@@ -15,7 +15,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 const allProvinces = [Province1JSON, Province2JSON, Province3JSON, Province4JSON, Province5JSON, Province6JSON, Province7JSON];
 
-const Create_addressInput = ({ onAddressChange }) => {
+const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors }) => {
   const [permanent, setPermanent] = useState({
     province: "",
     district: "",
@@ -57,16 +57,6 @@ const Create_addressInput = ({ onAddressChange }) => {
     const province = allProvinces.find((p) => p.name === provinceName);
     const district = province?.districts.find((d) => d.name === districtName);
     return district?.palikas || [];
-  };
-
-  const fillCurrentWithDash = () => {
-    setCurrent({
-      province: "-",
-      district: "-",
-      palika: "-",
-      wada: "-",
-      tole: "-",
-    });
   };
 
   return (
@@ -128,18 +118,42 @@ const Create_addressInput = ({ onAddressChange }) => {
 
         {/* Wada */}
         <div>
-          <Label>वडा नं</Label>
-          <Input className="w-full mt-2" value={permanent.wada} onChange={(e) => setPermanent({ ...permanent, wada: e.target.value })} onKeyDown={handleEnterFocus} />
+          <Label className={localErrors.permanent_wada && "text-red-600"}>वडा नं</Label>
+          <Input
+            className="w-full mt-2"
+            value={permanent.wada}
+            onChange={(e) => {
+              const val = e.target.value;
+              setPermanent({ ...permanent, wada: e.target.value });
+              if (!val) {
+                setLocalErrors((prev) => ({ ...prev, permanent_wada: true }));
+              } else {
+                setLocalErrors((prev) => ({ ...prev, permanent_wada: false }));
+              }
+            }}
+            onKeyDown={handleEnterFocus}
+          />
         </div>
 
         {/* Tole */}
         <div>
-          <Label>टोल / बाटो</Label>
-          <Input className="w-full mt-2" value={permanent.tole} onChange={(e) => setPermanent({ ...permanent, tole: e.target.value })} onKeyDown={handleEnterFocus} />
+          <Label className={localErrors.permanent_tole && "text-red-600"}>टोल / बाटो</Label>
+          <Input
+            className="w-full mt-2"
+            value={permanent.tole}
+            onChange={(e) => {
+              const val = e.target.value;
+              setPermanent({ ...permanent, tole: e.target.value });
+              if (!val || val.length < 4 || val.length > 50) {
+                setLocalErrors((prev) => ({ ...prev, permanent_tole: true }));
+              } else {
+                setLocalErrors((prev) => ({ ...prev, permanent_tole: false }));
+              }
+            }}
+            onKeyDown={handleEnterFocus}
+          />
         </div>
       </div>
-
-      {/* Current Address */}
 
       <div className="w-1/2 space-y-5">
         <div className="flex items-center justify-between space-x-3 my-2">
@@ -151,11 +165,7 @@ const Create_addressInput = ({ onAddressChange }) => {
               onCheckedChange={(checked) => {
                 if (checked) {
                   setCurrent({
-                    province: "-",
-                    district: "-",
-                    palika: "-",
-                    wada: "-",
-                    tole: "-",
+                    ...permanent,
                     sameAsPermanent: true,
                   });
                 } else {
@@ -234,15 +244,44 @@ const Create_addressInput = ({ onAddressChange }) => {
         </div>
 
         {/* Wada */}
+        {/* Wada */}
         <div>
-          <Label>वडा नं</Label>
-          <Input className="w-full mt-2" value={current.wada} disabled={current.sameAsPermanent} onChange={(e) => setCurrent({ ...current, wada: e.target.value })} onKeyDown={handleEnterFocus} />
+          <Label className={localErrors.current_wada && "text-red-600"}>वडा नं</Label>
+          <Input
+            className={`w-full mt-2 ${localErrors.current_wada ? "border-red-500" : ""}`}
+            value={current.wada}
+            disabled={current.sameAsPermanent}
+            onChange={(e) => {
+              const val = e.target.value;
+              setCurrent({ ...current, wada: val });
+              if (!val) {
+                setLocalErrors((prev) => ({ ...prev, current_wada: true }));
+              } else {
+                setLocalErrors((prev) => ({ ...prev, current_wada: false }));
+              }
+            }}
+            onKeyDown={handleEnterFocus}
+          />
         </div>
 
         {/* Tole */}
         <div>
-          <Label>टोल / बाटो</Label>
-          <Input className="w-full mt-2" value={current.tole} disabled={current.sameAsPermanent} onChange={(e) => setCurrent({ ...current, tole: e.target.value })} onKeyDown={handleEnterFocus} />
+          <Label className={localErrors.current_tole && "text-red-600"}>टोल / बाटो</Label>
+          <Input
+            className={`w-full mt-2 ${localErrors.current_tole ? "border-red-500" : ""}`}
+            value={current.tole}
+            disabled={current.sameAsPermanent}
+            onChange={(e) => {
+              const val = e.target.value;
+              setCurrent({ ...current, tole: val });
+              if (!val || val.length < 4 || val.length > 50) {
+                setLocalErrors((prev) => ({ ...prev, current_tole: true }));
+              } else {
+                setLocalErrors((prev) => ({ ...prev, current_tole: false }));
+              }
+            }}
+            onKeyDown={handleEnterFocus}
+          />
         </div>
       </div>
     </div>

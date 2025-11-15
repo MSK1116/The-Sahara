@@ -1,0 +1,103 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
+const topics = ["Salary", "Business", "House rent", "Agriculture", "Investment", "Other"];
+
+export default function Table3({ onDataChange, handleEnterFocus }) {
+  // Initialize rows with fixed topics
+  const initialRows = topics.map((topic, idx) => ({
+    id: idx,
+    title: topic,
+    debtorIncome: "",
+    familyAnnualIncome: "",
+    notes: "",
+  }));
+
+  const [rows, setRows] = useState(initialRows);
+  const [totalDebtor, setTotalDebtor] = useState(0);
+  const [totalFamily, setTotalFamily] = useState(0);
+
+  const handleInputChange = (id, field, value) => {
+    const newRows = rows.map((row) => {
+      if (row.id === id) {
+        return { ...row, [field]: value };
+      }
+      return row;
+    });
+    setRows(newRows);
+  };
+
+  // Calculate totals whenever rows change
+  useEffect(() => {
+    let debtorSum = 0;
+    let familySum = 0;
+    rows.forEach((row) => {
+      debtorSum += parseFloat(row.debtorIncome) || 0;
+      familySum += parseFloat(row.familyAnnualIncome) || 0;
+    });
+    setTotalDebtor(debtorSum);
+    setTotalFamily(familySum);
+
+    onDataChange &&
+      onDataChange({
+        rows,
+        totalDebtor: debtorSum,
+        totalFamily: familySum,
+      });
+  }, [rows, onDataChange]);
+
+  return (
+    <div className="overflow-x-auto mt-5">
+      <p className="font-bold my-5">ऋणीको वार्षिक आम्दानी र एकाघर परिवारको वार्षिक आय :-</p>
+      <div className="border shadow-sm rounded-md">
+        <table className="table-auto border-collapse border-gray-300 w-full">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="px-4 py-2 w-4 text-left text-sm text-gray-700 font-semibold border">सि.न</th>
+              <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">शीषक</th>
+              <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">ऋणीको वार्षिक आम्दानी</th>
+              <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">एकाघर परिवारको वार्षिक आय</th>
+              <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">कैफियत</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row, index) => (
+              <tr key={row.id}>
+                <td className="border p-2">
+                  <Input disabled readOnly value={index + 1} />
+                </td>
+                <td className="border p-2">
+                  <Input disabled readOnly value={row.title} />
+                </td>
+                <td className="border p-2">
+                  <Input onKeyDown={handleEnterFocus} value={row.debtorIncome} onChange={(e) => handleInputChange(row.id, "debtorIncome", e.target.value)} placeholder="ऋणीको वार्षिक आम्दानी" />
+                </td>
+                <td className="border p-2">
+                  <Input onKeyDown={handleEnterFocus} value={row.familyAnnualIncome} onChange={(e) => handleInputChange(row.id, "familyAnnualIncome", e.target.value)} placeholder="एकाघर परिवारको वार्षिक आय" />
+                </td>
+                <td className="border p-2">
+                  <Input onKeyDown={handleEnterFocus} value={row.notes} onChange={(e) => handleInputChange(row.id, "notes", e.target.value)} placeholder="कैफियत" />
+                </td>
+              </tr>
+            ))}
+            <tr className="bg-gray-100 font-semibold">
+              <td className="border p-2 text-sm text-right" colSpan={2}>
+                जम्मा (Total)
+              </td>
+              <td className="border p-2">
+                <Input disabled readOnly value={totalDebtor} />
+              </td>
+              <td className="border p-2">
+                <Input disabled readOnly value={totalFamily} />
+              </td>
+              <td className="border p-2"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}

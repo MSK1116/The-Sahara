@@ -1,14 +1,13 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { Input } from "@/components/ui/input";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const columns = ["सि. न", "कर्जा सुविधा", "रकम", "भुक्तानी अवधि", "कैफियत"];
 
-const Table1 = ({ onDataChange }) => {
+const Table1 = ({ onDataChange, amount, applicantType }) => {
   // Only one row
   const [row, setRow] = useState({
-    "कर्जा सुविधा": "",
-    रकम: "",
     "भुक्तानी अवधि": "",
     कैफियत: "",
   });
@@ -18,7 +17,7 @@ const Table1 = ({ onDataChange }) => {
   }, [row, onDataChange]);
 
   // refs for inputs
-  const inputRefs = [useRef(), useRef(), useRef(), useRef()];
+  const inputRefs = [useRef(), useRef()];
 
   // handle Enter key navigation
   const handleEnter = (e, idx) => {
@@ -46,16 +45,31 @@ const Table1 = ({ onDataChange }) => {
           <tbody>
             <tr className="hover:bg-gray-50 transition">
               <td className="px-2 py-1 border-b">
-                <Input className="w-full bg-gray-100 cursor-not-allowed" value={1} readOnly />
+                <Input disabled className="w-full bg-gray-100 " value={1} readOnly />
               </td>
               <td className="px-2 py-1 border-b">
-                <Input className="w-full" placeholder="कर्जा सुविधा" value={row["कर्जा सुविधा"]} onChange={(e) => setRow((r) => ({ ...r, "कर्जा सुविधा": e.target.value }))} onKeyDown={(e) => handleEnter(e, 0)} ref={inputRefs[0]} />
+                <Input disabled readOnly className="w-full" placeholder="कर्जा सुविधा" value={applicantType} onKeyDown={(e) => handleEnter(e, 0)} ref={inputRefs[0]} />
               </td>
               <td className="px-2 py-1 border-b">
-                <Input className="w-full" placeholder="रकम" value={row["रकम"]} onChange={(e) => setRow((r) => ({ ...r, रकम: e.target.value }))} onKeyDown={(e) => handleEnter(e, 1)} ref={inputRefs[1]} />
+                <Input disabled readOnly className="w-full" placeholder="रकम" value={amount} onKeyDown={(e) => handleEnter(e, 1)} ref={inputRefs[1]} />
               </td>
               <td className="px-2 py-1 border-b">
-                <Input className="w-full" placeholder="भुक्तानी अवधि" value={row["भुक्तानी अवधि"]} onChange={(e) => setRow((r) => ({ ...r, "भुक्तानी अवधि": e.target.value }))} onKeyDown={(e) => handleEnter(e, 2)} ref={inputRefs[2]} />
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="mt-2 border px-3 py-2 rounded-md w-full text-sm">{row["भुक्तानी अवधि"] || "भुक्तानी अवधि चयन गर्नुहोस्"}</DropdownMenuTrigger>
+
+                  <DropdownMenuContent className="w-full max-h-60 overflow-y-auto">
+                    <DropdownMenuRadioGroup value={row["भुक्तानी अवधि"]} onValueChange={(val) => setRow((r) => ({ ...r, "भुक्तानी अवधि": val }))}>
+                      {Array.from({ length: 7 }).map((_, i) => {
+                        const year = `${i + 1} वर्ष`;
+                        return (
+                          <DropdownMenuRadioItem key={year} value={year}>
+                            {year}
+                          </DropdownMenuRadioItem>
+                        );
+                      })}
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </td>
               <td className="px-2 py-1 border-b">
                 <Input className="w-full" placeholder="कैफियत" value={row["कैफियत"]} onChange={(e) => setRow((r) => ({ ...r, कैफियत: e.target.value }))} onKeyDown={(e) => handleEnter(e, 3)} ref={inputRefs[3]} />

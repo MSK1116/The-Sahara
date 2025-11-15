@@ -7,10 +7,21 @@ import Create_addressInput from "./Create_addressInput";
 import ProjectAddressSelector from "./ProjectAddressSelector";
 import Table1 from "./Table1";
 import convert from "number-to-nepali-words";
+import Table2 from "./Table2";
+import { Button } from "@/components/ui/button";
+import Approver_address_input from "./Approver_address_input";
+import Table3 from "./Table3";
+import Table4 from "./Table4";
+import Table5 from "./Table5";
+import Table6 from "./Table6";
+import Table7 from "./Table7";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const Create_form = ({ onDataChange }) => {
   const [applicantType, setApplicantType] = useState("व्यक्ति");
   const [paymentFrequency, setPaymentFrequency] = useState("मासिक");
+  const [isApprovalGiven, setIsApprovalGiven] = useState(false);
+  const [localErrors, setLocalErrors] = useState({});
   const otherRef = useRef(null);
   const formRef = useRef(null);
 
@@ -106,7 +117,7 @@ const Create_form = ({ onDataChange }) => {
   }, [localData, applicantType, paymentFrequency]);
 
   return (
-    <div className="p-10">
+    <div className="pt-10 px-10 pb-0">
       <form ref={formRef}>
         {/* ---------------------- Section 1 ---------------------------- */}
         <div className="flex flex-row items-center gap-x-10 justify-between">
@@ -141,18 +152,66 @@ const Create_form = ({ onDataChange }) => {
         {/* ---------------------- Section 2 ---------------------------- */}
         <div className="flex flex-row items-center gap-x-10 justify-between">
           <div className="w-full">
-            <Label htmlFor="branch">शाखा</Label>
-            <Input id="branch" name="branch" className="w-full mt-2" onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, branch: e.target.value }))} />
+            <Label className={localErrors.branch && "text-red-600"} htmlFor="branch">
+              शाखा
+            </Label>
+            <Input
+              id="branch"
+              name="branch"
+              className="w-full mt-2"
+              onKeyDown={handleEnterFocus}
+              onChange={(e) => {
+                const val = e.target.value;
+                setLocalData((d) => ({ ...d, branch: val }));
+                if (!val) {
+                  setLocalErrors((prev) => ({ ...prev, branch: true }));
+                } else {
+                  setLocalErrors((prev) => ({ ...prev, branch: false }));
+                }
+              }}
+            />
           </div>
 
           <div className="w-full">
-            <Label htmlFor="desc1">कृपया निम्न विवरण खुलाइ म/हामीले</Label>
-            <Input id="desc1" name="desc1" className="w-full mt-2" onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, desc1: e.target.value }))} />
+            <Label className={localErrors.desc1 && "text-red-600"} htmlFor="desc1">
+              कृपया निम्न विवरण खुलाइ म/हामीले
+            </Label>
+            <Input
+              id="desc1"
+              name="desc1"
+              className="w-full mt-2"
+              onKeyDown={handleEnterFocus}
+              onChange={(e) => {
+                const val = e.target.value;
+                setLocalData((d) => ({ ...d, desc1: val }));
+                if (val.length < 15) {
+                  setLocalErrors((prev) => ({ ...prev, desc1: true }));
+                } else {
+                  setLocalErrors((prev) => ({ ...prev, desc1: false }));
+                }
+              }}
+            />
           </div>
 
           <div className="w-full">
-            <Label htmlFor="amount">कार्यको लागि माग गरिएको रकम रु</Label>
-            <Input id="amount" name="amount" className="w-full mt-2" onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, amount: e.target.value }))} />
+            <Label className={localErrors.amount && "text-red-600"} htmlFor="amount">
+              कार्यको लागि माग गरिएको रकम रु
+            </Label>
+            <Input
+              id="amount"
+              name="amount"
+              className="w-full mt-2"
+              onKeyDown={handleEnterFocus}
+              onChange={(e) => {
+                const val = e.target.value;
+                setLocalData((d) => ({ ...d, amount: e.target.value }));
+                if (val >= 1000000 || val == 0) {
+                  setLocalErrors((prev) => ({ ...prev, amount: true }));
+                } else {
+                  setLocalErrors((prev) => ({ ...prev, amount: false }));
+                }
+              }}
+            />
           </div>
 
           <div className="w-full cursor-default ">
@@ -171,32 +230,110 @@ const Create_form = ({ onDataChange }) => {
           <div className="w-[30%]">
             <span className=" font-semibold">व्यक्तिगत जानकारी</span>
             <div className=" mt-6">
-              <Label htmlFor="applicant_name">ऋण निवेदकको नाम, थर</Label>
-              <Input id="applicant_name" name="applicant_name" className="w-full mt-2" onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, applicant_name: e.target.value }))} />
+              <Label className={localErrors.applicant_name && "text-red-600"} htmlFor="applicant_name">
+                ऋण निवेदकको नाम, थर
+              </Label>
+              <Input
+                id="applicant_name"
+                name="applicant_name"
+                className="w-full mt-2"
+                onKeyDown={handleEnterFocus}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  const spaceCount = (val.match(/ /g) || []).length;
+                  setLocalData((d) => ({ ...d, applicant_name: e.target.value }));
+                  if (val.length < 8 || val.length > 70 || spaceCount > 3) {
+                    setLocalErrors((prev) => ({ ...prev, applicant_name: true }));
+                  } else {
+                    setLocalErrors((prev) => ({ ...prev, applicant_name: false }));
+                  }
+                }}
+              />
             </div>
 
+            {/* Age */}
             <div className="mt-5">
-              <Label htmlFor="age">उमेर</Label>
-              <Input id="age" name="age" className="mt-2" onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, age: e.target.value }))} />
-            </div>
-            <div className="w-full mt-5">
-              <Label htmlFor="phone1">फोन नं १</Label>
-              <Input id="phone1" name="phone1" className="w-full mt-2" onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, phone1: e.target.value }))} />
+              <Label className={localErrors.age ? "text-red-600" : ""} htmlFor="age">
+                उमेर
+              </Label>
+              <Input
+                id="age"
+                name="age"
+                className="mt-2"
+                onKeyDown={handleEnterFocus}
+                onChange={(e) => {
+                  const val = Number(e.target.value);
+                  setLocalData((d) => ({ ...d, age: val }));
+                  setLocalErrors((prev) => ({ ...prev, age: val < 18 }));
+                }}
+              />
             </div>
 
+            {/* Phone 1 */}
             <div className="w-full mt-5">
-              <Label htmlFor="phone2">फोन नं २</Label>
-              <Input id="phone2" name="phone2" className="w-full mt-2" onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, phone2: e.target.value }))} />
+              <Label className={localErrors.phone1 ? "text-red-600" : ""} htmlFor="phone1">
+                फोन नं १
+              </Label>
+              <Input
+                id="phone1"
+                name="phone1"
+                className="w-full mt-2"
+                onKeyDown={handleEnterFocus}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setLocalData((d) => ({ ...d, phone1: val }));
+                  setLocalErrors((prev) => ({ ...prev, phone1: val.length !== 10 }));
+                }}
+              />
             </div>
 
+            {/* Phone 2 */}
             <div className="w-full mt-5">
-              <Label htmlFor="personal_education">शैक्षिक योग्यता</Label>
-              <Input id="personal_education" name="personal_education" className="w-full mt-2" onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, personal_education: e.target.value }))} />
+              <Label className={localErrors.phone2 ? "text-red-600" : ""} htmlFor="phone2">
+                फोन नं २
+              </Label>
+              <Input
+                id="phone2"
+                name="phone2"
+                className="w-full mt-2"
+                onKeyDown={handleEnterFocus}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setLocalData((d) => ({ ...d, phone2: val }));
+                  setLocalErrors((prev) => ({ ...prev, phone2: val.length !== 10 }));
+                }}
+              />
+            </div>
+
+            {/* Educational Qualification */}
+            <div className="w-full mt-5">
+              <Label className={localErrors.personal_education ? "text-red-600" : ""} htmlFor="personal_education">
+                शैक्षिक योग्यता
+              </Label>
+              <Select
+                value={localData.personal_education || ""}
+                onValueChange={(val) => {
+                  setLocalData((d) => ({ ...d, personal_education: val }));
+                  setLocalErrors((prev) => ({ ...prev, personal_education: val === "" }));
+                }}>
+                <SelectTrigger className="w-full mt-2">
+                  <SelectValue placeholder="-- चयन गर्नुहोस् --" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Na padheko">ना पढेको</SelectItem>
+                  <SelectItem value="1-7">१-७</SelectItem>
+                  <SelectItem value="8-9">८-९</SelectItem>
+                  <SelectItem value="10">१०</SelectItem>
+                  <SelectItem value="+2">+२</SelectItem>
+                  <SelectItem value="Bachelor">स्नातक</SelectItem>
+                  <SelectItem value="Master">स्नातकोत्तर</SelectItem>
+                  <SelectItem value="PhD">डाक्टर/PhD</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
-          {/* Address Section */}
-          <Create_addressInput onAddressChange={useCallback((addr) => setLocalData((d) => ({ ...d, address: addr })), [])} />
+          <Create_addressInput localErrors={localErrors} setLocalErrors={setLocalErrors} onAddressChange={useCallback((addr) => setLocalData((d) => ({ ...d, address: addr })), [])} />
         </div>
 
         {/* Divider */}
@@ -325,7 +462,160 @@ const Create_form = ({ onDataChange }) => {
           </div>
         </div>
         <div>
-          <Table1 localData={localData} onDataChange={useCallback((rows) => setLocalData((d) => ({ ...d, table1: rows })), [])} />
+          <Table1 amount={localData.amount} applicantType={applicantType} onDataChange={useCallback((rows) => setLocalData((d) => ({ ...d, table1: rows })), [])} />
+        </div>
+
+        <div className="flex items-center my-10">
+          <span className="flex-1 h-px bg-gray-300"></span>
+          <span className="px-4 text-sm text-gray-700">Page 2, Section 1</span>
+          <span className="flex-1 h-px bg-gray-300"></span>
+        </div>
+        <span className="font-bold">ऋणीको व्यक्तिगत विवरण</span>
+        <div className="flex flex-col space-y-5">
+          <div className="flex flex-row space-x-5">
+            <div className="w-full mt-5">
+              <Label htmlFor="applicant_name">नाम</Label>
+              <Input id="applicant_name" className="w-full mt-2" value={localData.applicant_name} onKeyDown={handleEnterFocus} disabled />
+            </div>
+            <div className="w-full mt-5">
+              <Label htmlFor="address">ठेगाना</Label>
+              <Input id="address" className="w-full mt-2" value={`${localData?.address?.permanent?.province}, ${localData?.address?.permanent?.district}, ${localData?.address?.permanent?.wada}, ${localData?.address?.permanent?.tole}`} disabled />
+            </div>
+            <div className="w-full mt-5">
+              <Label htmlFor="citizenship_number">नागरिकता न</Label>
+              <Input id="citizenship_number" name="citizenship_number" className="w-full mt-2" onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, citizenship_number: e.target.value }))} />
+            </div>
+          </div>
+
+          <div className="flex flex-row space-x-5">
+            <div className="w-full mt-5">
+              <Label htmlFor="applicant_father_name">बाबुको नाम</Label>
+              <Input id="applicant_father_name" name="applicant_father_name" className="w-full mt-2" onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, applicant_father_name: e.target.value }))} />
+            </div>
+            <div className="w-full mt-5">
+              <Label htmlFor="applicant_spouse_name">पतिको/पत्नीको नाम</Label>
+              <Input id="applicant_spouse_name" name="applicant_spouse_name" className="w-full mt-2" onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, applicant_housewife_name: e.target.value }))} />
+            </div>
+            <div className="w-full mt-5">
+              <Label htmlFor="applicant_inlaws_name">बाजे/ससुराको नाम</Label>
+              <Input id="applicant_inlaws_name" name="applicant_inlaws_name" className="w-full mt-2" onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, applicant_baje_or_sasura_name: e.target.value }))} />
+            </div>
+          </div>
+        </div>
+        <Table2 onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table2: newRows })), [])} />
+        <div className="flex items-center my-10">
+          <span className="flex-1 h-px bg-gray-300"></span>
+          <span className="px-4 text-sm text-gray-700">Page 2, Section 2</span>
+          <span className="flex-1 h-px bg-gray-300"></span>
+        </div>
+        <div className=" ">
+          <div className="flex flex-row items-center justify-between">
+            <p className=" font-bold">धितो मन्जुरीनामा दिनका व्यक्तिगत विवरण</p>
+            <div className=" flex flex-row gap-x-1.5">
+              <Button variant={"outline"} onClick={() => setIsApprovalGiven(!isApprovalGiven)} type="button">
+                स्वीकृति दिइने {isApprovalGiven ? "छ " : "छैन"} ।
+              </Button>
+            </div>
+          </div>
+          {/* Row 1 */}
+          <div className="flex flex-row space-x-5">
+            <div className="w-full mt-5">
+              <Label htmlFor="approver_applicant_name">नाम</Label>
+              <Input
+                id="approver_applicant_name"
+                name="approver_applicant_name"
+                className="w-full mt-2"
+                value={localData.approver_applicant_name || ""}
+                onKeyDown={handleEnterFocus}
+                onChange={(e) => setLocalData((d) => ({ ...d, applicant_name: e.target.value }))}
+              />
+            </div>
+            <div className="w-full ">
+              <Approver_address_input onApproverChange={useCallback((val) => setLocalData((d) => ({ ...d, approverAddress: val })), [])} />
+            </div>
+            <div className="w-full mt-5">
+              <Label htmlFor="citizenship_number">नागरिकता नम्बर</Label>
+              <Input
+                id="approver_citizenship_number"
+                name="approver_citizenship_number"
+                className="w-full mt-2"
+                value={localData.approver_citizenship_number || ""}
+                onKeyDown={handleEnterFocus}
+                onChange={(e) => setLocalData((d) => ({ ...d, approver_citizenship_number: e.target.value }))}
+              />
+            </div>
+            <div className="w-full mt-5">
+              <Label htmlFor="aprover_father_name">बुबाको नाम</Label>
+              <Input
+                id="aprover_father_name"
+                name="aprover_father_name"
+                className="w-full mt-2"
+                value={localData.aprover_father_name || ""}
+                onKeyDown={handleEnterFocus}
+                onChange={(e) => setLocalData((d) => ({ ...d, aprover_father_name: e.target.value }))}
+              />
+            </div>
+          </div>
+
+          {/* Row 2 */}
+          <div className="flex flex-row space-x-5">
+            <div className="w-full mt-5">
+              <Label htmlFor="approver_spouse_name">पतिको/पत्नीको नाम</Label>
+              <Input
+                id="approver_spouse_name"
+                name="approver_spouse_name"
+                className="w-full mt-2"
+                value={localData.approver_spouse_name || ""}
+                onKeyDown={handleEnterFocus}
+                onChange={(e) => setLocalData((d) => ({ ...d, approver_spouse_name: e.target.value }))}
+              />
+            </div>
+            <div className="w-full mt-5">
+              <Label htmlFor="approver_inlaws_name">हजुरबा/हजुरआमाको नाम</Label>
+              <Input
+                id="approver_inlaws_name"
+                name="approver_inlaws_name"
+                className="w-full mt-2"
+                value={localData.approver_inlaws_name || ""}
+                onKeyDown={handleEnterFocus}
+                onChange={(e) => setLocalData((d) => ({ ...d, approver_inlaws_name: e.target.value }))}
+              />
+            </div>
+            <div className="w-full mt-5">
+              <Label htmlFor="approver_families_details">परिवारका आफन्तहरूको विवरण</Label>
+              <Input
+                id="approver_families_details"
+                name="approver_families_details"
+                className="w-full mt-2"
+                value={localData.approver_families_details || ""}
+                onKeyDown={handleEnterFocus}
+                onChange={(e) => setLocalData((d) => ({ ...d, approver_families_details: e.target.value }))}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center my-10">
+          <span className="flex-1 h-px bg-gray-300"></span>
+          <span className="px-4 text-sm text-gray-700">Page 2, Section 3</span>
+          <span className="flex-1 h-px bg-gray-300"></span>
+        </div>
+        <div>
+          <div className="w-full mt-5">
+            <Label htmlFor="applicant_profession">ऋणीको पेशा</Label>
+            <Input id="applicant_profession" name="applicant_profession" className="w-full mt-2" onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, applicant_profession: e.target.value }))} />
+          </div>
+          <Table3 handleEnterFocus={handleEnterFocus} onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table3: newRows })), [])} />
+        </div>
+        <div className="flex items-center my-10">
+          <span className="flex-1 h-px bg-gray-300"></span>
+          <span className="px-4 text-sm text-gray-700">Page 3, Section 1</span>
+          <span className="flex-1 h-px bg-gray-300"></span>
+        </div>
+        <div>
+          <Table4 handleEnterFocus={handleEnterFocus} onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table4: newRows })), [])} />
+          <Table5 handleEnterFocus={handleEnterFocus} onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table5: newRows })), [])} />
+          <Table6 handleEnterFocus={handleEnterFocus} onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table6: newRows })), [])} />
+          <Table7 handleEnterFocus={handleEnterFocus} onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table7: newRows })), [])} />
         </div>
       </form>
     </div>

@@ -23,7 +23,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="h-screen">
+    <html lang="en" className="h-auto">
       <body className={`${geistSans.variable} ${poppins.variable} antialiased h-screen flex flex-col`}>
         <Navbar />
         {children}
