@@ -4,7 +4,7 @@ import React from "react";
 import { NepaliDatePicker as NDPicker } from "nepali-datepicker-reactjs";
 import "nepali-datepicker-reactjs/dist/index.css";
 
-const NepaliDateInput = ({ value, onChange, className, inputClassName, options }) => {
+const NepaliDateInput = ({ value, onChange, className, inputClassName, options, ...props }) => {
   return (
     <div className={`flex flex-col space-y-1 ${className || ""}`}>
       <NDPicker
@@ -17,6 +17,7 @@ const NepaliDateInput = ({ value, onChange, className, inputClassName, options }
             valueLocale: "en",
           }
         }
+        {...props}
       />
     </div>
   );

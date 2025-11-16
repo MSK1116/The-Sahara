@@ -1,12 +1,14 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Create_form from "./Create_form";
 import Create_navigator from "./Create_navigator";
-
+import axios from "axios";
+import toast from "react-hot-toast";
 const CreateWrapper = () => {
   const [form1Data, setForm1Data] = useState(null);
   const [form2Data, setForm2Data] = useState(null);
   const [form3Data, setForm3Data] = useState(null);
+  const [Lmsin, setLmsin] = useState("");
 
   const handleCollectAll = () => {
     const aggregated = {
@@ -14,20 +16,45 @@ const CreateWrapper = () => {
       form2: form2Data,
       form3: form3Data,
     };
-    // For now just print to console; could be sent to API
-    // JSON.stringify used to make it easy to inspect nested objects
-    console.log("Aggregated form data:", JSON.stringify(aggregated, null, 2));
-    alert("Aggregated form data logged to console (see DevTools)");
+    handleUpsert();
   };
+
+  const handleUpsert = async () => {
+    if (!Lmsin) {
+      window.alert("LMSIN is not generated yet!");
+      return;
+    }
+    try {
+      const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/upsert`, { ...form1Data, LMSIN: Lmsin });
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message, { position: "top-left" });
+    }
+  };
+
+  const getLMSIN = async () => {
+    try {
+      const LMSIN = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/las/getLmsin`);
+      if (LMSIN.data) {
+        setLmsin(LMSIN.data.lmsinNumber);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getLMSIN();
+  }, []);
 
   return (
     <>
-      <main className="flex flex-row flex-1">
-        <div className="w-[90%] overflow-y-auto">
+      <main className="flex flex-row">
+        <div className="w-[90%]">
           <Create_form onDataChange={setForm1Data} />
         </div>
         <div className="flex-1 ">
-          <Create_navigator data={form1Data} onSave={handleCollectAll} />
+          <Create_navigator LMSIN={Lmsin} data={form1Data} onSave={handleCollectAll} />
         </div>
       </main>
     </>

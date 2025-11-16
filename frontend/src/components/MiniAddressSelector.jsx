@@ -19,6 +19,10 @@ const allProvinces = [Province1JSON, Province2JSON, Province3JSON, Province4JSON
 export default function MiniAddressSelector({ value, onChange, disabled = false }) {
   const [selected, setSelected] = useState(value || { province: "", district: "", palika: "", wada: "", tole: "" });
 
+  useEffect(() => {
+    setSelected(value || { province: "", district: "", palika: "", wada: "", tole: "" });
+  }, [value]);
+
   const [step, setStep] = useState("province");
 
   const getDistricts = (province) => allProvinces.find((p) => p.name === province)?.districts || [];

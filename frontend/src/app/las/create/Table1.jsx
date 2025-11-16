@@ -5,12 +5,14 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenu
 
 const columns = ["सि. न", "कर्जा सुविधा", "रकम", "भुक्तानी अवधि", "कैफियत"];
 
-const Table1 = ({ onDataChange, amount, applicantType }) => {
+const Table1 = ({ onDataChange, amount, applicantType, initialData }) => {
   // Only one row
-  const [row, setRow] = useState({
-    "भुक्तानी अवधि": "",
-    कैफियत: "",
-  });
+  const [row, setRow] = useState(
+    initialData?.[0] || {
+      "भुक्तानी अवधि": "",
+      कैफियत: "",
+    }
+  );
 
   useEffect(() => {
     if (onDataChange) onDataChange([row]);

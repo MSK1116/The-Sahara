@@ -16,20 +16,20 @@ import Province7JSON from "../create/Province7.json";
 
 const allProvinces = [Province1JSON, Province2JSON, Province3JSON, Province4JSON, Province5JSON, Province6JSON, Province7JSON];
 
-export default function LandTable({ onDataChange, localData }) {
+export default function Table4({ onDataChange, localData, initialData }) {
   const initialRow = {
     id: Date.now(),
     province: "",
     district: "",
     palika: "",
     wardNo: "",
-    serialNo: "",
+    sheetNo: "",
     plotNo: "",
     area: "",
     remarks: "",
   };
 
-  const [rows, setRows] = useState([initialRow]);
+  const [rows, setRows] = useState(initialData || [initialRow]);
 
   const handleAddRow = () => {
     if (rows.length < 3) {
@@ -78,7 +78,7 @@ export default function LandTable({ onDataChange, localData }) {
 
   return (
     <div className="overflow-x-auto mt-5">
-      <p className="font-bold my-5">धनीको जग्गाको विवरण :-</p>
+      <p className="font-bold my-5">ऋणीको एकल परिवारको अचल सम्पत्तिको विनियोजन: -</p>
       <div className="border shadow-sm rounded-md">
         <table className="table-auto border-collapse border-gray-300 w-full">
           <thead>
@@ -158,7 +158,7 @@ export default function LandTable({ onDataChange, localData }) {
                   <Input onKeyDown={handleEnterFocus} value={row.wardNo} onChange={(e) => handleInputChange(row.id, "wardNo", e.target.value)} placeholder="वडा न." />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.serialNo} onChange={(e) => handleInputChange(row.id, "serialNo", e.target.value)} placeholder="सि.न" />
+                  <Input onKeyDown={handleEnterFocus} value={row.sheetNo} onChange={(e) => handleInputChange(row.id, "sheetNo", e.target.value)} placeholder="सि.न" />
                 </td>
                 <td className="border p-2">
                   <Input onKeyDown={handleEnterFocus} value={row.plotNo} onChange={(e) => handleInputChange(row.id, "plotNo", e.target.value)} placeholder="कि.न" />

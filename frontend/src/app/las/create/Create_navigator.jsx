@@ -5,7 +5,7 @@ import { IoSaveSharp } from "react-icons/io5";
 import { MdPrint } from "react-icons/md";
 import { PageMaker_LoanApplicationPage1 } from "@/components/PageMaker/PageMaker_LoanApplicationPage1";
 
-const Create_navigator = ({ onSave, data }) => {
+const Create_navigator = ({ onSave, data, LMSIN, isEditing = false }) => {
   const handlePrint = () => {
     if (!data) return;
 
@@ -18,50 +18,76 @@ const Create_navigator = ({ onSave, data }) => {
     // Use document.open + write full HTML at once
     printWindow.document.open();
     printWindow.document.write(`
-    <html>
-      <head>
-       <title>Print</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+  <html>
+    <head>
+      <title>Print</title>
+
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <style>
+
+      <style>
         @page {
-            size: A4;
-            margin: 10mm;
+          size: A4;
+          margin: 10mm;
+
+          /* Page Number at Bottom */
+          @bottom-center {
+            content: "Page " counter(page) " of " counter(pages);
+            font-size: 10px;
+            font-family: Poppins, sans-serif;
+          }
         }
 
         body {
-            font-family: Poppins;
-            font-size: 13px;
+          font-family: Poppins, sans-serif;
+          font-size: 13px;
+          counter-reset: page;
         }
 
         table {
-            border-collapse: collapse;
-            width: 100%;
+          border-collapse: collapse;
+          width: 100%;
         }
 
-        td,
-        th {
-            border: 1px solid #000;
-            padding: 6px;
+        td, th {
+          border: 1px solid #000;
+          padding: 6px;
         }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-        
-      </head>
+
+        /* Fallback in case browser does not support @bottom-center */
+        @media print {
+          .print-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 10px;
+            font-family: Poppins, sans-serif;
+          }
+
+          .print-footer::after {
+            content: "Page " counter(page) " of " counter(pages);
+          }
+        }
+      </style>
+
+      <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    </head>
+${htmlContent}
     
-        ${htmlContent}
-      
-     
-    </html>
-  `);
+
+  </html>
+`);
+
     printWindow.document.close();
   };
 
   return (
-    <div className="w-full flex flex-col p-5 rounded-l-2xl sticky bg-gray-200 top-1/5 shadow ">
+    <div className="w-full flex flex-col px-5 pt-3 pb-0 rounded-l-2xl sticky bg-gray-200 top-1/6 shadow ">
       <div className="flex relative flex-col select-none items-center gap-5">
         <div className="absolute h-full bg-gray-300 top-0 left-1/2 w-0.5 -translate-x-1/2 transform z-0"></div>
         {[...Array(5)].map((i, idx) => (
@@ -71,13 +97,21 @@ const Create_navigator = ({ onSave, data }) => {
         ))}
       </div>
 
-      <div className="flex flex-col items-center gap-y-2.5 justify-center mt-20">
+      <div className="flex flex-col items-center gap-y-2.5 justify-center mt-15">
         <Button type="button" onClick={() => onSave && onSave()} className="w-full" variant="outline">
-          Save <IoSaveSharp className="size-5" />
+          {isEditing ? "Update" : "Save"} <IoSaveSharp className="size-5" />
         </Button>
         <Button type="button" onClick={handlePrint} className="w-full" variant="outline">
           Print <MdPrint className="size-5" />
         </Button>
+        <span class="flex w-full items-center">
+          <span class="h-px flex-1 bg-linear-to-r from-transparent to-gray-50"></span>
+          <span class="h-px flex-1 bg-linear-to-l from-transparent to-gray-50"></span>
+        </span>
+        <p className="w-full text-center text-xs my-5 px-2 py-1 bg-white rounded-md">
+          LMSIN<br></br>
+          {LMSIN}
+        </p>
       </div>
     </div>
   );

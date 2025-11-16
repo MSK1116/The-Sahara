@@ -6,14 +6,14 @@ import { Input } from "@/components/ui/input";
 
 const topics = ["Salary", "Business", "House rent", "Agriculture", "Investment", "Other"];
 
-export default function Table3({ onDataChange }) {
+export default function Table3({ onDataChange, initialData }) {
   // Initialize rows with fixed topics
   const initialRows = topics.map((topic, idx) => ({
     id: idx,
     title: topic,
-    debtorIncome: "",
-    familyAnnualIncome: "",
-    notes: "",
+    debtorIncome: initialData?.rows?.find((r) => r.title === topic)?.debtorIncome || "",
+    familyAnnualIncome: initialData?.rows?.find((r) => r.title === topic)?.familyAnnualIncome || "",
+    notes: initialData?.rows?.find((r) => r.title === topic)?.notes || "",
   }));
 
   const [rows, setRows] = useState(initialRows);

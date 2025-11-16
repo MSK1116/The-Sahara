@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,9 +25,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-auto">
-      <body className={`${geistSans.variable} ${poppins.variable} antialiased h-screen flex flex-col`}>
+      <body className={`${geistSans.variable} ${poppins.variable} antialiased min-h-screen flex flex-col`}>
         <Navbar />
         {children}
+        <Toaster />
       </body>
     </html>
   );

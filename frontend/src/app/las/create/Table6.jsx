@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { MdDelete } from "react-icons/md";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-export default function Table6({ onDataChange, localData }) {
+export default function Table6({ onDataChange, localData, initialData }) {
   const initialRow = {
     id: Date.now(),
     borrowerName: "",
@@ -18,7 +18,7 @@ export default function Table6({ onDataChange, localData }) {
     remarks: "",
   };
 
-  const [rows, setRows] = useState([initialRow]);
+  const [rows, setRows] = useState(initialData || [initialRow]);
 
   const handleAddRow = () => {
     if (rows.length < 3) {

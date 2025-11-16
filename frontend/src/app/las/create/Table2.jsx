@@ -13,7 +13,7 @@ const educationList = ["नपढेको", "१–६", "८–९", "१०",
 
 const professionList = ["कृषक", "व्यवसाय", "नोकरी", "विद्यार्थी", "ड्राइभर", "शिक्षक", "इन्जिनियर", "डाक्टर", "गृहिणी", "विदेशमा रोजगार"];
 
-export default function Table2({ onDataChange, handleEnterFocus }) {
+export default function Table2({ onDataChange, handleEnterFocus, initialData }) {
   const initialRow = {
     id: Date.now(),
     name: "",
@@ -24,7 +24,7 @@ export default function Table2({ onDataChange, handleEnterFocus }) {
     profession: "",
   };
 
-  const [rows, setRows] = useState([initialRow]);
+  const [rows, setRows] = useState(initialData || [initialRow]);
 
   const handleAddRow = () => {
     if (rows.length < 8) {

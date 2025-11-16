@@ -9,7 +9,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className=" sticky shadow-md px-10 py-4 rounded-b-xl">
+      <nav className=" sticky top-0 z-50 bg-gray-50 shadow-md px-10 py-4 rounded-b-xl">
         <div className=" flex flex-row justify-between items-center">
           <div className=" relative w-60 h-15">
             <Image alt="logo" className=" object-center object-contain" fill={true} src={"/image_dir/thesahara-logo-img.png"}></Image>

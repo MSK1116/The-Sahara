@@ -15,22 +15,26 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 const allProvinces = [Province1JSON, Province2JSON, Province3JSON, Province4JSON, Province5JSON, Province6JSON, Province7JSON];
 
-const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors }) => {
-  const [permanent, setPermanent] = useState({
-    province: "",
-    district: "",
-    palika: "",
-    wada: "",
-    tole: "",
-  });
+const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, initialData }) => {
+  const [permanent, setPermanent] = useState(
+    initialData?.permanent || {
+      province: "",
+      district: "",
+      palika: "",
+      wada: "",
+      tole: "",
+    }
+  );
 
-  const [current, setCurrent] = useState({
-    province: "",
-    district: "",
-    palika: "",
-    wada: "",
-    tole: "",
-  });
+  const [current, setCurrent] = useState(
+    initialData?.current || {
+      province: "",
+      district: "",
+      palika: "",
+      wada: "",
+      tole: "",
+    }
+  );
 
   // inform parent of address changes
   React.useEffect(() => {

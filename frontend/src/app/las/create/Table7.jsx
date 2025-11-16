@@ -17,7 +17,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 const allProvinces = [Province1JSON, Province2JSON, Province3JSON, Province4JSON, Province5JSON, Province6JSON, Province7JSON];
 
-export default function Table7({ onDataChange, localData }) {
+export default function Table7({ onDataChange, localData, initialData }) {
   const initialRow = {
     id: Date.now(),
     ownerName: "",
@@ -26,7 +26,7 @@ export default function Table7({ onDataChange, localData }) {
     palika: "",
     wardNo: "",
     tole: "",
-    serialNo: "",
+    sheetNo: "",
     plotNo: "",
     area: "",
     charKila: "",
@@ -34,7 +34,7 @@ export default function Table7({ onDataChange, localData }) {
     remarks: "",
   };
 
-  const [rows, setRows] = useState([initialRow]);
+  const [rows, setRows] = useState(initialData || [initialRow]);
 
   const handleAddRow = () => {
     if (rows.length < 7) {
@@ -175,7 +175,7 @@ export default function Table7({ onDataChange, localData }) {
                   <Input onKeyDown={handleEnterFocus} value={row.tole} onChange={(e) => handleInputChange(row.id, "tole", e.target.value)} placeholder="टोल / बाटो" />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.serialNo} onChange={(e) => handleInputChange(row.id, "serialNo", e.target.value)} placeholder="सि.न" />
+                  <Input onKeyDown={handleEnterFocus} value={row.sheetNo} onChange={(e) => handleInputChange(row.id, "sheetNo", e.target.value)} placeholder="सि.न" />
                 </td>
                 <td className="border p-2">
                   <Input onKeyDown={handleEnterFocus} value={row.plotNo} onChange={(e) => handleInputChange(row.id, "plotNo", e.target.value)} placeholder="कि.न" />

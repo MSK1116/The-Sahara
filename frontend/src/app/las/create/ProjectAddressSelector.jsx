@@ -17,14 +17,16 @@ import React, { useState, useEffect } from "react";
 
 const allProvinces = [Province1JSON, Province2JSON, Province3JSON, Province4JSON, Province5JSON, Province6JSON, Province7JSON];
 
-export default function ProjectAddressSelector({ handleEnterFocus, onProjectChange, disabled = false }) {
-  const [selected, setSelected] = useState({
-    province: "",
-    district: "",
-    palika: "",
-    wada: "",
-    tole: "",
-  });
+export default function ProjectAddressSelector({ handleEnterFocus, onProjectChange, disabled = false, initialData }) {
+  const [selected, setSelected] = useState(
+    initialData || {
+      province: "",
+      district: "",
+      palika: "",
+      wada: "",
+      tole: "",
+    }
+  );
   const [step, setStep] = useState("province"); // province -> district -> palika -> wada/tole
 
   const getDistricts = (provinceName) => allProvinces.find((p) => p.name === provinceName)?.districts || [];

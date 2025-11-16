@@ -17,8 +17,154 @@ export function PageMaker_LoanApplicationPage1(data) {
     `;
   }
 
-  return `<body>
+  // Generate relatives table HTML with structured address
+  const relativesTable =
+    f.table2 && f.table2.length > 0
+      ? `
+    <p>सगोलमा रहेको नातेदारहरुको विवरण: -</p>
+    <table border="1" cellspacing="0" cellpadding="6" width="100%" class="text-xs mt-2 mb-5">
+      <thead>
+        <tr>
+          <th>सि.न</th>
+          <th>नाम</th>
+          <th>ठेगाना</th>
+          <th>नाता</th>
+          <th>उमेर</th>
+          <th>शैक्षिक योग्यता</th>
+          <th>पेसा</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${f.table2
+          .map(
+            (row, index) => `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${row.name || "—"}</td>
+            <td>
+              ${row.address ? `${row.address.province || "—"}, ${row.address.district || "—"}, ${row.address.palika || "—"}, ${row.address.wada || "—"}, ${row.address.tole || "—"}` : "—"}
+            </td>
+            <td>${row.relation || "—"}</td>
+            <td>${row.age || "—"}</td>
+            <td>${row.education || "—"}</td>
+            <td>${row.profession || "—"}</td>
+          </tr>
+        `
+          )
+          .join("")}
+      </tbody>
+    </table>
+  `
+      : `<p>सगोलमा रहेका नातेदारहरुको विवरण उपलब्ध छैन।</p>`;
 
+  // Approver section
+  const approverSection = f.approver_applicant_name
+    ? `
+  <div class="mt-5">
+    <p class="font-bold my-2">धितो मन्जुरीनामा दिनका व्यक्तिगत विवरण:</p>
+    <p>नाम: <b>${f.approver_applicant_name}</b></p>
+    <p>ठेगाना: 
+      <b>
+        ${f.approverAddress ? `${f.approverAddress.province || "—"}, ${f.approverAddress.district || "—"}, ${f.approverAddress.palika || "—"}, ${f.approverAddress.wada || "—"}, ${f.approverAddress.tole || "—"}` : "—"}
+      </b>
+    </p>
+    <p>नागरिकता न: <b>${f.approver_citizenship_number || "—"}</b></p>
+    <p>बुबाको नाम: <b>${f.approver_father_name || "—"}</b></p>
+    <p>पतिको/पत्नीको नाम: <b>${f.approver_spouse_name || "—"}</b></p>
+    <p>बाजे/ससुरको नाम: <b>${f.approver_inlaws_name || "—"}</b></p>
+    <p>सगोलमा रहेको नातेदारहरुको विवरण: <b>${f.approver_families_details || "—"}</b></p>
+  </div>
+  `
+    : ""; // empty string if no approver
+
+  // Income Table (Table-3)
+  const incomeTable =
+    f.table3 && f.table3.rows && f.table3.rows.length > 0
+      ? `
+    <p class="font-bold my-3">ऋणीको वार्षिक आम्दानी र एकाघर परिवारको वार्षिक आय :-</p>
+
+    <table border="1" cellspacing="0" cellpadding="6" width="100%" class="text-xs mt-2 mb-5">
+      <thead>
+        <tr>
+          <th>सि.न</th>
+          <th>शीर्षक</th>
+          <th>ऋणीको वार्षिक आम्दानी</th>
+          <th>एकाघर परिवारको वार्षिक आय</th>
+          <th>कैफियत</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${f.table3.rows
+          .map(
+            (row, index) => `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${row.title || "—"}</td>
+            <td>${row.debtorIncome && row.debtorIncome !== "" ? row.debtorIncome : "0"}</td>
+            <td>${row.familyAnnualIncome && row.familyAnnualIncome !== "" ? row.familyAnnualIncome : "0"}</td>
+            <td>${row.notes || ""}</td>
+          </tr>
+        `
+          )
+          .join("")}
+
+        <tr style="font-weight: bold; background: #eee;">
+          <td colspan="2" style="text-align:right;">जम्मा (Total)</td>
+          <td>${f.table3.totalDebtor || 0}</td>
+          <td>${f.table3.totalFamily || 0}</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  `
+      : "";
+
+  // Table-4: ऋणीको एकल परिवारको अचल सम्पत्तिको विनियोजन
+  const table4 = f.table4?.length
+    ? `
+  <p class="font-bold my-3">ऋणीको एकल परिवारको अचल सम्पत्तिको विनियोजन :-</p>
+
+  <table border="1" cellspacing="0" cellpadding="6" width="100%" class="text-xs mt-2 mb-5">
+    <thead>
+      <tr>
+        <th>सि.न</th>
+        <th>धनीको नाम</th>
+        <th>प्रदेश</th>
+        <th>जिल्ला</th>
+        <th>पालिका</th>
+        <th>वडा न.</th>
+        <th>सि.न</th>
+        <th>कि.न</th>
+        <th>क्षेत्रफल</th>
+        <th>कैफियत</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      ${f.table4
+        .map(
+          (row, index) => `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${f.applicant_name || ""}</td>
+          <td>${row.province || ""}</td>
+          <td>${row.district || ""}</td>
+          <td>${row.palika || ""}</td>
+          <td>${row.wardNo || ""}</td>
+          <td>${row.serialNo || ""}</td>
+          <td>${row.plotNo || ""}</td>
+          <td>${row.area || ""}</td>
+          <td>${row.remarks || ""}</td>
+        </tr>
+      `
+        )
+        .join("")}
+    </tbody>
+  </table>
+`
+    : "";
+
+  return `<body>
     <div class="flex relative flex-row justify-center items-center">
         <div class="absolute left-2 top-2 mr-10 size-20">
             <img class="rounded-full" src="/image_dir/LogoOnly.png" alt="Logo" />
@@ -71,6 +217,7 @@ export function PageMaker_LoanApplicationPage1(data) {
 
     ${applicantDetails}
 
+    <div class="mt-2 mb-1">माग  गरेको ऋण सुविधा</div>
     <table border="1" class="text-xs my-3" cellspacing="0" cellpadding="6" width="100%">
         <tr>
             <th>S No</th>
@@ -95,8 +242,34 @@ export function PageMaker_LoanApplicationPage1(data) {
 
     <p>व्याज बुझाउने: <b>${f.paymentFrequency}</b></p>
 
+    <p class="mt-2">
+      <b>ऋणीको व्यक्तिगत विवरण:</b> <br/>
+      नाम: <b>${f.applicant_name}</b>, <br/>
+      ठेगाना: <b>${f.address.permanent.province}, ${f.address.permanent.district}, ${f.address.permanent.palika}, ${f.address.permanent.wada}, ${f.address.permanent.tole}</b>
+    </p>
+
+    <p>
+      नागरिकता no: <b>${f.citizenship_number}</b>, <br/>
+      बुबाको नाम: <b>${f.applicant_father_name}</b>, <br/>
+      पतिको/पत्नीको नाम: <b>${f.applicant_spouse_name}</b>, <br/>
+      बाजे/ससुरको नाम: <b>${f.applicant_inlaws_name}</b>
+    </p>
+
+    ${relativesTable}
+   
+    ${approverSection}
+
+    <p>ऋणीको पेशा: - ${f.applicant_profession}
+
+    ${incomeTable}
+
+    ${table4}
+ </P>
+    <p></P>
+
     <script>
       window.onload = () => { window.print(); };
     </script>
+
 </body>`;
 }
