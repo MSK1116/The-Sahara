@@ -142,6 +142,12 @@ const LASchema = new mongoose.Schema(
 
     citizenship_number: { type: String, default: "" },
     approver_applicant_name: { type: String, default: "" },
+    approver_citizenship_number: { type: String, default: "" },
+    approver_father_name: { type: String, default: "" },
+    approver_inlaws_name: { type: String, default: "" },
+    approver_spouse_name: { type: String, default: "" },
+    approver_families_detail: { type: String, default: "" },
+
     applicant_father_name: { type: String, default: "" },
     applicant_spouse_name: { type: String, default: "" },
     applicant_inlaws_name: { type: String, default: "" },

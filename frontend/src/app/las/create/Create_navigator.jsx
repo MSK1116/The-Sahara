@@ -5,7 +5,7 @@ import { IoSaveSharp } from "react-icons/io5";
 import { MdPrint } from "react-icons/md";
 import { PageMaker_LoanApplicationPage1 } from "@/components/PageMaker/PageMaker_LoanApplicationPage1";
 
-const Create_navigator = ({ onSave, data, LMSIN, isEditing = false }) => {
+const Create_navigator = ({ onSave, data, isUpserting, LMSIN, isEditing = false }) => {
   const handlePrint = () => {
     if (!data) return;
 
@@ -98,15 +98,15 @@ ${htmlContent}
       </div>
 
       <div className="flex flex-col items-center gap-y-2.5 justify-center mt-15">
-        <Button type="button" onClick={() => onSave && onSave()} className="w-full" variant="outline">
-          {isEditing ? "Update" : "Save"} <IoSaveSharp className="size-5" />
+        <Button disabled={isUpserting} type="button" onClick={() => onSave && onSave()} className="w-full" variant="outline">
+          {isEditing ? "Update" : "Save"} {isUpserting ? <span className=" loading loading-xs loading-spinner"></span> : <IoSaveSharp className="size-5" />}
         </Button>
         <Button type="button" onClick={handlePrint} className="w-full" variant="outline">
           Print <MdPrint className="size-5" />
         </Button>
-        <span class="flex w-full items-center">
-          <span class="h-px flex-1 bg-linear-to-r from-transparent to-gray-50"></span>
-          <span class="h-px flex-1 bg-linear-to-l from-transparent to-gray-50"></span>
+        <span className="flex w-full items-center">
+          <span className="h-px flex-1 bg-linear-to-r from-transparent to-gray-50"></span>
+          <span className="h-px flex-1 bg-linear-to-l from-transparent to-gray-50"></span>
         </span>
         <p className="w-full text-center text-xs my-5 px-2 py-1 bg-white rounded-md">
           LMSIN<br></br>

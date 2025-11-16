@@ -24,7 +24,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="h-auto">
+    <html lang="en" className="h-auto" data-theme="light">
       <body className={`${geistSans.variable} ${poppins.variable} antialiased min-h-screen flex flex-col`}>
         <Navbar />
         {children}

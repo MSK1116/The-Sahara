@@ -18,44 +18,43 @@ export function PageMaker_LoanApplicationPage1(data) {
   }
 
   // Generate relatives table HTML with structured address
-  const relativesTable =
-    f.table2 && f.table2.length > 0
-      ? `
-    <p>सगोलमा रहेको नातेदारहरुको विवरण: -</p>
-    <table border="1" cellspacing="0" cellpadding="6" width="100%" class="text-xs mt-2 mb-5">
-      <thead>
-        <tr>
-          <th>सि.न</th>
-          <th>नाम</th>
-          <th>ठेगाना</th>
-          <th>नाता</th>
-          <th>उमेर</th>
-          <th>शैक्षिक योग्यता</th>
-          <th>पेसा</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${f.table2
-          .map(
-            (row, index) => `
-          <tr>
-            <td>${index + 1}</td>
-            <td>${row.name || "—"}</td>
-            <td>
-              ${row.address ? `${row.address.province || "—"}, ${row.address.district || "—"}, ${row.address.palika || "—"}, ${row.address.wada || "—"}, ${row.address.tole || "—"}` : "—"}
-            </td>
-            <td>${row.relation || "—"}</td>
-            <td>${row.age || "—"}</td>
-            <td>${row.education || "—"}</td>
-            <td>${row.profession || "—"}</td>
-          </tr>
-        `
-          )
-          .join("")}
-      </tbody>
-    </table>
-  `
-      : `<p>सगोलमा रहेका नातेदारहरुको विवरण उपलब्ध छैन।</p>`;
+  const relativesTable = f.table2 && f.table2.length > 0 ? f.table2 : [{}]; // if table is empty, create one empty row
+
+  const relativesTableHTML = `
+<p>सगोलमा रहेको नातेदारहरुको विवरण:</p>
+<table border="1" cellspacing="0" cellpadding="6" width="100%" class="text-xs mt-2 mb-5">
+  <thead>
+    <tr>
+      <th>सि.न</th>
+      <th>नाम</th>
+      <th>ठेगाना</th>
+      <th>नाता</th>
+      <th>उमेर</th>
+      <th>शैक्षिक योग्यता</th>
+      <th>पेसा</th>
+    </tr>
+  </thead>
+  <tbody>
+    ${relativesTable
+      .map(
+        (row, index) => `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${row.name || ""}</td>
+        <td>
+          ${row.address ? `${row.address.province || ""}, ${row.address.district || ""}, ${row.address.palika || ""}, ${row.address.wada || ""}, ${row.address.tole || ""}` : ""}
+        </td>
+        <td>${row.relation || ""}</td>
+        <td>${row.age || ""}</td>
+        <td>${row.education || ""}</td>
+        <td>${row.profession || ""}</td>
+      </tr>
+    `
+      )
+      .join("")}
+  </tbody>
+</table>
+`;
 
   // Approver section
   const approverSection = f.approver_applicant_name
@@ -119,50 +118,170 @@ export function PageMaker_LoanApplicationPage1(data) {
   `
       : "";
 
-  // Table-4: ऋणीको एकल परिवारको अचल सम्पत्तिको विनियोजन
-  const table4 = f.table4?.length
-    ? `
-  <p class="font-bold my-3">ऋणीको एकल परिवारको अचल सम्पत्तिको विनियोजन :-</p>
+  const table4Row = f.table4 && f.table4.length > 0 ? f.table4 : [{}];
+  const table5Row = f.table5 && f.table5.length > 0 ? f.table5 : [{}];
+  const table6Row = f.table6 && f.table6.length > 0 ? f.table6 : [{}];
+  const table7Row = f.table7 && f.table7.length > 0 ? f.table7 : [{}];
 
-  <table border="1" cellspacing="0" cellpadding="6" width="100%" class="text-xs mt-2 mb-5">
-    <thead>
+  const table4HTML = `
+<p class="font-bold my-3">ऋणीको एकल परिवारको अचल सम्पत्तिको विनियोजन :-</p>
+
+<table border="1" cellspacing="0" cellpadding="6" width="100%" class="text-xs mt-2 mb-5">
+  <thead>
+    <tr>
+      <th>सि.न</th>
+      <th>धनीको नाम</th>
+      <th>प्रदेश</th>
+      <th>जिल्ला</th>
+      <th>पालिका</th>
+      <th>वडा न.</th>
+      <th>सि.न</th>
+      <th>कि.न</th>
+      <th>क्षेत्रफल</th>
+      <th>कैफियत</th>
+    </tr>
+  </thead>
+  <tbody>
+    ${table4Row
+      .map(
+        (row, index) => `
       <tr>
-        <th>सि.न</th>
-        <th>धनीको नाम</th>
-        <th>प्रदेश</th>
-        <th>जिल्ला</th>
-        <th>पालिका</th>
-        <th>वडा न.</th>
-        <th>सि.न</th>
-        <th>कि.न</th>
-        <th>क्षेत्रफल</th>
-        <th>कैफियत</th>
+        <td>${index + 1}</td>
+        <td>${f.applicant_name || ""}</td>
+        <td>${row.province || ""}</td>
+        <td>${row.district || ""}</td>
+        <td>${row.palika || ""}</td>
+        <td>${row.wardNo || ""}</td>
+        <td>${row.serialNo || ""}</td>
+        <td>${row.plotNo || ""}</td>
+        <td>${row.area || ""}</td>
+        <td>${row.remarks || ""}</td>
       </tr>
-    </thead>
+    `
+      )
+      .join("")}
+  </tbody>
+</table>
+`;
 
-    <tbody>
-      ${f.table4
-        .map(
-          (row, index) => `
-        <tr>
-          <td>${index + 1}</td>
-          <td>${f.applicant_name || ""}</td>
-          <td>${row.province || ""}</td>
-          <td>${row.district || ""}</td>
-          <td>${row.palika || ""}</td>
-          <td>${row.wardNo || ""}</td>
-          <td>${row.serialNo || ""}</td>
-          <td>${row.plotNo || ""}</td>
-          <td>${row.area || ""}</td>
-          <td>${row.remarks || ""}</td>
-        </tr>
-      `
-        )
-        .join("")}
-    </tbody>
-  </table>
-`
-    : "";
+  const table5HTML = `
+<p class="font-bold my-3">ऋणी वा परिवारले अन्य बैंक/वित्तीय संस्थाबाट गरेको कारोबार :-</p>
+
+<table border="1" cellspacing="0" cellpadding="6" width="100%" class="text-xs mt-2 mb-5">
+  <thead>
+    <tr>
+      <th>सि.न</th>
+      <th>ऋणीको नाम</th>
+      <th>बैंकको नाम</th>
+      <th>कर्जा सुविधा</th>
+      <th>स्वीकृत रकम</th>
+      <th>तिर्न बाँकी रकम</th>
+      <th>कैफियत</th>
+    </tr>
+  </thead>
+  <tbody>
+    ${table5Row
+      .map(
+        (row, index) => `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${row.borrowerName ? (typeof row.borrowerName === "object" ? Object.values(row.borrowerName).join(" ") : row.borrowerName) : ""}</td>
+        <td>${row.bankName || ""}</td>
+        <td>${row.loanType || ""}</td>
+        <td>${row.approvedAmount || ""}</td>
+        <td>${row.remainingAmount || ""}</td>
+        <td>${row.remarks || ""}</td>
+      </tr>
+    `
+      )
+      .join("")}
+  </tbody>
+</table>
+`;
+
+  const table6HTML = `
+<p class="font-bold my-3">ऋणी वा परिवारले यस संस्थाबाट गरेको कारोबार :-</p>
+
+<table border="1" cellspacing="0" cellpadding="6" width="100%" class="text-xs mt-2 mb-5">
+  <thead>
+    <tr>
+      <th>सि.न</th>
+      <th>ऋणीको नाम</th>
+      <th>कर्जा नं</th>
+      <th>मि न.</th>
+      <th>स्वीकृत रकम</th>
+      <th>तिर्न बाँकी रकम</th>
+      <th>कारोबार सुरु गरेको मिति</th>
+      <th>कैफियत</th>
+    </tr>
+  </thead>
+  <tbody>
+    ${table6Row
+      .map(
+        (row, index) => `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${row.borrowerName ? (typeof row.borrowerName === "object" ? Object.values(row.borrowerName).join(" ") : row.borrowerName) : ""}</td>
+        <td>${row.loanNo || ""}</td>
+        <td>${row.miNo || ""}</td>
+        <td>${row.approvedAmount || ""}</td>
+        <td>${row.remainingAmount || ""}</td>
+        <td>${row.startDate || ""}</td>
+        <td>${row.remarks || ""}</td>
+      </tr>
+    `
+      )
+      .join("")}
+  </tbody>
+</table>
+`;
+
+  const table7HTML = `
+<p class="font-bold my-3">धितोको विवरण :-</p>
+
+<table border="1" cellspacing="0" cellpadding="6" width="100%" class="text-xs mt-2 mb-5">
+  <thead>
+    <tr>
+      <th>सि.न</th>
+      <th>धनीको नाम</th>
+      <th>प्रदेश</th>
+      <th>जिल्ला</th>
+      <th>पालिका</th>
+      <th>वडा नं</th>
+      <th>टोल / बाटो</th>
+      <th>सि.न</th>
+      <th>कि.न</th>
+      <th>क्षेत्रफल</th>
+      <th>चार किला</th>
+      <th>अनुमानित मूल्य</th>
+      <th>कैफियत</th>
+    </tr>
+  </thead>
+  <tbody>
+    ${table7Row
+      .map(
+        (row, index) => `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${row.ownerName || ""}</td>
+        <td>${row.province || ""}</td>
+        <td>${row.district || ""}</td>
+        <td>${row.palika || ""}</td>
+        <td>${row.wardNo || ""}</td>
+        <td>${row.tole || ""}</td>
+        <td>${row.sheetNo || ""}</td>
+        <td>${row.plotNo || ""}</td>
+        <td>${row.area || ""}</td>
+        <td>${row.charKila || ""}</td>
+        <td>${row.estimatedValue || ""}</td>
+        <td>${row.remarks || ""}</td>
+      </tr>
+    `
+      )
+      .join("")}
+  </tbody>
+</table>
+`;
 
   return `<body>
     <div class="flex relative flex-row justify-center items-center">
@@ -196,6 +315,7 @@ export function PageMaker_LoanApplicationPage1(data) {
     </p>
 
     <p>ऋण निवेदकको नाम थर: <b>${f.applicant_name}</b></p>
+    <p>उमेर: <b>${f.age}</b></p>
 
     <p>
       स्थायी ठेगाना (ना.प्र.प) अनुसार :  
@@ -231,8 +351,8 @@ export function PageMaker_LoanApplicationPage1(data) {
             (row, index) => `
         <tr>
             <td><b>${index + 1}</b></td>
-            <td><b>${row["कर्जा सुविधा"] || "—"}</b></td>
-            <td><b>${row["रकम"] || "—"}</b></td>
+            <td><b>${f.applicantType || "—"}</b></td>
+            <td><b>${f.amount || "—"}</b></td>
             <td><b>${row["भुक्तानी अवधि"] || "—"}</b></td>
             <td><b>${row["कैफियत"] || "—"}</b></td>
         </tr>`
@@ -255,15 +375,19 @@ export function PageMaker_LoanApplicationPage1(data) {
       बाजे/ससुरको नाम: <b>${f.applicant_inlaws_name}</b>
     </p>
 
-    ${relativesTable}
+    ${relativesTableHTML}
    
     ${approverSection}
 
-    <p>ऋणीको पेशा: - ${f.applicant_profession}
+    <p>ऋणीको पेशा: <b>${f.applicant_profession}</b></P>
 
     ${incomeTable}
 
-    ${table4}
+    ${table4HTML}
+
+    ${table5HTML}
+    ${table6HTML}
+    ${table7HTML}
  </P>
     <p></P>
 

@@ -9,7 +9,7 @@ import { IoIosArrowDropdownCircle } from "react-icons/io";
 import MiniAddressSelector from "@/components/MiniAddressSelector";
 const relationsList = ["पिता", "आमा", "दाजु", "भाइ", "दिदी", "बहिनी", "छोरा", "छोरी", "ससुर", "सासु"];
 
-const educationList = ["नपढेको", "१–६", "८–९", "१०", "+२", "Bachelor", "Master", "PhD"];
+const educationList = ["अशिक्षित", "१–६ कक्षा", "७–९ कक्षा", "१० कक्षा", "११–१२ कक्षा (+२)", "स्नातक (Bachelor)", "स्नातकोत्तर (Master)", "डाक्टर / PhD"];
 
 const professionList = ["कृषक", "व्यवसाय", "नोकरी", "विद्यार्थी", "ड्राइभर", "शिक्षक", "इन्जिनियर", "डाक्टर", "गृहिणी", "विदेशमा रोजगार"];
 
@@ -75,7 +75,7 @@ export default function Table2({ onDataChange, handleEnterFocus, initialData }) 
                 </td>
                 <td className="border p-2 w-40 max-w-50 min-w-40">
                   <div className="w-full overflow-hidden">
-                    <MiniAddressSelector onChange={(addr) => handleInputChange(row.id, "address", addr)} />
+                    <MiniAddressSelector value={row.address} onChange={(addr) => handleInputChange(row.id, "address", addr)} />
                   </div>
                 </td>
 

@@ -17,7 +17,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import NepaliDateInput from "@/components/NepaliDatePicker";
 import { Button } from "@/components/ui/button";
 import Approver_address_input from "./Approver_address_input";
-import MiniAddressSelector from "@/components/MiniAddressSelector";
 
 const Create_form = ({ onDataChange, initialData }) => {
   const [applicantType, setApplicantType] = useState("व्यक्ति");
@@ -56,7 +55,7 @@ const Create_form = ({ onDataChange, initialData }) => {
     if (value === "" || value == null) return "";
 
     try {
-      const cleaned = Number(String(value).replace(/,/g, ""));
+      const cleaned = Number(String(convert(value, "toEn")).replace(/,/g, ""));
       if (typeof convert === "function") {
         try {
           return convert(cleaned, "toNpWord", "currency");
@@ -183,8 +182,8 @@ const Create_form = ({ onDataChange, initialData }) => {
               id="branch"
               name="branch"
               className="w-full mt-2"
-              value={localData.branch || "Kaliya"}
-              defaultValue={"Kaliya"}
+              value={localData.branch || "कलैया"}
+              defaultValue={"कलैया"}
               onChange={(e) => {
                 const val = e.target.value;
                 setLocalData((d) => ({ ...d, branch: val }));
@@ -210,7 +209,7 @@ const Create_form = ({ onDataChange, initialData }) => {
               onChange={(e) => {
                 const val = e.target.value;
                 setLocalData((d) => ({ ...d, desc1: val }));
-                if (val.length < 15) {
+                if (val.length < 5) {
                   setLocalErrors((prev) => ({ ...prev, desc1: true }));
                 } else {
                   setLocalErrors((prev) => ({ ...prev, desc1: false }));
@@ -227,12 +226,12 @@ const Create_form = ({ onDataChange, initialData }) => {
               id="amount"
               name="amount"
               className="w-full mt-2"
-              value={localData.amount || ""}
+              value={convert(localData.amount, "toEn") || ""}
               onKeyDown={handleEnterFocus}
               onChange={(e) => {
-                const val = e.target.value;
-                setLocalData((d) => ({ ...d, amount: e.target.value }));
-                if (val >= 1000000 || val == 0) {
+                const valInEn = convert(e.target.value, "toEn");
+                setLocalData((d) => ({ ...d, amount: convert(e.target.value, "toNp") }));
+                if (Number(valInEn) > 1000000 || Number(valInEn) === 0) {
                   setLocalErrors((prev) => ({ ...prev, amount: true }));
                 } else {
                   setLocalErrors((prev) => ({ ...prev, amount: false }));
@@ -291,9 +290,10 @@ const Create_form = ({ onDataChange, initialData }) => {
                 value={localData.age || ""}
                 onKeyDown={handleEnterFocus}
                 onChange={(e) => {
-                  const val = Number(e.target.value);
-                  setLocalData((d) => ({ ...d, age: val }));
-                  setLocalErrors((prev) => ({ ...prev, age: val < 18 || val > 85 || isNaN(val) }));
+                  const valInEn = convert(e.target.value, "toEn");
+                  const numVal = Number(valInEn);
+                  setLocalData((d) => ({ ...d, age: convert(e.target.value, "toNp") }));
+                  setLocalErrors((prev) => ({ ...prev, age: numVal < 18 || numVal > 85 || isNaN(numVal) }));
                 }}
               />
             </div>
@@ -310,9 +310,13 @@ const Create_form = ({ onDataChange, initialData }) => {
                 value={localData.phone1 || ""}
                 onKeyDown={handleEnterFocus}
                 onChange={(e) => {
-                  const val = e.target.value;
-                  setLocalData((d) => ({ ...d, phone1: val }));
-                  setLocalErrors((prev) => ({ ...prev, phone1: val.length !== 10 }));
+                  const rawValue = e.target.value;
+                  const trimmedValue = rawValue.replace(/\s+/g, ""); // remove all spaces
+                  const valInEn = convert(trimmedValue, "toEn");
+                  const numVal = Number(valInEn);
+
+                  setLocalData((d) => ({ ...d, phone1: convert(trimmedValue, "toNp") }));
+                  setLocalErrors((prev) => ({ ...prev, phone1: valInEn.length !== 10 || isNaN(numVal) }));
                 }}
               />
             </div>
@@ -329,9 +333,12 @@ const Create_form = ({ onDataChange, initialData }) => {
                 value={localData.phone2 || ""}
                 onKeyDown={handleEnterFocus}
                 onChange={(e) => {
-                  const val = e.target.value;
-                  setLocalData((d) => ({ ...d, phone2: val }));
-                  setLocalErrors((prev) => ({ ...prev, phone2: val.length !== 10 }));
+                  const rawValue = e.target.value;
+                  const trimmedValue = rawValue.replace(/\s+/g, ""); // remove all spaces
+                  const valInEn = convert(trimmedValue, "toEn");
+                  const numVal = Number(valInEn);
+                  setLocalData((d) => ({ ...d, phone2: convert(trimmedValue, "toNp") }));
+                  setLocalErrors((prev) => ({ ...prev, phone2: valInEn.length !== 10 || isNaN(numVal) }));
                 }}
               />
             </div>
@@ -351,14 +358,14 @@ const Create_form = ({ onDataChange, initialData }) => {
                   <SelectValue placeholder="-- चयन गर्नुहोस् --" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Na padheko">ना पढेको</SelectItem>
-                  <SelectItem value="1-7">१-७</SelectItem>
-                  <SelectItem value="8-9">८-९</SelectItem>
-                  <SelectItem value="10">१०</SelectItem>
-                  <SelectItem value="+2">+२</SelectItem>
-                  <SelectItem value="Bachelor">स्नातक</SelectItem>
-                  <SelectItem value="Master">स्नातकोत्तर</SelectItem>
-                  <SelectItem value="PhD">डाक्टर/PhD</SelectItem>
+                  <SelectItem value="अशिक्षित">अशिक्षित</SelectItem>
+                  <SelectItem value="१–७ कक्षा">१–७ कक्षा (प्राथमिक शिक्षा)</SelectItem>
+                  <SelectItem value="८–९ कक्षा">८–९ कक्षा (माध्यमिक शिक्षा)</SelectItem>
+                  <SelectItem value="१० कक्षा">१० कक्षा (माध्यमिक तह पूरा)</SelectItem>
+                  <SelectItem value="+२">+२ / उच्च माध्यमिक</SelectItem>
+                  <SelectItem value="स्नातक">स्नातक (Bachelor)</SelectItem>
+                  <SelectItem value="स्नातकोत्तर">स्नातकोत्तर (Master)</SelectItem>
+                  <SelectItem value="डाक्टर / PhD">डाक्टर / PhD</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -725,11 +732,11 @@ const Create_form = ({ onDataChange, initialData }) => {
                 बुबाको नाम
               </Label>
               <Input
-                disabled={!isApprovalGiven} // Corrected typo from aprover to approver
-                id="aprover_father_name"
+                disabled={!isApprovalGiven}
+                id="approver_father_name"
                 name="approver_father_name"
                 className="w-full mt-2"
-                value={localData.aprover_father_name || ""}
+                value={localData.approver_father_name || ""}
                 onKeyDown={handleEnterFocus}
                 onChange={(e) => setLocalData((d) => ({ ...d, approver_father_name: e.target.value }))}
               />
