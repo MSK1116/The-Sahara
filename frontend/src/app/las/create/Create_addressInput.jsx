@@ -4,13 +4,13 @@ import { Label } from "@/components/ui/label";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 
-import Province1JSON from "../create/Province1.json";
-import Province2JSON from "../create/Province2.json";
-import Province3JSON from "../create/Province3.json";
-import Province4JSON from "../create/Province4.json";
-import Province5JSON from "../create/Province5.json";
-import Province6JSON from "../create/Province6.json";
-import Province7JSON from "../create/Province7.json";
+import Province1JSON from "@/asset/Province1.json";
+import Province2JSON from "@/asset/Province2.json";
+import Province3JSON from "@/asset/Province3.json";
+import Province4JSON from "@/asset/Province4.json";
+import Province5JSON from "@/asset/Province5.json";
+import Province6JSON from "@/asset/Province6.json";
+import Province7JSON from "@/asset/Province7.json";
 import { Checkbox } from "@/components/ui/checkbox";
 
 const allProvinces = [Province1JSON, Province2JSON, Province3JSON, Province4JSON, Province5JSON, Province6JSON, Province7JSON];

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import BikramSambat from "bikram-sambat-js";
+import Link from "next/link";
 const Navbar = () => {
   const date = new Date();
   const nepDate = new BikramSambat(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`).toBS().split("-");
@@ -11,9 +12,9 @@ const Navbar = () => {
     <>
       <nav className=" sticky top-0 z-50 bg-gray-50 shadow-md px-10 py-4 rounded-b-xl">
         <div className=" flex flex-row justify-between items-center">
-          <div className=" relative w-60 h-15">
+          <Link href={"/"} alt="home page" className=" relative w-60 h-15">
             <Image alt="logo" className=" object-center object-contain" fill={true} src={"/image_dir/thesahara-logo-img.png"}></Image>
-          </div>
+          </Link>
           <div className=" rounded-xl cursor-default text-sm font-medium bg-gray-100 p-1 px-3">
             <span> {days[date.getDay()]} </span>
             <div className=" flex  flex-row space-x-1">

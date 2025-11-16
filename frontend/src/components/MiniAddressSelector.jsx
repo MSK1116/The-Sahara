@@ -6,13 +6,13 @@ import { Input } from "@/components/ui/input";
 import { MdDelete } from "react-icons/md";
 import React, { useState, useEffect } from "react";
 
-import Province1JSON from "@/app/las/create/Province1.json";
-import Province2JSON from "@/app/las/create/Province2.json";
-import Province3JSON from "@/app/las/create/Province3.json";
-import Province4JSON from "@/app/las/create/Province4.json";
-import Province5JSON from "@/app/las/create/Province5.json";
-import Province6JSON from "@/app/las/create/Province6.json";
-import Province7JSON from "@/app/las/create/Province7.json";
+import Province1JSON from "@/asset/Province1.json";
+import Province2JSON from "@/asset/Province2.json";
+import Province3JSON from "@/asset/Province3.json";
+import Province4JSON from "@/asset/Province4.json";
+import Province5JSON from "@/asset/Province5.json";
+import Province6JSON from "@/asset/Province6.json";
+import Province7JSON from "@/asset/Province7.json";
 
 const allProvinces = [Province1JSON, Province2JSON, Province3JSON, Province4JSON, Province5JSON, Province6JSON, Province7JSON];
 

@@ -503,6 +503,7 @@ const Create_form = ({ onDataChange, initialData }) => {
                   <Input id="company_registrationDate" name="company_registrationDate" className="w-full mt-2" disabled={isPerson} />
                 ) : (
                   <NepaliDateInput
+                    handleEnterFocus={handleEnterFocus}
                     id="company_registrationDate"
                     name="company_registrationDate"
                     value={localData.company_registrationDate || ""}
