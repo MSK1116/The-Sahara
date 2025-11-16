@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const topics = ["Salary", "Business", "House rent", "Agriculture", "Investment", "Other"];
 
-export default function Table3({ onDataChange, handleEnterFocus }) {
+export default function Table3({ onDataChange }) {
   // Initialize rows with fixed topics
   const initialRows = topics.map((topic, idx) => ({
     id: idx,
@@ -49,6 +49,21 @@ export default function Table3({ onDataChange, handleEnterFocus }) {
       });
   }, [rows, onDataChange]);
 
+  const handleEnterFocus = useCallback((e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const table = e.currentTarget.closest("table");
+      if (!table) return;
+
+      // Only inputs, skip buttons or dropdown triggers
+      const focusableInputs = Array.from(table.querySelectorAll("input:not([disabled])"));
+
+      const index = focusableInputs.indexOf(e.currentTarget);
+      if (index > -1 && index + 1 < focusableInputs.length) {
+        focusableInputs[index + 1].focus();
+      }
+    }
+  }, []);
   return (
     <div className="overflow-x-auto mt-5">
       <p className="font-bold my-5">ऋणीको वार्षिक आम्दानी र एकाघर परिवारको वार्षिक आय :-</p>

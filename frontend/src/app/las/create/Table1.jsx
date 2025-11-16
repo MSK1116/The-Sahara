@@ -36,7 +36,7 @@ const Table1 = ({ onDataChange, amount, applicantType }) => {
           <thead className="bg-gray-100">
             <tr>
               {columns.map((col) => (
-                <th key={col} className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border-b">
+                <th key={col} className="px-4 py-2 text-left text-sm max-w-fit w-fit text-gray-700 font-semibold border-b">
                   {col}
                 </th>
               ))}

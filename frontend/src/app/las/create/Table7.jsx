@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MdDelete } from "react-icons/md";
@@ -13,10 +13,11 @@ import Province4JSON from "../create/Province4.json";
 import Province5JSON from "../create/Province5.json";
 import Province6JSON from "../create/Province6.json";
 import Province7JSON from "../create/Province7.json";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const allProvinces = [Province1JSON, Province2JSON, Province3JSON, Province4JSON, Province5JSON, Province6JSON, Province7JSON];
 
-export default function Table7({ onDataChange, handleEnterFocus }) {
+export default function Table7({ onDataChange, localData }) {
   const initialRow = {
     id: Date.now(),
     ownerName: "",
@@ -63,7 +64,21 @@ export default function Table7({ onDataChange, handleEnterFocus }) {
     const district = province?.districts.find((d) => d.name === districtName);
     return district?.palikas || [];
   };
+  const handleEnterFocus = useCallback((e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const table = e.currentTarget.closest("table");
+      if (!table) return;
 
+      // Only inputs, skip buttons or dropdown triggers
+      const focusableInputs = Array.from(table.querySelectorAll("input:not([disabled])"));
+
+      const index = focusableInputs.indexOf(e.currentTarget);
+      if (index > -1 && index + 1 < focusableInputs.length) {
+        focusableInputs[index + 1].focus();
+      }
+    }
+  }, []);
   return (
     <div className="overflow-x-auto mt-5">
       <p className="font-bold my-5">धितोको विवरण :-</p>
@@ -94,7 +109,15 @@ export default function Table7({ onDataChange, handleEnterFocus }) {
                   <Input disabled readOnly value={index + 1} />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.ownerName} onChange={(e) => handleInputChange(row.id, "ownerName", e.target.value)} placeholder="धनीको नाम" />
+                  <Select value={row.ownerName} onValueChange={(value) => handleInputChange(row.id, "ownerName", value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="धनीको नाम"></SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {localData.applicant_name && <SelectItem value={localData.applicant_name}>{localData.applicant_name}</SelectItem>}
+                      {localData.approver_applicant_name && <SelectItem value={localData.approver_applicant_name}>{localData.approver_applicant_name}</SelectItem>}{" "}
+                    </SelectContent>
+                  </Select>
                 </td>
 
                 {/* Province Dropdown */}

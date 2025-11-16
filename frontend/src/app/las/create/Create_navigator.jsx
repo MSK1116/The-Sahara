@@ -61,7 +61,7 @@ const Create_navigator = ({ onSave, data }) => {
   };
 
   return (
-    <div className="w-full flex flex-col justify-between shadow p-5 h-full bg-gray-100">
+    <div className="w-full flex flex-col p-5 rounded-l-2xl sticky bg-gray-200 top-1/5 shadow ">
       <div className="flex relative flex-col select-none items-center gap-5">
         <div className="absolute h-full bg-gray-300 top-0 left-1/2 w-0.5 -translate-x-1/2 transform z-0"></div>
         {[...Array(5)].map((i, idx) => (
@@ -71,7 +71,7 @@ const Create_navigator = ({ onSave, data }) => {
         ))}
       </div>
 
-      <div className="flex flex-col items-center gap-y-2.5 justify-center">
+      <div className="flex flex-col items-center gap-y-2.5 justify-center mt-20">
         <Button type="button" onClick={() => onSave && onSave()} className="w-full" variant="outline">
           Save <IoSaveSharp className="size-5" />
         </Button>

@@ -16,12 +16,16 @@ import Table5 from "./Table5";
 import Table6 from "./Table6";
 import Table7 from "./Table7";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import NepaliDateInput from "@/components/NepaliDatePicker";
+import MiniAddressSelector from "@/components/MiniAddressSelector";
 
 const Create_form = ({ onDataChange }) => {
   const [applicantType, setApplicantType] = useState("व्यक्ति");
   const [paymentFrequency, setPaymentFrequency] = useState("मासिक");
   const [isApprovalGiven, setIsApprovalGiven] = useState(false);
-  const [localErrors, setLocalErrors] = useState({});
+  const [localErrors, setLocalErrors] = useState({
+    personal_education: true,
+  });
   const otherRef = useRef(null);
   const formRef = useRef(null);
 
@@ -38,37 +42,47 @@ const Create_form = ({ onDataChange }) => {
     }
   }, []);
 
-  useEffect(() => {
-    // compute amount_text (words) from numeric amount when amount changes
-    // guard with dependency on localData.amount to avoid running every render
-    const amt = localData.amount;
-    if (amt === undefined) return;
+  const convertNumberToWords = (value) => {
+    if (value === "" || value == null) return "";
 
-    const compute = () => {
-      if (amt === "" || amt == null) return "";
-      try {
-        // try calling the imported convert function if available
-        const cleaned = Number(String(amt).replace(/,/g, ""));
-        if (typeof convert === "function") {
-          // try common signatures; if these fail we'll catch and fallback
-          try {
-            return convert(cleaned, "toNpWord", "currency");
-          } catch (_) {
-            return convert(cleaned);
-          }
+    try {
+      const cleaned = Number(String(value).replace(/,/g, ""));
+      if (typeof convert === "function") {
+        try {
+          return convert(cleaned, "toNpWord", "currency");
+        } catch (_) {
+          return convert(cleaned);
         }
-        return String(amt);
-      } catch (e) {
-        return String(amt);
       }
-    };
-
-    const words = compute();
-    if (words !== localData.amount_text) {
-      setLocalData((d) => ({ ...d, amount_text: words }));
+      return String(value);
+    } catch {
+      return String(value);
     }
-    // only run when the numeric amount changes
-  }, [localData.amount]);
+  };
+  const autoConvertList = [
+    { numberKey: "amount", textKey: "amount_text" },
+    { numberKey: "project_estimated_cost", textKey: "project_estimated_cost_text" },
+  ];
+
+  useEffect(() => {
+    setLocalData((prev) => {
+      const updated = { ...prev };
+      let changed = false;
+
+      autoConvertList.forEach(({ numberKey, textKey }) => {
+        const num = prev[numberKey];
+        if (num === undefined) return;
+
+        const words = convertNumberToWords(num);
+        if (words !== prev[textKey]) {
+          updated[textKey] = words;
+          changed = true;
+        }
+      });
+
+      return changed ? updated : prev;
+    });
+  }, [localData.amount, localData.project_estimated_cost]);
 
   // Focus the other input if "अन्य" is selected
   useEffect(() => {
@@ -160,6 +174,7 @@ const Create_form = ({ onDataChange }) => {
               name="branch"
               className="w-full mt-2"
               onKeyDown={handleEnterFocus}
+              defaultValue={"Kaliya"}
               onChange={(e) => {
                 const val = e.target.value;
                 setLocalData((d) => ({ ...d, branch: val }));
@@ -217,7 +232,7 @@ const Create_form = ({ onDataChange }) => {
           <div className="w-full cursor-default ">
             <Label htmlFor="amount_text">अक्षरेपी रु</Label>
             {/* show computed amount in words; make readOnly so it's always derived from numeric amount */}
-            <Input id="amount_text" name="amount_text" className="w-full mt-2 text-gray-500" value={localData.amount_text + " मात्र /-" || ""} readOnly />
+            <Input disabled id="amount_text" name="amount_text" className="w-full mt-2 text-gray-500" value={!localData.amount ? "पहिले भर्नुपर्ने नम्बर राख्नुहोस्" : `${localData.amount_text || ""} मात्र /-`} readOnly />
           </div>
         </div>
         {/* Divider */}
@@ -264,7 +279,7 @@ const Create_form = ({ onDataChange }) => {
                 onChange={(e) => {
                   const val = Number(e.target.value);
                   setLocalData((d) => ({ ...d, age: val }));
-                  setLocalErrors((prev) => ({ ...prev, age: val < 18 }));
+                  setLocalErrors((prev) => ({ ...prev, age: val < 18 || val > 85 }));
                 }}
               />
             </div>
@@ -368,16 +383,46 @@ const Create_form = ({ onDataChange }) => {
           <div className="w-full flex flex-row space-x-5">
             <div className="w-1/2 space-y-5">
               <div className="w-full">
-                <Label className={` ${isPerson && "text-gray-500"}`} htmlFor={`"companyName `}>
+                <Label className={` ${isPerson && "text-gray-500"} ${localErrors.companyName && "text-red-600"} `} htmlFor={`"companyName `}>
                   फर्म/कम्पनीको नाम
                 </Label>
-                <Input id="companyName" name="companyName" className="w-full mt-2" onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, companyName: e.target.value }))} disabled={isPerson} />
+                <Input
+                  id="companyName"
+                  name="companyName"
+                  className="w-full mt-2"
+                  onKeyDown={handleEnterFocus}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setLocalData((d) => ({ ...d, companyName: e.target.value }));
+                    if (val.length < 10 || val.length > 50) {
+                      setLocalErrors((prev) => ({ ...prev, companyName: true }));
+                    } else {
+                      setLocalErrors((prev) => ({ ...prev, companyName: false }));
+                    }
+                  }}
+                  disabled={isPerson}
+                />
               </div>
               <div className="w-full">
-                <Label className={` ${isPerson && "text-gray-500"}`} htmlFor="shareholderNumber">
+                <Label className={` ${isPerson && "text-gray-500"} ${localErrors.shareholderNumber && "text-red-600"} `} htmlFor="shareholderNumber">
                   शेयर सदस्य नं.
                 </Label>
-                <Input id="shareholderNumber" name="shareholderNumber" className="w-full mt-2" onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, shareholderNumber: e.target.value }))} disabled={isPerson} />
+                <Input
+                  id="shareholderNumber"
+                  name="shareholderNumber"
+                  className="w-full mt-2"
+                  onKeyDown={handleEnterFocus}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setLocalData((d) => ({ ...d, shareholderNumber: e.target.value }));
+                    if (val.length < 5 || val.length > 15) {
+                      setLocalErrors((prev) => ({ ...prev, shareholderNumber: true }));
+                    } else {
+                      setLocalErrors((prev) => ({ ...prev, shareholderNumber: false }));
+                    }
+                  }}
+                  disabled={isPerson}
+                />
               </div>
               <div className="w-full">
                 <Label className={` ${isPerson && "text-gray-500"}`} htmlFor="registrationOffice">
@@ -404,7 +449,11 @@ const Create_form = ({ onDataChange }) => {
                 <Label className={` ${isPerson && "text-gray-500"}`} htmlFor="registrationDate">
                   रजिष्ट्रेशन मिति
                 </Label>
-                <Input id="registrationDate" name="registrationDate" className="w-full mt-2" onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, registrationDate: e.target.value }))} disabled={isPerson} />
+                {isPerson ? (
+                  <Input id="registrationDate" name="registrationDate" className="w-full mt-2" disabled={isPerson} />
+                ) : (
+                  <NepaliDateInput id="registrationDate" name="registrationDate" onChange={(e) => setLocalData((d) => ({ ...d, registrationDate: e.target.value }))} disabled={isPerson} className="w-full mt-2 cursor-default" />
+                )}
               </div>
               <div className="w-full">
                 <Label className={` ${isPerson && "text-gray-500"}`} htmlFor="panNumber">
@@ -416,12 +465,16 @@ const Create_form = ({ onDataChange }) => {
                 <Label className={` ${isPerson && "text-gray-500"}`} htmlFor="panDate">
                   आयकर आ/स्थ नं. (PAN) मिति
                 </Label>
-                <Input id="panDate" name="panDate" className="w-full mt-2" onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, panDate: e.target.value }))} disabled={isPerson} />
+                {isPerson ? (
+                  <Input id="panDate" name="panDate" className="w-full mt-2" disabled={isPerson} />
+                ) : (
+                  <NepaliDateInput id="panDate" name="panDate" className="w-full mt-2" onChange={(e) => setLocalData((d) => ({ ...d, panDate: e.target.value }))} />
+                )}
               </div>
             </div>
           </div>
         </div>
-        <div className=" flex flex-row items-center justify-between mt-5 space-x-5">
+        <div className=" flex flex-row items-start justify-between mt-5 space-x-5">
           <div className=" w-full mt-5">
             <Label className={` ${isPerson && "text-gray-500"}`} htmlFor="business_type">
               व्यापारको प्रकार
@@ -430,10 +483,25 @@ const Create_form = ({ onDataChange }) => {
           </div>
           <ProjectAddressSelector disabled={isPerson} handleEnterFocus={handleEnterFocus} onProjectChange={useCallback((val) => setLocalData((d) => ({ ...d, projectAddress: val })), [])} />
           <div className="w-full mt-5">
-            <Label className={` ${isPerson && "text-gray-500"}`} htmlFor="project_estimated_cost">
+            <Label className={` ${isPerson && "text-gray-500"} ${localErrors.project_estimated_cost && "text-red-600"} `} htmlFor="project_estimated_cost">
               परियोजनाको अनुमानित कुल लागत
             </Label>
-            <Input id="project_estimated_cost" name="project_estimated_cost" className="w-full mt-2" onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, project_estimated_cost: e.target.value }))} disabled={isPerson} />
+            <Input
+              id="project_estimated_cost"
+              name="project_estimated_cost"
+              className="w-full mt-2"
+              onKeyDown={handleEnterFocus}
+              onChange={(e) => {
+                const val = e.target.value;
+                setLocalData((d) => ({ ...d, project_estimated_cost: e.target.value }));
+                if (val >= 1000000 || val == 0) {
+                  setLocalErrors((prev) => ({ ...prev, project_estimated_cost: true }));
+                } else {
+                  setLocalErrors((prev) => ({ ...prev, project_estimated_cost: false }));
+                }
+              }}
+              disabled={isPerson}
+            />
           </div>
           <div className="w-full mt-5">
             <Label className={` ${isPerson && "text-gray-500"}`} htmlFor="project_estimated_cost_text">
@@ -443,9 +511,9 @@ const Create_form = ({ onDataChange }) => {
               id="project_estimated_cost_text"
               name="project_estimated_cost_text"
               className="w-full mt-2"
+              value={!localData.project_estimated_cost_text ? "पहिले भर्नुपर्ने नम्बर राख्नुहोस्" : `${localData.project_estimated_cost_text || ""} मात्र /-`}
               onKeyDown={handleEnterFocus}
-              onChange={(e) => setLocalData((d) => ({ ...d, project_estimated_cost_text: e.target.value }))}
-              disabled={isPerson}
+              disabled={true}
             />
           </div>
           <div className="min-w-fit mt-5">
@@ -479,7 +547,12 @@ const Create_form = ({ onDataChange }) => {
             </div>
             <div className="w-full mt-5">
               <Label htmlFor="address">ठेगाना</Label>
-              <Input id="address" className="w-full mt-2" value={`${localData?.address?.permanent?.province}, ${localData?.address?.permanent?.district}, ${localData?.address?.permanent?.wada}, ${localData?.address?.permanent?.tole}`} disabled />
+              <Input
+                id="address"
+                className="w-full mt-2"
+                value={`${localData?.address?.permanent?.province}, ${localData?.address?.permanent?.district}, ${localData?.address?.permanent?.palika}, ${localData?.address?.permanent?.wada},${localData?.address?.permanent?.tole}`}
+                disabled
+              />
             </div>
             <div className="w-full mt-5">
               <Label htmlFor="citizenship_number">नागरिकता न</Label>
@@ -502,7 +575,7 @@ const Create_form = ({ onDataChange }) => {
             </div>
           </div>
         </div>
-        <Table2 onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table2: newRows })), [])} />
+        <Table2 handleEnterFocus={handleEnterFocus} onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table2: newRows })), [])} />
         <div className="flex items-center my-10">
           <span className="flex-1 h-px bg-gray-300"></span>
           <span className="px-4 text-sm text-gray-700">Page 2, Section 2</span>
@@ -512,8 +585,8 @@ const Create_form = ({ onDataChange }) => {
           <div className="flex flex-row items-center justify-between">
             <p className=" font-bold">धितो मन्जुरीनामा दिनका व्यक्तिगत विवरण</p>
             <div className=" flex flex-row gap-x-1.5">
-              <Button variant={"outline"} onClick={() => setIsApprovalGiven(!isApprovalGiven)} type="button">
-                स्वीकृति दिइने {isApprovalGiven ? "छ " : "छैन"} ।
+              <Button className={` ${isApprovalGiven ? " bg-red-600 text-white " : ""} `} variant={"outline"} onClick={() => setIsApprovalGiven(!isApprovalGiven)} type="button">
+                स्वीकृति दिइने {!isApprovalGiven ? "छ " : "छैन"} ।
               </Button>
             </div>
           </div>
@@ -522,20 +595,24 @@ const Create_form = ({ onDataChange }) => {
             <div className="w-full mt-5">
               <Label htmlFor="approver_applicant_name">नाम</Label>
               <Input
+                disabled={!isApprovalGiven}
                 id="approver_applicant_name"
                 name="approver_applicant_name"
                 className="w-full mt-2"
                 value={localData.approver_applicant_name || ""}
                 onKeyDown={handleEnterFocus}
-                onChange={(e) => setLocalData((d) => ({ ...d, applicant_name: e.target.value }))}
+                onChange={(e) => setLocalData((d) => ({ ...d, approver_applicant_nameapplicant_name: e.target.value }))}
               />
             </div>
-            <div className="w-full ">
-              <Approver_address_input onApproverChange={useCallback((val) => setLocalData((d) => ({ ...d, approverAddress: val })), [])} />
+            <div className="w-full mt-5 ">
+              <Label className={"mb-2"}>मन्जुरीनामा दिनको ठेगाना:</Label>
+
+              <MiniAddressSelector disabled={!isApprovalGiven} className="" onKeyDown={handleEnterFocus} onChange={(addr) => setLocalData((d) => ({ ...d, approverAddress: addr }), [])} />
             </div>
             <div className="w-full mt-5">
-              <Label htmlFor="citizenship_number">नागरिकता नम्बर</Label>
+              <Label htmlFor="approver_citizenship_number">नागरिकता नम्बर</Label>
               <Input
+                disabled={!isApprovalGiven}
                 id="approver_citizenship_number"
                 name="approver_citizenship_number"
                 className="w-full mt-2"
@@ -547,6 +624,7 @@ const Create_form = ({ onDataChange }) => {
             <div className="w-full mt-5">
               <Label htmlFor="aprover_father_name">बुबाको नाम</Label>
               <Input
+                disabled={!isApprovalGiven}
                 id="aprover_father_name"
                 name="aprover_father_name"
                 className="w-full mt-2"
@@ -562,6 +640,7 @@ const Create_form = ({ onDataChange }) => {
             <div className="w-full mt-5">
               <Label htmlFor="approver_spouse_name">पतिको/पत्नीको नाम</Label>
               <Input
+                disabled={!isApprovalGiven}
                 id="approver_spouse_name"
                 name="approver_spouse_name"
                 className="w-full mt-2"
@@ -573,6 +652,7 @@ const Create_form = ({ onDataChange }) => {
             <div className="w-full mt-5">
               <Label htmlFor="approver_inlaws_name">हजुरबा/हजुरआमाको नाम</Label>
               <Input
+                disabled={!isApprovalGiven}
                 id="approver_inlaws_name"
                 name="approver_inlaws_name"
                 className="w-full mt-2"
@@ -584,6 +664,7 @@ const Create_form = ({ onDataChange }) => {
             <div className="w-full mt-5">
               <Label htmlFor="approver_families_details">परिवारका आफन्तहरूको विवरण</Label>
               <Input
+                disabled={!isApprovalGiven}
                 id="approver_families_details"
                 name="approver_families_details"
                 className="w-full mt-2"
@@ -604,7 +685,7 @@ const Create_form = ({ onDataChange }) => {
             <Label htmlFor="applicant_profession">ऋणीको पेशा</Label>
             <Input id="applicant_profession" name="applicant_profession" className="w-full mt-2" onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, applicant_profession: e.target.value }))} />
           </div>
-          <Table3 handleEnterFocus={handleEnterFocus} onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table3: newRows })), [])} />
+          <Table3 onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table3: newRows })), [])} />
         </div>
         <div className="flex items-center my-10">
           <span className="flex-1 h-px bg-gray-300"></span>
@@ -612,10 +693,10 @@ const Create_form = ({ onDataChange }) => {
           <span className="flex-1 h-px bg-gray-300"></span>
         </div>
         <div>
-          <Table4 handleEnterFocus={handleEnterFocus} onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table4: newRows })), [])} />
-          <Table5 handleEnterFocus={handleEnterFocus} onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table5: newRows })), [])} />
-          <Table6 handleEnterFocus={handleEnterFocus} onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table6: newRows })), [])} />
-          <Table7 handleEnterFocus={handleEnterFocus} onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table7: newRows })), [])} />
+          <Table4 localData={localData} onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table4: newRows })), [])} />
+          <Table5 localData={localData} onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table5: newRows })), [])} />
+          <Table6 localData={localData} onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table6: newRows })), [])} />
+          <Table7 localData={localData} onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table7: newRows })), [])} />
         </div>
       </form>
     </div>

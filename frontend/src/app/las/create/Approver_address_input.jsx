@@ -48,7 +48,6 @@ export default function Approver_address_input({ handleEnterFocus, onApproverCha
   return (
     <div className="w-full mt-5">
       <Label className={`${disabled && "text-gray-500"}`}>मन्जुरीनामा दिनको ठेगाना:</Label>
-
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="outline" className="w-full text-left mt-2" disabled={disabled}>

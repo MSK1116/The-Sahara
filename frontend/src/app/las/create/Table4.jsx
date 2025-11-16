@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MdDelete } from "react-icons/md";
@@ -16,10 +16,9 @@ import Province7JSON from "../create/Province7.json";
 
 const allProvinces = [Province1JSON, Province2JSON, Province3JSON, Province4JSON, Province5JSON, Province6JSON, Province7JSON];
 
-export default function LandTable({ onDataChange, handleEnterFocus }) {
+export default function LandTable({ onDataChange, localData }) {
   const initialRow = {
     id: Date.now(),
-    ownerName: "",
     province: "",
     district: "",
     palika: "",
@@ -61,6 +60,22 @@ export default function LandTable({ onDataChange, handleEnterFocus }) {
     return district?.palikas || [];
   };
 
+  const handleEnterFocus = useCallback((e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const table = e.currentTarget.closest("table");
+      if (!table) return;
+
+      // Only inputs, skip buttons or dropdown triggers
+      const focusableInputs = Array.from(table.querySelectorAll("input:not([disabled])"));
+
+      const index = focusableInputs.indexOf(e.currentTarget);
+      if (index > -1 && index + 1 < focusableInputs.length) {
+        focusableInputs[index + 1].focus();
+      }
+    }
+  }, []);
+
   return (
     <div className="overflow-x-auto mt-5">
       <p className="font-bold my-5">धनीको जग्गाको विवरण :-</p>
@@ -88,7 +103,7 @@ export default function LandTable({ onDataChange, handleEnterFocus }) {
                   <Input disabled readOnly value={index + 1} />
                 </td>
                 <td className="border p-2">
-                  <Input value={row.ownerName} onChange={(e) => handleInputChange(row.id, "ownerName", e.target.value)} placeholder="धनीको नाम" />
+                  <Input value={localData.applicant_name} readOnly disabled />
                 </td>
 
                 {/* Province Dropdown */}

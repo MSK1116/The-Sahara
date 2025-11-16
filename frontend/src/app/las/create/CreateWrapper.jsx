@@ -22,11 +22,11 @@ const CreateWrapper = () => {
 
   return (
     <>
-      <main className="flex flex-row flex-1 overflow-hidden  ">
-        <div className="w-[88%] overflow-y-auto">
+      <main className="flex flex-row flex-1">
+        <div className="w-[90%] overflow-y-auto">
           <Create_form onDataChange={setForm1Data} />
         </div>
-        <div className="flex flex-1  bg-red-600 overflow-y-auto flex-col">
+        <div className="flex-1 ">
           <Create_navigator data={form1Data} onSave={handleCollectAll} />
         </div>
       </main>

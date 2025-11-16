@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MdDelete } from "react-icons/md";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-export default function Table6({ onDataChange, handleEnterFocus }) {
+export default function Table6({ onDataChange, localData }) {
   const initialRow = {
     id: Date.now(),
     borrowerName: "",
@@ -35,6 +36,21 @@ export default function Table6({ onDataChange, handleEnterFocus }) {
     onDataChange && onDataChange(newRows);
   };
 
+  const handleEnterFocus = useCallback((e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const table = e.currentTarget.closest("table");
+      if (!table) return;
+
+      // Only inputs, skip buttons or dropdown triggers
+      const focusableInputs = Array.from(table.querySelectorAll("input:not([disabled])"));
+
+      const index = focusableInputs.indexOf(e.currentTarget);
+      if (index > -1 && index + 1 < focusableInputs.length) {
+        focusableInputs[index + 1].focus();
+      }
+    }
+  }, []);
   return (
     <div className="overflow-x-auto mt-5">
       <p className="font-bold my-5">ऋणी वा परिवारले यस संस्थाबाट गरेको कारोबार :-</p>
@@ -60,7 +76,18 @@ export default function Table6({ onDataChange, handleEnterFocus }) {
                   <Input disabled readOnly value={index + 1} />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.borrowerName} onChange={(e) => handleInputChange(row.id, "borrowerName", e.target.value)} placeholder="ऋणीको नाम" />
+                  <Select value={row.borrowerName} onValueChange={(value) => handleInputChange(row.id, "borrowerName", value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="ऋणीको नाम" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {localData?.table2?.map((i) => (
+                        <SelectItem key={i.id} value={i.name || "-"}>
+                          {i.name || "-"}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </td>
                 <td className="border p-2">
                   <Input onKeyDown={handleEnterFocus} value={row.loanNo} onChange={(e) => handleInputChange(row.id, "loanNo", e.target.value)} placeholder="कर्जा नं" />

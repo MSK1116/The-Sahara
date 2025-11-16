@@ -5,12 +5,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MdDelete } from "react-icons/md";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
-
+import { IoIosArrowDropdownCircle } from "react-icons/io";
+import MiniAddressSelector from "@/components/MiniAddressSelector";
 const relationsList = ["पिता", "आमा", "दाजु", "भाइ", "दिदी", "बहिनी", "छोरा", "छोरी", "ससुर", "सासु"];
 
 const educationList = ["नपढेको", "१–६", "८–९", "१०", "+२", "Bachelor", "Master", "PhD"];
 
-export default function Table2({ onDataChange }) {
+const professionList = ["कृषक", "व्यवसाय", "नोकरी", "विद्यार्थी", "ड्राइभर", "शिक्षक", "इन्जिनियर", "डाक्टर", "गृहिणी", "विदेशमा रोजगार"];
+
+export default function Table2({ onDataChange, handleEnterFocus }) {
   const initialRow = {
     id: Date.now(),
     name: "",
@@ -53,7 +56,7 @@ export default function Table2({ onDataChange }) {
             <tr className="bg-gray-100">
               <th className="px-4 py-2 w-4 text-left text-sm text-gray-700 font-semibold border">सि.न</th>
               <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">नाम</th>
-              <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">ठेगाना</th>
+              <th className="px-4 py-2  text-left text-sm text-gray-700 font-semibold border">ठेगाना</th>
               <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">नाता</th>
               <th className="px-4 py-2 w-20 text-left text-sm text-gray-700 font-semibold border">उमेर</th>
               <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">शैक्षिक योग्यता</th>
@@ -67,12 +70,15 @@ export default function Table2({ onDataChange }) {
                 <td className="border p-2">
                   <Input disabled readOnly value={index + 1} />
                 </td>
-                <td className="border p-2">
-                  <Input id={`name-${row.id}`} value={row.name} onChange={(e) => handleInputChange(row.id, "name", e.target.value)} placeholder="नाम" />
+                <td className="border p-2 max-w-50">
+                  <Input onKeyDown={handleEnterFocus} id={`name-${row.id}`} value={row.name} onChange={(e) => handleInputChange(row.id, "name", e.target.value)} placeholder="नाम" />
                 </td>
-                <td className="border p-2">
-                  <Input id={`address-${row.id}`} value={row.address} onChange={(e) => handleInputChange(row.id, "address", e.target.value)} placeholder="ठेगाना" />
+                <td className="border p-2 w-40 max-w-50 min-w-40">
+                  <div className="w-full overflow-hidden">
+                    <MiniAddressSelector onChange={(addr) => handleInputChange(row.id, "address", addr)} />
+                  </div>
                 </td>
+
                 <td className="border p-2">
                   {/* Relation Dropdown */}
                   <DropdownMenu>
@@ -93,7 +99,7 @@ export default function Table2({ onDataChange }) {
                   </DropdownMenu>
                 </td>
                 <td className="border p-2">
-                  <Input id={`age-${row.id}`} value={row.age} onChange={(e) => handleInputChange(row.id, "age", e.target.value)} placeholder="उमेर" />
+                  <Input onKeyDown={handleEnterFocus} id={`age-${row.id}`} value={row.age} onChange={(e) => handleInputChange(row.id, "age", e.target.value)} placeholder="उमेर" />
                 </td>
                 <td className="border p-2">
                   {/* Education Dropdown */}
@@ -114,10 +120,31 @@ export default function Table2({ onDataChange }) {
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </td>
-                <td className="border p-2">
-                  <Input id={`profession-${row.id}`} value={row.profession} onChange={(e) => handleInputChange(row.id, "profession", e.target.value)} placeholder="पेसा" />
+                <td className="border p-2 w-30 max-w-30 min-w-30">
+                  <div className="flex w-full gap-2">
+                    <Input onKeyDown={handleEnterFocus} id={`profession-${row.id}`} value={row.profession} onChange={(e) => handleInputChange(row.id, "profession", e.target.value)} placeholder="पेसा" className="flex-1" />
+
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline">
+                          <IoIosArrowDropdownCircle />
+                        </Button>
+                      </DropdownMenuTrigger>
+
+                      <DropdownMenuContent align="start">
+                        <DropdownMenuRadioGroup value={row.profession} onValueChange={(val) => handleInputChange(row.id, "profession", val)}>
+                          {professionList.map((prof, i) => (
+                            <DropdownMenuRadioItem key={i} value={prof}>
+                              {prof}
+                            </DropdownMenuRadioItem>
+                          ))}
+                        </DropdownMenuRadioGroup>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
                 </td>
-                <td className="border p-2 text-center">
+
+                <td className="border p-2 min-w-5 max-w-5 w-5 text-center">
                   {index > 0 && (
                     <Button variant="destructive" size="sm" onClick={() => handleDeleteRow(row.id)}>
                       <MdDelete />

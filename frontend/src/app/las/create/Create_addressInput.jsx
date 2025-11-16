@@ -159,8 +159,9 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors }) =
         <div className="flex items-center justify-between space-x-3 my-2">
           <span className="font-semibold">हाल बसोबास गरेको ठेगाना</span>
           <div className="text-xs space-x-2 flex items-center justify-center">
-            <span className="font-semibold">स्थायी जस्तो भए</span>
+            <span className="font-semibold text-red-600">स्थायी जस्तो भए</span>
             <Checkbox
+              className={""}
               checked={current.sameAsPermanent || false}
               onCheckedChange={(checked) => {
                 if (checked) {
