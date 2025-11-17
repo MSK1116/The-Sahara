@@ -3,8 +3,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-const topics = ["Salary", "Business", "House rent", "Agriculture", "Investment", "Other"];
+import convert from "number-to-nepali-words";
+const topics = ["तलब", "व्यवसाय", "घरभाडा", "कृषि", "लगानी", "अन्य"];
 
 export default function Table3({ onDataChange, initialData }) {
   // Initialize rows with fixed topics
@@ -35,8 +35,8 @@ export default function Table3({ onDataChange, initialData }) {
     let debtorSum = 0;
     let familySum = 0;
     rows.forEach((row) => {
-      debtorSum += parseFloat(row.debtorIncome) || 0;
-      familySum += parseFloat(row.familyAnnualIncome) || 0;
+      debtorSum += parseFloat(convert(row.debtorIncome, "toEn")) || 0;
+      familySum += parseFloat(convert(row.familyAnnualIncome, "toEn")) || 0;
     });
     setTotalDebtor(debtorSum);
     setTotalFamily(familySum);
@@ -44,8 +44,8 @@ export default function Table3({ onDataChange, initialData }) {
     onDataChange &&
       onDataChange({
         rows,
-        totalDebtor: debtorSum,
-        totalFamily: familySum,
+        totalDebtor: convert(debtorSum, "toNp"),
+        totalFamily: convert(familySum, "toNp"),
       });
   }, [rows, onDataChange]);
 
@@ -88,10 +88,18 @@ export default function Table3({ onDataChange, initialData }) {
                   <Input disabled readOnly value={row.title} />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.debtorIncome} onChange={(e) => handleInputChange(row.id, "debtorIncome", e.target.value)} placeholder="ऋणीको वार्षिक आम्दानी" />
+                  <Input onKeyDown={handleEnterFocus} value={row.debtorIncome || ""} onChange={(e) => handleInputChange(row.id, "debtorIncome", convert(e.target.value, "toNp"))} placeholder="ऋणीको वार्षिक आम्दानी" />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.familyAnnualIncome} onChange={(e) => handleInputChange(row.id, "familyAnnualIncome", e.target.value)} placeholder="एकाघर परिवारको वार्षिक आय" />
+                  <Input
+                    onKeyDown={handleEnterFocus}
+                    value={row.familyAnnualIncome || ""}
+                    onChange={(e) => {
+                      const nepaliValue = convert(e.target.value, "toNp");
+                      handleInputChange(row.id, "familyAnnualIncome", nepaliValue);
+                    }}
+                    placeholder="एकाघर परिवारको वार्षिक आय"
+                  />
                 </td>
                 <td className="border p-2">
                   <Input onKeyDown={handleEnterFocus} value={row.notes} onChange={(e) => handleInputChange(row.id, "notes", e.target.value)} placeholder="कैफियत" />
@@ -103,10 +111,10 @@ export default function Table3({ onDataChange, initialData }) {
                 जम्मा (Total)
               </td>
               <td className="border p-2">
-                <Input disabled readOnly value={totalDebtor} />
+                <Input disabled readOnly value={convert(totalDebtor, "toNp")} />
               </td>
               <td className="border p-2">
-                <Input disabled readOnly value={totalFamily} />
+                <Input disabled readOnly value={convert(totalFamily, "toNp")} />
               </td>
               <td className="border p-2"></td>
             </tr>

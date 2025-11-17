@@ -33,14 +33,13 @@ const Table3RowSchema = new mongoose.Schema({
 
 const Table3Schema = new mongoose.Schema({
   rows: { type: [Table3RowSchema], default: [] },
-  totalDebtor: { type: Number, default: 0 },
-  totalFamily: { type: Number, default: 0 },
+  totalDebtor: { type: String, default: "" },
+  totalFamily: { type: String, default: "" },
 });
 
 const Table4Schema = new mongoose.Schema(
   {
     id: { type: Number, required: true },
-    province: { type: String, default: "" },
     district: { type: String, default: "" },
     palika: { type: String, default: "" },
     wardNo: { type: String, default: "" },
@@ -83,7 +82,6 @@ const Table7Schema = new mongoose.Schema(
   {
     id: { type: Number, required: true },
     ownerName: { type: String, default: "" },
-    province: { type: String, default: "" },
     district: { type: String, default: "" },
     palika: { type: String, default: "" },
     wardNo: { type: String, default: "" },

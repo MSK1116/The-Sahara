@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import Approver_address_input from "./Approver_address_input";
 
 const Create_form = ({ onDataChange, initialData }) => {
-  const [applicantType, setApplicantType] = useState("व्यक्ति");
+  const [applicantType, setApplicantType] = useState("सहारा व्यक्तिगत कर्जा");
   const [paymentFrequency, setPaymentFrequency] = useState("मासिक");
   const [isApprovalGiven, setIsApprovalGiven] = useState(false);
   const [localErrors, setLocalErrors] = useState({
@@ -104,15 +104,18 @@ const Create_form = ({ onDataChange, initialData }) => {
   }, [applicantType]);
 
   // disable blocks when applicant is 'व्यक्ति'
-  const isPerson = applicantType === "व्यक्ति";
+  const isPerson = applicantType !== "सहारा ब्यापारिक कर्जा";
 
   // helper: read form inputs using FormData and push into localData
   const readFormToObject = () => {
     const obj = {};
     if (!formRef.current) return obj;
     const fd = new FormData(formRef.current);
-    for (const [k, v] of fd.entries()) {
-      obj[k] = v;
+    for (const [key, value] of fd.entries()) {
+      // Exclude amount, as it's handled directly from state to preserve Nepali numerals
+      if (key !== "amount") {
+        obj[key] = value;
+      }
     }
     // include controlled dropdowns
     obj.applicantType = applicantType;
@@ -227,10 +230,10 @@ const Create_form = ({ onDataChange, initialData }) => {
               id="amount"
               name="amount"
               className="w-full mt-2"
-              value={localData.amount ? convert(localData.amount, "toEn") : ""}
+              value={localData.amount || ""}
               onKeyDown={handleEnterFocus}
               onChange={(e) => {
-                const valInEn = convert(e.target.value, "toEn");
+                const valInEn = e.target.value.trim() === "" ? "" : convert(e.target.value, "toEn");
                 setLocalData((d) => ({ ...d, amount: convert(e.target.value, "toNp") }));
                 if (Number(valInEn) > 1000000 || Number(valInEn) === 0) {
                   setLocalErrors((prev) => ({ ...prev, amount: true }));
@@ -391,10 +394,9 @@ const Create_form = ({ onDataChange, initialData }) => {
               <DropdownMenuTrigger className="mt-2 border px-3 py-2 text-sm rounded-md w-full">{applicantType}</DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
                 <DropdownMenuRadioGroup value={applicantType} onValueChange={setApplicantType}>
-                  <DropdownMenuRadioItem value="व्यक्ति">व्यक्ति</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="एकलौटी फर्म">एकलौटी फर्म</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="साझेदारी फर्म">साझेदारी फर्म</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="कम्पनी">कम्पनी</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="सिक्योड कर्जा">सिक्योड कर्जा</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="सहारा व्यक्तिगत कर्जा">सहारा व्यक्तिगत कर्जा</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="सहारा ब्यापारिक कर्जा">सहारा ब्यापारिक कर्जा</DropdownMenuRadioItem>
                   <DropdownMenuRadioItem value="अन्य">अन्य</DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
               </DropdownMenuContent>

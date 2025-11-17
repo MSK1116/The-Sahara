@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { MdDelete } from "react-icons/md";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
 
 import Province1JSON from "@/asset/Province1.json";
@@ -22,7 +20,6 @@ export default function Table7_copy_for_form2({ onDataChange, localData, initial
   const initialRow = {
     id: Date.now(),
     ownerName: "",
-    province: "",
     district: "",
     palika: "",
     wardNo: "",
@@ -47,27 +44,6 @@ export default function Table7_copy_for_form2({ onDataChange, localData, initial
     return province?.districts || [];
   };
 
-  const getPalikas = (provinceName, districtName) => {
-    if (!provinceName || !districtName) return [];
-    const province = allProvinces.find((p) => p.name === provinceName);
-    const district = province?.districts.find((d) => d.name === districtName);
-    return district?.palikas || [];
-  };
-  const handleEnterFocus = useCallback((e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      const table = e.currentTarget.closest("table");
-      if (!table) return;
-
-      // Only inputs, skip buttons or dropdown triggers
-      const focusableInputs = Array.from(table.querySelectorAll("input:not([disabled])"));
-
-      const index = focusableInputs.indexOf(e.currentTarget);
-      if (index > -1 && index + 1 < focusableInputs.length) {
-        focusableInputs[index + 1].focus();
-      }
-    }
-  }, []);
   return (
     <div className="overflow-x-auto mt-5">
       <p className="font-bold my-5">धितोको विवरण :-</p>
@@ -77,9 +53,8 @@ export default function Table7_copy_for_form2({ onDataChange, localData, initial
             <tr className="bg-gray-100">
               <th className="px-4 py-2 text-left text-gray-500 text-sm font-semibold border">सि.न</th>
               <th className="px-4 py-2 text-left text-gray-500 text-sm font-semibold border">धनीको नाम</th>
-              <th className="px-4 py-2 text-left text-gray-500 text-sm font-semibold border">प्रदेश</th>
               <th className="px-4 py-2 text-left text-gray-500 text-sm font-semibold border">जिल्ला</th>
-              <th className="px-4 py-2 text-left text-gray-500 text-sm font-semibold border">पालिका</th>
+              <th className="px-4 py-2 text-left text-gray-500 text-sm font-semibold border">गा.वि.स. / न.पा.</th>
               <th className="px-4 py-2 text-left text-gray-500 text-sm font-semibold border">वडा नं</th>
               <th className="px-4 py-2 text-left text-gray-500 text-sm font-semibold border">टोल / बाटो</th>
               <th className="px-4 py-2 text-left text-gray-500 text-sm font-semibold border">सि.न</th>
@@ -107,22 +82,6 @@ export default function Table7_copy_for_form2({ onDataChange, localData, initial
                 </td>
 
                 {/* Province Dropdown */}
-                <td className="border p-2">
-                  <DropdownMenu disabled readOnly>
-                    <DropdownMenuTrigger disabled readOnly className="w-full text-xs text-left border px-2 py-1 rounded-md">
-                      {row.province || "प्रदेश चयन गर्नुहोस्"}
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuRadioGroup value={row.province || ""}>
-                        {allProvinces.map((p) => (
-                          <DropdownMenuRadioItem key={p.name} value={p.name}>
-                            {p.name}
-                          </DropdownMenuRadioItem>
-                        ))}
-                      </DropdownMenuRadioGroup>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </td>
 
                 {/* District Dropdown */}
                 <td className="border p-2">
@@ -141,25 +100,9 @@ export default function Table7_copy_for_form2({ onDataChange, localData, initial
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </td>
-
-                {/* Palika Dropdown */}
                 <td className="border p-2">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger disabled readOnly className="w-full text-xs text-left border px-2 py-1 rounded-md">
-                      {row.palika || "पालिका चयन गर्नुहोस्"}
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuRadioGroup value={row.palika || ""}>
-                        {getPalikas(row.province, row.district).map((p) => (
-                          <DropdownMenuRadioItem key={p} value={p}>
-                            {p}
-                          </DropdownMenuRadioItem>
-                        ))}
-                      </DropdownMenuRadioGroup>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <Input disabled readOnly value={row.palika || ""} placeholder="पालिका" />
                 </td>
-
                 <td className="border p-2">
                   <Input disabled readOnly value={row.wardNo || ""} placeholder="वडा नं" />
                 </td>

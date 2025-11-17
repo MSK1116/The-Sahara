@@ -153,9 +153,8 @@ export function PageMaker_LoanApplicationPage1(data) {
     <tr>
       <th>सि.न</th>
       <th>धनीको नाम</th>
-      <th>प्रदेश</th>
       <th>जिल्ला</th>
-      <th>पालिका</th>
+      <th>गा.वि.स. / न.पा. </th>
       <th>वडा न.</th>
       <th>सि.न</th>
       <th>कि.न</th>
@@ -266,9 +265,8 @@ export function PageMaker_LoanApplicationPage1(data) {
     <tr>
       <th>सि.न</th>
       <th>धनीको नाम</th>
-      <th>प्रदेश</th>
       <th>जिल्ला</th>
-      <th>पालिका</th>
+      <th>गा.वि.स. / न.पा.</th>
       <th>वडा नं</th>
       <th>टोल / बाटो</th>
       <th>सि.न</th>

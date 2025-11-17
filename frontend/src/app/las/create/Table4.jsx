@@ -18,9 +18,9 @@ import AreaInput from "@/components/AreaInput";
 const allProvinces = [Province1JSON, Province2JSON, Province3JSON, Province4JSON, Province5JSON, Province6JSON, Province7JSON];
 
 export default function Table4({ onDataChange, localData, initialData }) {
+  const allDistricts = allProvinces.flatMap((p) => p.districts.map((d) => d.name));
   const initialRow = {
     id: Date.now(),
-    province: "",
     district: "",
     palika: "",
     wardNo: "",
@@ -86,9 +86,8 @@ export default function Table4({ onDataChange, localData, initialData }) {
             <tr className="bg-gray-100">
               <th className="px-4 py-2 w-4 text-left text-sm text-gray-700 font-semibold border">सि.न</th>
               <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">धनीको नाम</th>
-              <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">प्रदेश</th>
               <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">जिल्ला</th>
-              <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">पालिका</th>
+              <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">गा.वि.स./ न.पा. </th>
               <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">वडा न.</th>
               <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">सि.न</th>
               <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">कि.न</th>
@@ -107,54 +106,26 @@ export default function Table4({ onDataChange, localData, initialData }) {
                   <Input value={localData.applicant_name} readOnly disabled />
                 </td>
 
-                {/* Province Dropdown */}
-                <td className="border p-2">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className="w-full text-xs text-left border px-2 py-1 rounded-md">{row.province || "प्रदेश चयन गर्नुहोस्"}</DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuRadioGroup onKeyDown={handleEnterFocus} value={row.province} onValueChange={(val) => handleInputChange(row.id, "province", val)}>
-                        {allProvinces.map((p) => (
-                          <DropdownMenuRadioItem key={p.name} value={p.name}>
-                            {p.name}
-                          </DropdownMenuRadioItem>
-                        ))}
-                      </DropdownMenuRadioGroup>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </td>
-
                 {/* District Dropdown */}
+
                 <td className="border p-2">
                   <DropdownMenu>
                     <DropdownMenuTrigger className="w-full text-xs text-left border px-2 py-1 rounded-md">{row.district || "जिल्ला चयन गर्नुहोस्"}</DropdownMenuTrigger>
                     <DropdownMenuContent>
                       <DropdownMenuRadioGroup onKeyDown={handleEnterFocus} value={row.district} onValueChange={(val) => handleInputChange(row.id, "district", val)}>
-                        {getDistricts(row.province).map((d) => (
-                          <DropdownMenuRadioItem key={d.name} value={d.name}>
-                            {d.name}
+                        {allDistricts.map((d) => (
+                          <DropdownMenuRadioItem key={d} value={d}>
+                            {d}
                           </DropdownMenuRadioItem>
                         ))}
                       </DropdownMenuRadioGroup>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </td>
-
                 {/* Palika Dropdown */}
                 <td className="border p-2">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className="w-full text-xs text-left border px-2 py-1 rounded-md">{row.palika || "पालिका चयन गर्नुहोस्"}</DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuRadioGroup onKeyDown={handleEnterFocus} value={row.palika} onValueChange={(val) => handleInputChange(row.id, "palika", val)}>
-                        {getPalikas(row.province, row.district).map((p) => (
-                          <DropdownMenuRadioItem key={p} value={p}>
-                            {p}
-                          </DropdownMenuRadioItem>
-                        ))}
-                      </DropdownMenuRadioGroup>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <Input onKeyDown={handleEnterFocus} value={row.palika || ""} onChange={(e) => handleInputChange(row.id, "palika", e.target.value)} placeholder="पालिका" />
                 </td>
-
                 <td className="border p-2">
                   <Input onKeyDown={handleEnterFocus} value={row.wardNo || ""} onChange={(e) => handleInputChange(row.id, "wardNo", e.target.value)} placeholder="वडा न." />
                 </td>

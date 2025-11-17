@@ -10,13 +10,16 @@ const AreaInput = ({ value = "", onChange, disabled = false }) => {
   const refs = useRef([React.createRef(), React.createRef(), React.createRef(), React.createRef()]);
 
   useEffect(() => {
-    // Prevent overwrite when user is typing
     if (!value) return;
 
     const parts = value.split("-");
     const temp = ["", "", "", ""];
 
-    parts.forEach((p, i) => (temp[i] = p));
+    if (parts.length === 1) {
+      temp[3] = parts[0]; // Single input → last box only
+    } else if (parts.length === 4) {
+      parts.forEach((p, i) => (temp[i] = p));
+    }
 
     setInputs(temp);
   }, []);

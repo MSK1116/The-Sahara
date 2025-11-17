@@ -25,7 +25,6 @@ const Browser_wrapper = ({ LMSIN }) => {
       const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/getApplicant`, { LMSIN: LMSIN });
       if (temp.data) {
         setApplicantData(temp.data);
-        console.log(temp.data.form1);
       }
     } catch (error) {
       console.error(error);
