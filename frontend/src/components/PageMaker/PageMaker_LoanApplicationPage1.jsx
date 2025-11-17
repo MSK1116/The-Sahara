@@ -74,7 +74,29 @@ export function PageMaker_LoanApplicationPage1(data) {
     <p>सगोलमा रहेको नातेदारहरुको विवरण: <b>${f.approver_families_details || "—"}</b></p>
   </div>
   `
-    : ""; // empty string if no approver
+    : "";
+
+  const approverSection2 = f.approver_applicant_name
+    ? `
+    <td class="align-top w-1/2 border px-4 py-2">
+      <p class="font-semibold mb-3">मञ्जुरी दिने व्यक्ति:</p>
+
+      <p>हस्ताक्षर: ___________________</p>
+
+      <p>
+        नाम:
+        <b>${f.approver_applicant_name}</b>
+      </p>
+
+      <p>
+        ठेगाना:
+        <b>
+          ${f.approverAddress ? `${f.approverAddress.province || "—"}, ${f.approverAddress.district || "—"}, ${f.approverAddress.palika || "—"}, ${f.approverAddress.wada || "—"}, ${f.approverAddress.tole || "—"}` : "—"}
+        </b>
+      </p>
+    </td>
+    `
+    : "";
 
   // Income Table (Table-3)
   const incomeTable =
@@ -388,8 +410,40 @@ export function PageMaker_LoanApplicationPage1(data) {
     ${table5HTML}
     ${table6HTML}
     ${table7HTML}
- </P>
-    <p></P>
+
+    <p class="my-3">माथि उल्लेखित सम्पूर्ण विवरण मैले उपलब्ध गराएको सत्य र साँचो हो । यसमा फरक परे म पूर्ण रूपमा जिम्मेवार हुनेछु । साथै, बैंकले समय, परिस्थिति तथा अन्य कारणवश कुनै नियम, ब्याज दर तथा अन्य नीति–नियम परिवर्तन गरेमा मलाई मान्य हुनेछ ।</p>
+ 
+  
+    
+   <table class="w-full border-collapse my-5 text-xs">
+  <tr>
+    <!-- Applicant -->
+    <td class="align-top w-1/2 border px-4 py-2">
+      <p class="font-semibold mb-3">निवेदक:</p>
+
+      <p>हस्ताक्षर: ___________________</p>
+
+      <p>
+        नाम: <b>${f.applicant_name}</b>
+      </p>
+
+      <p>
+        ठेगाना:
+        <b>
+          ${f.address.permanent.province},
+          ${f.address.permanent.district},
+          ${f.address.permanent.palika},
+          ${f.address.permanent.wada},
+          ${f.address.permanent.tole}
+        </b>
+      </p>
+    </td>
+
+    <!-- Approver -->
+    ${approverSection2}
+  </tr>
+</table>
+
 
     <script>
       window.onload = () => { window.print(); };

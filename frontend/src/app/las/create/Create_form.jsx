@@ -689,7 +689,14 @@ const Create_form = ({ onDataChange, initialData }) => {
           <div className="flex flex-row items-center justify-between">
             <p className=" font-bold">धितो मन्जुरीनामा दिनका व्यक्तिगत विवरण</p>
             <div className=" flex flex-row gap-x-1.5">
-              <Button className={` ${isApprovalGiven ? " bg-red-600 text-white " : ""} `} variant={"outline"} onClick={() => setIsApprovalGiven(!isApprovalGiven)} type="button">
+              <Button
+                className={` ${isApprovalGiven ? " bg-red-600 text-white " : ""} `}
+                variant={"outline"}
+                onClick={() => {
+                  setIsApprovalGiven(!isApprovalGiven);
+                  setLocalData((d) => ({ ...d, approver_applicant_name: "" }));
+                }}
+                type="button">
                 स्वीकृति दिइने {!isApprovalGiven ? "छ " : "छैन"} ।
               </Button>
             </div>

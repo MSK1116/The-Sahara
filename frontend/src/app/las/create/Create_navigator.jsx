@@ -31,7 +31,7 @@ const Create_navigator = ({ onSave, data, isUpserting, LMSIN, isEditing = false 
       <style>
         @page {
           size: A4;
-          margin: 10mm;
+          margin: 15mm;
 
           /* Page Number at Bottom */
           @bottom-center {

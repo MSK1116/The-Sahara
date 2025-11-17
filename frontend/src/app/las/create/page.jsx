@@ -2,7 +2,11 @@ import React from "react";
 import CreateWrapper from "./CreateWrapper";
 
 const page = () => {
-  return <CreateWrapper />;
+  return (
+    <>
+      <CreateWrapper />
+    </>
+  );
 };
 
 export default page;

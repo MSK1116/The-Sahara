@@ -7,9 +7,9 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 const CreateWrapper = () => {
   const router = useRouter();
-  const [form1Data, setForm1Data] = useState(null);
-  const [form2Data, setForm2Data] = useState(null);
-  const [form3Data, setForm3Data] = useState(null);
+  const [form1Data, setForm1Data] = useState({});
+  const [form2Data, setForm2Data] = useState({});
+  const [form3Data, setForm3Data] = useState({});
   const [Lmsin, setLmsin] = useState("");
   const [isUpserting, setIsUpserting] = useState(false);
   const handleCollectAll = () => {

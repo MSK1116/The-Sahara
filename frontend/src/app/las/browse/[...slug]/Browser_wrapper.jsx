@@ -49,7 +49,14 @@ const Browser_wrapper = ({ LMSIN }) => {
   };
 
   if (loading) {
-    return <div className="w-full text-center p-10">Loading applicant data...</div>;
+    return (
+      <>
+        <div className="w-full flex flex-col items-center justify-center py-10 space-y-10">
+          <div className=" loader"></div>
+          <div>Loading applicant data...</div>
+        </div>
+      </>
+    );
   }
 
   return (
