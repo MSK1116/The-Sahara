@@ -74,6 +74,9 @@ const Create_form = ({ onDataChange, initialData }) => {
   ];
 
   useEffect(() => {
+    // Guard against running on server with undefined values during prerender
+    if (localData.amount === undefined && localData.project_estimated_cost === undefined) return;
+
     setLocalData((prev) => {
       const updated = { ...prev };
       let changed = false;
