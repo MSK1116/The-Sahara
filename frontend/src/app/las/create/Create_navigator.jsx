@@ -92,6 +92,7 @@ ${htmlContent}
     <div className="w-full flex flex-col px-5 pt-3 pb-0 rounded-l-2xl sticky bg-gray-200 top-1/6 shadow ">
       <div className="flex relative flex-col select-none items-center gap-5">
         <div className="absolute h-full bg-gray-300 top-0 left-1/2 w-0.5 -translate-x-1/2 transform z-0"></div>
+
         {[...Array(5)].map((i, idx) => (
           <div
             onClick={() => handleFormPage(idx + 1)}

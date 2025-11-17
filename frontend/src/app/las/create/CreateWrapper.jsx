@@ -5,6 +5,7 @@ import Create_navigator from "./Create_navigator";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import Create_form2 from "./Create_form2";
 const CreateWrapper = () => {
   const router = useRouter();
   const [form1Data, setForm1Data] = useState({});
@@ -14,6 +15,7 @@ const CreateWrapper = () => {
   const [isUpserting, setIsUpserting] = useState(false);
   const [dataFromServer, setDataFromServer] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
+  const [localData, setLocalData] = useState({});
 
   const handleUpsert = async () => {
     const aggregated = {
@@ -23,20 +25,22 @@ const CreateWrapper = () => {
     };
     if (!Lmsin) {
       window.alert("LMSIN is not generated yet!");
-      return;
+      return false;
     }
     try {
       setIsUpserting(true);
       const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/upsert`, { ...aggregated, LMSIN: Lmsin });
       if (temp.data) {
         console.log(temp.data.data.form1);
-        setIsUpserting(false);
         temp.data?.data.LMSIN && router.push(`/las/browse/${temp.data?.data.LMSIN}`);
+        setIsUpserting(false); // Set loading to false on success
+        return true; // Indicate success
       }
     } catch (error) {
       setIsUpserting(false);
       console.log(error);
       toast.error(error.response.data.message, { position: "top-left" });
+      return false; // Indicate failure
     }
   };
 
@@ -55,8 +59,11 @@ const CreateWrapper = () => {
     getLMSIN();
   }, []);
 
-  const handleFormPage = (page) => {
-    setCurrentPage(page);
+  const handleFormPage = async (page) => {
+    const success = await handleUpsert();
+    if (success) {
+      setCurrentPage(page);
+    }
   };
 
   return (
@@ -64,7 +71,7 @@ const CreateWrapper = () => {
       <main className="flex flex-row ">
         <div className="w-[90%]">
           {currentPage === 1 && <Create_form onDataChange={setForm1Data} />}
-          {currentPage === 2 && <div className="p-10">Page 2 is under construction.</div>}
+          {currentPage === 2 && <Create_form2 LMSIN={Lmsin} onDataChange={setForm2Data} />}
           {currentPage === 3 && <div className="p-10">Page 3 is under construction.</div>}
           {currentPage === 4 && <div className="p-10">Page 4 is under construction.</div>}
           {currentPage === 5 && <div className="p-10">Page 5 is under construction.</div>}

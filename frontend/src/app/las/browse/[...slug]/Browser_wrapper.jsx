@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Create_form from "../../create/Create_form";
 import Create_navigator from "../../create/Create_navigator";
 import toast from "react-hot-toast";
+import Create_form2 from "../../create/Create_form2";
 
 const Browser_wrapper = ({ LMSIN }) => {
   const [applicantData, setApplicantData] = useState(null);
@@ -15,7 +16,7 @@ const Browser_wrapper = ({ LMSIN }) => {
 
   useEffect(() => {
     handleDataFetch();
-  }, [LMSIN]);
+  }, [LMSIN, currentPage]);
 
   const handleDataFetch = async () => {
     setLoading(true);
@@ -24,6 +25,7 @@ const Browser_wrapper = ({ LMSIN }) => {
       const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/getApplicant`, { LMSIN: LMSIN });
       if (temp.data) {
         setApplicantData(temp.data);
+        console.log(temp.data.form1);
       }
     } catch (error) {
       console.error(error);
@@ -68,6 +70,7 @@ const Browser_wrapper = ({ LMSIN }) => {
   }
 
   const handleFormPage = (pageNumber) => {
+    handleSave();
     setCurrentPage(pageNumber);
   };
 
@@ -77,7 +80,7 @@ const Browser_wrapper = ({ LMSIN }) => {
         {applicantData ? (
           <>
             {currentPage === 1 && <Create_form initialData={applicantData?.form1} onDataChange={setForm1Data} />}
-            {currentPage === 2 && <div className="p-10">Page 2 is under construction.</div>}
+            {currentPage === 2 && <Create_form2 LMSIN={LMSIN} onDataChange={setForm2Data} />}
             {currentPage === 3 && <div className="p-10">Page 3 is under construction.</div>}
             {currentPage === 4 && <div className="p-10">Page 4 is under construction.</div>}
             {currentPage === 5 && <div className="p-10">Page 5 is under construction.</div>}

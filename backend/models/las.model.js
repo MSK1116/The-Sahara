@@ -127,6 +127,7 @@ const Form1Schema = new mongoose.Schema({
 
   desc1: { type: String, default: "" },
   amount: { type: String, default: "" },
+  amount_text: { type: String, default: "" },
   personal_education: { type: String, default: "" },
 
   applicant_name: { type: String, default: "" },

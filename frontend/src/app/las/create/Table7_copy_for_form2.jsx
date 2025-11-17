@@ -18,7 +18,7 @@ import AreaInput from "@/components/AreaInput";
 
 const allProvinces = [Province1JSON, Province2JSON, Province3JSON, Province4JSON, Province5JSON, Province6JSON, Province7JSON];
 
-export default function Table7({ onDataChange, localData, initialData }) {
+export default function Table7_copy_for_form2({ onDataChange, localData, initialData }) {
   const initialRow = {
     id: Date.now(),
     ownerName: "",
@@ -30,22 +30,10 @@ export default function Table7({ onDataChange, localData, initialData }) {
     sheetNo: "",
     plotNo: "",
     area: "",
-    charKila: "",
-    estimatedValue: "",
-    remarks: "",
+    landType: "",
   };
 
   const [rows, setRows] = useState(initialData || [initialRow]);
-
-  const handleAddRow = () => {
-    if (rows.length < 7) {
-      setRows([...rows, { ...initialRow, id: Date.now() + Math.random() }]);
-    }
-  };
-
-  const handleDeleteRow = (id) => {
-    setRows(rows.filter((row) => row.id !== id));
-  };
 
   const handleInputChange = (id, field, value) => {
     const newRows = rows.map((row) => (row.id === id ? { ...row, [field]: value } : row));
@@ -87,20 +75,17 @@ export default function Table7({ onDataChange, localData, initialData }) {
         <table className="table-auto border-collapse border-gray-300 w-full">
           <thead>
             <tr className="bg-gray-100">
-              <th className="px-4 py-2 text-left text-sm font-semibold border">सि.न</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold border">धनीको नाम</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold border">प्रदेश</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold border">जिल्ला</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold border">पालिका</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold border">वडा नं</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold border">टोल / बाटो</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold border">सि.न</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold border">कि.न</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold border">क्षेत्रफल</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold border">चार किला</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold border">अनुमानित मूल्य</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold border">कैफियत</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold border">#</th>
+              <th className="px-4 py-2 text-left text-gray-500 text-sm font-semibold border">सि.न</th>
+              <th className="px-4 py-2 text-left text-gray-500 text-sm font-semibold border">धनीको नाम</th>
+              <th className="px-4 py-2 text-left text-gray-500 text-sm font-semibold border">प्रदेश</th>
+              <th className="px-4 py-2 text-left text-gray-500 text-sm font-semibold border">जिल्ला</th>
+              <th className="px-4 py-2 text-left text-gray-500 text-sm font-semibold border">पालिका</th>
+              <th className="px-4 py-2 text-left text-gray-500 text-sm font-semibold border">वडा नं</th>
+              <th className="px-4 py-2 text-left text-gray-500 text-sm font-semibold border">टोल / बाटो</th>
+              <th className="px-4 py-2 text-left text-gray-500 text-sm font-semibold border">सि.न</th>
+              <th className="px-4 py-2 text-left text-gray-500 text-sm font-semibold border">कि.न</th>
+              <th className="px-4 py-2 text-left text-gray-500 text-sm font-semibold border">क्षेत्रफल</th>
+              <th className="px-4 py-2 text-left text-sm font-semibold border">जग्गाको किसिम:</th>
             </tr>
           </thead>
           <tbody>
@@ -110,7 +95,7 @@ export default function Table7({ onDataChange, localData, initialData }) {
                   <Input disabled readOnly value={index + 1} />
                 </td>
                 <td className="border p-2">
-                  <Select value={row.ownerName} onValueChange={(value) => handleInputChange(row.id, "ownerName", value)}>
+                  <Select disabled readOnly value={row.ownerName || ""}>
                     <SelectTrigger>
                       <SelectValue placeholder="धनीको नाम"></SelectValue>
                     </SelectTrigger>
@@ -123,10 +108,12 @@ export default function Table7({ onDataChange, localData, initialData }) {
 
                 {/* Province Dropdown */}
                 <td className="border p-2">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className="w-full text-xs text-left border px-2 py-1 rounded-md">{row.province || "प्रदेश चयन गर्नुहोस्"}</DropdownMenuTrigger>
+                  <DropdownMenu disabled readOnly>
+                    <DropdownMenuTrigger disabled readOnly className="w-full text-xs text-left border px-2 py-1 rounded-md">
+                      {row.province || "प्रदेश चयन गर्नुहोस्"}
+                    </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuRadioGroup onKeyDown={handleEnterFocus} value={row.province} onValueChange={(val) => handleInputChange(row.id, "province", val)}>
+                      <DropdownMenuRadioGroup value={row.province || ""}>
                         {allProvinces.map((p) => (
                           <DropdownMenuRadioItem key={p.name} value={p.name}>
                             {p.name}
@@ -139,10 +126,12 @@ export default function Table7({ onDataChange, localData, initialData }) {
 
                 {/* District Dropdown */}
                 <td className="border p-2">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className="w-full text-xs text-left border px-2 py-1 rounded-md">{row.district || "जिल्ला चयन गर्नुहोस्"}</DropdownMenuTrigger>
+                  <DropdownMenu disabled readOnly>
+                    <DropdownMenuTrigger disabled readOnly className="w-full text-xs text-left border px-2 py-1 rounded-md">
+                      {row.district || "जिल्ला चयन गर्नुहोस्"}
+                    </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuRadioGroup onKeyDown={handleEnterFocus} value={row.district} onValueChange={(val) => handleInputChange(row.id, "district", val)}>
+                      <DropdownMenuRadioGroup value={row.district} onValueChange={(val) => handleInputChange(row.id, "district", val)}>
                         {getDistricts(row.province).map((d) => (
                           <DropdownMenuRadioItem key={d.name} value={d.name}>
                             {d.name}
@@ -156,9 +145,11 @@ export default function Table7({ onDataChange, localData, initialData }) {
                 {/* Palika Dropdown */}
                 <td className="border p-2">
                   <DropdownMenu>
-                    <DropdownMenuTrigger className="w-full text-xs text-left border px-2 py-1 rounded-md">{row.palika || "पालिका चयन गर्नुहोस्"}</DropdownMenuTrigger>
+                    <DropdownMenuTrigger disabled readOnly className="w-full text-xs text-left border px-2 py-1 rounded-md">
+                      {row.palika || "पालिका चयन गर्नुहोस्"}
+                    </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuRadioGroup onKeyDown={handleEnterFocus} value={row.palika} onValueChange={(val) => handleInputChange(row.id, "palika", val)}>
+                      <DropdownMenuRadioGroup value={row.palika || ""}>
                         {getPalikas(row.province, row.district).map((p) => (
                           <DropdownMenuRadioItem key={p} value={p}>
                             {p}
@@ -170,46 +161,37 @@ export default function Table7({ onDataChange, localData, initialData }) {
                 </td>
 
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.wardNo} onChange={(e) => handleInputChange(row.id, "wardNo", e.target.value)} placeholder="वडा नं" />
+                  <Input disabled readOnly value={row.wardNo || ""} placeholder="वडा नं" />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.tole} onChange={(e) => handleInputChange(row.id, "tole", e.target.value)} placeholder="टोल / बाटो" />
+                  <Input disabled readOnly value={row.tole || ""} placeholder="टोल / बाटो" />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.sheetNo} onChange={(e) => handleInputChange(row.id, "sheetNo", e.target.value)} placeholder="सि.न" />
+                  <Input disabled readOnly value={row.sheetNo || ""} placeholder="सि.न" />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.plotNo} onChange={(e) => handleInputChange(row.id, "plotNo", e.target.value)} placeholder="कि.न" />
+                  <Input disabled readOnly value={row.plotNo || ""} placeholder="कि.न" />
                 </td>
                 <td className="border p-2">
-                  <AreaInput value={row.area || ""} onChange={(val) => handleInputChange(row.id, "area", val)} />
+                  <AreaInput disabled={true} readOnly value={row.area || ""} />
                 </td>
-                <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.charKila} onChange={(e) => handleInputChange(row.id, "charKila", e.target.value)} placeholder="चार किला" />
-                </td>
-                <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.estimatedValue} onChange={(e) => handleInputChange(row.id, "estimatedValue", e.target.value)} placeholder="अनुमानित मूल्य" />
-                </td>
-                <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.remarks} onChange={(e) => handleInputChange(row.id, "remarks", e.target.value)} placeholder="कैफियत" />
-                </td>
-                <td className="border p-2 text-center">
-                  {index > 0 && (
-                    <Button variant="destructive" size="sm" onClick={() => handleDeleteRow(row.id)}>
-                      <MdDelete />
-                    </Button>
-                  )}
+                <td className="border p-2 w">
+                  <Select value={row.landType} onValueChange={(value) => handleInputChange(row.id, "landType", value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="किसिम"></SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="अवल">अवल</SelectItem>
+                      <SelectItem value="दोयम">दोयम</SelectItem>
+                      <SelectItem value="सीम">सीम</SelectItem>
+                      <SelectItem value="घडेरी">घडेरी</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
-
-      <div className="mt-2">
-        <Button type="button" onClick={handleAddRow} disabled={rows.length >= 7}>
-          Add More Row
-        </Button>
       </div>
     </div>
   );

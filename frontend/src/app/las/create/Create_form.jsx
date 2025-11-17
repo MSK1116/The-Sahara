@@ -68,15 +68,13 @@ const Create_form = ({ onDataChange, initialData }) => {
       return String(value);
     }
   };
+
   const autoConvertList = [
     { numberKey: "amount", textKey: "amount_text" },
     { numberKey: "project_estimated_cost", textKey: "project_estimated_cost_text" },
   ];
 
   useEffect(() => {
-    // Guard against running on server with undefined values during prerender
-    if (localData.amount === undefined && localData.project_estimated_cost === undefined) return;
-
     setLocalData((prev) => {
       const updated = { ...prev };
       let changed = false;

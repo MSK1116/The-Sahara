@@ -333,7 +333,7 @@ export function PageMaker_LoanApplicationPage1(data) {
 
     <p class="my-1 mb-2">
       कृपया निम्न विवरण खुलाइ म/हामीले <b>${f.desc1}</b> कार्यको लागि माग गरेको रु 
-      <b>${f.amount}</b> अक्षरमा रु <b>${f.amount_text}</b> को सुविधा स्वीकृत गरी दिनु हुन अनुरोध गर्दछु/छौं।
+      <b>${f.amount}</b> अक्षरमा रु <b>${f.amount_text} मात्र /-</b> को सुविधा स्वीकृत गरी दिनु हुन अनुरोध गर्दछु/छौं।
     </p>
 
     <p>ऋण निवेदकको नाम थर: <b>${f.applicant_name}</b></p>

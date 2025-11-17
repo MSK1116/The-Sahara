@@ -13,6 +13,7 @@ import Province4JSON from "@/asset/Province4.json";
 import Province5JSON from "@/asset/Province5.json";
 import Province6JSON from "@/asset/Province6.json";
 import Province7JSON from "@/asset/Province7.json";
+import AreaInput from "@/components/AreaInput";
 
 const allProvinces = [Province1JSON, Province2JSON, Province3JSON, Province4JSON, Province5JSON, Province6JSON, Province7JSON];
 
@@ -155,19 +156,19 @@ export default function Table4({ onDataChange, localData, initialData }) {
                 </td>
 
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.wardNo} onChange={(e) => handleInputChange(row.id, "wardNo", e.target.value)} placeholder="वडा न." />
+                  <Input onKeyDown={handleEnterFocus} value={row.wardNo || ""} onChange={(e) => handleInputChange(row.id, "wardNo", e.target.value)} placeholder="वडा न." />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.sheetNo} onChange={(e) => handleInputChange(row.id, "sheetNo", e.target.value)} placeholder="सि.न" />
+                  <Input onKeyDown={handleEnterFocus} value={row.sheetNo || ""} onChange={(e) => handleInputChange(row.id, "sheetNo", e.target.value)} placeholder="सि.न" />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.plotNo} onChange={(e) => handleInputChange(row.id, "plotNo", e.target.value)} placeholder="कि.न" />
+                  <Input onKeyDown={handleEnterFocus} value={row.plotNo || ""} onChange={(e) => handleInputChange(row.id, "plotNo", e.target.value)} placeholder="कि.न" />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.area} onChange={(e) => handleInputChange(row.id, "area", e.target.value)} placeholder="क्षेत्रफल" />
+                  <AreaInput value={row.area || ""} onChange={(e) => handleInputChange(row.id, "area", e.target.value)} />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.remarks} onChange={(e) => handleInputChange(row.id, "remarks", e.target.value)} placeholder="कफियाक्त" />
+                  <Input onKeyDown={handleEnterFocus} value={row.remarks || ""} onChange={(e) => handleInputChange(row.id, "remarks", e.target.value)} placeholder="कफियाक्त" />
                 </td>
                 <td className="border p-2 text-center">
                   {index > 0 && (
