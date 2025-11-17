@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MdDelete } from "react-icons/md";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import NepaliDateInput from "@/components/NepaliDatePicker";
 
 export default function Table6({ onDataChange, localData, initialData }) {
   const initialRow = {
@@ -102,7 +103,7 @@ export default function Table6({ onDataChange, localData, initialData }) {
                   <Input onKeyDown={handleEnterFocus} value={row.remainingAmount} onChange={(e) => handleInputChange(row.id, "remainingAmount", e.target.value)} placeholder="तिर्न बाँकी रकम" />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} type="date" value={row.startDate} onChange={(e) => handleInputChange(row.id, "startDate", e.target.value)} />
+                  <NepaliDateInput onKeyDown={handleEnterFocus} value={row.startDate || ""} className="w-full mt-2" onChange={(e) => handleInputChange(row.id, "startDate", e.target.value)} />
                 </td>
                 <td className="border p-2">
                   <Input onKeyDown={handleEnterFocus} value={row.remarks} onChange={(e) => handleInputChange(row.id, "remarks", e.target.value)} placeholder="कैफियत" />

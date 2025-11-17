@@ -98,78 +98,77 @@ const Table7Schema = new mongoose.Schema(
   { _id: false }
 );
 
+const Form1Schema = new mongoose.Schema({
+  address: {
+    permanent: { type: AddressSchema, default: () => ({}) },
+    current: { type: AddressSchema, default: () => ({}) },
+  },
+
+  projectAddress: { type: AddressSchema, default: () => ({}) },
+
+  table1: { type: [Table1Schema], default: [] },
+  table2: { type: [Table2Schema], default: [] },
+
+  approverAddress: { type: AddressSchema, default: () => ({}) },
+
+  table3: { type: Table3Schema, default: () => ({}) },
+
+  table4: { type: [Table4Schema], default: [] },
+  table5: { type: [Table5Schema], default: [] },
+  table6: { type: [Table6Schema], default: [] },
+  table7: { type: [Table7Schema], default: [] },
+
+  rn1: { type: String, default: "" },
+  rn2: { type: String, default: "" },
+  rn3: { type: String, default: "" },
+  rn4: { type: String, default: "" },
+
+  branch: { type: String, default: "" },
+
+  desc1: { type: String, default: "" },
+  amount: { type: String, default: "" },
+  personal_education: { type: String, default: "" },
+
+  applicant_name: { type: String, default: "" },
+  age: { type: String, default: "" },
+
+  phone1: { type: String, default: "" },
+  phone2: { type: String, default: "" },
+
+  citizenship_number: { type: String, default: "" },
+  approver_applicant_name: { type: String, default: "" },
+  approver_citizenship_number: { type: String, default: "" },
+  approver_father_name: { type: String, default: "" },
+  approver_inlaws_name: { type: String, default: "" },
+  approver_spouse_name: { type: String, default: "" },
+  approver_families_detail: { type: String, default: "" },
+
+  applicant_father_name: { type: String, default: "" },
+  applicant_spouse_name: { type: String, default: "" },
+  applicant_inlaws_name: { type: String, default: "" },
+  applicant_profession: { type: String, default: "" },
+
+  applicantType: { type: String, default: "व्यक्ति" },
+
+  companyName: { type: String, default: "" },
+  company_shareholderNumber: { type: String, default: "" },
+  company_registrationOffice: { type: String, default: "" },
+  savingsAccountNumber: { type: String, default: "" },
+  company_registrationNumber: { type: String, default: "" },
+  company_registrationDate: { type: String, default: "" },
+  panNumber: { type: String, default: "" },
+  panDate: { type: String, default: "" },
+  business_type: { type: String, default: "" },
+  project_estimated_cost: { type: String, default: "" },
+  project_estimated_cost_text: { type: String, default: "" },
+
+  paymentFrequency: { type: String, default: "मासिक" },
+});
+
 const LASchema = new mongoose.Schema(
   {
-    address: {
-      permanent: { type: AddressSchema, default: () => ({}) },
-      current: { type: AddressSchema, default: () => ({}) },
-    },
-
-    projectAddress: { type: AddressSchema, default: () => ({}) },
-
-    table1: { type: [Table1Schema], default: [] },
-
-    table2: { type: [Table2Schema], default: [] },
-
-    approverAddress: { type: AddressSchema, default: () => ({}) },
-
-    table3: { type: Table3Schema, default: () => ({}) },
-
-    table4: { type: [Table4Schema], default: [] },
-
-    table5: { type: [Table5Schema], default: [] },
-
-    table6: { type: [Table6Schema], default: [] },
-
-    table7: { type: [Table7Schema], default: [] },
-
-    rn1: { type: String, default: "" },
-    rn2: { type: String, default: "" },
-    rn3: { type: String, default: "" },
-    rn4: { type: String, default: "" },
-
-    branch: { type: String, default: "" },
-
-    desc1: { type: String, default: "" },
-    amount: { type: String, default: "" },
-    personal_education: { type: String, default: "" },
-
-    applicant_name: { type: String, default: "" },
-    age: { type: String, default: "" },
-
-    phone1: { type: String, default: "" },
-    phone2: { type: String, default: "" },
-
-    citizenship_number: { type: String, default: "" },
-    approver_applicant_name: { type: String, default: "" },
-    approver_citizenship_number: { type: String, default: "" },
-    approver_father_name: { type: String, default: "" },
-    approver_inlaws_name: { type: String, default: "" },
-    approver_spouse_name: { type: String, default: "" },
-    approver_families_detail: { type: String, default: "" },
-
-    applicant_father_name: { type: String, default: "" },
-    applicant_spouse_name: { type: String, default: "" },
-    applicant_inlaws_name: { type: String, default: "" },
-    applicant_profession: { type: String, default: "" },
-
-    applicantType: { type: String, default: "व्यक्ति" },
-
-    companyName: { type: String, default: "" },
-    company_shareholderNumber: { type: String, default: "" },
-    company_registrationOffice: { type: String, default: "" },
-    savingsAccountNumber: { type: String, default: "" },
-    company_registrationNumber: { type: String, default: "" },
-    company_registrationDate: { type: String, default: "" },
-    panNumber: { type: String, default: "" },
-    panDate: { type: String, default: "" },
-    business_type: { type: String, default: "" },
-    project_estimated_cost: { type: String, default: "" },
-    project_estimated_cost_text: { type: String, default: "" },
-
-    paymentFrequency: { type: String, default: "मासिक" },
-
     LMSIN: { type: String, unique: true },
+    form1: { type: Form1Schema, default: () => ({}) },
   },
   { timestamps: true }
 );

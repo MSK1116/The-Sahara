@@ -12,24 +12,24 @@ const CreateWrapper = () => {
   const [form3Data, setForm3Data] = useState({});
   const [Lmsin, setLmsin] = useState("");
   const [isUpserting, setIsUpserting] = useState(false);
-  const handleCollectAll = () => {
+  const [dataFromServer, setDataFromServer] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleUpsert = async () => {
     const aggregated = {
       form1: form1Data,
       form2: form2Data,
       form3: form3Data,
     };
-    handleUpsert();
-  };
-
-  const handleUpsert = async () => {
     if (!Lmsin) {
       window.alert("LMSIN is not generated yet!");
       return;
     }
     try {
       setIsUpserting(true);
-      const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/upsert`, { ...form1Data, LMSIN: Lmsin });
+      const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/upsert`, { ...aggregated, LMSIN: Lmsin });
       if (temp.data) {
+        console.log(temp.data.data.form1);
         setIsUpserting(false);
         temp.data?.data.LMSIN && router.push(`/las/browse/${temp.data?.data.LMSIN}`);
       }
@@ -55,14 +55,22 @@ const CreateWrapper = () => {
     getLMSIN();
   }, []);
 
+  const handleFormPage = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <>
       <main className="flex flex-row ">
         <div className="w-[90%]">
-          <Create_form onDataChange={setForm1Data} />
+          {currentPage === 1 && <Create_form onDataChange={setForm1Data} />}
+          {currentPage === 2 && <div className="p-10">Page 2 is under construction.</div>}
+          {currentPage === 3 && <div className="p-10">Page 3 is under construction.</div>}
+          {currentPage === 4 && <div className="p-10">Page 4 is under construction.</div>}
+          {currentPage === 5 && <div className="p-10">Page 5 is under construction.</div>}
         </div>
         <div className="flex-1 ">
-          <Create_navigator isUpserting={isUpserting} LMSIN={Lmsin} data={form1Data} onSave={handleCollectAll} />
+          <Create_navigator currentPage={currentPage} handleFormPage={handleFormPage} isUpserting={isUpserting} LMSIN={Lmsin} data={dataFromServer} onSave={handleUpsert} />
         </div>
       </main>
     </>

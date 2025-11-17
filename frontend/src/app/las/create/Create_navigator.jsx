@@ -5,8 +5,10 @@ import { IoSaveSharp } from "react-icons/io5";
 import { MdPrint } from "react-icons/md";
 import { PageMaker_LoanApplicationPage1 } from "@/components/PageMaker/PageMaker_LoanApplicationPage1";
 
-const Create_navigator = ({ onSave, data, isUpserting, LMSIN, isEditing = false }) => {
+const Create_navigator = ({ currentPage, onSave, data, handleFormPage, isUpserting, LMSIN, isEditing = false }) => {
   const handlePrint = () => {
+    onSave && onSave();
+
     if (!data) return;
 
     const htmlContent = PageMaker_LoanApplicationPage1(data);
@@ -91,7 +93,10 @@ ${htmlContent}
       <div className="flex relative flex-col select-none items-center gap-5">
         <div className="absolute h-full bg-gray-300 top-0 left-1/2 w-0.5 -translate-x-1/2 transform z-0"></div>
         {[...Array(5)].map((i, idx) => (
-          <div key={idx} className="relative z-10 h-8 w-8 bg-white border text-blue-700 border-blue-600 border-dotted rounded-full flex items-center justify-center cursor-pointer">
+          <div
+            onClick={() => handleFormPage(idx + 1)}
+            key={idx}
+            className={` ${currentPage == idx + 1 ? "bg-blue-600 text-white border-white" : "bg-white border-blue-600"} relative z-10 h-8 w-8  border text-blue-700  border-dotted rounded-full flex items-center justify-center cursor-pointer `}>
             {idx + 1}
           </div>
         ))}
