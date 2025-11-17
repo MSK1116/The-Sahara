@@ -229,7 +229,7 @@ const Create_form = ({ onDataChange, initialData }) => {
               id="amount"
               name="amount"
               className="w-full mt-2"
-              value={convert(localData.amount, "toEn") || ""}
+              value={localData.amount ? convert(localData.amount, "toEn") : ""}
               onKeyDown={handleEnterFocus}
               onChange={(e) => {
                 const valInEn = convert(e.target.value, "toEn");
@@ -290,7 +290,7 @@ const Create_form = ({ onDataChange, initialData }) => {
                 id="age"
                 name="age"
                 className="mt-2"
-                value={localData.age || ""}
+                value={localData.age ? convert(localData.age, "toEn") : ""}
                 onKeyDown={handleEnterFocus}
                 onChange={(e) => {
                   const valInEn = convert(e.target.value, "toEn");
@@ -310,7 +310,7 @@ const Create_form = ({ onDataChange, initialData }) => {
                 id="phone1"
                 name="phone1"
                 className="w-full mt-2"
-                value={localData.phone1 || ""}
+                value={localData.phone1 ? convert(localData.phone1, "toEn") : ""}
                 onKeyDown={handleEnterFocus}
                 onChange={(e) => {
                   const rawValue = e.target.value;
@@ -333,7 +333,7 @@ const Create_form = ({ onDataChange, initialData }) => {
                 id="phone2"
                 name="phone2"
                 className="w-full mt-2"
-                value={localData.phone2 || ""}
+                value={localData.phone2 ? convert(localData.phone2, "toEn") : ""}
                 onKeyDown={handleEnterFocus}
                 onChange={(e) => {
                   const rawValue = e.target.value;
@@ -566,12 +566,13 @@ const Create_form = ({ onDataChange, initialData }) => {
               id="project_estimated_cost"
               name="project_estimated_cost"
               className="w-full mt-2"
-              value={localData.project_estimated_cost || ""}
+              value={localData.project_estimated_cost ? convert(localData.project_estimated_cost, "toEn") : ""}
               onKeyDown={handleEnterFocus}
               onChange={(e) => {
-                const val = e.target.value;
-                setLocalData((d) => ({ ...d, project_estimated_cost: e.target.value }));
-                if (val >= 1000000 || val == 0) {
+                const valInNp = convert(e.target.value, "toNp");
+                const valInEn = convert(e.target.value, "toEn");
+                setLocalData((d) => ({ ...d, project_estimated_cost: valInNp }));
+                if (Number(valInEn) >= 1000000 || Number(valInEn) == 0) {
                   setLocalErrors((prev) => ({ ...prev, project_estimated_cost: true }));
                 } else {
                   setLocalErrors((prev) => ({ ...prev, project_estimated_cost: false }));
