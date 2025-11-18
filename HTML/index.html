@@ -34,25 +34,60 @@
 
 <body>
 
-    <div class="flex relative flex-row justify-center items-center">
-        <div class="absolute left-2 top-2 mr-10 size-20">
-            <img class="rounded-full" src="../frontend/public/image_dir/LogoOnly.png" alt="Logo" />
+    <div class=" my-2 flex fex-row items-center justify-between">
+        <div>
+            <div class=" flex flex-row items-center justify-start space-x-4 ">
+                <img class="size-20" src="../frontend/public/image_dir/LogoOnly.png">
+                <h1 class="text-3xl font-extrabold text-shadow-md">द सहारा</h1>
+            </div>
+            <div class=" bg-black text-white font-bold">
+                लोन सेविंग्स को-आपरेटिभ सोसाइटी लि.
+            </div>
         </div>
-        <div class="text-center">
-            <h2 class="font-bold text-xl text-center mt-1 tracking-widest">द सहारा
-            </h2>
-            <h3 class="text-center">लोन सेविम्स को अपरेटिभ सोसाइटी
-                लिमिटेड</h3>
-            <h4>प्रधान कार्यालय: मलंगवा, सर्लाही(नेपाल)</h4>
-            <h3 class="text-sm text-center">रजिष्टर्ड प्रधान कार्यालय </h3>
-            <h4 class="mt-3 mb-2 text-center">शाखा: <b>${f.branch}</b></h4>
-            <h5 class="font-bold text-xl text-center my-3">धितो दिने घर जग्गाको मूल्याङ्कन प्रतिवेदन</h5>
+        <div class=" flex flex-col">
+            <div class=" border border-black items-center px-1 justify-center">(नेपाल सरकार सहकारी विभागबाट स्वीकृति
+                प्राप्त)
+                र.नं. १/०५०/०५१</div>
+            <div class=" border border-black items-center px-1 justify-center">प्रधान कार्यालयः मलंगवा, सर्लाही</div>
+            <div class=" border border-black items-center px-1 justify-center">फोन नं. ०४६-५२००१२, ०४६-५२०७५७ फ्याक्स
+                नं.
+                ०४६-५२१११४</div>
+        </div>
+    </div>
 
+    <div class=" flex flex-row items-center justify-between ">
+        <div>
+            <p>प्रधान कार्यालय/ शाखा कार्यालय/नि.सं. केन्द्रः-</p>
+            <p>पत्र संख्या: -</p>
+            <p>चलानी न.: -</p>
         </div>
+        <div class=" pr-10">
+            <p>कोड न. :-</p>
+            <p>मिति: -</p>
+        </div>
+    </div>
+
+    <div class="my-5">
+        <p class="font-bold">श्री मालपोत कार्यालय,</p>
+        <p>___________</p>
+        <p class=" text-center font-semibold">विषयः - धितो (दृष्टि) बन्धक पारित गरिदिने बारे ।</p>
+        <p class="mt-4">
+            उपरोक्त सम्बन्धमा,
+            परदेश <strong>${f.address.permanent.province}</strong>,
+            जिल्ला <strong>${f.address.permanent.district}</strong>,
+            <strong>${f.address.permanent.palika || "—"}</strong>,
+            वडा <strong>${f.address.permanent.wada || "—"}</strong>,
+            टोल <strong>${f.address.permanent.tole || "—"}</strong> मा बसोबास गर्ने व्यक्ति र हाल बसोबास परदेश
+            <strong>${f.address.current.province}</strong>,
+            जिल्ला <strong>${f.address.current.district}</strong>,
+            <strong>${f.address.current.palika || "—"}</strong>,
+            वडा <strong>${f.address.current.wada || "—"}</strong>,
+            टोल <strong>${f.address.current.tole || "—"}</strong>
+            मा बस्ने <strong>${f.gender}</strong>
+        </p>
 
     </div>
 
-    <hr>
     <div class="mt-2">
         <div class="flex flex-row items-center space-x-5">
             <p>मूल्यांकन गर्नेको नामः <b>${f2.evaluatorName}</b></p>
@@ -89,7 +124,7 @@
                 उपलब्ध गराउने गरी स्वीकृत गरियो ।
             </p>
         </div>
-        <div class="my-5 flex flex-row items-center justify-between px-8">
+        <div class="my-5 flex flex-row items-center justify-between">
             <div class=" items-center flex flex-col">
                 <p>___________</p>
                 <p>सदस्य सचिव</p>

@@ -89,10 +89,10 @@ export function PageMaker_LoanApplicationFrom2(data) {
           <td>${row.wardNo || ""}</td>
           <td>${row.plotNo || ""}</td>
           <td class="text-nowrap whitespace-nowrap">${row.area || ""}</td>
-          <td>${row.govApprovedPrice || ""}</td>
-          <td>${row.localApprovedPrice || ""}</td>
-          <td>${total.toFixed(2)}</td>
-          <td>${(total / 2).toFixed(2)}</td>
+          <td>${row.govApprovedPrice ? convert(row.govApprovedPrice, "toNp") : ""}</td>
+          <td>${row.localApprovedPrice ? convert(row.localApprovedPrice, "toNp") : ""}</td>
+          <td>${total.toFixed(2) ? convert(total.toFixed(2), "toNp") : ""}</td>
+          <td>${convert((total / 2).toFixed(2), "toNp")}</td>
         </tr>
       `;
     })
@@ -103,10 +103,10 @@ export function PageMaker_LoanApplicationFrom2(data) {
   <tr class="font-bold">
     <td colspan="6" class="text-right">जम्मा:</td>
     <td>
-      ${table7Row.reduce((sum, r) => sum + (r._total || 0), 0).toFixed(2)}
+      ${convert(table7Row.reduce((sum, r) => sum + (r._total || 0), 0).toFixed(2), "toNp")}
     </td>
     <td>
-      ${table7Row.reduce((sum, r) => sum + (r._total || 0) / 2, 0).toFixed(2)}
+      ${convert(table7Row.reduce((sum, r) => sum + (r._total || 0) / 2, 0).toFixed(2), "toNp")}
     </td>
   </tr>
 </tfoot>
@@ -167,7 +167,7 @@ export function PageMaker_LoanApplicationFrom2(data) {
 
   <div class=" my-5">
             <div>सिफारिस मूल्यः-</div>
-            <p>उपरोक्त बमोजिमको धितोको मूल्यमा नियमानुसार ५०% मार्जिन कटाई अधिकतम रु <b>${f2.fiftyPercentMargin}</b>
+            <p>उपरोक्त बमोजिमको धितोको मूल्यमा नियमानुसार ५०% मार्जिन कटाई अधिकतम रु <b>${convert(f2.fiftyPercentMargin, "toNp")}</b>
                 अक्षरेपी रु. <b>${f2.fiftyPercentMargin_text}</b><br><br> धितो मूल्यांकन गर्नेको दस्तखत :- ___________
             </p>
    </div>
