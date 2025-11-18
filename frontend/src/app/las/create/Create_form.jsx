@@ -18,6 +18,7 @@ import NepaliDateInput from "@/components/NepaliDatePicker";
 import { Button } from "@/components/ui/button";
 import Approver_address_input from "./Approver_address_input";
 import GenderAndMale_status from "@/components/GenderAndMarried_status";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const Create_form = ({ onDataChange, initialData }) => {
   const [applicantType, setApplicantType] = useState("सहारा व्यक्तिगत कर्जा");
@@ -711,19 +712,23 @@ const Create_form = ({ onDataChange, initialData }) => {
           <span className="flex-1 h-px bg-gray-300"></span>
         </div>
         <div className=" ">
-          <div className="flex flex-row items-center justify-between">
+          <div className="flex flex-row items-center space-x-5">
             <p className=" font-bold">धितो मन्जुरीनामा दिनका व्यक्तिगत विवरण</p>
-            <div className=" flex flex-row gap-x-1.5">
-              <Button
-                className={` ${isApprovalGiven ? " bg-red-600 text-white " : ""} `}
-                variant={"outline"}
-                onClick={() => {
-                  setIsApprovalGiven(!isApprovalGiven);
-                  setLocalData((d) => ({ ...d, approver_applicant_name: "" }));
+
+            <div className="text-xs space-x-2 flex items-center justify-center">
+              <Checkbox
+                className={""}
+                checked={isApprovalGiven || false}
+                onCheckedChange={(checked) => {
+                  if (checked) {
+                    setIsApprovalGiven(true);
+                    setLocalData((d) => ({ ...d, approver_applicant_name: "" }));
+                  } else {
+                    setIsApprovalGiven(false);
+                    setLocalData((d) => ({ ...d, approver_applicant_name: "" }));
+                  }
                 }}
-                type="button">
-                स्वीकृति दिइने {!isApprovalGiven ? "छ " : "छैन"} ।
-              </Button>
+              />
             </div>
           </div>
           {/* Row 1 */}

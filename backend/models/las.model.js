@@ -172,6 +172,8 @@ const Form2Schema = new mongoose.Schema({
   evaluatorName: { type: String, default: "" },
   evaluatorPost: { type: String, default: "" },
   evaluationDate: { type: String, default: "" },
+  fiftyPercentMargin: { type: String, default: "" },
+  fiftyPercentMargin_text: { type: String, default: "" },
 });
 
 const LASchema = new mongoose.Schema(

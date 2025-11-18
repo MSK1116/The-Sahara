@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-
+import convert from "number-to-nepali-words";
 import axios from "axios";
 import Table7_copy_for_form2 from "./Table7_copy_for_form2";
 import TableLandEvaluation_and_calculator from "./TableLandEvaluation_and_calculator";
@@ -140,6 +140,34 @@ const Create_form2 = ({ LMSIN, onDataChange }) => {
 
           <Table7_copy_for_form2 localData={localData} initialData={localData.form1?.table7} onDataChange={handleTable1Change} />
           <TableLandEvaluation_and_calculator onDataChange={handleTable2Change} initialData={localData.form1?.table7} />
+
+          <span className="flex items-center my-4">
+            <span className="h-px flex-1 bg-linear-to-r from-transparent to-gray-300"></span>
+            <span className="shrink-0 px-4 text-gray-900">Page 1, Section 3</span>
+            <span className="h-px flex-1 bg-linear-to-l from-transparent to-gray-300"></span>
+          </span>
+
+          <div className=" mb-10">
+            <p className=" font-bold my-5">सिफारिस मूल्यः-</p>
+            <div className=" flex flex-row items-center space-x-5">
+              <div className="w-1/2">
+                <Label>५०% मार्जिन कटाई:</Label>
+                <Input
+                  className="mt-2"
+                  onChange={(e) => {
+                    const cleaned = Number(String(convert(e.target.value, "toEn")).replace(/,/g, ""));
+                    setFrom2((d) => ({ ...d, fiftyPercentMargin: cleaned }));
+                    setFrom2((d) => ({ ...d, fiftyPercentMargin_text: convert(cleaned, "toNpWord", "currency") }));
+                  }}
+                  value={form2.fiftyPercentMargin || ""}
+                />
+              </div>
+              <div className="w-full">
+                <Label>अक्षरेपी रु.</Label>
+                <Input className="mt-2" value={form2.fiftyPercentMargin ? convert(form2.fiftyPercentMargin, "toNpWord", "currency") + " मात्र /-" : ""} disabled />
+              </div>
+            </div>
+          </div>
         </div>
       ) : null}
     </>
