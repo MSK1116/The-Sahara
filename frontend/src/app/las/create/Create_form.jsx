@@ -17,6 +17,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import NepaliDateInput from "@/components/NepaliDatePicker";
 import { Button } from "@/components/ui/button";
 import Approver_address_input from "./Approver_address_input";
+import GenderAndMale_status from "@/components/GenderAndMarried_status";
 
 const Create_form = ({ onDataChange, initialData }) => {
   const [applicantType, setApplicantType] = useState("सहारा व्यक्तिगत कर्जा");
@@ -283,22 +284,35 @@ const Create_form = ({ onDataChange, initialData }) => {
             </div>
 
             {/* Age */}
-            <div className="mt-5">
-              <Label className={localErrors.age ? "text-red-600" : ""} htmlFor="age">
-                उमेर
-              </Label>
-              <Input
-                id="age"
-                name="age"
-                className="mt-2"
-                value={localData.age ? convert(localData.age, "toEn") : ""}
-                onKeyDown={handleEnterFocus}
-                onChange={(e) => {
-                  const valInEn = convert(e.target.value, "toEn");
-                  const numVal = Number(valInEn);
-                  setLocalData((d) => ({ ...d, age: convert(e.target.value, "toNp") }));
-                  setLocalErrors((prev) => ({ ...prev, age: numVal < 18 || numVal > 85 || isNaN(numVal) }));
-                }}
+            <div className="mt-5 flex flex-row items-center justify-center space-x-3">
+              <div>
+                <Label className={localErrors.age ? "text-red-600" : ""} htmlFor="age">
+                  उमेर
+                </Label>
+                <Input
+                  id="age"
+                  name="age"
+                  className="mt-2"
+                  value={localData.age ? convert(localData.age, "toEn") : ""}
+                  onKeyDown={handleEnterFocus}
+                  onChange={(e) => {
+                    const valInEn = convert(e.target.value, "toEn");
+                    const numVal = Number(valInEn);
+                    setLocalData((d) => ({ ...d, age: convert(e.target.value, "toNp") }));
+                    setLocalErrors((prev) => ({ ...prev, age: numVal < 18 || numVal > 85 || isNaN(numVal) }));
+                  }}
+                />
+              </div>
+              <GenderAndMale_status
+                gender={localData.applicant_gender || ""}
+                maritalStatus={localData.applicant_maritalStatus || ""}
+                onDataChange={(val) =>
+                  setLocalData((d) => ({
+                    ...d,
+                    applicant_gender: val.gender,
+                    applicant_maritalStatus: val.marital,
+                  }))
+                }
               />
             </div>
 

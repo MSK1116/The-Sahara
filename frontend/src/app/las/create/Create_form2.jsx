@@ -13,10 +13,9 @@ import axios from "axios";
 import Table7_copy_for_form2 from "./Table7_copy_for_form2";
 import TableLandEvaluation_and_calculator from "./TableLandEvaluation_and_calculator";
 
-const Create_form2 = ({ LMSIN }) => {
-  const [applicantData, setApplicantData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [localData, setLocalData] = useState({}); // added
+const Create_form2 = ({ LMSIN, onDataChange }) => {
+  const [localData, setLocalData] = useState({});
+  const [form2, setFrom2] = useState({});
   const officers = [
     {
       id: 1,
@@ -41,32 +40,45 @@ const Create_form2 = ({ LMSIN }) => {
   ];
 
   const handleDataFetch = async () => {
-    setLoading(true);
     try {
       const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/getApplicant`, { LMSIN });
 
       if (temp.data) {
-        setApplicantData(temp.data);
-        setLocalData(temp.data.form1 ?? {}); // initialize
+        setLocalData(temp.data ?? {});
+        setFrom2(temp.data.form2 ?? {});
       }
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false);
     }
   };
 
   useEffect(() => {
     handleDataFetch();
+  }, [LMSIN]);
+
+  const mergeTable7 = useCallback((newRows) => {
+    setLocalData((prev) => ({
+      ...prev,
+      form1: {
+        ...prev.form1,
+        table7: newRows,
+      },
+    }));
   }, []);
 
-  const handleTable7Change = useCallback((newRows) => {
-    setLocalData((d) => ({ ...d, table7: newRows }));
-  }, []);
+  const handleTable1Change = mergeTable7;
+  const handleTable2Change = mergeTable7;
+
+  useEffect(() => {
+    if (onDataChange) {
+      onDataChange({ form1: localData.form1, form2 });
+    }
+  }, [localData, form2]);
 
   return (
     <>
-      {applicantData?.form1 ? (
+      {localData?.form1 ? (
         <div className="pt-10 px-10 pb-0">
           <div className="flex flex-row justify-between items-center space-x-5">
             {/* Evaluator Name - ShadCN Combobox */}
@@ -75,7 +87,7 @@ const Create_form2 = ({ LMSIN }) => {
               <Popover>
                 <PopoverTrigger asChild>
                   <Button variant="outline" role="combobox" className="w-full mt-2 justify-between">
-                    {localData.evaluatorName || "छान्नुहोस्"}
+                    {form2.evaluatorName || "छान्नुहोस्"}
                     <ChevronsUpDown className="opacity-50 h-4 w-4" />
                   </Button>
                 </PopoverTrigger>
@@ -91,11 +103,12 @@ const Create_form2 = ({ LMSIN }) => {
                             key={o.id}
                             value={o.name}
                             onSelect={() => {
-                              setLocalData((d) => ({
+                              setFrom2((d) => ({
                                 ...d,
                                 evaluatorName: o.name,
                                 evaluatorPost: o.post,
                               }));
+                              document.body.click(); // Close popover
                             }}>
                             <Check className={cn("mr-2 h-4 w-4", o.name === localData.evaluatorName ? "opacity-100" : "opacity-0")} />
                             {o.name}
@@ -110,12 +123,12 @@ const Create_form2 = ({ LMSIN }) => {
 
             <div className="w-full">
               <Label>पद :</Label>
-              <Input className="mt-2" value={localData.evaluatorPost || ""} disabled />
+              <Input className="mt-2" value={form2.evaluatorPost || ""} disabled />
             </div>
 
             <div className="w-full">
               <Label htmlFor="date">स्थलमा गई मूल्यांकन गरेको मितिः</Label>
-              <NepaliDateInput className="mt-2" />
+              <NepaliDateInput value={form2.evaluationDate} onChange={(val) => setFrom2((d) => ({ ...d, evaluationDate: val }))} className="mt-2" />
             </div>
           </div>
 
@@ -125,8 +138,8 @@ const Create_form2 = ({ LMSIN }) => {
             <span className="h-px flex-1 bg-linear-to-l from-transparent to-gray-300"></span>
           </span>
 
-          <Table7_copy_for_form2 localData={localData} initialData={applicantData.form1?.table7} onDataChange={handleTable7Change} />
-          <TableLandEvaluation_and_calculator localData={localData} initialData={applicantData.form1?.table7} />
+          <Table7_copy_for_form2 localData={localData} initialData={localData.form1?.table7} onDataChange={handleTable1Change} />
+          <TableLandEvaluation_and_calculator onDataChange={handleTable2Change} initialData={localData.form1?.table7} />
         </div>
       ) : null}
     </>

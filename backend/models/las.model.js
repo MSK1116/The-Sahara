@@ -92,6 +92,8 @@ const Table7Schema = new mongoose.Schema(
     charKila: { type: String, default: "" },
     estimatedValue: { type: Number, default: 0 },
     remarks: { type: String, default: "" },
+    govApprovedPrice: { type: Number, default: "" },
+    localApprovedPrice: { type: Number, default: "" },
   },
   { _id: false }
 );
@@ -130,6 +132,8 @@ const Form1Schema = new mongoose.Schema({
 
   applicant_name: { type: String, default: "" },
   age: { type: String, default: "" },
+  applicant_gender: { type: String, default: "male" },
+  applicant_maritalStatus: { type: String, default: "single" },
 
   phone1: { type: String, default: "" },
   phone2: { type: String, default: "" },
@@ -164,10 +168,17 @@ const Form1Schema = new mongoose.Schema({
   paymentFrequency: { type: String, default: "मासिक" },
 });
 
+const Form2Schema = new mongoose.Schema({
+  evaluatorName: { type: String, default: "" },
+  evaluatorPost: { type: String, default: "" },
+  evaluationDate: { type: String, default: "" },
+});
+
 const LASchema = new mongoose.Schema(
   {
     LMSIN: { type: String, unique: true },
     form1: { type: Form1Schema, default: () => ({}) },
+    form2: { type: Form2Schema, default: () => ({}) },
   },
   { timestamps: true }
 );

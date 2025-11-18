@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
 import AreaInput from "@/components/AreaInput";
 
-const TableLandEvaluation_and_calculator = ({ initialData, localData }) => {
+const TableLandEvaluation_and_calculator = ({ initialData, onDataChange }) => {
   const initialRow = {
     id: Date.now(),
     wardNo: "",
@@ -22,7 +22,7 @@ const TableLandEvaluation_and_calculator = ({ initialData, localData }) => {
     if (parts.length === 1) return parts[0];
     if (parts.length === 4) {
       const [A, B, C, D] = parts;
-      return A * 20 + B + C / 20 + D / (20 * 15);
+      return A * 20 + B + C / 20 + D / (20 * 16);
     }
     return 0;
   };
@@ -33,6 +33,7 @@ const TableLandEvaluation_and_calculator = ({ initialData, localData }) => {
         ...newRows[rowIndex],
         [field]: value,
       };
+      if (onDataChange) onDataChange(newRows);
       return newRows;
     });
   };
@@ -69,7 +70,6 @@ const TableLandEvaluation_and_calculator = ({ initialData, localData }) => {
                   <Input disabled readOnly value={row.plotNo || ""} placeholder="कि.न" />
                 </td>
                 <td className="border p-2">
-                  {console.log(row.area)}
                   <AreaInput disabled={true} readOnly value={row.area || ""} />
                 </td>
                 <td title={katha} className="border p-2">
