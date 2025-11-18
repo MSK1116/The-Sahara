@@ -65,6 +65,9 @@ const Browser_wrapper = ({ LMSIN }) => {
         success: "Applicant updated successfully!",
         error: "Failed to update applicant.",
       });
+      const temp = await promise;
+      temp.data && setApplicantData(temp.data.data);
+      return temp.data.data;
     } catch (error) {
       console.error(error);
     }
@@ -136,7 +139,7 @@ const Browser_wrapper = ({ LMSIN }) => {
         )}
       </div>
       <div className="flex-1">
-        <Create_navigator currentPage={currentPage} handleFormPage={handleFormPage} LMSIN={LMSIN} data={form1Data} onSave={handleSave} isEditing={true} />
+        <Create_navigator currentPage={currentPage} handleFormPage={handleFormPage} LMSIN={LMSIN} data={applicantData} onSave={handleSave} isEditing={true} />
       </div>
     </main>
   );

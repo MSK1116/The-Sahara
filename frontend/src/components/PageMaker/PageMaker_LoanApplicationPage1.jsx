@@ -1,5 +1,5 @@
 export function PageMaker_LoanApplicationPage1(data) {
-  const f = data;
+  const f = data.form1;
   console.log(f);
 
   // Conditional content for applicant type
@@ -175,7 +175,7 @@ export function PageMaker_LoanApplicationPage1(data) {
         <td>${row.wardNo || ""}</td>
         <td>${row.serialNo || ""}</td>
         <td>${row.plotNo || ""}</td>
-        <td>${row.area || ""}</td>
+        <td class="text-nowrap whitespace-nowrap">${row.area || ""}</td>
         <td>${row.remarks || ""}</td>
       </tr>
     `
@@ -284,14 +284,13 @@ export function PageMaker_LoanApplicationPage1(data) {
       <tr>
         <td>${index + 1}</td>
         <td>${row.ownerName || ""}</td>
-        <td>${row.province || ""}</td>
         <td>${row.district || ""}</td>
         <td>${row.palika || ""}</td>
         <td>${row.wardNo || ""}</td>
         <td>${row.tole || ""}</td>
         <td>${row.sheetNo || ""}</td>
         <td>${row.plotNo || ""}</td>
-        <td>${row.area || ""}</td>
+        <td class="text-nowrap whitespace-nowrap" >${row.area || ""}</td>
         <td>${row.charKila || ""}</td>
         <td>${row.estimatedValue || ""}</td>
         <td>${row.remarks || ""}</td>
@@ -311,7 +310,7 @@ export function PageMaker_LoanApplicationPage1(data) {
         <div class="">
             <h1 class="text-xs mt-5 text-center">सहकारी ऐन २०४८ बमोजिम स्थापित</h1>
             <h2 class="font-bold text-center mt-1 tracking-widest">द सहारा लोन सेविम्स को अपरेटिभ सोसाइटी लिमिटेड</h2>
-            <h3 class="text-sm text-center">रजिष्टर्ड प्रधान कार्यालय मलंगवा, सलाही (नेपाल)</h3>
+            <h3 class="text-sm text-center">रजिष्टर्ड प्रधान कार्यालय मलंगवा, सर्लाही(नेपाल)</h3>
             <h4 class="mt-5 mb-2 underline text-center">Loan Application</h4>
         </div>
     </div>

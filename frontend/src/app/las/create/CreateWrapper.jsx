@@ -77,7 +77,7 @@ const CreateWrapper = () => {
           {currentPage === 5 && <div className="p-10">Page 5 is under construction.</div>}
         </div>
         <div className="flex-1 ">
-          <Create_navigator currentPage={currentPage} handleFormPage={handleFormPage} isUpserting={isUpserting} LMSIN={Lmsin} data={dataFromServer} onSave={handleUpsert} />
+          <Create_navigator currentPage={currentPage} handleFormPage={handleFormPage} isUpserting={isUpserting} LMSIN={Lmsin} onSave={handleUpsert} />
         </div>
       </main>
     </>

@@ -38,22 +38,71 @@
         <div class="absolute left-2 top-2 mr-10 size-20">
             <img class="rounded-full" src="../frontend/public/image_dir/LogoOnly.png" alt="Logo" />
         </div>
-        <div class="">
-            <h1 class="text-xs mt-5 text-center">सहकारी ऐन २०४८ बमोजिम स्थापित</h1>
-            <h2 class="font-bold text-center mt-1 tracking-widest">द सहारा लोन सेविम्स को अपरेटिभ सोसाइटी
-                लिमिटेड
+        <div class="text-center">
+            <h2 class="font-bold text-xl text-center mt-1 tracking-widest">द सहारा
             </h2>
-            <h3 class="text-sm text-center">रजिष्टर्ड प्रधान कार्यालय मलंगवा, सलाही (नेपाल)</h3>
-            <h4 class="mt-5 mb-2 underline text-center">Loan Application</h4>
+            <h3 class="text-center">लोन सेविम्स को अपरेटिभ सोसाइटी
+                लिमिटेड</h3>
+            <h4>प्रधान कार्यालय: मलंगवा, सर्लाही(नेपाल)</h4>
+            <h3 class="text-sm text-center">रजिष्टर्ड प्रधान कार्यालय </h3>
+            <h4 class="mt-3 mb-2 text-center">शाखा: <b>${f.branch}</b></h4>
+            <h5 class="font-bold text-xl text-center my-3">धितो दिने घर जग्गाको मूल्याङ्कन प्रतिवेदन</h5>
+
         </div>
+
     </div>
 
     <hr>
-    <div class="flex items-center text-xs mt-1 justify-between flex-row">
-        <h5>ऋण माग पत्र दर्ता संख्या: -</h5>
-        <h5>ऋण भाग पत्र दर्ता मिति: -</h5>
-        <h5>ऋण संख्या:-</h5>
-        <h5>दर्ता गर्नेको दस्तखत: -</h5>
+    <div class="mt-2">
+        <div class="flex flex-row items-center space-x-5">
+            <p>मूल्यांकन गर्नेको नामः <b>${f2.evaluatorName}</b></p>
+            <p>पद: <b>${f2.evaluatorPost}</b></p>
+        </div>
+        <div>
+            <p>स्थलमा गई मूल्यांकन गरेको मितिः <b>12/12/14</b></p>
+            <p>ऋण निवेदकको नामः <b>${f.applicant_name}</b></p>
+            <p>
+                स्थायी ठेगाना: -
+                <b>${f.address.permanent.province}</b>,
+                <b>${f.address.permanent.district}</b>,
+                <b>${f.address.permanent.palika || "—"}</b>,
+                <b>${f.address.permanent.wada || "—"}</b>,
+                <b>${f.address.permanent.tole || "—"}</b> र हाल बसोबास गरेको ठेगाना: -
+                <b>${f.address.current.province}</b>,
+                <b>${f.address.current.district}</b>,
+                <b>${f.address.current.palika || "—"}</b>,
+                <b>${f.address.current.wada || "—"}</b>,
+                <b>${f.address.current.tole || "—"}</b>
+            </p>
+            <p>ऋणको उद्देश्यः- <b>${f.desc1</b>}</p>
+        </div>
+
+        <div class=" my-5">
+            <div>सिफारिस मूल्यः-</div>
+            <p>उपरोक्त बमोजिमको धितोको मूल्यमा नियमानुसार ५०% मार्जिन कटाई अधिकतम रु <b>{f2.fiftyPercentMargin}</b>
+                अक्षरेपी रु. <b>{f2.fiftyPercentMargin_text}</b><br><br> धितो मूल्यांकन गर्नेको दस्तखत :- ___________
+            </p>
+        </div>
+        <div class="my-5">
+            <p>मिति: ___________ को ___________ समितिको बैठक नं. ___________ बाट ___________ शीर्षक अन्तर्गत ___________
+                अवधीको लागि ___________ गर्न ऋण रु. ___________ अक्षरेपी रु. ___________ ब्याज दर ___________ मा ऋण
+                उपलब्ध गराउने गरी स्वीकृत गरियो ।
+            </p>
+        </div>
+        <div class="my-5 flex flex-row items-center justify-between px-8">
+            <div class=" items-center flex flex-col">
+                <p>___________</p>
+                <p>सदस्य सचिव</p>
+            </div>
+            <div class=" items-center flex flex-col">
+                <p>___________</p>
+                <p>सदस्य </p>
+            </div>
+            <div class=" items-center flex flex-col">
+                <p>___________</p>
+                <p>अध्यक्ष/संयोजक</p>
+            </div>
+        </div>
     </div>
     <h2 class="mt-5 mb-0.5">श्रीमान् कार्यालय प्रमुख ज्यु</h2>
     <h3 class="my-1">द सहारा लोन सेविम्स को अपरेटिभ सोसाइटी लिमिटेड</h3>
@@ -108,6 +157,9 @@
     </table>
     <p>व्याज बुझाउने: - ${f.paymentFrequency}</p>
 
+
+
+    <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter/dist/nepali-date-converter.umd.js"></script>
 </body>
 
 </html>

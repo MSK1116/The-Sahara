@@ -156,7 +156,7 @@ const Create_form2 = ({ LMSIN, onDataChange }) => {
                   className="mt-2"
                   onChange={(e) => {
                     const cleaned = Number(String(convert(e.target.value, "toEn")).replace(/,/g, ""));
-                    setFrom2((d) => ({ ...d, fiftyPercentMargin: cleaned }));
+                    if (cleaned) setFrom2((d) => ({ ...d, fiftyPercentMargin: cleaned }));
                     setFrom2((d) => ({ ...d, fiftyPercentMargin_text: convert(cleaned, "toNpWord", "currency") }));
                   }}
                   value={form2.fiftyPercentMargin || ""}
