@@ -53,11 +53,12 @@ const Browser_wrapper = ({ LMSIN }) => {
       form2: form2Data,
       form3: form3Data,
     };
-    console.log(aggregated);
+
     if (!aggregated) {
       toast.error("No data to save.");
       return;
     }
+
     try {
       const promise = axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/upsert`, { ...aggregated, LMSIN: LMSIN });
       toast.promise(promise, {

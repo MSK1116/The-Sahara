@@ -44,9 +44,9 @@ const AreaInput = ({ value = "", onChange, disabled = false }) => {
   };
 
   const handleChange = (index, val) => {
+    const cleanVal = val.replace(/\s/g, "");
     const newArr = [...inputs];
-    newArr[index] = val;
-
+    newArr[index] = cleanVal;
     setInputs(newArr);
     validate(newArr);
   };

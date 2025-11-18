@@ -3,7 +3,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
 import AreaInput from "@/components/AreaInput";
-
+import convert from "number-to-nepali-words";
 const TableLandEvaluation_and_calculator = ({ initialData, onDataChange }) => {
   const initialRow = {
     id: Date.now(),
@@ -17,8 +17,8 @@ const TableLandEvaluation_and_calculator = ({ initialData, onDataChange }) => {
 
   const calculateKatha = (area) => {
     if (!area) return 0;
-    const parts = area.split("-").map(Number);
 
+    const parts = area.split("-").map((part) => Number(convert(part, "toEn")));
     if (parts.length === 1) return parts[0];
     if (parts.length === 4) {
       const [A, B, C, D] = parts;
@@ -72,16 +72,30 @@ const TableLandEvaluation_and_calculator = ({ initialData, onDataChange }) => {
                 <td className="border p-2">
                   <AreaInput disabled={true} readOnly value={row.area || ""} />
                 </td>
-                <td title={katha} className="border p-2">
-                  <Input value={row.govApprovedPrice} onChange={(e) => handleInputChange(index, "govApprovedPrice", e.target.value)} placeholder="नेपाल सरकार वा निकायले तोकेको मूल्य प्रतिकठ्ठा" />
+                <td title={katha || ""} className="border p-2">
+                  <Input
+                    value={row.govApprovedPrice}
+                    onChange={(e) => {
+                      const val = convert(e.target.value, "toEn");
+                      handleInputChange(index, "govApprovedPrice", val);
+                    }}
+                    placeholder="नेपाल सरकार वा निकायले तोकेको मूल्य प्रतिकठ्ठा"
+                  />
                 </td>
                 <td className="border p-2">
-                  <Input value={row.localApprovedPrice} onChange={(e) => handleInputChange(index, "localApprovedPrice", e.target.value)} placeholder="चलन चल्तीको मूल्य प्रतिकठ्ठा" />
+                  <Input
+                    value={row.localApprovedPrice || ""}
+                    onChange={(e) => {
+                      const val = convert(e.target.value, "toEn");
+                      handleInputChange(index, "localApprovedPrice", val);
+                    }}
+                    placeholder="चलन चल्तीको मूल्य प्रतिकठ्ठा"
+                  />
                 </td>
-                <td className="border p-2">
+                <td title={total || ""} className="border p-2">
                   <Input disabled readOnly value={total || ""} placeholder="कि.न" />
                 </td>
-                <td className="border p-2">
+                <td title={total / 2 || ""} className="border p-2">
                   <Input disabled readOnly value={total / 2 || ""} placeholder="कि.न" />
                 </td>
               </tr>

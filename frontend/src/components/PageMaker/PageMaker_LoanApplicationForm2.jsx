@@ -1,12 +1,12 @@
 import NepaliDate from "nepali-date-converter";
-
+import convert from "number-to-nepali-words";
 export function PageMaker_LoanApplicationFrom2(data) {
   const f = data.form1;
   const f2 = data.form2;
   const calculateKatha = (area) => {
     if (!area) return 0;
-    const parts = area.split("-").map(Number);
 
+    const parts = area.split("-").map((part) => Number(convert(part, "toEn")));
     if (parts.length === 1) return parts[0];
     if (parts.length === 4) {
       const [A, B, C, D] = parts;
