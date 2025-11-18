@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MdDelete } from "react-icons/md";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
-
+import convert from "number-to-nepali-words";
 import Province1JSON from "@/asset/Province1.json";
 import Province2JSON from "@/asset/Province2.json";
 import Province3JSON from "@/asset/Province3.json";
@@ -52,18 +52,6 @@ export default function Table7({ onDataChange, localData, initialData }) {
     onDataChange && onDataChange(newRows);
   };
 
-  const getDistricts = (provinceName) => {
-    if (!provinceName) return [];
-    const province = allProvinces.find((p) => p.name === provinceName);
-    return province?.districts || [];
-  };
-
-  const getPalikas = (provinceName, districtName) => {
-    if (!provinceName || !districtName) return [];
-    const province = allProvinces.find((p) => p.name === provinceName);
-    const district = province?.districts.find((d) => d.name === districtName);
-    return district?.palikas || [];
-  };
   const handleEnterFocus = useCallback((e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -133,22 +121,48 @@ export default function Table7({ onDataChange, localData, initialData }) {
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </td>
-                {/* Palika Dropdown */}
 
                 <td className="border p-2">
                   <Input onKeyDown={handleEnterFocus} value={row.palika || ""} onChange={(e) => handleInputChange(row.id, "palika", e.target.value)} placeholder="पालिका" />
                 </td>
+
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.wardNo || ""} onChange={(e) => handleInputChange(row.id, "wardNo", e.target.value)} placeholder="वडा नं" />
+                  <Input
+                    onKeyDown={handleEnterFocus}
+                    value={row.wardNo || ""}
+                    onChange={(e) => {
+                      const val = convert(e.target.value, "toNp");
+                      handleInputChange(row.id, "wardNo", val);
+                    }}
+                    placeholder="वडा नं"
+                  />
                 </td>
+                {/* tole */}
                 <td className="border p-2">
                   <Input onKeyDown={handleEnterFocus} value={row.tole || ""} onChange={(e) => handleInputChange(row.id, "tole", e.target.value)} placeholder="टोल / बाटो" />
                 </td>
+                {/* sheetNo */}
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.sheetNo || ""} onChange={(e) => handleInputChange(row.id, "sheetNo", e.target.value)} placeholder="सि.न" />
+                  <Input
+                    onKeyDown={handleEnterFocus}
+                    value={row.sheetNo || ""}
+                    onChange={(e) => {
+                      const val = convert(e.target.value, "toNp");
+                      handleInputChange(row.id, "sheetNo", val);
+                    }}
+                    placeholder="सि.न"
+                  />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.plotNo || ""} onChange={(e) => handleInputChange(row.id, "plotNo", e.target.value)} placeholder="कि.न" />
+                  <Input
+                    onKeyDown={handleEnterFocus}
+                    value={row.plotNo || ""}
+                    onChange={(e) => {
+                      const val = convert(e.target.value, "toNp");
+                      handleInputChange(row.id, "plotNo", val);
+                    }}
+                    placeholder="कि.न"
+                  />
                 </td>
                 <td className="border p-2">
                   <AreaInput value={row.area || ""} onChange={(val) => handleInputChange(row.id, "area", val)} />

@@ -44,8 +44,6 @@ const AreaInput = ({ value = "", onChange, disabled = false }) => {
   };
 
   const handleChange = (index, val) => {
-    if (!/^\d*$/.test(val)) return;
-
     const newArr = [...inputs];
     newArr[index] = val;
 
