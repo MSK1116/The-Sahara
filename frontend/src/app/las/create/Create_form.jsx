@@ -23,6 +23,8 @@ const Create_form = ({ onDataChange, initialData }) => {
   const [applicantType, setApplicantType] = useState("सहारा व्यक्तिगत कर्जा");
   const [paymentFrequency, setPaymentFrequency] = useState("मासिक");
   const [isApprovalGiven, setIsApprovalGiven] = useState(false);
+  const [isPanRequired, setIsPanRequired] = useState(false);
+
   const [localErrors, setLocalErrors] = useState({
     personal_education: true,
   });
@@ -31,6 +33,14 @@ const Create_form = ({ onDataChange, initialData }) => {
 
   // central form state derived from form fields and child components
   const [localData, setLocalData] = useState(initialData || {});
+  useEffect(() => {
+    const isPerson = applicantType !== "सहारा ब्यापारिक कर्जा";
+    if (!isPerson && convert(localData.amount, "toEn") > 300000) {
+      setIsPanRequired(true);
+    } else {
+      setIsPanRequired(false);
+    }
+  }, [applicantType, localData.amount]);
 
   useEffect(() => {
     if (initialData) {
@@ -103,9 +113,6 @@ const Create_form = ({ onDataChange, initialData }) => {
       }, 100);
     }
   }, [applicantType]);
-
-  // disable blocks when applicant is 'व्यक्ति'
-  const isPerson = applicantType !== "सहारा ब्यापारिक कर्जा";
 
   // helper: read form inputs using FormData and push into localData
   const readFormToObject = () => {
@@ -431,7 +438,7 @@ const Create_form = ({ onDataChange, initialData }) => {
           <div className="w-full flex flex-row space-x-5">
             <div className="w-1/2 space-y-5">
               <div className="w-full">
-                <Label className={` ${isPerson && "text-gray-500"} ${localErrors.companyName && "text-red-600"} `} htmlFor={`"companyName `}>
+                <Label className={` ${!isPanRequired && "text-gray-500"} ${localErrors.companyName && "text-red-600"} `} htmlFor={`"companyName `}>
                   फर्म/कम्पनीको नाम
                 </Label>
                 <Input
@@ -449,11 +456,11 @@ const Create_form = ({ onDataChange, initialData }) => {
                       setLocalErrors((prev) => ({ ...prev, companyName: false }));
                     }
                   }}
-                  disabled={isPerson}
+                  disabled={!isPanRequired}
                 />
               </div>
               <div className="w-full">
-                <Label className={` ${isPerson && "text-gray-500"} ${localErrors.shareholderNumber && "text-red-600"} `} htmlFor="company_shareholderNumber">
+                <Label className={` ${!isPanRequired && "text-gray-500"} ${localErrors.shareholderNumber && "text-red-600"} `} htmlFor="company_shareholderNumber">
                   शेयर सदस्य नं.
                 </Label>
                 <Input
@@ -471,11 +478,11 @@ const Create_form = ({ onDataChange, initialData }) => {
                       setLocalErrors((prev) => ({ ...prev, company_shareholderNumber: false }));
                     }
                   }}
-                  disabled={isPerson}
+                  disabled={!isPanRequired}
                 />
               </div>
               <div className="w-full">
-                <Label className={` ${isPerson && "text-gray-500"}`} htmlFor="company_registrationOffice">
+                <Label className={` ${!isPanRequired && "text-gray-500"}`} htmlFor="company_registrationOffice">
                   रजिष्ट्रेशन गर्ने कार्यालयको नाम
                 </Label>
                 <Input
@@ -485,11 +492,11 @@ const Create_form = ({ onDataChange, initialData }) => {
                   value={localData.company_registrationOffice || ""}
                   onKeyDown={handleEnterFocus}
                   onChange={(e) => setLocalData((d) => ({ ...d, company_registrationOffice: e.target.value }))}
-                  disabled={isPerson}
+                  disabled={!isPanRequired}
                 />
               </div>
               <div className="w-full">
-                <Label className={` ${isPerson && "text-gray-500"}`} htmlFor="savingsAccountNumber">
+                <Label className={` ${!isPanRequired && "text-gray-500"}`} htmlFor="savingsAccountNumber">
                   बचत खाता नं.
                 </Label>
                 <Input
@@ -499,14 +506,14 @@ const Create_form = ({ onDataChange, initialData }) => {
                   value={localData.savingsAccountNumber || ""}
                   onKeyDown={handleEnterFocus}
                   onChange={(e) => setLocalData((d) => ({ ...d, savingsAccountNumber: e.target.value }))}
-                  disabled={isPerson}
+                  disabled={!isPanRequired}
                 />
               </div>
             </div>
 
             <div className="w-1/2 space-y-5">
               <div className="w-full">
-                <Label className={` ${isPerson && "text-gray-500"}`} htmlFor="company_registrationNumber">
+                <Label className={` ${!isPanRequired && "text-gray-500"}`} htmlFor="company_registrationNumber">
                   रजिष्ट्रेशन नं.
                 </Label>
                 <Input
@@ -516,15 +523,15 @@ const Create_form = ({ onDataChange, initialData }) => {
                   value={localData.company_registrationNumber || ""}
                   onKeyDown={handleEnterFocus}
                   onChange={(e) => setLocalData((d) => ({ ...d, company_registrationNumber: e.target.value }))}
-                  disabled={isPerson}
+                  disabled={!isPanRequired}
                 />
               </div>
               <div className="w-full">
-                <Label className={` ${isPerson && "text-gray-500"}`} htmlFor="company_registrationDate">
+                <Label className={` ${!isPanRequired && "text-gray-500"}`} htmlFor="company_registrationDate">
                   रजिष्ट्रेशन मिति
                 </Label>
-                {isPerson ? (
-                  <Input id="company_registrationDate" name="company_registrationDate" className="w-full mt-2" disabled={isPerson} />
+                {!isPanRequired ? (
+                  <Input id="company_registrationDate" name="company_registrationDate" className="w-full mt-2" disabled={!isPanRequired} />
                 ) : (
                   <NepaliDateInput
                     handleEnterFocus={handleEnterFocus}
@@ -532,23 +539,23 @@ const Create_form = ({ onDataChange, initialData }) => {
                     name="company_registrationDate"
                     value={localData.company_registrationDate || ""}
                     onChange={(val) => setLocalData((d) => ({ ...d, company_registrationDate: val }))}
-                    disabled={isPerson}
+                    disabled={!isPanRequired}
                     className="w-full mt-2 cursor-default"
                   />
                 )}
               </div>
               <div className="w-full">
-                <Label className={` ${isPerson && "text-gray-500"}`} htmlFor="panNumber">
+                <Label className={` ${!isPanRequired && "text-gray-500"}`} htmlFor="panNumber">
                   आयकर आ/स्थ नं. (PAN)
                 </Label>
-                <Input id="panNumber" name="panNumber" className="w-full mt-2" value={localData.panNumber || ""} onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, panNumber: e.target.value }))} disabled={isPerson} />
+                <Input id="panNumber" name="panNumber" className="w-full mt-2" value={localData.panNumber || ""} onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, panNumber: e.target.value }))} disabled={!isPanRequired} />
               </div>
               <div className="w-full">
-                <Label className={` ${isPerson && "text-gray-500"}`} htmlFor="panDate">
+                <Label className={` ${!isPanRequired && "text-gray-500"}`} htmlFor="panDate">
                   आयकर आ/स्थ नं. (PAN) मिति
                 </Label>
-                {isPerson ? (
-                  <Input id="panDate" name="panDate" className="w-full mt-2" disabled={isPerson} />
+                {!isPanRequired ? (
+                  <Input id="panDate" name="panDate" className="w-full mt-2" disabled={!isPanRequired} />
                 ) : (
                   <NepaliDateInput id="panDate" name="panDate" value={localData.panDate || ""} className="w-full mt-2" onChange={(val) => setLocalData((d) => ({ ...d, panDate: val }))} />
                 )}
@@ -558,7 +565,7 @@ const Create_form = ({ onDataChange, initialData }) => {
         </div>
         <div className=" flex flex-row items-start justify-between mt-5 space-x-5">
           <div className=" w-full mt-5">
-            <Label className={` ${isPerson && "text-gray-500"}`} htmlFor="business_type">
+            <Label className={` ${!isPanRequired && "text-gray-500"}`} htmlFor="business_type">
               व्यापारको प्रकार
             </Label>
             <Input
@@ -568,12 +575,12 @@ const Create_form = ({ onDataChange, initialData }) => {
               value={localData.business_type || ""}
               onKeyDown={handleEnterFocus}
               onChange={(e) => setLocalData((d) => ({ ...d, business_type: e.target.value }))}
-              disabled={isPerson}
+              disabled={!isPanRequired}
             />
           </div>
-          <ProjectAddressSelector disabled={isPerson} handleEnterFocus={handleEnterFocus} onProjectChange={useCallback((val) => setLocalData((d) => ({ ...d, projectAddress: val })), [])} initialData={localData.projectAddress} />
+          <ProjectAddressSelector disabled={!isPanRequired} handleEnterFocus={handleEnterFocus} onProjectChange={useCallback((val) => setLocalData((d) => ({ ...d, projectAddress: val })), [])} initialData={localData.projectAddress} />
           <div className="w-full mt-5">
-            <Label className={` ${isPerson && "text-gray-500"} ${localErrors.project_estimated_cost && "text-red-600"} `} htmlFor="project_estimated_cost">
+            <Label className={` ${!isPanRequired && "text-gray-500"} ${localErrors.project_estimated_cost && "text-red-600"} `} htmlFor="project_estimated_cost">
               परियोजनाको अनुमानित कुल लागत
             </Label>
             <Input
@@ -592,11 +599,11 @@ const Create_form = ({ onDataChange, initialData }) => {
                   setLocalErrors((prev) => ({ ...prev, project_estimated_cost: false }));
                 }
               }}
-              disabled={isPerson}
+              disabled={!isPanRequired}
             />
           </div>
           <div className="w-full mt-5">
-            <Label className={` ${isPerson && "text-gray-500"}`} htmlFor="project_estimated_cost_text">
+            <Label className={` ${!isPanRequired && "text-gray-500"}`} htmlFor="project_estimated_cost_text">
               परियोजनाको अनुमानित कुल लागत (अक्षरेपी)
             </Label>
             <Input
