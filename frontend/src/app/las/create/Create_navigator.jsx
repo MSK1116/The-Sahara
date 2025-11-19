@@ -10,7 +10,7 @@ import { PageMaker_LoanApplicationFrom2 } from "@/components/PageMaker/PageMaker
 import toast from "react-hot-toast";
 import { PageMaker_LoanApplicationLetterToMalpot } from "@/components/PageMaker/PageMaker_LoanApplicationLetterToMalpot";
 
-const Create_navigator = ({ currentPage, onSave, data, handleFormPage, isUpserting, LMSIN, isEditing = false }) => {
+const Create_navigator = ({ currentPage, onSave, handleFormPage, isUpserting, LMSIN, isEditing = false }) => {
   const [openPrintModal, setOpenPrintModal] = useState(false);
 
   const handlePrint1 = async () => {

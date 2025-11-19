@@ -10,7 +10,8 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-const Home_page = () => {
+const Home_page = ({ sessionAuth0 }) => {
+  console.log(sessionAuth0);
   const router = useRouter();
   const [lmsin, setLmsin] = useState("");
 

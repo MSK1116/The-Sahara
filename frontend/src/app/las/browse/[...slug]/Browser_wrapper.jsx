@@ -70,7 +70,7 @@ const Browser_wrapper = ({ LMSIN }) => {
       toast.promise(promise, {
         loading: "Updating applicant...",
         success: "Applicant updated successfully!",
-        error: "Failed to update applicant.",
+        error: (err) => err?.response?.data?.message || "Failed to update applicant. Please try again.",
       });
       const temp = await promise;
       temp.data && setApplicantData(temp.data.data);
@@ -91,9 +91,11 @@ const Browser_wrapper = ({ LMSIN }) => {
     );
   }
 
-  const handleFormPage = (pageNumber) => {
-    handleSave();
-    setCurrentPage(pageNumber);
+  const handleFormPage = async (page) => {
+    const success = await handleSave();
+    if (success) {
+      setCurrentPage(page);
+    }
   };
 
   const handleSearch = () => {
@@ -147,7 +149,7 @@ const Browser_wrapper = ({ LMSIN }) => {
         )}
       </div>
       <div className="flex-1">
-        <Create_navigator currentPage={currentPage} handleFormPage={handleFormPage} LMSIN={LMSIN} data={applicantData} onSave={handleSave} isEditing={true} />
+        <Create_navigator currentPage={currentPage} handleFormPage={handleFormPage} LMSIN={LMSIN} onSave={handleSave} isEditing={true} />
       </div>
     </main>
   );
