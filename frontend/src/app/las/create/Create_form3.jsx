@@ -46,9 +46,9 @@ const Create_form3 = ({ LMSIN, onDataChange }) => {
                   <SelectValue placeholder="कार्यालयको किसिम"></SelectValue>
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value={" प्रधान कार्यालय "}>प्रधान कार्यालय</SelectItem>
-                  <SelectItem value={" मुख्य साखा कार्यालय"}>मुख्य साखा कार्यालय</SelectItem>
-                  <SelectItem value={" साखा कार्यालय"}>साखा कार्यालय</SelectItem>
+                  <SelectItem value={"प्रधान कार्यालय "}>प्रधान कार्यालय</SelectItem>
+                  <SelectItem value={"मुख्य साखा कार्यालय"}>मुख्य साखा कार्यालय</SelectItem>
+                  <SelectItem value={"सेवा केन्द्र"}>सेवा केन्द्र</SelectItem>
                 </SelectContent>
               </Select>
             </div>
