@@ -33,7 +33,7 @@ const Home_page = ({ sessionAuth0 }) => {
             <Image className=" border border-white object-center object-cover rounded-full" src={"/image_dir/personaA.jpg"} fill={true}></Image>
           </div>
           <div className=" text-center  mt-4 space-x-1 text-white">
-            <p className=" font-bold">Buddha Ram Mahato</p>
+            <p className=" capitalize font-bold">{sessionAuth0?.user?.nickname || "Guest"}</p>
             <p className=" text-sm">Branch Manager</p>
             <p className=" text-sm">Kaliya, Bara</p>
           </div>
