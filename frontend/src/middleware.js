@@ -1,9 +1,12 @@
-// E:\CODE\Bureaucrazy Temp\frontend\src\middleware.js
+//E:\CODE\Bureaucrazy Temp\frontend\src\middleware.js
 import { NextResponse } from "next/server";
 import { auth0 } from "./lib/auth0";
 
-function isProtectedPath(pathname) {
-  return pathname.startsWith("/");
+const PUBLIC_PATHS = [];
+
+function isPublicPath(pathname) {
+  if (PUBLIC_PATHS.includes(pathname)) return true;
+  return PUBLIC_PATHS.some((publicPath) => pathname.startsWith(publicPath + "/"));
 }
 
 export async function middleware(request) {
@@ -13,7 +16,7 @@ export async function middleware(request) {
     return auth0.middleware(request);
   }
 
-  if (!isProtectedPath(pathname)) {
+  if (isPublicPath(pathname)) {
     return NextResponse.next();
   }
 
@@ -28,5 +31,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|api|auth/.*|.*\\..*).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|api|.*\\..*).*)"],
 };
