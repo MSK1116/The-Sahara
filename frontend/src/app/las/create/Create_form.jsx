@@ -36,7 +36,7 @@ const Create_form = ({ onDataChange, initialData }) => {
   const [localData, setLocalData] = useState(initialData || {});
   useEffect(() => {
     const isPerson = applicantType !== "सहारा ब्यापारिक कर्जा";
-    if (!isPerson && convert(localData.amount, "toEn") > 300000) {
+    if (!isPerson && convert(localData.amount || "", "toEn") > 300000) {
       setIsPanRequired(true);
     } else {
       setIsPanRequired(false);
@@ -67,12 +67,12 @@ const Create_form = ({ onDataChange, initialData }) => {
     if (value === "" || value == null) return "";
 
     try {
-      const cleaned = Number(String(convert(value, "toEn")).replace(/,/g, ""));
+      const cleaned = Number(String(convert(value || "", "toEn")).replace(/,/g, ""));
       if (typeof convert === "function") {
         try {
-          return convert(cleaned, "toNpWord", "currency");
+          return convert(cleaned || "", "toNpWord", "currency");
         } catch (_) {
-          return convert(cleaned);
+          return convert(cleaned || "");
         }
       }
       return String(value);
@@ -242,8 +242,8 @@ const Create_form = ({ onDataChange, initialData }) => {
               value={localData.amount || ""}
               onKeyDown={handleEnterFocus}
               onChange={(e) => {
-                const valInEn = e.target.value.trim() === "" ? "" : convert(e.target.value, "toEn");
-                setLocalData((d) => ({ ...d, amount: convert(e.target.value, "toNp") }));
+                const valInEn = e.target.value.trim() === "" ? "" : convert(e.target.value || "", "toEn");
+                setLocalData((d) => ({ ...d, amount: convert(e.target.value || "", "toNp") }));
                 if (Number(valInEn) > 1000000 || Number(valInEn) === 0) {
                   setLocalErrors((prev) => ({ ...prev, amount: true }));
                 } else {
@@ -301,12 +301,12 @@ const Create_form = ({ onDataChange, initialData }) => {
                   id="age"
                   name="age"
                   className="mt-2"
-                  value={localData.age ? convert(localData.age, "toEn") : ""}
+                  value={localData.age ? convert(localData.age || "", "toEn") : ""}
                   onKeyDown={handleEnterFocus}
                   onChange={(e) => {
-                    const valInEn = convert(e.target.value, "toEn");
+                    const valInEn = convert(e.target.value || "", "toEn");
                     const numVal = Number(valInEn);
-                    setLocalData((d) => ({ ...d, age: convert(e.target.value, "toNp") }));
+                    setLocalData((d) => ({ ...d, age: convert(e.target.value || "", "toNp") }));
                     setLocalErrors((prev) => ({ ...prev, age: numVal < 18 || numVal > 85 || isNaN(numVal) }));
                   }}
                 />
@@ -333,15 +333,15 @@ const Create_form = ({ onDataChange, initialData }) => {
                 id="phone1"
                 name="phone1"
                 className="w-full mt-2"
-                value={localData.phone1 ? convert(localData.phone1, "toEn") : ""}
+                value={localData.phone1 ? convert(localData.phone1 || "", "toEn") : ""}
                 onKeyDown={handleEnterFocus}
                 onChange={(e) => {
                   const rawValue = e.target.value;
                   const trimmedValue = rawValue.replace(/\s+/g, ""); // remove all spaces
-                  const valInEn = convert(trimmedValue, "toEn");
+                  const valInEn = convert(trimmedValue || "", "toEn");
                   const numVal = Number(valInEn);
 
-                  setLocalData((d) => ({ ...d, phone1: convert(trimmedValue, "toNp") }));
+                  setLocalData((d) => ({ ...d, phone1: convert(trimmedValue || "", "toNp") }));
                   setLocalErrors((prev) => ({ ...prev, phone1: valInEn.length !== 10 || isNaN(numVal) }));
                 }}
               />
@@ -356,14 +356,14 @@ const Create_form = ({ onDataChange, initialData }) => {
                 id="phone2"
                 name="phone2"
                 className="w-full mt-2"
-                value={localData.phone2 ? convert(localData.phone2, "toEn") : ""}
+                value={localData.phone2 ? convert(localData.phone2 || "", "toEn") : ""}
                 onKeyDown={handleEnterFocus}
                 onChange={(e) => {
                   const rawValue = e.target.value;
                   const trimmedValue = rawValue.replace(/\s+/g, ""); // remove all spaces
                   const valInEn = convert(trimmedValue, "toEn");
                   const numVal = Number(valInEn);
-                  setLocalData((d) => ({ ...d, phone2: convert(trimmedValue, "toNp") }));
+                  setLocalData((d) => ({ ...d, phone2: convert(trimmedValue || "", "toNp") }));
                   setLocalErrors((prev) => ({ ...prev, phone2: valInEn.length !== 10 || isNaN(numVal) }));
                 }}
               />
@@ -439,6 +439,40 @@ const Create_form = ({ onDataChange, initialData }) => {
           <div className="w-full flex flex-row space-x-5">
             <div className="w-1/2 space-y-5">
               <div className="w-full">
+                <Label className={` `} htmlFor="savingsAccountNumber">
+                  बचत खाता नं.
+                </Label>
+                <Input
+                  id="savingsAccountNumber"
+                  name="savingsAccountNumber"
+                  className="w-full mt-2"
+                  value={localData.savingsAccountNumber || ""}
+                  onKeyDown={handleEnterFocus}
+                  onChange={(e) => setLocalData((d) => ({ ...d, savingsAccountNumber: e.target.value }))}
+                />
+              </div>
+              <div className="w-full">
+                <Label className={`  ${localErrors.shareholderNumber && "text-red-600"} `} htmlFor="company_shareholderNumber">
+                  शेयर सदस्य नं.
+                </Label>
+                <Input
+                  id="company_shareholderNumber"
+                  name="company_shareholderNumber"
+                  className="w-full mt-2"
+                  value={localData.company_shareholderNumber || ""}
+                  onKeyDown={handleEnterFocus}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setLocalData((d) => ({ ...d, company_shareholderNumber: e.target.value }));
+                    if (val.length < 5 || val.length > 15) {
+                      setLocalErrors((prev) => ({ ...prev, company_shareholderNumber: true }));
+                    } else {
+                      setLocalErrors((prev) => ({ ...prev, company_shareholderNumber: false }));
+                    }
+                  }}
+                />
+              </div>
+              <div className="w-full">
                 <Label className={` ${!isPanRequired && "text-gray-500"} ${localErrors.companyName && "text-red-600"} `} htmlFor={`"companyName `}>
                   फर्म/कम्पनीको नाम
                 </Label>
@@ -460,28 +494,7 @@ const Create_form = ({ onDataChange, initialData }) => {
                   disabled={!isPanRequired}
                 />
               </div>
-              <div className="w-full">
-                <Label className={` ${!isPanRequired && "text-gray-500"} ${localErrors.shareholderNumber && "text-red-600"} `} htmlFor="company_shareholderNumber">
-                  शेयर सदस्य नं.
-                </Label>
-                <Input
-                  id="company_shareholderNumber"
-                  name="company_shareholderNumber"
-                  className="w-full mt-2"
-                  value={localData.company_shareholderNumber || ""}
-                  onKeyDown={handleEnterFocus}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    setLocalData((d) => ({ ...d, company_shareholderNumber: e.target.value }));
-                    if (val.length < 5 || val.length > 15) {
-                      setLocalErrors((prev) => ({ ...prev, company_shareholderNumber: true }));
-                    } else {
-                      setLocalErrors((prev) => ({ ...prev, company_shareholderNumber: false }));
-                    }
-                  }}
-                  disabled={!isPanRequired}
-                />
-              </div>
+
               <div className="w-full">
                 <Label className={` ${!isPanRequired && "text-gray-500"}`} htmlFor="company_registrationOffice">
                   रजिष्ट्रेशन गर्ने कार्यालयको नाम
@@ -493,20 +506,6 @@ const Create_form = ({ onDataChange, initialData }) => {
                   value={localData.company_registrationOffice || ""}
                   onKeyDown={handleEnterFocus}
                   onChange={(e) => setLocalData((d) => ({ ...d, company_registrationOffice: e.target.value }))}
-                  disabled={!isPanRequired}
-                />
-              </div>
-              <div className="w-full">
-                <Label className={` ${!isPanRequired && "text-gray-500"}`} htmlFor="savingsAccountNumber">
-                  बचत खाता नं.
-                </Label>
-                <Input
-                  id="savingsAccountNumber"
-                  name="savingsAccountNumber"
-                  className="w-full mt-2"
-                  value={localData.savingsAccountNumber || ""}
-                  onKeyDown={handleEnterFocus}
-                  onChange={(e) => setLocalData((d) => ({ ...d, savingsAccountNumber: e.target.value }))}
                   disabled={!isPanRequired}
                 />
               </div>
@@ -588,11 +587,11 @@ const Create_form = ({ onDataChange, initialData }) => {
               id="project_estimated_cost"
               name="project_estimated_cost"
               className="w-full mt-2"
-              value={localData.project_estimated_cost ? convert(localData.project_estimated_cost, "toEn") : ""}
+              value={localData.project_estimated_cost ? convert(localData.project_estimated_cost || "", "toEn") : ""}
               onKeyDown={handleEnterFocus}
               onChange={(e) => {
-                const valInNp = convert(e.target.value, "toNp");
-                const valInEn = convert(e.target.value, "toEn");
+                const valInNp = convert(e.target.value || "", "toNp");
+                const valInEn = convert(e.target.value || "", "toEn");
                 setLocalData((d) => ({ ...d, project_estimated_cost: valInNp }));
                 if (Number(valInEn) >= 1000000 || Number(valInEn) == 0) {
                   setLocalErrors((prev) => ({ ...prev, project_estimated_cost: true }));
