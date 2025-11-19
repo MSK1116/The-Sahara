@@ -274,7 +274,7 @@ ${htmlContent}
         </span>
         <p className="w-full text-center text-xs my-5 px-2 py-1 bg-white rounded-md">
           LMSIN<br></br>
-          {LMSIN}
+          {LMSIN ? LMSIN : <div className="loading text-red-600 loading-xs loading-dots"></div>}
         </p>
       </div>
       <Dialog open={openPrintModal} onOpenChange={setOpenPrintModal}>
