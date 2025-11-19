@@ -16,6 +16,8 @@ import TableLandEvaluation_and_calculator from "./TableLandEvaluation_and_calcul
 const Create_form2 = ({ LMSIN, onDataChange }) => {
   const [localData, setLocalData] = useState({});
   const [form2, setFrom2] = useState({});
+  const [fiftyPercentMarginLimit, setFiftyPercentMarginLimit] = useState(0);
+
   const officers = [
     {
       id: 1,
@@ -75,6 +77,10 @@ const Create_form2 = ({ LMSIN, onDataChange }) => {
       onDataChange({ form1: localData.form1, form2 });
     }
   }, [localData, form2]);
+
+  const handleFiftyPercent = (grandTotal) => {
+    setFiftyPercentMarginLimit(grandTotal / 4);
+  };
 
   return (
     <>
@@ -139,7 +145,7 @@ const Create_form2 = ({ LMSIN, onDataChange }) => {
           </span>
 
           <Table7_copy_for_form2 localData={localData} initialData={localData.form1?.table7} onDataChange={handleTable1Change} />
-          <TableLandEvaluation_and_calculator onDataChange={handleTable2Change} initialData={localData.form1?.table7} />
+          <TableLandEvaluation_and_calculator handleFiftyPercent={handleFiftyPercent} onDataChange={handleTable2Change} initialData={localData.form1?.table7} />
 
           <span className="flex items-center my-4">
             <span className="h-px flex-1 bg-linear-to-r from-transparent to-gray-300"></span>
@@ -155,9 +161,26 @@ const Create_form2 = ({ LMSIN, onDataChange }) => {
                 <Input
                   className="mt-2"
                   onChange={(e) => {
-                    const cleaned = Number(String(convert(e.target.value, "toEn")).replace(/,/g, ""));
-                    if (cleaned) setFrom2((d) => ({ ...d, fiftyPercentMargin: cleaned }));
-                    setFrom2((d) => ({ ...d, fiftyPercentMargin_text: convert(cleaned, "toNpWord", "currency") }));
+                    const raw = e.target.value;
+                    if (raw === "") {
+                      setFrom2((d) => ({
+                        ...d,
+                        fiftyPercentMargin: "",
+                        fiftyPercentMargin_text: "",
+                      }));
+                      return;
+                    }
+                    const cleaned = Number(String(convert(raw, "toEn")).replace(/,/g, ""));
+                    if (isNaN(cleaned)) return;
+                    if (cleaned > fiftyPercentMarginLimit) return;
+                    setFrom2((d) => ({
+                      ...d,
+                      fiftyPercentMargin: cleaned,
+                    }));
+                    setFrom2((d) => ({
+                      ...d,
+                      fiftyPercentMargin_text: convert(cleaned, "toNpWord", "currency"),
+                    }));
                   }}
                   value={form2.fiftyPercentMargin || ""}
                 />

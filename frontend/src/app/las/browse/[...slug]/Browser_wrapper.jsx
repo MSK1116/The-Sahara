@@ -9,10 +9,11 @@ import { useRouter } from "next/navigation";
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp";
 import { IoSearchSharp } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
+import Create_form3 from "../../create/Create_form3";
 
 const Browser_wrapper = ({ LMSIN }) => {
   const [applicantData, setApplicantData] = useState(null);
-  const [form1Data, setForm1Data] = useState(null);
+  const [form1Data, setForm1Data] = useState({});
   const [form2Data, setForm2Data] = useState({});
   const [form3Data, setForm3Data] = useState({});
   const [loading, setLoading] = useState(true);
@@ -33,6 +34,7 @@ const Browser_wrapper = ({ LMSIN }) => {
         setApplicantData(temp.data);
         setForm1Data(temp.data.form1);
         setForm2Data(temp.data.form2 || {});
+        setForm3Data(temp.data.form3 || {});
       }
     } catch (error) {
       console.error(error);
@@ -45,6 +47,10 @@ const Browser_wrapper = ({ LMSIN }) => {
   const handleForm2DataChange = ({ form1, form2 }) => {
     setForm2Data(form2);
     setForm1Data(form1);
+  };
+
+  const handleForm3DataChange = ({ form3 }) => {
+    setForm3Data(form3);
   };
 
   const handleSave = async () => {
@@ -105,7 +111,7 @@ const Browser_wrapper = ({ LMSIN }) => {
           <>
             {currentPage === 1 && <Create_form initialData={applicantData?.form1} onDataChange={setForm1Data} />}
             {currentPage === 2 && <Create_form2 LMSIN={LMSIN} onDataChange={handleForm2DataChange} />}
-            {currentPage === 3 && <div className="p-10">Page 3 is under construction.</div>}
+            {currentPage === 3 && <Create_form3 LMSIN={LMSIN} onDataChange={handleForm3DataChange} />}
             {currentPage === 4 && <div className="p-10">Page 4 is under construction.</div>}
             {currentPage === 5 && <div className="p-10">Page 5 is under construction.</div>}
           </>

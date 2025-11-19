@@ -176,11 +176,22 @@ const Form2Schema = new mongoose.Schema({
   fiftyPercentMargin_text: { type: String, default: "" },
 });
 
+const Form3Schema = new mongoose.Schema({
+  branchType: { type: String, default: "साखा कार्यालय" },
+  branchCode: { type: String, default: "" },
+  malpotLetterNo: { type: String, default: "" },
+  malpotLetterChalaniNo: { type: String, default: "" },
+  malpotLetterDate: { type: String, default: "" },
+  malpotOfficeName: { type: String, default: "" },
+  malpotOfficerName: { type: String, default: "" },
+});
+
 const LASchema = new mongoose.Schema(
   {
     LMSIN: { type: String, unique: true },
     form1: { type: Form1Schema, default: () => ({}) },
     form2: { type: Form2Schema, default: () => ({}) },
+    form3: { type: Form3Schema, default: () => ({}) },
   },
   { timestamps: true }
 );

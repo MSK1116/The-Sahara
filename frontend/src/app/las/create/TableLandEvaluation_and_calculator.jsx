@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
 import AreaInput from "@/components/AreaInput";
 import convert from "number-to-nepali-words";
-const TableLandEvaluation_and_calculator = ({ initialData, onDataChange }) => {
+const TableLandEvaluation_and_calculator = ({ initialData, onDataChange, handleFiftyPercent }) => {
   const initialRow = {
     id: Date.now(),
     wardNo: "",
@@ -14,7 +14,6 @@ const TableLandEvaluation_and_calculator = ({ initialData, onDataChange }) => {
     localApprovedPrice: "",
   };
   const [rows, setRows] = useState(initialData || [initialRow]);
-
   const calculateKatha = (area) => {
     if (!area) return 0;
 
@@ -38,6 +37,17 @@ const TableLandEvaluation_and_calculator = ({ initialData, onDataChange }) => {
     });
   };
 
+  const grandTotal = rows.reduce((sum, row) => {
+    const katha = calculateKatha(row.area);
+    const total = (Number(row.govApprovedPrice) || 0) * katha + (Number(row.localApprovedPrice) || 0) * katha;
+    return sum + total;
+  }, 0);
+
+  useEffect(() => {
+    if (handleFiftyPercent) {
+      handleFiftyPercent(grandTotal);
+    }
+  }, [grandTotal]);
   return (
     <>
       <div className="my-5 font-bold">जग्गाको मूल्याङ्कन:-</div>
@@ -58,6 +68,7 @@ const TableLandEvaluation_and_calculator = ({ initialData, onDataChange }) => {
           {rows.map((row, index) => {
             const katha = calculateKatha(row.area);
             const total = (Number(row.govApprovedPrice) || 0) * katha + (Number(row.localApprovedPrice) || 0) * katha;
+
             return (
               <tr key={row.id}>
                 <td className="border p-2">
@@ -74,7 +85,7 @@ const TableLandEvaluation_and_calculator = ({ initialData, onDataChange }) => {
                 </td>
                 <td title={katha || ""} className="border p-2">
                   <Input
-                    value={row.govApprovedPrice}
+                    value={row.govApprovedPrice || ""}
                     onChange={(e) => {
                       const val = convert(e.target.value, "toEn");
                       handleInputChange(index, "govApprovedPrice", val);
@@ -93,15 +104,24 @@ const TableLandEvaluation_and_calculator = ({ initialData, onDataChange }) => {
                   />
                 </td>
                 <td title={total || ""} className="border p-2">
-                  <Input disabled readOnly value={total || ""} placeholder="कि.न" />
+                  <Input disabled readOnly value={total.toFixed(2) || ""} placeholder="कि.न" />
                 </td>
                 <td title={total / 2 || ""} className="border p-2">
-                  <Input disabled readOnly value={total / 2 || ""} placeholder="कि.न" />
+                  <Input disabled readOnly value={(total / 2).toFixed(2) || ""} placeholder="कि.न" />
                 </td>
               </tr>
             );
           })}
         </tbody>
+        <tfoot>
+          <tr className="font-bold bg-gray-100">
+            <td colSpan="6" className="text-right border px-2 py-1">
+              जम्मा:
+            </td>
+            <td className="border px-2 py-1">{convert(grandTotal.toFixed(2), "toNp")}</td>
+            <td className="border px-2 py-1">{convert(grandTotal.toFixed(2) / 2, "toNp")}</td>
+          </tr>
+        </tfoot>
       </table>
     </>
   );

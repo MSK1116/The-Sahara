@@ -80,7 +80,7 @@ export function PageMaker_LoanApplicationFrom2(data) {
   ${table7Row
     .map((row, index) => {
       const katha = calculateKatha(row.area);
-      if (!row.govApprovedPrice && !row.localApprovedPrice) return "";
+      if (!row.govApprovedPrice || !row.localApprovedPrice) return "";
       const total = (Number(row.govApprovedPrice) || 0) * katha + (Number(row.localApprovedPrice) || 0) * katha;
       row._total = total;
       return `
@@ -143,7 +143,7 @@ export function PageMaker_LoanApplicationFrom2(data) {
             <p>पद: <b>${f2.evaluatorPost}</b></p>
         </div>
         <div>
-            <p>स्थलमा गई मूल्यांकन गरेको मितिः <b>${new NepaliDate(new Date()).format("ddd DD, MMMM YYYY", "np")}</b></p>
+            <p>स्थलमा गई मूल्यांकन गरेको मितिः <b>${new NepaliDate(f2.evaluationDate).format("ddd DD, MMMM YYYY", "np")}</b></p>
             <p>ऋण निवेदकको नामः <b>${f.applicant_name}</b></p>
             <p>
                 स्थायी ठेगाना: -

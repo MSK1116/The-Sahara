@@ -6,6 +6,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Create_form2 from "./Create_form2";
+import Create_form3 from "./Create_form3";
 const CreateWrapper = () => {
   const router = useRouter();
   const [form1Data, setForm1Data] = useState({});
@@ -72,7 +73,7 @@ const CreateWrapper = () => {
         <div className="w-[90%]">
           {currentPage === 1 && <Create_form onDataChange={setForm1Data} />}
           {currentPage === 2 && <Create_form2 LMSIN={Lmsin} onDataChange={setForm2Data} />}
-          {currentPage === 3 && <div className="p-10">Page 3 is under construction.</div>}
+          {currentPage === 3 && <Create_form3 LMSIN={Lmsin} onDataChange={setForm3Data} />}
           {currentPage === 4 && <div className="p-10">Page 4 is under construction.</div>}
           {currentPage === 5 && <div className="p-10">Page 5 is under construction.</div>}
         </div>

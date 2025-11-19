@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input"; // Shadcn Input
-
+import convert from "number-to-nepali-words";
 export default function NepaliDateInput({ value, onChange, className = "", inputClassName = "", handleEnterFocus }) {
   const [year, setYear] = useState("");
   const [month, setMonth] = useState("");
@@ -51,19 +51,49 @@ export default function NepaliDateInput({ value, onChange, className = "", input
       <div className="flex space-x-2">
         {/* Year */}
         <div className="flex flex-col">
-          <Input onKeyDown={handleEnterFocus} type="text" placeholder="YYYY" value={year} onChange={(e) => handleChange("year", e.target.value.replace(/\D/g, ""))} className={inputClassName} />
+          <Input
+            onKeyDown={handleEnterFocus}
+            type="text"
+            placeholder="YYYY"
+            value={year}
+            onChange={(e) => {
+              const val = e.target.value.replace(/[\s\D]/g, "");
+              handleChange("year", convert(val, "toEn"));
+            }}
+            className={inputClassName}
+          />
           {errors.year && <span className="text-xs text-destructive mt-0.5">{errors.year}</span>}
         </div>
 
         {/* Month */}
         <div className="flex flex-col">
-          <Input onKeyDown={handleEnterFocus} type="text" placeholder="MM" value={month} onChange={(e) => handleChange("month", e.target.value.replace(/\D/g, ""))} className={inputClassName} />
+          <Input
+            onKeyDown={handleEnterFocus}
+            type="text"
+            placeholder="MM"
+            value={month}
+            onChange={(e) => {
+              const val = e.target.value.replace(/[\s\D]/g, "");
+              handleChange("month", convert(val, "toEn"));
+            }}
+            className={inputClassName}
+          />
           {errors.month && <span className="text-xs text-destructive mt-0.5">{errors.month}</span>}
         </div>
 
         {/* Day */}
         <div className="flex flex-col">
-          <Input onKeyDown={handleEnterFocus} type="text" placeholder="DD" value={day} onChange={(e) => handleChange("day", e.target.value.replace(/\D/g, ""))} className={inputClassName} />
+          <Input
+            onKeyDown={handleEnterFocus}
+            type="text"
+            placeholder="DD"
+            value={day ?? ""}
+            onChange={(e) => {
+              const val = e.target.value.replace(/[\s\D]/g, "");
+              handleChange("day", convert(val, "toEn"));
+            }}
+            className={inputClassName}
+          />
           {errors.day && <span className="text-xs text-destructive mt-0.5">{errors.day}</span>}
         </div>
       </div>

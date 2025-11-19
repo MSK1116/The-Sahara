@@ -1,32 +1,90 @@
 import NepaliDate from "nepali-date-converter";
 import convert from "number-to-nepali-words";
-export function PageMaker_LoanApplicationFrom2(data) {
+export function PageMaker_LoanApplicationLetterToMalpot(data) {
   const f = data.form1;
   const f2 = data.form2;
+  const f3 = data.form3;
+
   var p1 = "";
   var p2 = "";
+  var p3 = "";
+  var p4 = "";
   // applicant_inlaws_name;
   if (f.applicant_gender == "male") {
-    p1 = "नाती ";
+    p1 = " को  नाती ";
   } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "single") {
-    p1 = "नातिनी ";
-  } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "single") {
-    p1 = "बुहारी ";
+    p1 = "को  नातिनी ";
+  } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "married") {
+    p1 = "को  बुहारी ";
   }
 
-  if (f.applicant_gender == female && f.applicant_maritalStatus == married) {
+  if (f.applicant_gender == "female" && f.applicant_maritalStatus == "married") {
     p2 = "पतनी ";
-  } else if (f.applicant_gender == female && f.applicant_maritalStatus == single) {
+  } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "single") {
     p2 = "छोरि";
-  } else if (f.applicant_gender == male && f.applicant_maritalStatus == single) {
+  } else if (f.applicant_gender == "male") {
     p2 = "छोरा ";
   }
+
+  if (f.applicant_gender == "male") {
+    p3 = "श्री ";
+  } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "married") {
+    p3 = "श्रीमती ";
+  } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "single") {
+    p3 = "शुश्री ";
+  }
+
+  if (f.approver_applicant_name) {
+    p4 = "";
+  } else {
+    p4 = "निज";
+  }
+
+  const table7Row = f.table7 && f.table7.length > 0 ? f.table7 : [{}];
+  const table7HTML2 = `
+  <p class="font-bold my-3 text-center ">तपसिल </p>
+  
+  <table border="1" cellspacing="0" cellpadding="6" width="100%" class="text-xs mt-2 mb-5">
+  <thead>
+    <tr>
+   
+      <th >जग्गाधनीको नाम</th>
+      <th >जिल्ला</th>
+      <th >न.पा./गा.वि.स.</th>
+      <th >वार्ड नं.</th>
+      <th >कित्ता नं.</th>
+      <th >क्षेत्रफल</th>
+      <th >कैफियत</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    ${table7Row
+      .map((row, index) => {
+        if (!row.govApprovedPrice || !row.localApprovedPrice) return "";
+        return `
+          <tr>
+            <td>${row.ownerName || ""}</td>
+            <td>${row.district || ""}</td>
+            <td>${row.palika || ""}</td>
+            <td >${row.wardNo || ""}</td>
+            <td>${row.plotNo || ""}</td>
+            <td class="text-nowrap whitespace-nowrap">${row.area || ""}</td>
+            <td>${row.remarks || ""}</td>
+          </tr>
+        `;
+      })
+      .join("")}
+  </tbody>
+  </table>
+  `;
+
   return `
 
 <body>
 
 
-   <div class=" my-2 flex fex-row items-center justify-between">
+    <div class=" my-2 flex fex-row items-end justify-between">
         <div>
             <div class=" flex flex-row items-center justify-start space-x-4 ">
                 <img class="size-20" src="/image_dir/LogoOnly.png">
@@ -46,22 +104,22 @@ export function PageMaker_LoanApplicationFrom2(data) {
                 ०४६-५२१११४</div>
         </div>
     </div>
-
-    <div class=" flex flex-row items-center justify-between ">
+<hr>
+    <div class="mt-2 flex flex-row items-center justify-between ">
         <div>
-            <p>प्रधान कार्यालय/ शाखा कार्यालय/नि.सं. केन्द्रः-</p>
-            <p>पत्र संख्या: -</p>
-            <p>चलानी न.: -</p>
+            <p>${f3.branchType}: - ${f.branch}</p>
+            <p>पत्र संख्या: - ${f3.malpotLetterNo}</p>
+            <p>चलानी न.: - ${f3.malpotLetterChalaniNo}</p>
         </div>
         <div class=" pr-10">
-            <p>कोड न. :-</p>
-            <p>मिति: -</p>
+            <p>कोड न. :- ${f3.branchCode}</p>
+            <p>मिति: - ${new NepaliDate(f3.malpotLetterDate).format("ddd DD, MMMM YYYY", "np")}</p>
         </div>
     </div>
 
     <div class="my-5">
         <p class="font-bold">श्री मालपोत कार्यालय,</p>
-        <p>___________</p>
+        <p class="font-bold underline">${f3.malpotOfficeName || "-"}</p>
         <p class=" text-center font-semibold">विषयः - धितो (दृष्टि) बन्धक पारित गरिदिने बारे ।</p>
         <p class="mt-4">
             उपरोक्त सम्बन्धमा,
@@ -75,11 +133,34 @@ export function PageMaker_LoanApplicationFrom2(data) {
             <strong>${f.address.current.palika || "—"}</strong>,
             वडा <strong>${f.address.current.wada || "—"}</strong>,
             टोल <strong>${f.address.current.tole || "—"}</strong>
-            मा बस्ने <strong>${f.gender}</strong>
+            मा बस्ने <strong>${f.applicant_inlaws_name || "-"} </strong> ${p1} <b>${f.applicant_father_name || "-"}</b> को  ${p2 || ""} वर्ष <b>${f.age ? convert(f.age, "toNp") : ""}</b> ${p3 || ""} 
+         <b>${f.applicant_name || ""}</b> ले तपसिल बमोजिम जग्गा दृस्टी बन्दक लेखत संस्थाको नाउँमा पारित गराई ऋण माग गर्नु भएको हुँदा ${p4 || ""} को नाउँमा दर्ता कायम भएको जग्गामा स्वीकृत ऋण रकम रु.<b> ${convert(
+    f2.fiftyPercentMargin,
+    "toNp"
+  )}/-</b> अक्षरेपी <b>${f2.fiftyPercentMargin_text || ""}</b> मात्र /- दृष्टि बन्धक लेखत पारित गराउन यस संस्थाको प्रतिनिधि ${f3.malpotOfficerName || "-"} मार्फत रोक्का राखी जानकारी पठाई दिनुहुन अनुरोध गरिन्छ ।
         </p>
-
     </div>
 
+ ${table7HTML2}
+
+
+  <div class=" flex flex-col">
+        <p>बोधार्थ: -</p>
+        <div class="mt-1 flex flex-row space-x-5">
+            <div>श्री मालपोत कार्यालय, ${f3.malpotOfficeName || "-"}<br>(रोक्का फाँट)</div>
+            <div>उपरोक्त तपसिलमा उल्लेख जग्गाहरु रोक्का राखिदिनुहुन ।</div>
+        </div>
+        <div class=" flex mt-3 flex-row space-x-5">
+            <div>श्री ${f3.malpotOfficerName || "-"}<br>
+                <p>द सहारा,${f3.branchType}: - ${f.branch}</p>
+            </div>
+            <div>दृष्टि बन्धक पारित गराई रोक्काको जानकारी समेत लिई आउनु होला ।</div>
+        </div>
+        <div class=" flex flex-col items-center justify-center  m-5">
+            <p>दस्तखतको नमूना</p>
+            <div class="mt-1 w-1/3 h-20 border"></div>
+        </div>
+    </div>
 
 <script>
   window.onload = () => { window.print(); };
