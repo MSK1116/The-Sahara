@@ -29,7 +29,7 @@ export function PageMaker_LoanApplicationBharpaie(data) {
                 <p>ऋण नं. <b> </b></p>
             </div>
 
-            <p class="mt-3">इति सम्बत्: ${new NepaliDate(new Date()).format("YYYY", "np")} साल ${new NepaliDate(new Date()).format("MMMM", "np")} महिना ${new NepaliDate(new Date()).format("D", "np")} गते रोज ${new NepaliDate(new Date()).format(
+            <p class="mt-3">इति सम्बत्: ${new NepaliDate(new Date()).format("YYYY", "np")} साल ${new NepaliDate(new Date()).format("MMMM", "np")} महिना ${new NepaliDate(new Date()).format("ddd", "np")} गते रोज ${new NepaliDate(new Date()).format(
     "DD",
     "np"
   )} मा शुभम् ।</p>
@@ -60,7 +60,7 @@ export function PageMaker_LoanApplicationBharpaie(data) {
                 <p>ऋण नं. <b> </b></p>
             </div>
 
-            <p class="mt-3">इति सम्बत्: ${new NepaliDate(new Date()).format("YYYY", "np")} साल ${new NepaliDate(new Date()).format("MMMM", "np")} महिना ${new NepaliDate(new Date()).format("D", "np")} गते रोज ${new NepaliDate(new Date()).format(
+            <p class="mt-3">इति सम्बत्: ${new NepaliDate(new Date()).format("YYYY", "np")} साल ${new NepaliDate(new Date()).format("MMMM", "np")} महिना ${new NepaliDate(new Date()).format("ddd", "np")} गते रोज ${new NepaliDate(new Date()).format(
     "DD",
     "np"
   )} मा शुभम् ।</p>
