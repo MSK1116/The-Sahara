@@ -95,6 +95,7 @@ const Browser_wrapper = ({ LMSIN }) => {
     handleSave();
     setCurrentPage(pageNumber);
   };
+
   const handleSearch = () => {
     if (lmsin.length !== 6) {
       toast.error("LMSIN must be 6 digits");
