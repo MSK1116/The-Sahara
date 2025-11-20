@@ -139,6 +139,9 @@ const Form1Schema = new mongoose.Schema({
   phone2: { type: String, default: "" },
 
   citizenship_number: { type: String, default: "" },
+  citizenship_takenOffice: { type: String, default: "" },
+  citizenship_takenDate: { type: String, default: "" },
+
   approver_applicant_name: { type: String, default: "" },
   approver_citizenship_number: { type: String, default: "" },
   approver_father_name: { type: String, default: "" },
@@ -185,6 +188,27 @@ const Form3Schema = new mongoose.Schema({
   malpotOfficeName: { type: String, default: "" },
   malpotOfficerName: { type: String, default: "" },
 });
+const WitnessSchema = new mongoose.Schema(
+  {
+    district: { type: String, default: "" },
+    palika: { type: String, default: "" },
+    ward: { type: String, default: "" },
+    name: { type: String, default: "" },
+  },
+  { _id: false }
+);
+
+const Form4Schema = new mongoose.Schema({
+  annualInterestRate: { type: String, default: "" },
+  addPer1: { type: String, default: "" },
+  addPer2: { type: String, default: "" },
+  malpotOfficeReplyDate: { type: String, default: "" },
+  malpotOfficeReplyChalaniNo: { type: String, default: "" },
+  malpotOfficeReplyPageNo: { type: String, default: "" },
+  witness1: { type: WitnessSchema, default: () => ({}) },
+  witness2: { type: WitnessSchema, default: () => ({}) },
+  maker: { type: String, default: "" },
+});
 
 const LASchema = new mongoose.Schema(
   {
@@ -192,6 +216,7 @@ const LASchema = new mongoose.Schema(
     form1: { type: Form1Schema, default: () => ({}) },
     form2: { type: Form2Schema, default: () => ({}) },
     form3: { type: Form3Schema, default: () => ({}) },
+    form4: { type: Form4Schema, default: () => ({}) },
   },
   { timestamps: true }
 );

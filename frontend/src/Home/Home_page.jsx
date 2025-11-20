@@ -11,7 +11,6 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 const Home_page = ({ sessionAuth0 }) => {
-  console.log(sessionAuth0);
   const router = useRouter();
   const [lmsin, setLmsin] = useState("");
 
@@ -30,7 +29,7 @@ const Home_page = ({ sessionAuth0 }) => {
         <div className=" w-[40%] bg-blue-700 p-10 rounded-sm cursor-default">
           <p className=" text-xl font-bold text-center mb-5 text-white">Welcome to Loan Application System!</p>
           <div className=" relative mx-auto size-30 rounded-full">
-            <Image className=" border border-white object-center object-cover rounded-full" src={"/image_dir/personaA.jpg"} fill={true}></Image>
+            <Image alt="profile image" className=" border border-white object-center object-cover rounded-full" src={"/image_dir/personaA.jpg"} fill={true}></Image>
           </div>
           <div className=" text-center  mt-4 space-x-1 text-white">
             <p className=" capitalize font-bold">{sessionAuth0?.user?.nickname || "Guest"}</p>

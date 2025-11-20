@@ -666,6 +666,27 @@ const Create_form = ({ onDataChange, initialData }) => {
                 onChange={(e) => setLocalData((d) => ({ ...d, citizenship_number: e.target.value }))}
               />
             </div>
+            <div className="w-full mt-5">
+              <Label htmlFor="citizenship_takenDate">नागरिकता लिने मिति</Label>
+              <NepaliDateInput
+                onChange={(val) => setLocalData((d) => ({ ...d, citizenship_takenDate: val }))}
+                handleEnterFocus={handleEnterFocus}
+                value={localData.citizenship_takenDate || ""}
+                className="w-full mt-2"
+                id="citizenship_takenDate"
+                name="citizenship_takenDate"></NepaliDateInput>
+            </div>
+            <div className="w-full mt-5">
+              <Label htmlFor="citizenship_takenOffice">नागरिकता लिने कार्यालय </Label>
+              <Input
+                id="citizenship_takenOffice"
+                name="citizenship_takenOffice"
+                className="w-full mt-2"
+                value={localData.citizenship_takenOffice || ""}
+                onKeyDown={handleEnterFocus}
+                onChange={(e) => setLocalData((d) => ({ ...d, citizenship_takenOffice: e.target.value }))}
+              />
+            </div>
           </div>
 
           <div className="flex flex-row space-x-5">

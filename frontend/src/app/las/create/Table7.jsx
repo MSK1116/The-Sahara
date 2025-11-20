@@ -113,7 +113,7 @@ export default function Table7({ onDataChange, localData, initialData }) {
                     <DropdownMenuContent>
                       <DropdownMenuRadioGroup onKeyDown={handleEnterFocus} value={row.district} onValueChange={(val) => handleInputChange(row.id, "district", val)}>
                         {allDistricts.map((d) => (
-                          <DropdownMenuRadioItem key={d} value={d}>
+                          <DropdownMenuRadioItem key={d + "457"} value={d}>
                             {d}
                           </DropdownMenuRadioItem>
                         ))}

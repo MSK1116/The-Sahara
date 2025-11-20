@@ -345,7 +345,7 @@ ${htmlContent}
       <style>
         @page {
           size: A4;
-          margin: 8mm;
+          margin: 5mm;
 
           /* Page Number at Bottom */
           @bottom-center {

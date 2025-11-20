@@ -95,14 +95,14 @@ export default function Table3({ onDataChange, initialData }) {
                     onKeyDown={handleEnterFocus}
                     value={row.familyAnnualIncome || ""}
                     onChange={(e) => {
-                      const nepaliValue = convert(e.target.value, "toNp");
+                      const nepaliValue = convert(e.target.value || "", "toNp");
                       handleInputChange(row.id, "familyAnnualIncome", nepaliValue);
                     }}
                     placeholder="एकाघर परिवारको वार्षिक आय"
                   />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.notes} onChange={(e) => handleInputChange(row.id, "notes", e.target.value)} placeholder="कैफियत" />
+                  <Input onKeyDown={handleEnterFocus} value={row.notes || ""} onChange={(e) => handleInputChange(row.id, "notes", e.target.value)} placeholder="कैफियत" />
                 </td>
               </tr>
             ))}

@@ -18,6 +18,17 @@
             font-size: 13px;
         }
 
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #000;
+            padding: 6px;
+        }
+
         .b {
             text-orientation: mixed;
             writing-mode: vertical-lr;
@@ -27,7 +38,7 @@
 </head>
 
 <body class=" flex flex-row">
-    <div class="flex mt-10 w-[10%] items-center justify-center h-full my-auto ">
+    <div class="flex mt-15 w-[10%] items-center justify-center h-full my-auto ">
         <div class="p-2 b h-[90%] text-xs">
             <p class="">
                 संस्थाको तर्फबाट कागज तयार गर्नेको नाम :
@@ -113,8 +124,62 @@
             दिइने मेरो सबै हिसाब पुरा-पुरा मान्य हुनेछ।</span>
 
         </P>
-    </div>
 
+        <div>
+            <p class="font-semibold text-center my-2">ऋण भुक्तानी कार्यक्रम</p>
+
+            <table border="1" class="text-xs border" cellspacing="0" cellpadding="6" width="100%">
+                <thead>
+                    <tr class="border ">
+                        <th class="border-r">ऋण भुक्तानी मिति</th>
+                        <th class="border-r">साँवा</th>
+                        <th class="border-r">कैफियत</th>
+                        <th class="border-r">कैफियत</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="border-r">${new NepaliDate(oneYearLater).format("YYYY", "np")} साल ${new
+                            NepaliDate(oneYearLater).format("MMMM", "np")}
+                            महिना ${new NepaliDate(oneYearLater).format("DD", "np")}
+                        </td>
+                        <td class="border-r">रु. ${f2.fiftyPercentMargin ? convert(f2.fiftyPercentMargin, "toNp") : ""}
+                            (अक्षरेपी रु.
+                            ${f2.fiftyPercentMargin_text || ""} मात्र )
+                        </td>
+                        <td class="border-r">
+                            ऋण रकमको ________ ले हुने ब्याज हरेक महिना तोकीएको मितिमा बुझाउन अनिवार्य हुनेछ। तोकेको थप
+                            समयमा व्याज नबुझाएमा थप _____% का दरले व्याज लाग्नेछ साथै तोकेको समयमा किस्ता
+                            तथा साँवा नबुझाएमा थप _____% का दरले व्याज लाग्नेछ ।
+                            तोकेको दिनमा व्याज नबुझाएमा मेरो बचत खाता
+                            नं. ${f.savingsAccountNumber || ""}
+
+                            बाट कट्टा गरि लिएमा मलाई मंजुर छ।
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+            <p class="my-2">ईती सम्वत ${new NepaliDate(today).format("YYYY", "np")} साल ${new
+                NepaliDate(today).format("MMMM", "np")}
+                महिना ${new
+                NepaliDate(today).format("DD", "np")} गते रोज ${new NepaliDate(today).format(
+                "ddd",
+                "np"
+                )} मा शुभम् ________</p>
+        </div>
+        <div class="my-2">
+            <p class="font-semibold my-2 underline">संस्थाको प्रयोजनको लागि :- </p>
+            <p>धितो रोक्काको लागि संस्थाबाट पत्र संख्या _____ च.न _____ मिति _____ </p>
+            <p>मालपोत कार्यालय _____ बाट धितो रोक्का भएको प्राप्त पत्रको प.सं. _____ मिति _____ च.नं. _____</p>
+            <p>ऋणीको नागरिकता नं. _____ मिति _____ दिने कार्यलय नाम:</p>
+
+        </div>
+    </div>
 
 </body>
 

@@ -10,12 +10,14 @@ import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/comp
 import { IoSearchSharp } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
 import Create_form3 from "../../create/Create_form3";
+import Create_form4 from "../../create/Create_form4";
 
 const Browser_wrapper = ({ LMSIN }) => {
   const [applicantData, setApplicantData] = useState(null);
   const [form1Data, setForm1Data] = useState({});
   const [form2Data, setForm2Data] = useState({});
   const [form3Data, setForm3Data] = useState({});
+  const [form4Data, setForm4Data] = useState({});
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [lmsin, setLmsin] = useState(LMSIN.replace(/-/g, ""));
@@ -52,12 +54,16 @@ const Browser_wrapper = ({ LMSIN }) => {
   const handleForm3DataChange = ({ form3 }) => {
     setForm3Data(form3);
   };
+  const handleForm4DataChange = ({ form4 }) => {
+    setForm4Data(form4);
+  };
 
   const handleSave = async () => {
     const aggregated = {
       form1: form1Data,
       form2: form2Data,
       form3: form3Data,
+      form4: form4Data,
     };
 
     if (!aggregated) {
@@ -115,7 +121,7 @@ const Browser_wrapper = ({ LMSIN }) => {
             {currentPage === 1 && <Create_form initialData={applicantData?.form1} onDataChange={setForm1Data} />}
             {currentPage === 2 && <Create_form2 LMSIN={LMSIN} onDataChange={handleForm2DataChange} />}
             {currentPage === 3 && <Create_form3 LMSIN={LMSIN} onDataChange={handleForm3DataChange} />}
-            {currentPage === 4 && <div className="p-10">Page 4 is under construction.</div>}
+            {currentPage === 4 && <Create_form4 LMSIN={LMSIN} onDataChange={handleForm4DataChange} />}
             {currentPage === 5 && <div className="p-10">Page 5 is under construction.</div>}
           </>
         ) : (

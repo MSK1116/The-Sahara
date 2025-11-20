@@ -48,19 +48,6 @@ export default function Table4({ onDataChange, localData, initialData }) {
     onDataChange && onDataChange(newRows);
   };
 
-  const getDistricts = (provinceName) => {
-    if (!provinceName) return [];
-    const province = allProvinces.find((p) => p.name === provinceName);
-    return province?.districts || [];
-  };
-
-  const getPalikas = (provinceName, districtName) => {
-    if (!provinceName || !districtName) return [];
-    const province = allProvinces.find((p) => p.name === provinceName);
-    const district = province?.districts.find((d) => d.name === districtName);
-    return district?.palikas || [];
-  };
-
   const handleEnterFocus = useCallback((e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -114,7 +101,7 @@ export default function Table4({ onDataChange, localData, initialData }) {
                     <DropdownMenuContent>
                       <DropdownMenuRadioGroup onKeyDown={handleEnterFocus} value={row.district} onValueChange={(val) => handleInputChange(row.id, "district", val)}>
                         {allDistricts.map((d) => (
-                          <DropdownMenuRadioItem key={d} value={d}>
+                          <DropdownMenuRadioItem key={d + "123"} value={d}>
                             {d}
                           </DropdownMenuRadioItem>
                         ))}
