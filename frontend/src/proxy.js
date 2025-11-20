@@ -1,4 +1,4 @@
-//E:\CODE\Bureaucrazy Temp\frontend\src\middleware.js
+//E:\CODE\Bureaucrazy Temp\frontend\src\proxy.js
 import { NextResponse } from "next/server";
 import { auth0 } from "./lib/auth0";
 
@@ -9,7 +9,7 @@ function isPublicPath(pathname) {
   return PUBLIC_PATHS.some((publicPath) => pathname.startsWith(publicPath + "/"));
 }
 
-export async function middleware(request) {
+export async function proxy(request) {
   const { pathname } = request.nextUrl;
 
   if (pathname.startsWith("/auth")) {
