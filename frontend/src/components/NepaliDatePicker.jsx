@@ -55,7 +55,7 @@ export default function NepaliDateInput({ value, onChange, className = "", input
             onKeyDown={handleEnterFocus}
             type="text"
             placeholder="YYYY"
-            value={year}
+            value={year || ""}
             onChange={(e) => {
               const val = e.target.value.replace(/[\s\D]/g, "");
               handleChange("year", convert(val, "toEn"));
@@ -71,7 +71,7 @@ export default function NepaliDateInput({ value, onChange, className = "", input
             onKeyDown={handleEnterFocus}
             type="text"
             placeholder="MM"
-            value={month}
+            value={month || ""}
             onChange={(e) => {
               const val = e.target.value.replace(/[\s\D]/g, "");
               handleChange("month", convert(val, "toEn"));

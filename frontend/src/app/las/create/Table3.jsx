@@ -85,7 +85,7 @@ export default function Table3({ onDataChange, initialData }) {
                   <Input disabled readOnly value={index + 1} />
                 </td>
                 <td className="border p-2">
-                  <Input disabled readOnly value={row.title} />
+                  <Input disabled readOnly value={row.title || ""} />
                 </td>
                 <td className="border p-2">
                   <Input onKeyDown={handleEnterFocus} value={row.debtorIncome || ""} onChange={(e) => handleInputChange(row.id, "debtorIncome", convert(e.target.value, "toNp"))} placeholder="ऋणीको वार्षिक आम्दानी" />

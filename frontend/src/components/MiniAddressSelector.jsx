@@ -129,9 +129,9 @@ export default function MiniAddressSelector({ value, onChange, disabled = false 
               ⬅ Palika
             </Button>
 
-            <Input placeholder="वडा नं" value={selected.wada} onChange={(e) => setSelected({ ...selected, wada: e.target.value })} />
+            <Input placeholder="वडा नं" value={selected.wada || ""} onChange={(e) => setSelected({ ...selected, wada: e.target.value })} />
 
-            <Input placeholder="टोल / बाटो" value={selected.tole} onChange={(e) => setSelected({ ...selected, tole: e.target.value })} />
+            <Input placeholder="टोल / बाटो" value={selected.tole || ""} onChange={(e) => setSelected({ ...selected, tole: e.target.value })} />
 
             <Button variant="outline" onClick={() => setStep("province")}>
               Done

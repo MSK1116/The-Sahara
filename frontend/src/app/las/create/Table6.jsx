@@ -77,7 +77,7 @@ export default function Table6({ onDataChange, localData, initialData }) {
                   <Input disabled readOnly value={index + 1} />
                 </td>
                 <td className="border p-2">
-                  <Select value={row.borrowerName} onValueChange={(value) => handleInputChange(row.id, "borrowerName", value)}>
+                  <Select value={row.borrowerName || ""} onValueChange={(value) => handleInputChange(row.id, "borrowerName", value)}>
                     <SelectTrigger>
                       <SelectValue placeholder="ऋणीको नाम" />
                     </SelectTrigger>
@@ -91,22 +91,22 @@ export default function Table6({ onDataChange, localData, initialData }) {
                   </Select>
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.loanNo} onChange={(e) => handleInputChange(row.id, "loanNo", e.target.value)} placeholder="कर्जा नं" />
+                  <Input onKeyDown={handleEnterFocus} value={row.loanNo || ""} onChange={(e) => handleInputChange(row.id, "loanNo", e.target.value)} placeholder="कर्जा नं" />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.miNo} onChange={(e) => handleInputChange(row.id, "miNo", e.target.value)} placeholder="मि न." />
+                  <Input onKeyDown={handleEnterFocus} value={row.miNo || ""} onChange={(e) => handleInputChange(row.id, "miNo", e.target.value)} placeholder="मि न." />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.approvedAmount} onChange={(e) => handleInputChange(row.id, "approvedAmount", e.target.value)} placeholder="स्वीकृत रकम" />
+                  <Input onKeyDown={handleEnterFocus} value={row.approvedAmount || ""} onChange={(e) => handleInputChange(row.id, "approvedAmount", e.target.value)} placeholder="स्वीकृत रकम" />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.remainingAmount} onChange={(e) => handleInputChange(row.id, "remainingAmount", e.target.value)} placeholder="तिर्न बाँकी रकम" />
+                  <Input onKeyDown={handleEnterFocus} value={row.remainingAmount || ""} onChange={(e) => handleInputChange(row.id, "remainingAmount", e.target.value)} placeholder="तिर्न बाँकी रकम" />
                 </td>
                 <td className="border p-2">
                   <NepaliDateInput onKeyDown={handleEnterFocus} value={row.startDate || ""} className="w-full mt-2" onChange={(e) => handleInputChange(row.id, "startDate", e.target.value)} />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.remarks} onChange={(e) => handleInputChange(row.id, "remarks", e.target.value)} placeholder="कैफियत" />
+                  <Input onKeyDown={handleEnterFocus} value={row.remarks || ""} onChange={(e) => handleInputChange(row.id, "remarks", e.target.value)} placeholder="कैफियत" />
                 </td>
                 <td className="border p-2 text-center">
                   {index > 0 && (

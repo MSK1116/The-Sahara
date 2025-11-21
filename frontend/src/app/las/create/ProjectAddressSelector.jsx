@@ -151,8 +151,8 @@ export default function ProjectAddressSelector({ handleEnterFocus, onProjectChan
               <Button variant="ghost" className="justify-start text-sm" onClick={() => setStep("palika")} disabled={disabled}>
                 ⬅ Back to Palika
               </Button>
-              <Input placeholder="वडा नं" value={selected.wada} onChange={(e) => setSelected({ ...selected, wada: e.target.value })} onKeyDown={handleEnterFocus} disabled={disabled} />
-              <Input placeholder="टोल / बाटो" value={selected.tole} onChange={(e) => setSelected({ ...selected, tole: e.target.value })} onKeyDown={handleEnterFocus} disabled={disabled} />
+              <Input placeholder="वडा नं" value={selected.wada || ""} onChange={(e) => setSelected({ ...selected, wada: e.target.value })} onKeyDown={handleEnterFocus} disabled={disabled} />
+              <Input placeholder="टोल / बाटो" value={selected.tole || ""} onChange={(e) => setSelected({ ...selected, tole: e.target.value })} onKeyDown={handleEnterFocus} disabled={disabled} />
               <Button variant="outline" onClick={() => setStep("province")} disabled={disabled}>
                 Finish
               </Button>

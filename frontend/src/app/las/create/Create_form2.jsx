@@ -134,7 +134,7 @@ const Create_form2 = ({ LMSIN, onDataChange }) => {
 
             <div className="w-full">
               <Label htmlFor="date">स्थलमा गई मूल्यांकन गरेको मितिः</Label>
-              <NepaliDateInput value={form2.evaluationDate} onChange={(val) => setFrom2((d) => ({ ...d, evaluationDate: val }))} className="mt-2" />
+              <NepaliDateInput value={form2.evaluationDate || ""} onChange={(val) => setFrom2((d) => ({ ...d, evaluationDate: val }))} className="mt-2" />
             </div>
           </div>
 

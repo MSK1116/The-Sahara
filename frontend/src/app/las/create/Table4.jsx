@@ -90,7 +90,7 @@ export default function Table4({ onDataChange, localData, initialData }) {
                   <Input disabled readOnly value={index + 1} />
                 </td>
                 <td className="border p-2">
-                  <Input value={localData.applicant_name} readOnly disabled />
+                  <Input value={localData.applicant_name || ""} readOnly disabled />
                 </td>
 
                 {/* District Dropdown */}
@@ -99,7 +99,7 @@ export default function Table4({ onDataChange, localData, initialData }) {
                   <DropdownMenu>
                     <DropdownMenuTrigger className="w-full text-xs text-left border px-2 py-1 rounded-md">{row.district || "जिल्ला चयन गर्नुहोस्"}</DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuRadioGroup onKeyDown={handleEnterFocus} value={row.district} onValueChange={(val) => handleInputChange(row.id, "district", val)}>
+                      <DropdownMenuRadioGroup onKeyDown={handleEnterFocus} value={row.district || ""} onValueChange={(val) => handleInputChange(row.id, "district", val)}>
                         {allDistricts.map((d) => (
                           <DropdownMenuRadioItem key={d + "123"} value={d}>
                             {d}

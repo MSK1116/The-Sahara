@@ -50,10 +50,10 @@ const Table1 = ({ onDataChange, amount, applicantType, initialData }) => {
                 <Input disabled className="w-full bg-gray-100 " value={1} readOnly />
               </td>
               <td className="px-2 py-1 border-b">
-                <Input disabled readOnly className="w-full" placeholder="कर्जा सुविधा" value={applicantType} onKeyDown={(e) => handleEnter(e, 0)} ref={inputRefs[0]} />
+                <Input disabled readOnly className="w-full" placeholder="कर्जा सुविधा" value={applicantType || ""} onKeyDown={(e) => handleEnter(e, 0)} ref={inputRefs[0]} />
               </td>
               <td className="px-2 py-1 border-b">
-                <Input disabled readOnly className="w-full" placeholder="रकम" value={amount} onKeyDown={(e) => handleEnter(e, 1)} ref={inputRefs[1]} />
+                <Input disabled readOnly className="w-full" placeholder="रकम" value={amount || ""} onKeyDown={(e) => handleEnter(e, 1)} ref={inputRefs[1]} />
               </td>
               <td className="px-2 py-1 border-b">
                 <DropdownMenu>
@@ -64,7 +64,7 @@ const Table1 = ({ onDataChange, amount, applicantType, initialData }) => {
                       {Array.from({ length: 7 }).map((_, i) => {
                         const year = `${i + 1} वर्ष`;
                         return (
-                          <DropdownMenuRadioItem key={year} value={year}>
+                          <DropdownMenuRadioItem key={year} value={year || ""}>
                             {year}
                           </DropdownMenuRadioItem>
                         );

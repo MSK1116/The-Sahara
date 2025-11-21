@@ -132,7 +132,7 @@ const Browser_wrapper = ({ LMSIN }) => {
               <IoSearchSharp className="fill-blue-700 size-15" />
               <p className="mt-3 text-center font-semibold">Quick Search</p>
               <p className="text-xs text-gray-500 mb-3 text-center">Enter the 6-digit LMSIN.</p>
-              <InputOTP id="lmsin-input" maxLength={6} value={lmsin} onChange={(value) => setLmsin(value)}>
+              <InputOTP id="lmsin-input" maxLength={6} value={lmsin || ""} onChange={(value) => setLmsin(value)}>
                 <InputOTPGroup className={"bg-gray-50"}>
                   <InputOTPSlot index={0} />
                   <InputOTPSlot index={1} />

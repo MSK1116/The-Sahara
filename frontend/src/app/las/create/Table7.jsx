@@ -96,7 +96,7 @@ export default function Table7({ onDataChange, localData, initialData }) {
                   <Input disabled readOnly value={index + 1} />
                 </td>
                 <td className="border p-2">
-                  <Select value={row.ownerName} onValueChange={(value) => handleInputChange(row.id, "ownerName", value)}>
+                  <Select value={row.ownerName || ""} onValueChange={(value) => handleInputChange(row.id, "ownerName", value)}>
                     <SelectTrigger>
                       <SelectValue placeholder="धनीको नाम"></SelectValue>
                     </SelectTrigger>
@@ -111,7 +111,7 @@ export default function Table7({ onDataChange, localData, initialData }) {
                   <DropdownMenu>
                     <DropdownMenuTrigger className="w-full text-xs text-left border px-2 py-1 rounded-md">{row.district || "जिल्ला चयन गर्नुहोस्"}</DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuRadioGroup onKeyDown={handleEnterFocus} value={row.district} onValueChange={(val) => handleInputChange(row.id, "district", val)}>
+                      <DropdownMenuRadioGroup onKeyDown={handleEnterFocus} value={row.district || ""} onValueChange={(val) => handleInputChange(row.id, "district", val)}>
                         {allDistricts.map((d, index) => (
                           <DropdownMenuRadioItem key={d + index + "457"} value={d}>
                             {d}
@@ -174,7 +174,7 @@ export default function Table7({ onDataChange, localData, initialData }) {
                   <Input onKeyDown={handleEnterFocus} value={row.estimatedValue || ""} onChange={(e) => handleInputChange(row.id, "estimatedValue", e.target.value)} placeholder="अनुमानित मूल्य" />
                 </td>
                 <td className="border p-2">
-                  <Input onKeyDown={handleEnterFocus} value={row.remarks} onChange={(e) => handleInputChange(row.id, "remarks", e.target.value)} placeholder="कैफियत" />
+                  <Input onKeyDown={handleEnterFocus} value={row.remarks || ""} onChange={(e) => handleInputChange(row.id, "remarks", e.target.value)} placeholder="कैफियत" />
                 </td>
                 <td className="border p-2 text-center">
                   {index > 0 && (

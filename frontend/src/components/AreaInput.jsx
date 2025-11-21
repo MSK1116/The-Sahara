@@ -92,7 +92,7 @@ const AreaInput = ({ value = "", onChange, disabled = false }) => {
             disabled={disabled}
             title="क्षेत्रफल राख्नुहोस् (वर्ग कि.मी वा बिघा/कठ्ठा/धुर/कनमा)। एउटा मात्रै नम्बर राख्ने हो भने अन्तिम बाकसमा राख्नुहोस्।"
             ref={refs.current[index]}
-            value={val}
+            value={val || ""}
             onChange={(e) => handleChange(index, e.target.value)}
             onKeyDown={(e) => handleKeyDown(index, e)}
             onPaste={handlePaste}

@@ -90,7 +90,7 @@ export default function Table7_copy_for_form2({ onDataChange, localData, initial
                       {row.district || "जिल्ला चयन गर्नुहोस्"}
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuRadioGroup value={row.district} onValueChange={(val) => handleInputChange(row.id, "district", val)}>
+                      <DropdownMenuRadioGroup value={row.district || ""} onValueChange={(val) => handleInputChange(row.id, "district", val)}>
                         {getDistricts(row.province).map((d) => (
                           <DropdownMenuRadioItem key={d.name} value={d.name}>
                             {d.name}

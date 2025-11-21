@@ -87,7 +87,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
             <DropdownMenuContent>
               <DropdownMenuRadioGroup onKeyDown={handleEnterFocus} value={permanentOld.district || ""} onValueChange={(val) => setPermanentOld({ ...permanentOld, district: val })}>
                 {allDistricts.map((d, index) => (
-                  <DropdownMenuRadioItem key={d + index + "57"} value={d}>
+                  <DropdownMenuRadioItem key={d + index + "57"} value={d || ""}>
                     {d}
                   </DropdownMenuRadioItem>
                 ))}
@@ -107,7 +107,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
           <Label className={localErrors?.permanentOld_wada && "text-red-600"}>वडा नं</Label>
           <Input
             className="w-full mt-2"
-            value={permanent.wada}
+            value={permanent.wada || ""}
             onChange={(e) => {
               const val = e.target.value;
               setPermanentOld({ ...permanentOld, wada: e.target.value });
@@ -126,7 +126,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
           <Label className={localErrors?.permanent_tole && "text-red-600"}>टोल / बाटो</Label>
           <Input
             className="w-full mt-2"
-            value={permanent.tole}
+            value={permanent.tole || ""}
             onChange={(e) => {
               const val = e.target.value;
               setPermanent({ ...permanent, tole: e.target.value });
@@ -150,9 +150,9 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
           <DropdownMenu>
             <DropdownMenuTrigger className="mt-2 border px-3 py-2 rounded-md w-full text-sm">{permanent.province || "प्रदेश चयन गर्नुहोस्"}</DropdownMenuTrigger>
             <DropdownMenuContent className="w-full max-h-60 overflow-y-auto">
-              <DropdownMenuRadioGroup value={permanent.province} onValueChange={(val) => setPermanent({ ...permanent, province: val, district: "", palika: "" })}>
+              <DropdownMenuRadioGroup value={permanent.province || ""} onValueChange={(val) => setPermanent({ ...permanent, province: val, district: "", palika: "" })}>
                 {allProvinces.map((p) => (
-                  <DropdownMenuRadioItem key={p.name} value={p.name}>
+                  <DropdownMenuRadioItem key={p.name} value={p.name || ""}>
                     {p.name}
                   </DropdownMenuRadioItem>
                 ))}
@@ -167,9 +167,9 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
           <DropdownMenu>
             <DropdownMenuTrigger className="mt-2 border px-3 py-2 rounded-md w-full text-sm">{permanent.district || "जिल्ला चयन गर्नुहोस्"}</DropdownMenuTrigger>
             <DropdownMenuContent className="w-full max-h-60 overflow-y-auto">
-              <DropdownMenuRadioGroup value={permanent.district} onValueChange={(val) => setPermanent({ ...permanent, district: val, palika: "" })}>
+              <DropdownMenuRadioGroup value={permanent.district || ""} onValueChange={(val) => setPermanent({ ...permanent, district: val, palika: "" })}>
                 {getDistricts(permanent.province).map((d) => (
-                  <DropdownMenuRadioItem key={d.name} value={d.name}>
+                  <DropdownMenuRadioItem key={d.name} value={d.name || ""}>
                     {d.name}
                   </DropdownMenuRadioItem>
                 ))}
@@ -184,7 +184,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
           <DropdownMenu>
             <DropdownMenuTrigger className="mt-2 border px-3 py-2 rounded-md w-full text-sm">{permanent.palika || "पालिका चयन गर्नुहोस्"}</DropdownMenuTrigger>
             <DropdownMenuContent className="w-full max-h-60 overflow-y-auto">
-              <DropdownMenuRadioGroup value={permanent.palika} onValueChange={(val) => setPermanent({ ...permanent, palika: val })}>
+              <DropdownMenuRadioGroup value={permanent.palika || ""} onValueChange={(val) => setPermanent({ ...permanent, palika: val })}>
                 {getPalikas(permanent.province, permanent.district).map((p) => (
                   <DropdownMenuRadioItem key={p} value={p}>
                     {p}
@@ -200,7 +200,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
           <Label className={localErrors?.permanent_wada && "text-red-600"}>वडा नं</Label>
           <Input
             className="w-full mt-2"
-            value={permanent.wada}
+            value={permanent.wada || ""}
             onChange={(e) => {
               const val = e.target.value;
               setPermanent({ ...permanent, wada: e.target.value });
@@ -219,7 +219,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
           <Label className={localErrors?.permanent_tole && "text-red-600"}>टोल / बाटो</Label>
           <Input
             className="w-full mt-2"
-            value={permanent.tole}
+            value={permanent.tole || ""}
             onChange={(e) => {
               const val = e.target.value;
               setPermanent({ ...permanent, tole: e.target.value });
@@ -274,7 +274,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
               {current.province || "प्रदेश चयन गर्नुहोस्"}
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-full max-h-60 overflow-y-auto">
-              <DropdownMenuRadioGroup value={current.province} onValueChange={(val) => setCurrent({ ...current, province: val, district: "", palika: "" })}>
+              <DropdownMenuRadioGroup value={current.province || ""} onValueChange={(val) => setCurrent({ ...current, province: val, district: "", palika: "" })}>
                 {allProvinces.map((p) => (
                   <DropdownMenuRadioItem key={p.name} value={p.name} disabled={current.sameAsPermanent}>
                     {p.name}
@@ -293,7 +293,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
               {current.district || "जिल्ला चयन गर्नुहोस्"}
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-full max-h-60 overflow-y-auto">
-              <DropdownMenuRadioGroup value={current.district} onValueChange={(val) => setCurrent({ ...current, district: val, palika: "" })}>
+              <DropdownMenuRadioGroup value={current.district || ""} onValueChange={(val) => setCurrent({ ...current, district: val, palika: "" })}>
                 {getDistricts(current.province).map((d) => (
                   <DropdownMenuRadioItem key={d.name} value={d.name} disabled={current.sameAsPermanent}>
                     {d.name}
@@ -312,7 +312,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
               {current.palika || "पालिका चयन गर्नुहोस्"}
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-full max-h-60 overflow-y-auto">
-              <DropdownMenuRadioGroup value={current.palika} onValueChange={(val) => setCurrent({ ...current, palika: val })}>
+              <DropdownMenuRadioGroup value={current.palika || ""} onValueChange={(val) => setCurrent({ ...current, palika: val })}>
                 {getPalikas(current.province, current.district).map((p) => (
                   <DropdownMenuRadioItem key={p} value={p} disabled={current.sameAsPermanent}>
                     {p}
@@ -328,7 +328,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
           <Label className={localErrors?.current_wada && "text-red-600"}>वडा नं</Label>
           <Input
             className={`w-full mt-2 ${localErrors?.current_wada ? "border-red-500" : ""}`}
-            value={current.wada}
+            value={current.wada || ""}
             disabled={current.sameAsPermanent}
             onChange={(e) => {
               const val = e.target.value;
@@ -348,7 +348,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
           <Label className={localErrors?.current_tole && "text-red-600"}>टोल / बाटो</Label>
           <Input
             className={`w-full mt-2 ${localErrors?.current_tole ? "border-red-500" : ""}`}
-            value={current.tole}
+            value={current.tole || ""}
             disabled={current.sameAsPermanent}
             onChange={(e) => {
               const val = e.target.value;
