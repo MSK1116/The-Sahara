@@ -113,7 +113,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
         </div>
         <div class=" pr-10">
             <p>कोड न. :- ${f3.branchCode}</p>
-            <p>मिति: - ${new NepaliDate(f3.malpotLetterDate).format("ddd DD, MMMM YYYY", "np")}</p>
+            <p>मिति: - ${new NepaliDate(f3.malpotLetterDate || new Date()).format("ddd DD, MMMM YYYY", "np")}</p>
         </div>
     </div>
 

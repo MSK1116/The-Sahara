@@ -35,9 +35,9 @@ export function PageMaker_LoanApplicationFamily(data) {
     `साबिक ठेगाना : जिल्ला ${f.address.permanentOld.district || ""} 
    गा.वि.स./न. पा. ${f.address.permanentOld.palika || ""} 
    वडा नं. ${f.address.permanentOld.wada || ""}`,
-    `जिल्ला ${f.address.current.district || ""} 
-   गा.वि.स./न. पा. ${f.address.current.palika || ""} 
-   वडा नं. ${f.address.current.wada || ""}`,
+    `जिल्ला ${f.address.permanent.district || ""} 
+   गा.वि.स./न. पा. ${f.address.permanent.palika || ""} 
+   वडा नं. ${f.address.permanent.wada || ""}`,
   ];
 
   const landOwnerDetails2 = [
@@ -47,9 +47,9 @@ export function PageMaker_LoanApplicationFamily(data) {
     `साबिक ठेगाना : जिल्ला ${f.address.permanentOld.district || ""} 
    गा.वि.स./न. पा. ${f.address.permanentOld.palika || ""} 
    वडा नं. ${f.address.permanentOld.wada || ""}`,
-    `जिल्ला ${f.address.current.district || ""} 
-   गा.वि.स./न. पा. ${f.address.current.palika || ""} 
-   वडा नं. ${f.address.current.wada || ""}`,
+    `जिल्ला ${f.address.permanent.district || ""} 
+   गा.वि.स./न. पा. ${f.address.permanent.palika || ""} 
+   वडा नं. ${f.address.permanent.wada || ""}`,
   ];
 
   const table7Row = f.table7 && f.table7.length > 0 ? f.table7 : [{}];
@@ -179,10 +179,10 @@ ${fixedRows2
         <h3>महोदय,</h3>
         <h4 class="indent-5">
             त्यस संस्थाबाद श्री <b>${f.applicant_inlaws_name || ""}</b> को ${p1} श्री ${f.applicant_father_name || ""} को  ${p2} जिल्ला
-            ${f.address.permanent.district || ""} गा.वि.स./न. पा. ${f.address.permanent.palika || ""} वडा नं.
-            ${f.address.permanent.wada || ""} हाल जिल्ला
-            ${f.address.current.district || ""} गा.वि.स./न. पा. ${f.address.current.palika || ""} वडा नं.
-            ${f.address.current.wada || ""} स्थापी ठेगाना भई बसौबास ग्नें वर्ष ${f.age || ""} को श्री ${f.applicant_name || ""} ${f.approver_applicant_name ? f.approver_applicant_name + " र" : ""} को नौउम कर्जां अन्तर्गत जम्मा
+            ${f.address.permanentOld.district || ""} गा.वि.स./न. पा. ${f.address.permanentOld.palika || ""} वडा नं.
+            ${f.address.permanentOld.wada || ""} हाल जिल्ला
+            ${f.address.permanen.district || ""} गा.वि.स./न. पा. ${f.address.permanen.palika || ""} वडा नं.
+            ${f.address.permanen.wada || ""} स्थापी ठेगाना भई बसौबास ग्नें वर्ष ${f.age || ""} को श्री ${f.applicant_name || ""} ${f.approver_applicant_name ? f.approver_applicant_name + " र" : ""} को नौउम कर्जां अन्तर्गत जम्मा
             रु. ${f2.fiftyPercentMargin ? convert(f2.fiftyPercentMargin, "toNp") : ""} (अक्षरेपी रु.
             ${f2.fiftyPercentMargin_text || ""} मात्र ) ऋण लिनको लागि सुरक्षण बापत धितो स्वरूप श्री ${f.applicant_name || ""} को नाउँमा जग्गाधनी प्रमाण पूर्जा भई
             हकभोगमा रहेकी तपसिलमा उल्लेख भए मोजिमको जायजेभा सुरक्षण वापत संस्थालाई धिती लेखि दिएमा धितो जमानी दातार्सँग

@@ -103,10 +103,10 @@ export function PageMaker_LoanApplicationTamasuk(data) {
             सर्लाही, मलंगवा र.नं. ०१/०५०/०५१
             मिति ०५१/०२/१३ को आगे ऋणीको नाम
             ${f.applicant_inlaws_name || ""} को ${p1} ${f.applicant_father_name || ""} को ${p2} ${p3 || ""}
+            जिल्ला ${f.address.permanentOld?.district || ""} गा.वि.स./न. पा. ${f.address.permanentOld.palika || ""}
+            वडा नं. ${f.address.permanentOld.wada || ""} हाल
             जिल्ला ${f.address.permanent?.district || ""} गा.वि.स./न. पा. ${f.address.permanent.palika || ""}
-            वडा नं. ${f.address.permanent.wada || ""} हाल
-            जिल्ला ${f.address.current?.district || ""} गा.वि.स./न. पा. ${f.address.current.palika || ""}
-            वडा नं. ${f.address.current.wada || ""} बस्ने वर्ष ${f.age || ""} को म ${f.applicant_name || ""} ले
+            वडा नं. ${f.address.permanent.wada || ""} बस्ने वर्ष ${f.age || ""} को म ${f.applicant_name || ""} ले
             ${f.desc1 || ""} कार्य गर्नको लागि बस संस्थावाट आजका मितिमा रु. ${f2.fiftyPercentMargin ? convert(f2.fiftyPercentMargin, "toNp") : ""} (अक्षरेपी रु.
             ${f2.fiftyPercentMargin_text || ""} मात्र ) ऋण लिएको ठिक साँची हो | यो ऋणको वार्षिक ${f4.annualInterestRate || ""} % (अक्षरेपी रु.
             ${convert(f4.annualInterestRate, "toNp") || ""} 

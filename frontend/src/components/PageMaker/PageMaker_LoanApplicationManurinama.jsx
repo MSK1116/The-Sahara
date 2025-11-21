@@ -65,7 +65,6 @@ export function PageMaker_LoanApplicationFamily(data) {
   `;
 
   return `
-
 <body class=" flex flex-row items-center">
      <div class="flex mt-15 w-[10%] items-center justify-center h-full my-auto ">
         <div class="p-2 b h-[90%] text-xs">

@@ -338,17 +338,16 @@ export function PageMaker_LoanApplicationPage1(data) {
 
     <p>
       स्थायी ठेगाना (ना.प्र.प) अनुसार :  
+      <b>${f.address.permanentOld.district}</b>, 
+      <b>${f.address.permanentOld.palika || "—"}</b>, 
+      <b>${f.address.permanentOld.wada || "—"}</b>, 
+      <b>${f.address.permanentOld.tole || "—"}</b>
+      र हाल बसोबास:  
       <b>${f.address.permanent.province}</b>, 
       <b>${f.address.permanent.district}</b>, 
       <b>${f.address.permanent.palika || "—"}</b>, 
       <b>${f.address.permanent.wada || "—"}</b>, 
       <b>${f.address.permanent.tole || "—"}</b>
-      र हाल बसोबास:  
-      <b>${f.address.current.province}</b>, 
-      <b>${f.address.current.district}</b>, 
-      <b>${f.address.current.palika || "—"}</b>, 
-      <b>${f.address.current.wada || "—"}</b>, 
-      <b>${f.address.current.tole || "—"}</b>
     </p>
 
     <h2>फोन नं: <b>${f.phone1}</b>, <b>${f.phone2}</b></h2>
@@ -427,11 +426,10 @@ export function PageMaker_LoanApplicationPage1(data) {
       <p>
         ठेगाना:
         <b>
-          ${f.address.permanent.province},
-          ${f.address.permanent.district},
-          ${f.address.permanent.palika},
-          ${f.address.permanent.wada},
-          ${f.address.permanent.tole}
+          ${f.address.permanentOld.district},
+          ${f.address.permanentOld.palika},
+          ${f.address.permanentOld.wada},
+          ${f.address.permanentOld.tole}
         </b>
       </p>
     </td>

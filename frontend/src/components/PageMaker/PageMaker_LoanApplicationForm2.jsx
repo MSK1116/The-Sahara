@@ -143,15 +143,14 @@ export function PageMaker_LoanApplicationFrom2(data) {
             <p>पद: <b>${f2.evaluatorPost}</b></p>
         </div>
         <div>
-            <p>स्थलमा गई मूल्यांकन गरेको मितिः <b>${new NepaliDate(f2.evaluationDate).format("ddd DD, MMMM YYYY", "np")}</b></p>
-            <p>ऋण निवेदकको नामः <b>${f.applicant_name}</b></p>
+            <p>स्थलमा गई मूल्यांकन गरेको मितिः <b>${new NepaliDate(f2.evaluationDate || new Date()).format("ddd DD, MMMM YYYY", "np")}</b></p>
+            <p>ऋण निवेदकको नामः <b>${f.applicant_name || ""}</b></p>
             <p>
                 स्थायी ठेगाना: -
-                <b>${f.address.permanent.province}</b>,
-                <b>${f.address.permanent.district}</b>,
-                <b>${f.address.permanent.palika || "—"}</b>,
-                <b>${f.address.permanent.wada || "—"}</b>,
-                <b>${f.address.permanent.tole || "—"}</b> र हाल बसोबास गरेको ठेगाना: -
+                <b>${f.address.permanentOld.district || "--"}</b>,
+                <b>${f.address.permanentOld.palika || "—"}</b>,
+                <b>${f.address.permanentOld.wada || "—"}</b>,
+                <b>${f.address.permanentOld.tole || "—"}</b> र हाल बसोबास गरेको ठेगाना: -
                 <b>${f.address.current.province}</b>,
                 <b>${f.address.current.district}</b>,
                 <b>${f.address.current.palika || "—"}</b>,
@@ -179,7 +178,7 @@ export function PageMaker_LoanApplicationFrom2(data) {
                 उपलब्ध गराउने गरी स्वीकृत गरियो ।
             </p>
         </div>
-        <div class="my-5 flex flex-row items-center justify-between px-8">
+        <div class="my-5 mt-8 flex flex-row items-center justify-between px-8">
             <div class=" items-center flex flex-col">
                 <p>___________</p>
                 <p>सदस्य सचिव</p>
