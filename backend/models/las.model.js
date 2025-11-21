@@ -154,6 +154,11 @@ const Form1Schema = new mongoose.Schema({
   approver_inlaws_name: { type: String, default: "" },
   approver_spouse_name: { type: String, default: "" },
   approver_families_detail: { type: String, default: "" },
+  approver_age: { type: String, default: "" },
+  approver_applicant_gender: { type: String, default: "" },
+  approver_applicant_maritalStatus: { type: String, default: "" },
+  approver_citizenship_takenOffice: { type: String, default: "" },
+  approver_citizenship_takenDate: { type: String, default: "" },
 
   applicant_father_name: { type: String, default: "" },
   applicant_spouse_name: { type: String, default: "" },
@@ -173,7 +178,6 @@ const Form1Schema = new mongoose.Schema({
   business_type: { type: String, default: "" },
   project_estimated_cost: { type: String, default: "" },
   project_estimated_cost_text: { type: String, default: "" },
-
   paymentFrequency: { type: String, default: "मासिक" },
 });
 

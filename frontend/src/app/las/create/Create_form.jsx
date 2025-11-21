@@ -751,7 +751,7 @@ const Create_form = ({ onDataChange, initialData }) => {
             </div>
           </div>
           <div className={` ${isApprovalGiven ? "" : "hidden"}  flex flex-row space-x-5 mt-5  `}>
-            <div className="flex flex-col space-x-5 space-y-5">
+            <div className="flex flex-col max-w-1/4 space-x-5 space-y-5">
               <div className="w-full mt-3 ">
                 <Label className={!isApprovalGiven && "text-gray-500"} htmlFor="approver_applicant_name">
                   नाम
@@ -766,6 +766,33 @@ const Create_form = ({ onDataChange, initialData }) => {
                   onChange={(e) => setLocalData((d) => ({ ...d, approver_applicant_name: e.target.value }))}
                 />
               </div>
+              <div className=" flex flex-row items-center justify-center space-x-3">
+                <div>
+                  <Label className={localErrors.approver_age ? "text-red-600" : ""}>उमेर</Label>
+                  <Input
+                    className="mt-2"
+                    value={localData.approver_age ? convert(localData.approver_age || "", "toEn") : ""}
+                    onKeyDown={handleEnterFocus}
+                    onChange={(e) => {
+                      const valInEn = convert(e.target.value || "", "toEn");
+                      const numVal = Number(valInEn);
+                      setLocalData((d) => ({ ...d, approver_age: convert(e.target.value || "", "toNp") }));
+                      setLocalErrors((prev) => ({ ...prev, approver_age: numVal < 18 || numVal > 85 || isNaN(numVal) }));
+                    }}
+                  />
+                </div>
+                <GenderAndMale_status
+                  gender={localData.approver_applicant_gender || ""}
+                  maritalStatus={localData.approver_applicant_maritalStatus || ""}
+                  onDataChange={(val) =>
+                    setLocalData((d) => ({
+                      ...d,
+                      approver_applicant_gender: val.gender,
+                      approver_applicant_maritalStatus: val.marital,
+                    }))
+                  }
+                />
+              </div>
               <div className="w-full ">
                 <Label className={!isApprovalGiven && "text-gray-500"} htmlFor="approver_citizenship_number">
                   नागरिकता नम्बर
@@ -778,6 +805,27 @@ const Create_form = ({ onDataChange, initialData }) => {
                   value={localData.approver_citizenship_number || ""}
                   onKeyDown={handleEnterFocus}
                   onChange={(e) => setLocalData((d) => ({ ...d, approver_citizenship_number: e.target.value }))}
+                />
+              </div>
+              <div className=" ">
+                <Label htmlFor="citizenship_takenDate">नागरिकता लिने मिति</Label>
+                <NepaliDateInput
+                  onChange={(val) => setLocalData((d) => ({ ...d, approver_citizenship_takenDate: val }))}
+                  handleEnterFocus={handleEnterFocus}
+                  value={localData.approver_citizenship_takenDate || ""}
+                  className="w-full mt-2"
+                  id="citizenship_takenDate"
+                  name="citizenship_takenDate"></NepaliDateInput>
+              </div>
+              <div className=" ">
+                <Label htmlFor="citizenship_takenOffice">नागरिकता लिने कार्यालय </Label>
+                <Input
+                  id="citizenship_takenOffice"
+                  name="citizenship_takenOffice"
+                  className="w-full mt-2"
+                  value={localData.approver_citizenship_takenOffice || ""}
+                  onKeyDown={handleEnterFocus}
+                  onChange={(e) => setLocalData((d) => ({ ...d, approver_citizenship_takenOffice: e.target.value }))}
                 />
               </div>
               <div className="w-full ">

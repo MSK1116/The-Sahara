@@ -35,7 +35,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
   }
 
   if (f.approver_applicant_name) {
-    p4 = "";
+    p4 = f.approver_applicant_name;
   } else {
     p4 = "निज";
   }
@@ -123,16 +123,15 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
         <p class=" text-center font-semibold">विषयः - धितो (दृष्टि) बन्धक पारित गरिदिने बारे ।</p>
         <p class="mt-4">
             उपरोक्त सम्बन्धमा,
-            परदेश <strong>${f.address.permanent.province}</strong>,
+            जिल्ला <strong>${f.address.permanentOld.district}</strong>,
+            <strong>${f.address.permanentOld.palika || "—"}</strong>,
+            वडा <strong>${f.address.permanentOld.wada || "—"}</strong>,
+            टोल <strong>${f.address.permanentOld.tole || "—"}</strong> मा बसोबास गर्ने व्यक्ति र हाल बसोबास परदेश
+            <strong>${f.address.permanent.province}</strong>,
             जिल्ला <strong>${f.address.permanent.district}</strong>,
             <strong>${f.address.permanent.palika || "—"}</strong>,
             वडा <strong>${f.address.permanent.wada || "—"}</strong>,
-            टोल <strong>${f.address.permanent.tole || "—"}</strong> मा बसोबास गर्ने व्यक्ति र हाल बसोबास परदेश
-            <strong>${f.address.current.province}</strong>,
-            जिल्ला <strong>${f.address.current.district}</strong>,
-            <strong>${f.address.current.palika || "—"}</strong>,
-            वडा <strong>${f.address.current.wada || "—"}</strong>,
-            टोल <strong>${f.address.current.tole || "—"}</strong>
+            टोल <strong>${f.address.permanent.tole || "—"}</strong>
             मा बस्ने <strong>${f.applicant_inlaws_name || "-"} </strong> ${p1} <b>${f.applicant_father_name || "-"}</b> को  ${p2 || ""} वर्ष <b>${f.age ? convert(f.age, "toNp") : ""}</b> ${p3 || ""} 
          <b>${f.applicant_name || ""}</b> ले तपसिल बमोजिम जग्गा दृस्टी बन्दक लेखत संस्थाको नाउँमा पारित गराई ऋण माग गर्नु भएको हुँदा ${p4 || ""} को नाउँमा दर्ता कायम भएको जग्गामा स्वीकृत ऋण रकम रु.<b> ${convert(
     f2.fiftyPercentMargin,
