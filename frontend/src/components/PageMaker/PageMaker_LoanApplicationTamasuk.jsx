@@ -10,7 +10,7 @@ export function PageMaker_LoanApplicationTamasuk(data) {
   var p1 = "";
   var p2 = "";
   var p3 = "";
-  var p4 = "";
+
   // applicant_inlaws_name;
   if (f.applicant_gender == "male") {
     p1 = " को  नाती ";
@@ -198,11 +198,11 @@ export function PageMaker_LoanApplicationTamasuk(data) {
         </div>
         <div class="my-2">
             <p class="font-semibold my-2 underline">संस्थाको प्रयोजनको लागि :- </p>
-            <p>धितो रोक्काको लागि संस्थाबाट पत्र संख्या ${f3?.malpotLetterNo || ""} च.न ${f3?.malpotLetterChalaniNo || ""} मिति ${new NepaliDate(f3?.malpotLetterDate || "").format("YYYY/MM/DD", "np")} मिति</p>
+            <p>धितो रोक्काको लागि संस्थाबाट पत्र संख्या ${f3?.malpotLetterNo || ""} च.न ${f3?.malpotLetterChalaniNo || ""} मिति ${new NepaliDate(f3?.malpotLetterDate || today).format("YYYY/MM/DD", "np")} मिति</p>
             <p>मालपोत कार्यालय ${f3?.malpotOfficeName || ""} बाट धितो रोक्का भएको प्राप्त पत्रको प.सं. ${f4?.malpotOfficeReplyPageNo || ""} मिति ${
-    f4?.malpotOfficeReplyDate && new NepaliDate(f4?.malpotOfficeReplyDate).format("ddd DD, MMMM YYYY", "np")
+    f4?.malpotOfficeReplyDate && new NepaliDate(f4?.malpotOfficeReplyDate || today).format("ddd DD, MMMM YYYY", "np")
   } च.नं. ${f4?.malpotOfficeReplyChalaniNo || ""}</p>
-            <p>ऋणीको नागरिकता नं. ${f.citizenship_number || ""} मिति  ${f?.citizenship_takenDate && new NepaliDate(f?.citizenship_takenDate).format("ddd DD, MMMM YYYY", "np")} दिने कार्यलय नाम: ${f.citizenship_takenOffice || ""}</p>
+            <p>ऋणीको नागरिकता नं. ${f.citizenship_number || ""} मिति  ${f?.citizenship_takenDate && new NepaliDate(f?.citizenship_takenDate || today).format("ddd DD, MMMM YYYY", "np")} दिने कार्यलय नाम: ${f.citizenship_takenOffice || ""}</p>
         </div>
     </div>
 

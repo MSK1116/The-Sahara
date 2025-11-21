@@ -14,11 +14,11 @@ export function PageMaker_LoanApplicationFamily(data) {
   var p4 = "";
   // applicant_inlaws_name;
   if (f.applicant_gender == "male") {
-    p1 = " को  नाती ";
+    p1 = "  नाती ";
   } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "single") {
-    p1 = "को  नातिनी ";
+    p1 = " नातिनी ";
   } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "married") {
-    p1 = "को  बुहारी ";
+    p1 = " बुहारी ";
   }
   if (f.applicant_gender == "female" && f.applicant_maritalStatus == "married") {
     p2 = "पतनी ";
@@ -29,28 +29,32 @@ export function PageMaker_LoanApplicationFamily(data) {
   }
 
   const landOwnerDetails = [
-    `${f.applicant_name || ""}`,
-    `${f.applicant_inlaws_name || ""}`,
-    `बाबुको नामः ${f.applicant_father_name || ""}`,
-    `साबिक ठेगाना : जिल्ला ${f.address.permanent.district || ""} 
-   गा.वि.स./न. पा. ${f.address.permanent.palika || ""} 
-   वडा नं. ${f.address.permanent.wada || ""}`,
+    `नाम: ${f.applicant_name || ""}`,
+    `${p1}:${f.applicant_inlaws_name || ""} ${p1}`,
+    `${p2}: ${f.applicant_father_name || ""}`,
+    `साबिक ठेगाना : जिल्ला ${f.address.permanentOld.district || ""} 
+   गा.वि.स./न. पा. ${f.address.permanentOld.palika || ""} 
+   वडा नं. ${f.address.permanentOld.wada || ""}`,
     `जिल्ला ${f.address.current.district || ""} 
    गा.वि.स./न. पा. ${f.address.current.palika || ""} 
    वडा नं. ${f.address.current.wada || ""}`,
   ];
 
   const landOwnerDetails2 = [
-    `${f.approver_applicant_name || ""}`,
-    `${f.approver_inlaws_name || ""}`,
-    `बाबुको नामः ${f.approver_father_name || ""}`,
-    `साबिक ठेगाना : --halnw bakii xa`,
+    `नाम: ${f.approver_applicant_name || ""}`,
+    `${p1}:${f.approver_inlaws_name || ""}`,
+    `${p2}:${f.approver_father_name || ""}`,
+    `साबिक ठेगाना : जिल्ला ${f.address.permanentOld.district || ""} 
+   गा.वि.स./न. पा. ${f.address.permanentOld.palika || ""} 
+   वडा नं. ${f.address.permanentOld.wada || ""}`,
     `जिल्ला ${f.address.current.district || ""} 
    गा.वि.स./न. पा. ${f.address.current.palika || ""} 
    वडा नं. ${f.address.current.wada || ""}`,
   ];
 
   const table7Row = f.table7 && f.table7.length > 0 ? f.table7 : [{}];
+  const table2Row = f.table2 && f.table2.length > 0 ? f.table2 : [{}];
+
   const landDetails = table7Row.filter((row) => row.govApprovedPrice && row.localApprovedPrice && row.ownerName === f.applicant_name);
   const landDetails2 = table7Row.filter((row) => row.govApprovedPrice && row.localApprovedPrice && row.ownerName === f.approver_applicant_name);
 
@@ -107,7 +111,7 @@ ${fixedRows2
   .map((row, index) => {
     return `
       <tr>
-        <td>${landOwnerDetails[index]}</td>
+        <td>${landOwnerDetails2[index]}</td>
         <td>${row.district || ""}</td>
         <td>${row.palika || ""}</td>
         <td>${row.wardNo || ""}</td>
@@ -118,15 +122,53 @@ ${fixedRows2
   .join("")}
 </tbody>
 </table>`;
+  const table2HTML = `
+    <h4 class="font-semibold text-center">सहमती दाताको विवरण</h4>
+            <table border="1" cellspacing="0" cellpadding="6" width="100%" class="text-xs mt-2 mb-5">
+                <thead>
+
+                    <tr>
+                        <th>सि.न</th>
+                        <th>सहमती दाताको नाम</th>
+                        <th>धितो जमानीदातार्सँगको सम्बन्ध</th>
+                        <th>दस्तखत</th>
+                        <th>ओठा छाप</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${table2Row
+                      .map((row, index) => {
+                        return `
+                    <tr>
+                        <td class="w-9">${index + 1}</td>
+                        <td>${row?.name || ""}
+                            <br>
+                            ${row?.citizenship_number || ""}
+                        </td>
+                        <td>${row?.relation}</td>
+                        <td></td>
+                        <td class="min-w-48"></td>
+                    </tr>
+                    `;
+                      })
+                      .join("")}
+                </tbody>
+     </table>`;
 
   return `
 
 <body class=" flex flex-row items-center">
-    <div class="flex mt-15 w-[10%] items-center justify-center h-full my-auto ">
-        <div class="p-2 b h-[90%] text-xs">
-            <p class="ml-2">${f5?.witness2.district || "___________"} न.पा./गा.वि.स ${f5?.witness2.palika || "___________"} वडा नं. ${f5?.witness2.wada || "___________"}मा बस्ने ${f5?.witness2.name}</p>
-            <p>${f5?.witness1.district || "___________"} न.पा./गा.वि.स ${f5?.witness1.palika || "___________"} वडा नं.
-                ${f5?.witness1.wada || "___________"}मा बस्ने ${f5?.witness1.name}</p>
+    <div class="flex w-[10%] h-full">
+        <div class=" pr-4 text-center b text-xs ">
+            
+            <p class="ml-2">
+              जिल्ला __________ न.पा./गा.वि.स ___________ वडा नं. _________ मा बस्ने
+                ________________
+            </p>
+            <p>
+              जिल्ला ___________ न.पा./गा.वि.स ___________ वडा नं. ___________ मा बस्ने
+                _______________
+            </p>
             <p class=" font-semibold">साक्षी :</p>
         </div>
     </div>
@@ -136,7 +178,7 @@ ${fixedRows2
         <h2 class=" text-center">विषयः व्यक्तिगत जमानीको सहमती बारे ।</h2>
         <h3>महोदय,</h3>
         <h4 class="indent-5">
-            त्यस संस्थाबाद श्री <b>${f.applicant_inlaws_name || ""}</b> -p1- श्री -p2- जिल्ला
+            त्यस संस्थाबाद श्री <b>${f.applicant_inlaws_name || ""}</b> को ${p1} श्री ${f.applicant_father_name || ""} को  ${p2} जिल्ला
             ${f.address.permanent.district || ""} गा.वि.स./न. पा. ${f.address.permanent.palika || ""} वडा नं.
             ${f.address.permanent.wada || ""} हाल जिल्ला
             ${f.address.current.district || ""} गा.वि.स./न. पा. ${f.address.current.palika || ""} वडा नं.
@@ -159,11 +201,18 @@ ${fixedRows2
         <div>
         <h1 class="my-2 font-semibold text-center">तपसिल </h1>
               ${table7HTM}
-              ${table7HTM2}
+              ${f.approver_applicant_name ? table7HTM2 : ""}
+              ${table2HTML}
         </div>
-        <p></p>
+                    <p class="mt-3">इति सम्बत्: ${new NepaliDate(new Date()).format("YYYY", "np")} साल ${new NepaliDate(new Date()).format("MMMM", "np")} महिना ${new NepaliDate(new Date()).format("ddd", "np")} गते रोज ${new NepaliDate(
+    new Date()
+  ).format("ddd", "np")} मा शुभम् ।</p>
 
-        <!-- inside this -->
+        <div class="my-2 px-15 text-center flex flex-row justify-between items-center">
+            <div>___________<br>तयार गर्ने</div>
+            <div>___________<br>सदर गर्ने</div>
+
+        </div>
     </div>
 
     <script>

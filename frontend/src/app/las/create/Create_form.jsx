@@ -414,7 +414,7 @@ const Create_form = ({ onDataChange, initialData }) => {
             <DropdownMenu>
               <DropdownMenuTrigger className="mt-2 border px-3 py-2 text-sm rounded-md w-full">{applicantType}</DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
-                <DropdownMenuRadioGroup value={applicantType} onValueChange={setApplicantType}>
+                <DropdownMenuRadioGroup value={applicantType || ""} onValueChange={setApplicantType}>
                   <DropdownMenuRadioItem value="सिक्योड कर्जा">सिक्योड कर्जा</DropdownMenuRadioItem>
                   <DropdownMenuRadioItem value="सहारा व्यक्तिगत कर्जा">सहारा व्यक्तिगत कर्जा</DropdownMenuRadioItem>
                   <DropdownMenuRadioItem value="सहारा ब्यापारिक कर्जा">सहारा ब्यापारिक कर्जा</DropdownMenuRadioItem>
@@ -619,7 +619,7 @@ const Create_form = ({ onDataChange, initialData }) => {
             <DropdownMenu>
               <DropdownMenuTrigger className="mt-2 border px-3 py-2 rounded-md w-full text-sm">{paymentFrequency || "भुक्तानी अवधि चयन गर्नुहोस्"}</DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
-                <DropdownMenuRadioGroup value={paymentFrequency} onValueChange={setPaymentFrequency}>
+                <DropdownMenuRadioGroup value={paymentFrequency || ""} onValueChange={setPaymentFrequency}>
                   <DropdownMenuRadioItem value="मासिक">मासिक</DropdownMenuRadioItem>
                   <DropdownMenuRadioItem value="त्रैमासिक">त्रैमासिक</DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>

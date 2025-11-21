@@ -494,7 +494,7 @@ ${htmlContent}
       <div className="flex relative flex-col select-none items-center gap-3">
         <div className="absolute h-full bg-gray-300 top-0 left-1/2 w-0.5 -translate-x-1/2 transform z-0"></div>
 
-        {[...Array(7)].map((i, idx) => (
+        {[...Array(4)].map((i, idx) => (
           <Button
             variant={"outline"}
             disabled={!isEditing && idx !== 0}

@@ -124,9 +124,45 @@
                     .join("")}
                 </tbody>
             </table>
+            <h4 class="font-semibold text-center">सहमती दाताको विवरण</h4>
+            <table border="1" cellspacing="0" cellpadding="6" width="100%" class="text-xs mt-2 mb-5">
+                <thead>
+
+                    <tr>
+                        <th>सि.न</th>
+                        <th>सहमती दाताको नाम</th>
+                        <th>धितो जमानीदातार्सँगको सम्बन्ध</th>
+                        <th>दस्तखत</th>
+                        <th>ओठा छाप</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${table2Row
+                    .map((row, index) => {
+                    return `
+                    <tr>
+                        <td class="w-9">${index+1}</td>
+                        <td>${row?.name || ""}
+                            <br>
+                            ${row?.citizenship_number ||""}
+                        </td>
+                        <td>${row?.relation}</td>
+                        <td></td>
+                        <td class="min-w-48"></td>
+                    </tr>
+                    `;
+                    })
+                    .join("")}
+                </tbody>
+            </table>
+
 
         </div>
-        <p></p>
+        <div class="my-2 px-15 text-center flex flex-row justify-between items-center">
+            <div>___________<br>तयार गर्ने</div>
+            <div>___________<br>सदर गर्ने</div>
+
+        </div>
 
         <!-- inside this -->
     </div>
