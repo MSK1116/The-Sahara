@@ -47,7 +47,6 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
   <table border="1" cellspacing="0" cellpadding="6" width="100%" class="text-xs mt-2 mb-5">
   <thead>
     <tr>
-   
       <th >जग्गाधनीको नाम</th>
       <th >जिल्ला</th>
       <th >न.पा./गा.वि.स.</th>
@@ -62,6 +61,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
     ${table7Row
       .map((row, index) => {
         if (!row.govApprovedPrice || !row.localApprovedPrice) return "";
+        if (row.ownerName !== f.applicant_name) return "";
         return `
           <tr>
             <td>${row.ownerName || ""}</td>
