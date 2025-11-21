@@ -204,7 +204,7 @@ ${fixedRows2
               ${f.approver_applicant_name ? table7HTM2 : ""}
               ${table2HTML}
         </div>
-                    <p class="mt-3">इति सम्बत्: ${new NepaliDate(new Date()).format("YYYY", "np")} साल ${new NepaliDate(new Date()).format("MMMM", "np")} महिना ${new NepaliDate(new Date()).format("ddd", "np")} गते रोज ${new NepaliDate(
+                    <p class="mt-3">इति सम्बत्: ${new NepaliDate(new Date()).format("YYYY", "np")} साल ${new NepaliDate(new Date()).format("MMMM", "np")} महिना ${new NepaliDate(new Date()).format("DD", "np")} गते रोज ${new NepaliDate(
     new Date()
   ).format("ddd", "np")} मा शुभम् ।</p>
 
