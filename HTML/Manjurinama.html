@@ -1,0 +1,206 @@
+<html>
+
+<head>
+    <title>Print</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 8mm;
+        }
+
+        body {
+            font-family: Poppins;
+            font-size: 13px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #000;
+            padding: 6px;
+        }
+
+        .b {
+            text-orientation: mixed;
+            writing-mode: vertical-lr;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class=" flex flex-row">
+    <div class="flex mt-15 w-[10%] items-center justify-center h-full my-auto ">
+        <div class="p-2 b h-[90%] text-xs">
+            <p class="">
+                संस्थाको तर्फबाट कागज तयार गर्नेको नाम :
+                ${f4?.maker || "___________"}<br>
+                संस्थाको तर्फबाट कागज जाँच गर्नेको दस्तखत : ___________
+            </p>
+            <p class="ml-2">
+                ${f4?.witness2.district || "___________"} न.पा./गा.वि.स
+                ${f4?.witness2.palika || "___________"} वडा नं. ${f4?.witness2.wada || "___________"}मा बस्ने
+                ${f4?.witness2.name}
+            </p>
+            <p>
+                ${f4?.witness1.district || "___________"} न.पा./गा.वि.स
+                ${f4?.witness1.palika || "___________"} वडा नं. ${f4?.witness1.wada || "___________"}मा बस्ने
+                ${f4?.witness1.name}
+            </p>
+            <p class=" font-semibold">साक्षी :</p>
+        </div>
+    </div>
+
+    <div class="pl-3">
+        <h1 class="my-3 underline  text-center">मन्जुरीनामा</h1>
+        <p>
+            लिखितम् ${f.applicant_inlaws_name || ""} को ${p1} ${f.applicant_father_name || ""} को ${p2} ${p3 || ""}
+            जिल्ला ${f.address.permanent.district || ""} गा.वि.स./न. पा. ${f.address.permanent.palika || ""}
+            वडा नं. ${f.address.permanent.wada || ""} हाल
+            जिल्ला ${f.address.current.district || ""} गा.वि.स./न. पा. ${f.address.current.palika || ""}
+            वडा नं. ${f.address.current.wada || ""} बस्ने वर्ष ${f.age || ""} को म ${f.applicant_name || ""} आगे
+            ${f.applicant_inlaws_name || ""} को ${p1} ${f.applicant_father_name || ""} को ${p2} ${p3 || ""}
+            जिल्ला ${f.address.permanent.district || ""} गा.वि.स./न. पा. ${f.address.permanent.palika || ""}
+            वडा नं. ${f.address.permanent.wada || ""} हाल
+            जिल्ला ${f.address.current.district || ""} गा.वि.स./न. पा. ${f.address.current.palika || ""}
+            वडा नं. ${f.address.current.wada || ""} बस्ने वर्ष ${f.age || ""} को -male/female- ले -reason- कार्य गर्न
+            भनी यस द सहारा लोन सेविंग्स
+            को-ऑपरेटिभ सोसाइटी लिमिटेड मुख्य शाखा मलंगवा, सलाही वाट ऋण रकम रु. ${
+            f2.fiftyPercentMargin ? convert(f2.fiftyPercentMargin, "toNp") : ""
+            } (अक्षरेपी रु.
+            ${f2.fiftyPercentMargin_text || ""} मात्र ) कर्जा लिने भएको र सो कजां लिन धितो राखी दिनु होस भनी निज
+            -unknow- ले अन्नु भएको ₹ उपरोक्त बमोजिम धितो राखी दिन मन्जुर छ कि छैन भनी द
+            सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड मुख्य शाखा मलंगवा, सरलाहीबाट सोधनी हुँदा सोधनी गर्दा
+            मेरो चित्त बुभ्यो तमसुकमा लेखिए अनुसारको लिनु दिन हुने वापत तपसिलमा लेखिएको अरु कसैलाई कुनै
+            व्यहोराको लिखित नगरी दिएको मेरो हक भोगको जग्गा जाय जेबा धितों राखी -unknow- लाई
+            कर्जा कारोवार गन गराउन मन्जुर छ निज ऋणीले यस द सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी
+            लिमिटेडमुख्य शाखा मलंगवा, सलाहीमा गरेको तमसुक अनुसार समयमा ऋण नतीरेमा मैले मन्जुरीनामा गरी
+            लेखि दिएको जग्गा जाय जेथा लिलाम विक्री गरी असुल उपर गरेमा मेरो मन्जुरी छ । पछि कुनै किसिमको
+            उजर बाजुर गर्ने छैन, गरे यसै कागजले बबर गरी दिनु भनी म आफ्नो ख़ुशी राजीले बस व सहारा लोन
+            सेविंग्स को-ऑपरेटिभ सोसाइटी लिमिटेड मुख्य शाखा मलंगवा, सलाहीमा बसी
+
+
+
+
+            ${f.desc1 || ""} कार्य गर्नको लागि बस संस्थावाट आजका मितिमा रु. ${
+            f2.fiftyPercentMargin ? convert(f2.fiftyPercentMargin, "toNp") : ""
+            } (अक्षरेपी रु.
+            ${f2.fiftyPercentMargin_text || ""} मात्र ) ऋण लिएको ठिक साँची हो | यो ऋणको वार्षिक _____ (अक्षरेपी रु.
+            _____
+            प्रतिशत) का दरसे ब्याज लगाई सो लागने ब्याज र सम्पूर्ण साँवा
+            तपसिलको ऋण भुक्तानी तालिका अनुसार भुक्तानी समेत तपसिल बमोजिमका शतहरु पुरा-पुरा पालना गरी ${new
+            NepaliDate(oneYearLater).format("YYYY", "np")} साल ${new NepaliDate(oneYearLater).format("MMMM", "np")}
+            महिना ${new NepaliDate(
+            oneYearLater
+            ).format("DD", "np")} गते मसान्त ________ भित्र
+            तपसिलको ऋण भुक्तानी तालिका अनुसार तोकिएको समय मित्र नगद यस संस्थालाई ब्राउने छु। यस ऋण बापत
+            अरु कसैलाई कनै व्यवहारको लिखित गरि नदिएको खास लिखित गरि सहिछाप गर्नेको हकभोगको तपसिल बमोजिमको धितो यस
+            संस्थालाई लेखि दिएको छु। मेरो आफने नाउँमा वर्ता रहेको जति दृष्टी र अस्को मञ्जुरीवाट धितो रहेको जति जमानतको
+            रुपमा मानिने छ। तपसिलमा लेखिए वमोजिमको शर्तं पालना नभएमा वा तोकिएको म्याद भिन्न साँबा व्याज र किस्ताकी रकम
+            बुझाउन नसकेमा मेरो जायजेथा रोकी वा
+            नरोंकी वा मैले राखेको धितो र अरुको हकको जमानी रुपमा रहेको धिती समेत डॉँक लिलाम बिक्री गरी यसवाट र त्यसवाट
+            नपुगे रोक्का रहून नसकेको समेत अन्य चल अचल जायजेयाबाट बाँकी साँवा, व्याज असुल उपर गरी लिन होला भनि मेरो
+            मनोमान ख़ुशी राजीले ${f.branch || ""} स्थित द साहरा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड , मलंगवा,
+            सर्लाही
+            लाई बुझाई दिए । साक्षी किनाराको सदर । ईती सम्वत ${new NepaliDate(today).format("YYYY", "np")} साल ${new
+            NepaliDate(today).format("MMMM", "np")} महिना ${new NepaliDate(today).format("DD", "np")} गते रोज ${new
+            NepaliDate(today).format(
+            "ddd",
+            "np"
+            )} मा शुभम् ________
+        </p>
+        <P class="mt-2 gap-y-1.5">
+        <h2 class="my-1 font-semibold">शर्तहरु :</h2>
+        <span>१. यस ऋण रकमबाट तयार गरिने वाली वा खरीद हुने सामान ऋण नतिरेसम्म बिक्री गर्ने छैन र सो समेत धितोको रुपमा
+            रहन मेरो
+
+            मंजुर छ। इस प्रकार तयार हुने वाली त्यस संस्थालाई बुझाई यसबाट हुने रकमबाट मेरो तिनु पनें किस्ता रकम र अन्य
+            खर्च
+            केही
+            भएमा सो समेत कटाई बाँकी रकम मलाई भुक्तानी दिन संस्थाको व्यवस्था प्रति मेरो मन्जुर हुनेछ।</span>
+        <br>
+        <span>२. संस्थाको उपर्युक्त शर्त पालना नगरेमा वा मैले गर्नु पर्नें कार्य नगरेमा मैले दिएको जानकारी पछि झूठा
+            ठहरेमा
+            संस्थाले
+            चाहेको समयमा
+
+            कुनै व्यवस्थाबाट पनि ऋण रकम असुल उपर गरी लिएमा पनि मेरो मंजुर हुनेछ।</span>
+        <br>
+        <span>३.
+            यस ऋण सम्बन्धि उल्लेखित शर्तको अतिरिक्त इस संस्थाको ऐन नियम अनुसार र पछि बनाईने ऐन नियम कार्यविधि र
+            प्रशासकिय
+
+            आदेशहरु सबै मलाई मान्य हुनेछ त्यस सम्बन्धि संशोधित नियम र व्याजदर समेत मलाई लागु हुनेछ र त्यसको पालना
+            गर्नेछु र
+            संस्थाले
+            दिइने मेरो सबै हिसाब पुरा-पुरा मान्य हुनेछ।</span>
+
+        </P>
+
+        <div>
+            <p class="font-semibold text-center my-2">ऋण भुक्तानी कार्यक्रम</p>
+
+            <table border="1" class="text-xs border" cellspacing="0" cellpadding="6" width="100%">
+                <thead>
+                    <tr class="border ">
+                        <th class="border-r">ऋण भुक्तानी मिति</th>
+                        <th class="border-r">साँवा</th>
+                        <th class="border-r">कैफियत</th>
+                        <th class="border-r">कैफियत</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="border-r">${new NepaliDate(oneYearLater).format("YYYY", "np")} साल ${new
+                            NepaliDate(oneYearLater).format("MMMM", "np")}
+                            महिना ${new NepaliDate(oneYearLater).format("DD", "np")}
+                        </td>
+                        <td class="border-r">रु. ${f2.fiftyPercentMargin ? convert(f2.fiftyPercentMargin, "toNp") : ""}
+                            (अक्षरेपी रु.
+                            ${f2.fiftyPercentMargin_text || ""} मात्र )
+                        </td>
+                        <td class="border-r">
+                            ऋण रकमको ________ ले हुने ब्याज हरेक महिना तोकीएको मितिमा बुझाउन अनिवार्य हुनेछ। तोकेको थप
+                            समयमा व्याज नबुझाएमा थप _____% का दरले व्याज लाग्नेछ साथै तोकेको समयमा किस्ता
+                            तथा साँवा नबुझाएमा थप _____% का दरले व्याज लाग्नेछ ।
+                            तोकेको दिनमा व्याज नबुझाएमा मेरो बचत खाता
+                            नं. ${f.savingsAccountNumber || ""}
+
+                            बाट कट्टा गरि लिएमा मलाई मंजुर छ।
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+            <p class="my-2">ईती सम्वत ${new NepaliDate(today).format("YYYY", "np")} साल ${new
+                NepaliDate(today).format("MMMM", "np")}
+                महिना ${new
+                NepaliDate(today).format("DD", "np")} गते रोज ${new NepaliDate(today).format(
+                "ddd",
+                "np"
+                )} मा शुभम् ________</p>
+        </div>
+        <div class="my-2">
+            <p class="font-semibold my-2 underline">संस्थाको प्रयोजनको लागि :- </p>
+            <p>धितो रोक्काको लागि संस्थाबाट पत्र संख्या _____ च.न _____ मिति _____ </p>
+            <p>मालपोत कार्यालय _____ बाट धितो रोक्का भएको प्राप्त पत्रको प.सं. _____ मिति _____ च.नं. _____</p>
+            <p>ऋणीको नागरिकता नं. _____ मिति _____ दिने कार्यलय नाम:</p>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

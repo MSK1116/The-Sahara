@@ -1,0 +1,135 @@
+<html>
+
+<head>
+    <title>Print</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet" />
+    <style>
+        @page {
+            size: A4;
+            margin: 8mm;
+        }
+
+        body {
+            font-family: Poppins;
+            font-size: 13px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #000;
+            padding: 6px;
+        }
+
+        .b {
+            text-orientation: mixed;
+            writing-mode: vertical-lr;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class=" flex flex-row">
+    <div class="flex mt-15 w-[10%] items-center justify-center h-full my-auto ">
+        <div class="p-2 b h-[90%] text-xs">
+            <p class="ml-2">${f5?.witness2.district || "___________"} न.पा./गा.वि.स ${f5?.witness2.palika ||
+                "___________"} वडा नं. ${f5?.witness2.wada || "___________"}मा बस्ने ${f5?.witness2.name}</p>
+            <p>${f5?.witness1.district || "___________"} न.पा./गा.वि.स ${f5?.witness1.palika || "___________"} वडा नं.
+                ${f5?.witness1.wada || "___________"}मा बस्ने ${f5?.witness1.name}</p>
+            <p class=" font-semibold">साक्षी :</p>
+        </div>
+    </div>
+
+    <div class="pl-3">
+        <h1 class="my-2">श्री द सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड <br />मुख्य शाखा मलंगवा, सलाही।</h1>
+        <h2 class=" text-center">विषयः व्यक्तिगत जमानीको सहमती बारे ।</h2>
+        <h3>महोदय,</h3>
+        <h4 class="indent-5 text-xs">
+            त्यस संस्थाबाद श्री <b>${f.applicant_inlaws_name ||""}</b> -p1- श्री -p2- जिल्ला
+            ${f.address.permanent.district || ""} गा.वि.स./न. पा. ${f.address.permanent.palika || ""} वडा नं.
+            ${f.address.permanent.wada || ""} हाल जिल्ला
+            ${f.address.current.district || ""} गा.वि.स./न. पा. ${f.address.current.palika || ""} वडा नं.
+            ${f.address.current.wada || ""} स्थापी ठेगाना भई बसौबास ग्नें वर्ष ${f.age || ""} को श्री ${f.applicant_name
+            || ""} ${f.approver_applicant_name? f.approver_applicant_name+" र"||""} को नौउम कर्जां अन्तर्गत जम्मा
+            रु. ${ f2.fiftyPercentMargin ? convert(f2.fiftyPercentMargin, "toNp") : "" } (अक्षरेपी रु.
+            ${f2.fiftyPercentMargin_text || ""} मात्र ) ऋण लिनको लागि सुरक्षण बापत धितो स्वरूप श्री ${f.applicant_name
+            || ""} को नाउँमा जग्गाधनी प्रमाण पूर्जा भई
+            हकभोगमा रहेकी तपसिलमा उल्लेख भए मोजिमको जायजेभा सुरक्षण वापत संस्थालाई धिती लेखि दिएमा धितो जमानी दातार्सँग
+            तल विवरणमा भरिए वमोजिमका हामी नाता सम्बन्धका व्यक्तिहरुको पूर्ण रुपमा सहमती छ। उपरोक्त फर्म/संस्था/व्यक्ति
+            ले उल्लेखित कर्ज़ा र त्यसमा
+            लागने ब्याज तथा जरिवाना समेत नतिरे/ बुझाएमा सहकारी ऐन तथा संस्थाको नियमावली अनुसार तपसिलमा उल्लेखित धितोदाता
+            श्री ${f.applicant_name || ""} ${f.approver_applicant_name? f.approver_applicant_name+" र"||""} को नाडँको
+            जायजेयावाट असुल उपर गरेमा
+            मेरो/ हामो मञ्जुरी छ । पछि उक्त जायजेयामा मेरो हासो पनि हक लागने हो, निजले मात्र
+            धितो लेखि विवैमा मेरो हाग्रो हक जाने होइन भनी कहि कते उजर बाज़ुर गने छैन यदि गरे भने इसे सहमति पत्रलाई आधार
+            मानि मेरो हामरो बाबी खारेज होस् भनी यो सहमतिपत्रको कागजात पटक-पटक ऋण लिन गरेमा मेरो/हाप्रो पूर्ण रूपले
+            मंजुरी हुने अन्नी सहिछाप गरी द सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड (${f.branch || ""}) लाई दियाँ /
+            दिया । साक्षी
+            किनाराको सदर ।
+
+
+        </h4>
+        <div class="my-2">
+            <h4 class=" font-semibold text-center">तपसिल</h4>
+            <table border="1" cellspacing="0" cellpadding="6" width="100%" class="text-xs mt-2 mb-5">
+                <thead>
+                    <tr>
+
+                        <th class=" w-1/2" rowspan="2">जग्गाधनीको विवरण</th>
+                        <th class="w-1/2" colspan="5">जग्गाको विवरण</th>
+
+                    </tr>
+                    <tr>
+
+                        <th>जिल्ला</th>
+                        <th>न.पा./गा.वि.स.</th>
+                        <th>वार्ड नं.</th>
+                        <th>कित्ता नं.</th>
+                        <th>क्षेत्रफल</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    ${table7Row
+                    .map((row, index) => {
+                    if (!row.govApprovedPrice || !row.localApprovedPrice) return "";
+                    if(row.ownerName !== f.applicant_name) return "";
+                    const landOwnerDetails = [`${f.applicant_inlaws_name || ""}`,`--baje-ko-name--`,`बाबुको नामः
+                    ${f.applicant_father_name ||""}`,`साबिक ठेगाना : जिल्ला
+                    ${f.address.permanent.district || ""} गा.वि.स./न. पा. ${f.address.permanent.palika || ""}
+                    वडा नं.
+                    ${f.address.permanent.wada || ""}`.`जिल्ला ${f.address.current.district || ""} गा.वि.स./न. पा.
+                    ${f.address.current.palika || ""}
+                    वडा नं. ${f.address.current.wada || ""}`]
+                    return `
+                    <tr>
+                        <td>${landOwnerDetails[index]}</td>
+                        <td>${row?.district || ""}</td>
+                        <td>${row.palika || ""}</td>
+                        <td>${row.wardNo || ""}</td>
+                        <td>${row.plotNo || ""}</td>
+                        <td class="text-nowrap whitespace-nowrap">${row.area || ""}</td>
+                    </tr>
+                    `;
+                    })
+                    .join("")}
+                </tbody>
+            </table>
+
+        </div>
+        <p></p>
+
+        <!-- inside this -->
+    </div>
+</body>
+
+</html>

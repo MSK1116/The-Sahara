@@ -396,7 +396,6 @@ const Create_form = ({ onDataChange, initialData }) => {
               </Select>
             </div>
           </div>
-
           <Create_addressInput localErrors={localErrors} setLocalErrors={setLocalErrors} onAddressChange={useCallback((addr) => setLocalData((d) => ({ ...d, address: addr })), [])} initialData={localData.address} />
         </div>
 
@@ -737,7 +736,7 @@ const Create_form = ({ onDataChange, initialData }) => {
 
             <div className="text-xs space-x-2 flex items-center justify-center">
               <Checkbox
-                className={""}
+                className={" border border-red-600"}
                 checked={isApprovalGiven || false}
                 onCheckedChange={(checked) => {
                   if (checked) {
@@ -751,100 +750,98 @@ const Create_form = ({ onDataChange, initialData }) => {
               />
             </div>
           </div>
-          {/* Row 1 */}
-          <div className="flex flex-row space-x-5">
-            <div className="w-full mt-5">
-              <Label className={!isApprovalGiven && "text-gray-500"} htmlFor="approver_applicant_name">
-                नाम
-              </Label>
-              <Input
-                disabled={!isApprovalGiven}
-                id="approver_applicant_name"
-                name="approver_applicant_name"
-                value={localData.approver_applicant_name || ""}
-                className="w-full mt-2"
-                onKeyDown={handleEnterFocus}
-                onChange={(e) => setLocalData((d) => ({ ...d, approver_applicant_name: e.target.value }))}
-              />
+          <div className={` ${isApprovalGiven ? "" : "hidden"}  flex flex-row space-x-5 mt-5  `}>
+            <div className="flex flex-col space-x-5 space-y-5">
+              <div className="w-full mt-3 ">
+                <Label className={!isApprovalGiven && "text-gray-500"} htmlFor="approver_applicant_name">
+                  नाम
+                </Label>
+                <Input
+                  disabled={!isApprovalGiven}
+                  id="approver_applicant_name"
+                  name="approver_applicant_name"
+                  value={localData.approver_applicant_name || ""}
+                  className="w-full mt-2"
+                  onKeyDown={handleEnterFocus}
+                  onChange={(e) => setLocalData((d) => ({ ...d, approver_applicant_name: e.target.value }))}
+                />
+              </div>
+              <div className="w-full ">
+                <Label className={!isApprovalGiven && "text-gray-500"} htmlFor="approver_citizenship_number">
+                  नागरिकता नम्बर
+                </Label>
+                <Input
+                  disabled={!isApprovalGiven}
+                  id="approver_citizenship_number"
+                  name="approver_citizenship_number"
+                  className="w-full mt-2"
+                  value={localData.approver_citizenship_number || ""}
+                  onKeyDown={handleEnterFocus}
+                  onChange={(e) => setLocalData((d) => ({ ...d, approver_citizenship_number: e.target.value }))}
+                />
+              </div>
+              <div className="w-full ">
+                <Label className={!isApprovalGiven && "text-gray-500"} htmlFor="aprover_father_name">
+                  बुबाको नाम
+                </Label>
+                <Input
+                  disabled={!isApprovalGiven}
+                  id="approver_father_name"
+                  name="approver_father_name"
+                  className="w-full mt-2"
+                  value={localData.approver_father_name || ""}
+                  onKeyDown={handleEnterFocus}
+                  onChange={(e) => setLocalData((d) => ({ ...d, approver_father_name: e.target.value }))}
+                />
+              </div>
+              <div className="w-full ">
+                <Label className={!isApprovalGiven && "text-gray-500"} htmlFor="approver_spouse_name">
+                  पतिको/पत्नीको नाम
+                </Label>
+                <Input
+                  disabled={!isApprovalGiven}
+                  id="approver_spouse_name"
+                  name="approver_spouse_name"
+                  className="w-full mt-2"
+                  value={localData.approver_spouse_name || ""}
+                  onKeyDown={handleEnterFocus}
+                  onChange={(e) => setLocalData((d) => ({ ...d, approver_spouse_name: e.target.value }))}
+                />
+              </div>
+              <div className="w-full ">
+                <Label className={!isApprovalGiven && "text-gray-500"} htmlFor="approver_inlaws_name">
+                  हजुरबा/हजुरआमाको नाम
+                </Label>
+                <Input
+                  disabled={!isApprovalGiven}
+                  id="approver_inlaws_name"
+                  name="approver_inlaws_name"
+                  className="w-full mt-2"
+                  value={localData.approver_inlaws_name || ""}
+                  onKeyDown={handleEnterFocus}
+                  onChange={(e) => setLocalData((d) => ({ ...d, approver_inlaws_name: e.target.value }))}
+                />
+              </div>
+              <div className="w-full ">
+                <Label className={!isApprovalGiven && "text-gray-500"} htmlFor="approver_families_details">
+                  परिवारका आफन्तहरूको विवरण
+                </Label>
+                <Input
+                  disabled={!isApprovalGiven}
+                  id="approver_families_details"
+                  name="approver_families_details"
+                  className="w-full mt-2"
+                  value={localData.approver_families_details || ""}
+                  onKeyDown={handleEnterFocus}
+                  onChange={(e) => setLocalData((d) => ({ ...d, approver_families_details: e.target.value }))}
+                />
+              </div>
             </div>
 
-            <Approver_address_input disabled={!isApprovalGiven} handleEnterFocus={handleEnterFocus} onApproverChange={useCallback((addr) => setLocalData((d) => ({ ...d, approverAddress: addr })), [])} initialData={localData.approverAddress} />
-
-            <div className="w-full mt-5">
-              <Label className={!isApprovalGiven && "text-gray-500"} htmlFor="approver_citizenship_number">
-                नागरिकता नम्बर
-              </Label>
-              <Input
-                disabled={!isApprovalGiven}
-                id="approver_citizenship_number"
-                name="approver_citizenship_number"
-                className="w-full mt-2"
-                value={localData.approver_citizenship_number || ""}
-                onKeyDown={handleEnterFocus}
-                onChange={(e) => setLocalData((d) => ({ ...d, approver_citizenship_number: e.target.value }))}
-              />
-            </div>
-            <div className="w-full mt-5">
-              <Label className={!isApprovalGiven && "text-gray-500"} htmlFor="aprover_father_name">
-                बुबाको नाम
-              </Label>
-              <Input
-                disabled={!isApprovalGiven}
-                id="approver_father_name"
-                name="approver_father_name"
-                className="w-full mt-2"
-                value={localData.approver_father_name || ""}
-                onKeyDown={handleEnterFocus}
-                onChange={(e) => setLocalData((d) => ({ ...d, approver_father_name: e.target.value }))}
-              />
-            </div>
+            <Create_addressInput initialData={localData.approverAddress} />
           </div>
 
           {/* Row 2 */}
-          <div className="flex flex-row space-x-5">
-            <div className="w-full mt-5">
-              <Label className={!isApprovalGiven && "text-gray-500"} htmlFor="approver_spouse_name">
-                पतिको/पत्नीको नाम
-              </Label>
-              <Input
-                disabled={!isApprovalGiven}
-                id="approver_spouse_name"
-                name="approver_spouse_name"
-                className="w-full mt-2"
-                value={localData.approver_spouse_name || ""}
-                onKeyDown={handleEnterFocus}
-                onChange={(e) => setLocalData((d) => ({ ...d, approver_spouse_name: e.target.value }))}
-              />
-            </div>
-            <div className="w-full mt-5">
-              <Label className={!isApprovalGiven && "text-gray-500"} htmlFor="approver_inlaws_name">
-                हजुरबा/हजुरआमाको नाम
-              </Label>
-              <Input
-                disabled={!isApprovalGiven}
-                id="approver_inlaws_name"
-                name="approver_inlaws_name"
-                className="w-full mt-2"
-                value={localData.approver_inlaws_name || ""}
-                onKeyDown={handleEnterFocus}
-                onChange={(e) => setLocalData((d) => ({ ...d, approver_inlaws_name: e.target.value }))}
-              />
-            </div>
-            <div className="w-full mt-5">
-              <Label className={!isApprovalGiven && "text-gray-500"} htmlFor="approver_families_details">
-                परिवारका आफन्तहरूको विवरण
-              </Label>
-              <Input
-                disabled={!isApprovalGiven}
-                id="approver_families_details"
-                name="approver_families_details"
-                className="w-full mt-2"
-                value={localData.approver_families_details || ""}
-                onKeyDown={handleEnterFocus}
-                onChange={(e) => setLocalData((d) => ({ ...d, approver_families_details: e.target.value }))}
-              />
-            </div>
-          </div>
         </div>
         <div className="flex items-center my-10">
           <span className="flex-1 h-px bg-gray-300"></span>

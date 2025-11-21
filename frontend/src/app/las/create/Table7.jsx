@@ -112,8 +112,8 @@ export default function Table7({ onDataChange, localData, initialData }) {
                     <DropdownMenuTrigger className="w-full text-xs text-left border px-2 py-1 rounded-md">{row.district || "जिल्ला चयन गर्नुहोस्"}</DropdownMenuTrigger>
                     <DropdownMenuContent>
                       <DropdownMenuRadioGroup onKeyDown={handleEnterFocus} value={row.district} onValueChange={(val) => handleInputChange(row.id, "district", val)}>
-                        {allDistricts.map((d) => (
-                          <DropdownMenuRadioItem key={d + "457"} value={d}>
+                        {allDistricts.map((d, index) => (
+                          <DropdownMenuRadioItem key={d + index + "457"} value={d}>
                             {d}
                           </DropdownMenuRadioItem>
                         ))}

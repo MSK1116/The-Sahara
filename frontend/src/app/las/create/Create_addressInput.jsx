@@ -16,6 +16,17 @@ import { Checkbox } from "@/components/ui/checkbox";
 const allProvinces = [Province1JSON, Province2JSON, Province3JSON, Province4JSON, Province5JSON, Province6JSON, Province7JSON];
 
 const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, initialData }) => {
+  const allDistricts = allProvinces.flatMap((p) => p.districts.map((d) => d.name));
+
+  const [permanentOld, setPermanentOld] = useState(
+    initialData?.permanentOld || {
+      province: "",
+      district: "",
+      palika: "",
+      wada: "",
+      tole: "",
+    }
+  );
   const [permanent, setPermanent] = useState(
     initialData?.permanent || {
       province: "",
@@ -25,7 +36,6 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
       tole: "",
     }
   );
-
   const [current, setCurrent] = useState(
     initialData?.current || {
       province: "",
@@ -39,7 +49,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
   // inform parent of address changes
   React.useEffect(() => {
     if (onAddressChange) onAddressChange({ permanent, current });
-  }, [permanent, current, onAddressChange]);
+  }, [permanentOld, permanent, current, onAddressChange]);
 
   const handleEnterFocus = (e) => {
     if (e.key === "Enter") {
@@ -65,9 +75,74 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
 
   return (
     <div className="w-full flex flex-row space-x-6">
+      {/* from nagrita */}
+      <div className="w-1/2 space-y-5">
+        <span className="font-semibold my-5">साबिक ठेगाना :</span>
+
+        {/* District */}
+        <div className="">
+          <div className="mt-5">जिल्ला</div>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="w-full text-left border px-2 py-1 rounded-md">{permanentOld.district || "जिल्ला चयन गर्नुहोस्"}</DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuRadioGroup onKeyDown={handleEnterFocus} value={permanentOld.district || ""} onValueChange={(val) => setPermanentOld({ ...permanentOld, district: val })}>
+                {allDistricts.map((d, index) => (
+                  <DropdownMenuRadioItem key={d + index + "57"} value={d}>
+                    {d}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        {/* Palika */}
+        <div>
+          <Label>पालिका</Label>
+          <Input value={permanentOld.palika || ""} onChange={(val) => setPermanentOld({ ...permanentOld, palika: val.target.value })}></Input>
+        </div>
+
+        {/* Wada */}
+        <div>
+          <Label className={localErrors?.permanentOld_wada && "text-red-600"}>वडा नं</Label>
+          <Input
+            className="w-full mt-2"
+            value={permanent.wada}
+            onChange={(e) => {
+              const val = e.target.value;
+              setPermanentOld({ ...permanentOld, wada: e.target.value });
+              if (!val) {
+                setLocalErrors((prev) => ({ ...prev, permanentOld_wada: true }));
+              } else {
+                setLocalErrors((prev) => ({ ...prev, permanentOld_wada: false }));
+              }
+            }}
+            onKeyDown={handleEnterFocus}
+          />
+        </div>
+
+        {/* Tole */}
+        <div>
+          <Label className={localErrors?.permanent_tole && "text-red-600"}>टोल / बाटो</Label>
+          <Input
+            className="w-full mt-2"
+            value={permanent.tole}
+            onChange={(e) => {
+              const val = e.target.value;
+              setPermanent({ ...permanent, tole: e.target.value });
+              if (!val || val.length < 4 || val.length > 50) {
+                setLocalErrors((prev) => ({ ...prev, permanent_tole: true }));
+              } else {
+                setLocalErrors((prev) => ({ ...prev, permanent_tole: false }));
+              }
+            }}
+            onKeyDown={handleEnterFocus}
+          />
+        </div>
+      </div>
       {/* Permanent Address */}
       <div className="w-1/2 space-y-5">
-        <span className="font-semibold my-5">स्थायी ठेगाना</span>
+        <span className="font-semibold my-5">हाल ठेगाना</span>
 
         {/* Province */}
         <div className=" mt-6">
@@ -122,7 +197,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
 
         {/* Wada */}
         <div>
-          <Label className={localErrors.permanent_wada && "text-red-600"}>वडा नं</Label>
+          <Label className={localErrors?.permanent_wada && "text-red-600"}>वडा नं</Label>
           <Input
             className="w-full mt-2"
             value={permanent.wada}
@@ -141,7 +216,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
 
         {/* Tole */}
         <div>
-          <Label className={localErrors.permanent_tole && "text-red-600"}>टोल / बाटो</Label>
+          <Label className={localErrors?.permanent_tole && "text-red-600"}>टोल / बाटो</Label>
           <Input
             className="w-full mt-2"
             value={permanent.tole}
@@ -161,7 +236,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
 
       <div className="w-1/2 space-y-5">
         <div className="flex items-center justify-between space-x-3 my-2">
-          <span className="font-semibold">हाल बसोबास गरेको ठेगाना</span>
+          <span className="font-semibold">बसोबास ठेगाना</span>
           <div className="text-xs space-x-2 flex items-center justify-center">
             <span className="font-semibold text-red-600">स्थायी जस्तो भए</span>
             <Checkbox
@@ -249,11 +324,10 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
         </div>
 
         {/* Wada */}
-        {/* Wada */}
         <div>
-          <Label className={localErrors.current_wada && "text-red-600"}>वडा नं</Label>
+          <Label className={localErrors?.current_wada && "text-red-600"}>वडा नं</Label>
           <Input
-            className={`w-full mt-2 ${localErrors.current_wada ? "border-red-500" : ""}`}
+            className={`w-full mt-2 ${localErrors?.current_wada ? "border-red-500" : ""}`}
             value={current.wada}
             disabled={current.sameAsPermanent}
             onChange={(e) => {
@@ -271,9 +345,9 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
 
         {/* Tole */}
         <div>
-          <Label className={localErrors.current_tole && "text-red-600"}>टोल / बाटो</Label>
+          <Label className={localErrors?.current_tole && "text-red-600"}>टोल / बाटो</Label>
           <Input
-            className={`w-full mt-2 ${localErrors.current_tole ? "border-red-500" : ""}`}
+            className={`w-full mt-2 ${localErrors?.current_tole ? "border-red-500" : ""}`}
             value={current.tole}
             disabled={current.sameAsPermanent}
             onChange={(e) => {

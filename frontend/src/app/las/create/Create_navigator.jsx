@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { PageMaker_LoanApplicationLetterToMalpot } from "@/components/PageMaker/PageMaker_LoanApplicationLetterToMalpot";
 import { PageMaker_LoanApplicationBharpaie } from "@/components/PageMaker/PageMaker_LoanApplicationBharpaie";
 import { PageMaker_LoanApplicationTamasuk } from "@/components/PageMaker/PageMaker_LoanApplicationTamasuk";
+import { PageMaker_LoanApplicationFamily } from "@/components/PageMaker/PageMaker_LoanApplicationFamily";
 
 const Create_navigator = ({ currentPage, onSave, handleFormPage, isUpserting, LMSIN, isEditing = false }) => {
   const [openPrintModal, setOpenPrintModal] = useState(false);
@@ -405,13 +406,95 @@ ${htmlContent}
 
     printWindow.document.close();
   };
+  const handlePrint6 = async () => {
+    const updated = await onSave();
+    if (!updated) return toast.error("Failed to update before printing.");
+    setOpenPrintModal(false);
+
+    const htmlContent = PageMaker_LoanApplicationFamily(updated);
+    const printWindow = window.open("", "_blank");
+    if (!printWindow) return alert("Pop-up blocked");
+    // Use document.open + write full HTML at once
+
+    printWindow.document.open();
+    printWindow.document.write(`
+  <html>
+    <head>
+      <title>Print</title>
+
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+      <style>
+        @page {
+          size: A4;
+          margin: 5mm;
+
+          /* Page Number at Bottom */
+          @bottom-center {
+            content: "Page " counter(page) " of " counter(pages);
+            font-size: 10px;
+            font-family: Mukta, sans-serif;
+          }
+        }
+
+        body {
+          font-family: Poppins, sans-serif;
+          font-size: 13px;
+          counter-reset: page;
+        }
+
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+
+        td, th {
+          border: 1px solid #000;
+          padding: 6px;
+        }
+
+         .b {
+            text-orientation: mixed;
+            writing-mode: vertical-lr;
+        }
+
+        /* Fallback in case browser does not support @bottom-center */
+        @media print {
+          .print-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 10px;
+            font-family: Poppins, sans-serif;
+          }
+
+          .print-footer::after {
+            content: "Page " counter(page) " of " counter(pages);
+          }
+        }
+
+      </style>
+
+      <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    </head>
+${htmlContent}
+    
+
+  </html>
+`);
+
+    printWindow.document.close();
+  };
 
   return (
     <div className="w-full flex flex-col px-5 pt-3 pb-0 rounded-l-2xl sticky bg-gray-200 top-1/6 shadow ">
-      <div className="flex relative flex-col select-none items-center gap-5">
+      <div className="flex relative flex-col select-none items-center gap-3">
         <div className="absolute h-full bg-gray-300 top-0 left-1/2 w-0.5 -translate-x-1/2 transform z-0"></div>
 
-        {[...Array(5)].map((i, idx) => (
+        {[...Array(7)].map((i, idx) => (
           <Button
             variant={"outline"}
             disabled={!isEditing && idx !== 0}
@@ -460,6 +543,9 @@ ${htmlContent}
             </Button>
             <Button onClick={handlePrint5} variant="outline">
               तमसुक
+            </Button>
+            <Button onClick={handlePrint6} variant="outline">
+              व्यक्तिगत जमानीको सहमती
             </Button>
           </div>
           <DialogFooter>

@@ -21,6 +21,7 @@ const Table2Schema = new mongoose.Schema({
   age: { type: String, default: "" },
   education: { type: String, default: "" },
   profession: { type: String, default: "" },
+  citizenship_number: { type: String, default: "" },
 });
 
 const Table3RowSchema = new mongoose.Schema({
@@ -100,6 +101,7 @@ const Table7Schema = new mongoose.Schema(
 
 const Form1Schema = new mongoose.Schema({
   address: {
+    permanentOld: { type: AddressSchema, default: () => ({}) },
     permanent: { type: AddressSchema, default: () => ({}) },
     current: { type: AddressSchema, default: () => ({}) },
   },
@@ -109,7 +111,11 @@ const Form1Schema = new mongoose.Schema({
   table1: { type: [Table1Schema], default: [] },
   table2: { type: [Table2Schema], default: [] },
 
-  approverAddress: { type: AddressSchema, default: () => ({}) },
+  approverAddress: {
+    permanentOld: { type: AddressSchema, default: () => ({}) },
+    permanent: { type: AddressSchema, default: () => ({}) },
+    current: { type: AddressSchema, default: () => ({}) },
+  },
 
   table3: { type: Table3Schema, default: () => ({}) },
 
@@ -188,6 +194,7 @@ const Form3Schema = new mongoose.Schema({
   malpotOfficeName: { type: String, default: "" },
   malpotOfficerName: { type: String, default: "" },
 });
+
 const WitnessSchema = new mongoose.Schema(
   {
     district: { type: String, default: "" },
