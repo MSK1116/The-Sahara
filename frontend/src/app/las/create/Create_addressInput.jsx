@@ -48,7 +48,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
 
   // inform parent of address changes
   React.useEffect(() => {
-    if (onAddressChange) onAddressChange({ permanent, current });
+    if (onAddressChange) onAddressChange({ permanentOld, permanent, current });
   }, [permanentOld, permanent, current, onAddressChange]);
 
   const handleEnterFocus = (e) => {
@@ -98,7 +98,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
 
         {/* Palika */}
         <div>
-          <Label>पालिका</Label>
+          <Label>गा.वि.स / ना. पा.</Label>
           <Input value={permanentOld.palika || ""} onChange={(val) => setPermanentOld({ ...permanentOld, palika: val.target.value })}></Input>
         </div>
 

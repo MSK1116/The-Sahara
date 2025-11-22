@@ -885,7 +885,7 @@ const Create_form = ({ onDataChange, initialData }) => {
                 />
               </div>
             </div>
-            <Create_addressInput initialData={localData.approverAddress} />
+            <Create_addressInput onAddressChange={useCallback((addr) => setLocalData((d) => ({ ...d, approverAddress: addr })), [])} initialData={localData.approverAddress} />
           </div>
 
           {/* Row 2 */}
