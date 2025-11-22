@@ -3,6 +3,7 @@ import convert from "number-to-nepali-words";
 export function PageMaker_LoanApplicationFrom2(data) {
   const f = data.form1;
   const f2 = data.form2;
+  const f3 = data.form3;
   const calculateKatha = (area) => {
     if (!area) return 0;
 
@@ -129,7 +130,7 @@ export function PageMaker_LoanApplicationFrom2(data) {
                 लिमिटेड</h3>
             <h4>प्रधान कार्यालय: मलंगवा, सर्लाही(नेपाल)</h4>
             <h3 class="text-sm text-center">रजिष्टर्ड प्रधान कार्यालय </h3>
-            <h4 class="mt-3 mb-2 text-center">शाखा: <b>${f.branch}</b></h4>
+            <h4 class="mt-3 mb-2 text-center"> ${f3.branchType} <b>${f.branch}</b></h4>
             <h5 class="font-bold text-xl text-center my-3">धितो दिने घर जग्गाको मूल्याङ्कन प्रतिवेदन</h5>
 
         </div>
