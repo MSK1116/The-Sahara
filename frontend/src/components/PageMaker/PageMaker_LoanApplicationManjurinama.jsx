@@ -122,7 +122,7 @@ export function PageMaker_LoanApplicationManjurinama(data) {
         </div>
     </div>
 
-    <div class="pl-4 text-sm">
+    <div class="pl-4 text-sm text-justify">
         <h1 class="my-3 underline  text-center font-semibold">मन्जुरीनामा</h1>
         <p>
             लिखितम् ${f.approver_inlaws_name || ""} को ${p4} ${f.approver_father_name || ""} को ${p5} ${p6 || ""}

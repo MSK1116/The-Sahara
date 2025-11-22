@@ -96,7 +96,7 @@ export function PageMaker_LoanApplicationTamasuk(data) {
         </div>
     </div>
 
-    <div class="pl-5">
+    <div class="pl-5 text-justify">
         <h1 class="my-3 underline  text-center">तमसुक</h1>
         <p>
             लिखितम् धनिको नाम द सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड
