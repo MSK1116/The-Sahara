@@ -40,6 +40,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
     p4 = "निज";
   }
   const table7Row = f.table7 && f.table7.length > 0 ? f.table7 : [{}];
+  const ownerNamesString = [...new Set(f.table7.filter((row) => row.govApprovedPrice && row.localApprovedPrice).map((row) => row.ownerName || "Unknown"))].join(" र ");
   const table7HTML2 = `
   <p class="font-bold my-3 text-center ">तपसिल </p>
   
@@ -60,7 +61,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
     ${table7Row
       .map((row, index) => {
         if (!row.govApprovedPrice || !row.localApprovedPrice) return "";
-        if (row.ownerName !== f.applicant_name) return "";
+
         return `
           <tr>
             <td>${row.ownerName || ""}</td>
@@ -132,7 +133,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
             वडा <strong>${f.address.permanent.wada || "—"}</strong>,
             टोल <strong>${f.address.permanent.tole || "—"}</strong>
             मा बस्ने <strong>${f.applicant_inlaws_name || "-"} </strong> ${p1} <b>${f.applicant_father_name || "-"}</b> को  ${p2 || ""} वर्ष <b>${f.age ? convert(f.age, "toNp") : ""}</b> ${p3 || ""} 
-         <b>${f.applicant_name || ""}</b> ले तपसिल बमोजिम जग्गा दृस्टी बन्दक लेखत संस्थाको नाउँमा पारित गराई ऋण माग गर्नु भएको हुँदा ${p4 || ""} को नाउँमा दर्ता कायम भएको जग्गामा स्वीकृत ऋण रकम रु.<b> ${convert(
+         <b>${ownerNamesString || ""}</b> ले तपसिल बमोजिम जग्गा दृस्टी बन्दक लेखत संस्थाको नाउँमा पारित गराई ऋण माग गर्नु भएको हुँदा ${p4 || ""}  को नाउँमा दर्ता कायम भएको जग्गामा स्वीकृत ऋण रकम रु.<b> ${convert(
     f2.fiftyPercentMargin,
     "toNp"
   )}/-</b> अक्षरेपी <b>${f2.fiftyPercentMargin_text || ""}</b> मात्र /- दृष्टि बन्धक लेखत पारित गराउन यस संस्थाको प्रतिनिधि ${f3.malpotOfficerName || "-"} मार्फत रोक्का राखी जानकारी पठाई दिनुहुन अनुरोध गरिन्छ ।
