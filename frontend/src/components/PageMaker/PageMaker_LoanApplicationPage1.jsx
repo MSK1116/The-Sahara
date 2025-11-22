@@ -7,7 +7,7 @@ export function PageMaker_LoanApplicationPage1(data) {
   if (!isPerson && convert(f.amount || "", "toEn") > 300000) {
     applicantDetails = `
       <p class="mt-2">ऋण निवेदकको प्रकार: <b>${f.applicantType}</b></p>
-      <p>फर्म/कम्पनीको: <b>${f.companyName}</b>, शेयर सदस्यता नं: <b>${f.company_shareholderNumber}</b>, रजिष्ट्रेशन कार्यालयको नाम: <b>${f.registrationOffice}</b></p>
+      <p>फर्म/कम्पनीको नाम: <b>${f.companyName}</b>, शेयर सदस्यता नं: <b>${f.company_shareholderNumber}</b>, रजिष्ट्रेशन कार्यालयको नाम: <b>${f.registrationOffice}</b></p>
       <p>रजिष्ट्रेशन नं: <b>${f.registrationNumber}</b>, मिति: <b>${f.registrationDate}</b>, आयकर पान नं (PAN): <b>${f.panNumber}</b>, मिति: <b>${f.panDate}</b></p>
       <p>व्यापारको प्रकार: <b>${f.businessType || "—"}</b></p>
       <p>परियोजना स्थल: <b>${f.projectLocation || "—"}</b></p>
