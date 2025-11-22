@@ -14,18 +14,18 @@ export function PageMaker_LoanApplicationFamily(data) {
   var p4 = "";
   // applicant_inlaws_name;
   if (f.applicant_gender == "male") {
-    p1 = "  नाती ";
+    p1 = "बजे";
   } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "single") {
-    p1 = " नातिनी ";
+    p1 = "बजे";
   } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "married") {
-    p1 = " बुहारी ";
+    p1 = "ससुरा ";
   }
   if (f.applicant_gender == "female" && f.applicant_maritalStatus == "married") {
-    p2 = "पतनी ";
+    p2 = "पति ";
   } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "single") {
-    p2 = "छोरि";
+    p2 = "बुवा";
   } else if (f.applicant_gender == "male") {
-    p2 = "छोरा ";
+    p2 = "बुवा ";
   }
 
   const landOwnerDetails = [

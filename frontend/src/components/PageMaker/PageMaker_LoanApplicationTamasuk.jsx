@@ -183,7 +183,6 @@ export function PageMaker_LoanApplicationTamasuk(data) {
                             तथा साँवा नबुझाएमा थप ${f4.addPer2 || ""}}% का दरले व्याज लाग्नेछ ।
                             तोकेको दिनमा व्याज नबुझाएमा मेरो बचत खाता
                             नं. ${f.savingsAccountNumber || ""}
-
                             बाट कट्टा गरि लिएमा मलाई मंजुर छ।
                         </td>
                         <td>
