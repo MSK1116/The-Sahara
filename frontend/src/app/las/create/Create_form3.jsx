@@ -37,6 +37,8 @@ const Create_form3 = ({ LMSIN, onDataChange }) => {
   return (
     <>
       <div className="pt-10 px-10 pb-0">
+        <h1 className="text-xl select-none tracking-wide font-semibold mb-10 px-3 py-1 bg-gray-100 rounded-md w-fit">मालपोतको लागि रोका पत्र</h1>
+
         <div className=" flex flex-row items-center justify-between">
           <div className=" flex flex-row items-center justify-center space-x-5">
             <div>

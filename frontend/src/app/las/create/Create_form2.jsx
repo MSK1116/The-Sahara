@@ -86,6 +86,7 @@ const Create_form2 = ({ LMSIN, onDataChange }) => {
     <>
       {localData?.form1 ? (
         <div className="pt-10 px-10 pb-0">
+          <h1 className="text-xl select-none tracking-wide font-semibold mb-10 px-3 py-1 bg-gray-100 rounded-md w-fit">मूल्यांकन परतिवेदन </h1>
           <div className="flex flex-row justify-between items-center space-x-5">
             {/* Evaluator Name - ShadCN Combobox */}
             <div className="w-full">
