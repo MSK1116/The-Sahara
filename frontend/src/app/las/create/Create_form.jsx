@@ -15,8 +15,6 @@ import Table6 from "./Table6";
 import Table7 from "./Table7";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import NepaliDateInput from "@/components/NepaliDatePicker";
-import { Button } from "@/components/ui/button";
-import Approver_address_input from "./Approver_address_input";
 import GenderAndMale_status from "@/components/GenderAndMarried_status";
 import { Checkbox } from "@/components/ui/checkbox";
 

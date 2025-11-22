@@ -60,15 +60,13 @@ const Create_form4 = ({ LMSIN, onDataChange }) => {
                   className="mt-2"
                   value={form4?.annualInterestRate || ""}
                   onChange={(e) => {
-                    const val = e.target.value;
-                    console.log(val, typeof val);
-                    if (Number(val) > 50 || Number(val) < 0) return;
+                    const val = convert(e.target.value, "toEn").trim();
                     setForm4((d) => ({ ...d, annualInterestRate: val }));
                   }}></Input>
               </div>
               <div>
                 <Label>अक्षरेपी प्रतिशत</Label>
-                <Input disabled readOnly value={form4?.annualInterestRate > 1 && convert(form4?.annualInterestRate || "", "toNpWord") + " प्रतिशत"} className="mt-2"></Input>
+                <Input disabled readOnly value={convert(form4?.annualInterestRate || "", "toNpWord") + " प्रतिशत"} className="mt-2"></Input>
               </div>
             </div>
 

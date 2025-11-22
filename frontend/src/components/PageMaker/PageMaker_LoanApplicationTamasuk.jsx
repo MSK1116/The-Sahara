@@ -207,7 +207,6 @@ export function PageMaker_LoanApplicationTamasuk(data) {
     </div>
 
   
-
     <script>
       window.onload = () => { window.print(); };
     </script>

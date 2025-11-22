@@ -35,7 +35,7 @@ const CreateWrapper = () => {
       setIsUpserting(false);
       console.log(error);
       toast.error(error.response.data.message, { position: "top-left" });
-      return false; // Indicate failure
+      return false;
     }
   };
 
