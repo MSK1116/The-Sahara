@@ -35,7 +35,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
   }
 
   if (f.approver_applicant_name) {
-    p4 = f.approver_applicant_name;
+    p4 = "";
   } else {
     p4 = "निज";
   }
@@ -133,7 +133,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
             वडा <strong>${f.address.permanent.wada || "—"}</strong>,
             टोल <strong>${f.address.permanent.tole || "—"}</strong>
             मा बस्ने <strong>${f.applicant_inlaws_name || "-"} </strong> ${p1} <b>${f.applicant_father_name || "-"}</b> को  ${p2 || ""} वर्ष <b>${f.age ? convert(f.age, "toNp") : ""}</b> ${p3 || ""} 
-         <b>${ownerNamesString || ""}</b> ले तपसिल बमोजिम जग्गा दृस्टी बन्दक लेखत संस्थाको नाउँमा पारित गराई ऋण माग गर्नु भएको हुँदा ${p4 || ""}  को नाउँमा दर्ता कायम भएको जग्गामा स्वीकृत ऋण रकम रु.<b> ${convert(
+         <b>${f.applicant_name || ""}</b> ले तपसिल बमोजिम जग्गा दृस्टी बन्दक लेखत संस्थाको नाउँमा पारित गराई ऋण माग गर्नु भएको हुँदा ${p4 || ""} ${ownerNamesString || ""}  को नाउँमा दर्ता कायम भएको जग्गामा स्वीकृत ऋण रकम रु.<b> ${convert(
     f2.fiftyPercentMargin,
     "toNp"
   )}/-</b> अक्षरेपी <b>${f2.fiftyPercentMargin_text || ""}</b> मात्र /- दृष्टि बन्धक लेखत पारित गराउन यस संस्थाको प्रतिनिधि ${f3.malpotOfficerName || "-"} मार्फत रोक्का राखी जानकारी पठाई दिनुहुन अनुरोध गरिन्छ ।
