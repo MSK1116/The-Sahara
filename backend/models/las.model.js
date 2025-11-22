@@ -90,6 +90,7 @@ const Table7Schema = new mongoose.Schema(
     sheetNo: { type: String, default: "" },
     plotNo: { type: String, default: "" },
     area: { type: String, default: "" },
+    landType: { type: String, default: "" },
     charKila: { type: String, default: "" },
     estimatedValue: { type: Number, default: 0 },
     remarks: { type: String, default: "" },
