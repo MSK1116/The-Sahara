@@ -21,15 +21,14 @@ const allProvinces = [Province1JSON, Province2JSON, Province3JSON, Province4JSON
 const Create_form4 = ({ LMSIN, onDataChange }) => {
   const allDistricts = allProvinces.flatMap((p) => p.districts.map((d) => d.name));
   const [localData, setLocalData] = useState({});
-  const [form4, setFrom4] = useState({});
+  const [form4, setForm4] = useState({});
 
   const handleDataFetch = async () => {
     try {
       const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/getApplicant`, { LMSIN });
-
       if (temp.data) {
         setLocalData(temp.data ?? {});
-        setFrom4(temp.data.form4 ?? {});
+        setForm4(temp.data.form4 ?? {});
       }
     } catch (error) {
       console.error(error);
@@ -59,12 +58,12 @@ const Create_form4 = ({ LMSIN, onDataChange }) => {
                 <Label>ऋणको बार्षिक पर्तिसत</Label>
                 <Input
                   className="mt-2"
-                  value={form4?.annualInterestRate || " "}
+                  value={form4?.annualInterestRate || ""}
                   onChange={(e) => {
                     const val = e.target.value;
                     console.log(val, typeof val);
                     if (Number(val) > 50 || Number(val) < 0) return;
-                    setFrom4((d) => ({ ...d, annualInterestRate: val }));
+                    setForm4((d) => ({ ...d, annualInterestRate: val }));
                   }}></Input>
               </div>
               <div>
@@ -75,11 +74,11 @@ const Create_form4 = ({ LMSIN, onDataChange }) => {
 
             <div className=" ">
               <Label>तोकेको थप समयमा व्याज नबुझाएमा थप % </Label>
-              <Input className="mt-2" value={form4?.addPer1 || ""} onChange={(e) => setFrom4((d) => ({ ...d, addPer1: e.target.value }))}></Input>
+              <Input className="mt-2" value={form4?.addPer1 || ""} onChange={(e) => setForm4((d) => ({ ...d, addPer1: e.target.value }))}></Input>
             </div>
             <div className=" ">
               <Label>तोकेको समयमा किस्ता तथा साँवा नबुझाएमा थप %</Label>
-              <Input className="mt-2" value={form4?.addPer2 || ""} onChange={(e) => setFrom4((d) => ({ ...d, addPer2: e.target.value }))}></Input>
+              <Input className="mt-2" value={form4?.addPer2 || ""} onChange={(e) => setForm4((d) => ({ ...d, addPer2: e.target.value }))}></Input>
             </div>
           </div>
           <span className="flex my-10 items-center">
@@ -96,11 +95,11 @@ const Create_form4 = ({ LMSIN, onDataChange }) => {
             <Input
               value={form4?.malpotOfficeReplyPageNo || ""}
               onChange={(e) => {
-                setFrom4((d) => ({ ...d, malpotOfficeReplyPageNo: e.target.value }));
+                setForm4((d) => ({ ...d, malpotOfficeReplyPageNo: e.target.value }));
               }}
               className={"w-1/6"}></Input>{" "}
-            मिति <NepaliDateInput value={form4?.malpotOfficeReplyDate || ""} onChange={(val) => setFrom4((d) => ({ ...d, malpotOfficeReplyDate: val }))} className={"w-1/6 "}></NepaliDateInput> च.नं.
-            <Input value={form4?.malpotOfficeReplyChalaniNo || ""} onChange={(e) => setFrom4((d) => ({ ...d, malpotOfficeReplyChalaniNo: e.target.value }))} className={"w-1/6"}></Input> <br></br>ऋणीको नागरिकता नं.{" "}
+            मिति <NepaliDateInput value={form4?.malpotOfficeReplyDate || ""} onChange={(val) => setForm4((d) => ({ ...d, malpotOfficeReplyDate: val }))} className={"w-1/6 "}></NepaliDateInput> च.नं.
+            <Input value={form4?.malpotOfficeReplyChalaniNo || ""} onChange={(e) => setForm4((d) => ({ ...d, malpotOfficeReplyChalaniNo: e.target.value }))} className={"w-1/6"}></Input> <br></br>ऋणीको नागरिकता नं.{" "}
             {localData?.form1?.citizenship_number || ""} मिति {localData?.form1?.citizenship_takenDate || <span className="text-red-500">कृपया फारम १ बाट बुझाउनुहोस्।</span>} दिने कार्यलय नाम:{" "}
             {localData?.form1?.citizenship_takenOffice || <span className="text-red-500">कृपया फारम १ बाट बुझाउनुहोस्।</span>}
           </div>
@@ -119,7 +118,7 @@ const Create_form4 = ({ LMSIN, onDataChange }) => {
                   <DropdownMenuRadioGroup
                     value={form4?.witness1?.district || ""}
                     onValueChange={(val) =>
-                      setFrom4((d) => ({
+                      setForm4((d) => ({
                         ...d,
                         witness1: {
                           ...d.witness1,
@@ -139,7 +138,7 @@ const Create_form4 = ({ LMSIN, onDataChange }) => {
               <Input
                 value={form4?.witness1?.palika || ""}
                 onChange={(val) =>
-                  setFrom4((d) => ({
+                  setForm4((d) => ({
                     ...d,
                     witness1: {
                       ...d.witness1,
@@ -152,7 +151,7 @@ const Create_form4 = ({ LMSIN, onDataChange }) => {
               <Input
                 value={form4?.witness1?.ward || ""}
                 onChange={(val) =>
-                  setFrom4((d) => ({
+                  setForm4((d) => ({
                     ...d,
                     witness1: {
                       ...d.witness1,
@@ -165,7 +164,7 @@ const Create_form4 = ({ LMSIN, onDataChange }) => {
               <Input
                 value={form4?.witness1?.name || ""}
                 onChange={(val) =>
-                  setFrom4((d) => ({
+                  setForm4((d) => ({
                     ...d,
                     witness1: {
                       ...d.witness1,
@@ -183,7 +182,7 @@ const Create_form4 = ({ LMSIN, onDataChange }) => {
                   <DropdownMenuRadioGroup
                     value={form4?.witness2?.district || ""}
                     onValueChange={(val) =>
-                      setFrom4((d) => ({
+                      setForm4((d) => ({
                         ...d,
                         witness2: {
                           ...d.witness2,
@@ -203,7 +202,7 @@ const Create_form4 = ({ LMSIN, onDataChange }) => {
               <Input
                 value={form4?.witness2?.palika || ""}
                 onChange={(val) =>
-                  setFrom4((d) => ({
+                  setForm4((d) => ({
                     ...d,
                     witness2: {
                       ...d.witness2,
@@ -216,7 +215,7 @@ const Create_form4 = ({ LMSIN, onDataChange }) => {
               <Input
                 value={form4?.witness2?.ward || ""}
                 onChange={(val) =>
-                  setFrom4((d) => ({
+                  setForm4((d) => ({
                     ...d,
                     witness2: {
                       ...d.witness2,
@@ -229,7 +228,7 @@ const Create_form4 = ({ LMSIN, onDataChange }) => {
               <Input
                 value={form4?.witness2?.name || ""}
                 onChange={(val) =>
-                  setFrom4((d) => ({
+                  setForm4((d) => ({
                     ...d,
                     witness2: {
                       ...d.witness2,
@@ -240,7 +239,7 @@ const Create_form4 = ({ LMSIN, onDataChange }) => {
                 className={"w-1/6"}></Input>
             </p>
             <p className="">
-              संस्थाको तर्फबाट कागज तयार गर्नेको नाम : <Input value={form4?.maker || ""} onChange={(val) => setFrom4((d) => ({ ...d, maker: val.target.value }))} className={"w-1/6"}></Input>
+              संस्थाको तर्फबाट कागज तयार गर्नेको नाम : <Input value={form4?.maker || ""} onChange={(val) => setForm4((d) => ({ ...d, maker: val.target.value }))} className={"w-1/6"}></Input>
             </p>
           </div>
         </div>
