@@ -1,19 +1,23 @@
+import convert from "number-to-nepali-words";
 export function PageMaker_LoanApplicationPage1(data) {
   const f = data.form1;
   console.log(f);
-
-  // Conditional content for applicant type
   let applicantDetails = "";
-  if (f.applicantType === "व्यक्ति") {
-    applicantDetails = `<p>ऋण निवेदकको प्रकार: <b>${f.applicantType}</b></p>`;
-  } else {
+  const isPerson = f.applicantType !== "सहारा ब्यापारिक कर्जा";
+  if (!isPerson && convert(f.amount || "", "toEn") > 300000) {
     applicantDetails = `
       <p class="mt-2">ऋण निवेदकको प्रकार: <b>${f.applicantType}</b></p>
-      <p>फर्म/कम्पनीको: <b>${f.companyName}</b>, शेयर सदस्यता नं: <b>${f.shareholderNumber}</b>, रजिष्ट्रेशन कार्यालयको नाम: <b>${f.registrationOffice}</b></p>
+      <p>फर्म/कम्पनीको: <b>${f.companyName}</b>, शेयर सदस्यता नं: <b>${f.company_shareholderNumber}</b>, रजिष्ट्रेशन कार्यालयको नाम: <b>${f.registrationOffice}</b></p>
       <p>रजिष्ट्रेशन नं: <b>${f.registrationNumber}</b>, मिति: <b>${f.registrationDate}</b>, आयकर पान नं (PAN): <b>${f.panNumber}</b>, मिति: <b>${f.panDate}</b></p>
       <p>व्यापारको प्रकार: <b>${f.businessType || "—"}</b></p>
       <p>परियोजना स्थल: <b>${f.projectLocation || "—"}</b></p>
       <p>परियोजनाको अनुमानित कुल लागत: <b>${f.projectCost || "—"}</b></p>
+    `;
+  } else {
+    applicantDetails = `<p>ऋण निवेदकको प्रकार: <b>${f.applicantType}</b></p>
+        <p>खाता नं. ${f.savingsAccountNumber || ""}<b> </b></p>
+                <p>सेयर नं. ${f.company_shareholderNumber || ""}<b> </b></p>
+
     `;
   }
 
