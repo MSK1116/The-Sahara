@@ -57,8 +57,9 @@ export default function NepaliDateInput({ value, onChange, className = "", input
             placeholder="YYYY"
             value={year || ""}
             onChange={(e) => {
-              const val = e.target.value.replace(/[\s\D]/g, "");
-              handleChange("year", convert(val, "toEn"));
+              const inEng = convert(e.target.value || "", "toEn");
+              const val = inEng.replace(/[\s\D]/g, "");
+              handleChange("year", val);
             }}
             className={inputClassName}
           />
@@ -73,8 +74,9 @@ export default function NepaliDateInput({ value, onChange, className = "", input
             placeholder="MM"
             value={month || ""}
             onChange={(e) => {
-              const val = e.target.value.replace(/[\s\D]/g, "");
-              handleChange("month", convert(val, "toEn"));
+              const inEn = convert(e.target.value || "", "toEn");
+              const val = inEn.replace(/[\s\D]/g, "");
+              handleChange("month", inEn);
             }}
             className={inputClassName}
           />
@@ -89,8 +91,9 @@ export default function NepaliDateInput({ value, onChange, className = "", input
             placeholder="DD"
             value={day ?? ""}
             onChange={(e) => {
-              const val = e.target.value.replace(/[\s\D]/g, "");
-              handleChange("day", convert(val, "toEn"));
+              const inEn = convert(e.target.value || "", "toEn");
+              const val = inEn.replace(/[\s\D]/g, "");
+              handleChange("day", val);
             }}
             className={inputClassName}
           />
