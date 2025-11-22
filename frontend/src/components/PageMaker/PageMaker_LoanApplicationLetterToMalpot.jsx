@@ -39,7 +39,6 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
   } else {
     p4 = "निज";
   }
-
   const table7Row = f.table7 && f.table7.length > 0 ? f.table7 : [{}];
   const table7HTML2 = `
   <p class="font-bold my-3 text-center ">तपसिल </p>

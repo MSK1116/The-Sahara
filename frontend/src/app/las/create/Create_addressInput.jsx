@@ -107,7 +107,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
           <Label className={localErrors?.permanentOld_wada && "text-red-600"}>वडा नं</Label>
           <Input
             className="w-full mt-2"
-            value={permanent.wada || ""}
+            value={permanentOld.wada || ""}
             onChange={(e) => {
               const val = e.target.value;
               setPermanentOld({ ...permanentOld, wada: e.target.value });
