@@ -121,7 +121,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
         <p class="font-bold">श्री मालपोत कार्यालय,</p>
         <p class="font-bold underline">${f3.malpotOfficeName || "-"}</p>
         <p class=" text-center font-semibold">विषयः - धितो (दृष्टि) बन्धक पारित गरिदिने बारे ।</p>
-        <p class="mt-4">
+        <p class="mt-4 text-justify">
             उपरोक्त सम्बन्धमा,
             जिल्ला <strong>${f.address.permanentOld.district}</strong>,
             <strong>${f.address.permanentOld.palika || "—"}</strong>,

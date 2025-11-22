@@ -2,6 +2,7 @@ import NepaliDate from "nepali-date-converter";
 
 export function PageMaker_LoanApplicationBharpaie(data) {
   const f = data.form1;
+  const f2 = data.form2;
   const f3 = data.form3;
   return `
 
