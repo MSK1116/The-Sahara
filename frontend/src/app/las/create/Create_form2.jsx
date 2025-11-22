@@ -173,7 +173,7 @@ const Create_form2 = ({ LMSIN, onDataChange }) => {
                     }
                     const cleaned = Number(String(convert(raw, "toEn")).replace(/,/g, ""));
                     if (isNaN(cleaned)) return;
-                    if (cleaned > fiftyPercentMarginLimit) return;
+                    if (cleaned > fiftyPercentMarginLimit && cleaned > localData.form1.amount) return;
                     setFrom2((d) => ({
                       ...d,
                       fiftyPercentMargin: cleaned,
