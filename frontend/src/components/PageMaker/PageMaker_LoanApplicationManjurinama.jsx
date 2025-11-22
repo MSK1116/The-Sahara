@@ -105,24 +105,24 @@ export function PageMaker_LoanApplicationManjurinama(data) {
 
 <body class=" flex flex-row items-center">
     <div class="flex w-[10%] h-full">
-        <div class=" pr-4 text-center b text-xs ">
+        <div class=" pr-4 mt-auto mb-20 text-center b text-xs ">
             <p>
                 संस्थाको तर्फबाट कागज तयार गर्नेको नाम : _______________<br>
                 संस्थाको तर्फबाट कागज जाँच गर्नेको दस्तखत : ___________
             </p>
             <p class="ml-2">
-                जिल्ला ______________ न.पा./गा.वि.स ___________वडा नं. ___________ मा बस्ने
+                जिल्ला __________ न.पा./गा.वि.स ___________वडा नं. ___________ मा बस्ने
                 ______________
             </p>
             <p>
-                जिल्ला ___________ न.पा./गा.वि.स ___________ वडा नं. ___________ मा बस्ने
+                जिल्ला ________ न.पा./गा.वि.स ___________ वडा नं. ___________ मा बस्ने
                 ______________
             </p>
             <p class=" font-semibold">साक्षी :</p>
         </div>
     </div>
 
-    <div class="pl-3">
+    <div class="pl-4 text-sm">
         <h1 class="my-3 underline  text-center font-semibold">मन्जुरीनामा</h1>
         <p>
             लिखितम् ${f.approver_inlaws_name || ""} को ${p4} ${f.approver_father_name || ""} को ${p5} ${p6 || ""}
@@ -151,17 +151,19 @@ export function PageMaker_LoanApplicationManjurinama(data) {
             लिमिटेड ${f3.branchType || ""} ${f.branch || ""} लाई दिएँ।
         </p>
 
-        <h3 class="my-3 text-center underline font-semibold">तपसिल</h3>
+        <h3 class="my-5 text-center underline font-semibold">तपसिल</h3>
         ${table7HTML2}
         <p class="my-2">ईती सम्वत ${new NepaliDate(today).format("YYYY", "np")} साल ${new NepaliDate(today).format("MMMM", "np")}
             महिना ${new NepaliDate(today).format("DD", "np")} गते रोज ${new NepaliDate(today).format("ddd", "np")} मा
             शुभम्
             ________</p>
         <div class="my-2">
-            <p class="font-semibold my-2 underline">संस्थाको प्रयोजनको लागि :- </p>
+            <p class="font-semibold my-3 underline">संस्थाको प्रयोजनको लागि :- </p>
             <p>मालपोत कार्यालय ${f3?.malpotOfficeName || ""} बाट धितो रोक्का भएको प्राप्त पत्रको प.सं.
                 ${f4?.malpotOfficeReplyPageNo || ""} च.नं. ${f4?.malpotOfficeReplyChalaniNo || ""}</p>
-            <p>मन्जुरीनामा दिनेको नागरिकता नं. ${f.approver_citizenship_number || ""} मिति ${f?.approver_citizenship_takenDate && new NepaliDate(f?.approver_citizenship_takenDate || today).format("ddd DD, MMMM YYYY", "np")} दिने कार्यलय नाम:
+            <p class="mt-1.5">मन्जुरीनामा दिनेको नागरिकता नं. ${f.approver_citizenship_number || ""} मिति ${
+    f?.approver_citizenship_takenDate && new NepaliDate(f?.approver_citizenship_takenDate || today).format("ddd DD, MMMM YYYY", "np")
+  } दिने कार्यलय नाम:
                 ${f.approver_citizenship_takenOffice || ""}</p>
         </div>
     </div>

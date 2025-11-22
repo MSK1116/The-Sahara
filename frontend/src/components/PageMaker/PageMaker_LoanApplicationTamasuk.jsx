@@ -122,7 +122,7 @@ export function PageMaker_LoanApplicationTamasuk(data) {
             नपुगे रोक्का रहून नसकेको समेत अन्य चल अचल जायजेयाबाट बाँकी साँवा, व्याज असुल उपर गरी लिन होला भनि मेरो
             मनोमान ख़ुशी राजीले ${f.branch || ""} स्थित द साहरा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड , मलंगवा,
             सर्लाही
-            लाई बुझाई दिए । साक्षी किनाराको सदर । ईती सम्वत ${new NepaliDate(today).format("YYYY", "np")} साल ${new NepaliDate(today).format("MMMM", "np")} महिना ${new NepaliDate(today).format("DD", "np")} गते रोज ${new NepaliDate(today).format(
+            लाई बुझाई दिए । साक्षी किनाराको सदर । <br>ईती सम्वत ${new NepaliDate(today).format("YYYY", "np")} साल ${new NepaliDate(today).format("MMMM", "np")} महिना ${new NepaliDate(today).format("DD", "np")} गते रोज ${new NepaliDate(today).format(
     "ddd",
     "np"
   )} मा शुभम् ________
