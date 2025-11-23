@@ -17,7 +17,7 @@ export function PageMaker_LoanApplicationBharpaie(data) {
                 ${f.address.current.wada || "—"}, ${f.address.current.tole || "—"} मा बस्ने म ${f.applicant_name} यस द
                 सहारा
                 लोन सेविंग्स को
-                औ-सो लि <b>${f3.branchType}: - ${f.branch}</b> बाट ${f.desc1 || ""} निम्न
+                औ-सो लि <b>${f.branchType}: - ${f.branch}</b> बाट ${f.desc1 || ""} निम्न
                 कामको लागि रु. ${f.amount || ""} (अक्षरेपी रुपियाँ: ${f.amount_text || ""} मात्र) नगद/चेक नं. संस्था बाट
                 बुझिलिई यो भरपाई गरि दियें</div>
         </div>
@@ -48,7 +48,7 @@ export function PageMaker_LoanApplicationBharpaie(data) {
                 ${f.address.current.wada || "—"}, ${f.address.current.tole || "—"} मा बस्ने म ${f.applicant_name} यस द
                 सहारा
                 लोन सेविंग्स को
-                औ-सो लि <b>${f3.branchType}: - ${f.branch}</b> बाट ${f.desc1 || ""} निम्न
+                औ-सो लि <b>${f.branchType}: - ${f.branch}</b> बाट ${f.desc1 || ""} निम्न
                 कामको लागि रु. ${f2.fiftyPercentMargin || ""} (अक्षरेपी रुपियाँ: ${f2.fiftyPercentMargin || ""} मात्र) नगद/चेक नं. संस्था बाट
                 बुझिलिई यो भरपाई गरि दियें</div>
         </div>

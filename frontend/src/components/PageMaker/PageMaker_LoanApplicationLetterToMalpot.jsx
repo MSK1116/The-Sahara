@@ -107,7 +107,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
 <hr>
     <div class="mt-2 flex flex-row items-center justify-between ">
         <div>
-            <p>${f3.branchType}: - ${f.branch}</p>
+            <p>${f.branchType}: - ${f.branch}</p>
             <p>पत्र संख्या: - ${f3.malpotLetterNo}</p>
             <p>चलानी न.: - ${f3.malpotLetterChalaniNo}</p>
         </div>
@@ -151,7 +151,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
         </div>
         <div class=" flex mt-3 flex-row space-x-5">
             <div>श्री ${f3.malpotOfficerName || "-"}<br>
-                <p>द सहारा,${f3.branchType}: - ${f.branch}</p>
+                <p>द सहारा,${f.branchType}: - ${f.branch}</p>
             </div>
             <div>दृष्टि बन्धक पारित गराई रोक्काको जानकारी समेत लिई आउनु होला ।</div>
         </div>

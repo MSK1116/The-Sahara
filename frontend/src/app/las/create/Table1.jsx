@@ -62,10 +62,10 @@ const Table1 = ({ onDataChange, amount, applicantType, initialData }) => {
                   <DropdownMenuContent className="w-full max-h-60 overflow-y-auto">
                     <DropdownMenuRadioGroup value={row["भुक्तानी अवधि"]} onValueChange={(val) => setRow((r) => ({ ...r, "भुक्तानी अवधि": val }))}>
                       {Array.from({ length: 7 }).map((_, i) => {
-                        const year = `${i + 1} वर्ष`;
+                        const year = `${i + 1}`;
                         return (
                           <DropdownMenuRadioItem key={year} value={year || ""}>
-                            {year}
+                            {year} वर्ष
                           </DropdownMenuRadioItem>
                         );
                       })}

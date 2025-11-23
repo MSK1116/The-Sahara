@@ -31,7 +31,7 @@ const Create_navigator = ({ currentPage, onSave, handleFormPage, isUpserting, LM
     printWindow.document.write(`
   <html>
     <head>
-      <title>Print</title>
+      <title>${LMSIN}</title>
 
      <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -325,6 +325,7 @@ ${htmlContent}
 
     printWindow.document.close();
   };
+
   const handlePrint5 = async () => {
     const updated = await onSave();
     if (!updated) return toast.error("Failed to update before printing.");

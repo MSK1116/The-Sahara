@@ -64,13 +64,15 @@ export function PageMaker_LoanApplicationPage1(data) {
   const approverSection = f.approver_applicant_name
     ? `
   <div class="mt-5">
-    <p class="font-bold my-2">धितो मन्जुरीनामा दिनका व्यक्तिगत विवरण:</p>
+    <p class="font-bold my-2">धितो मन्जुरीनामा दिनेको व्यक्तिगत विवरण:</p>
     <p>नाम: <b>${f.approver_applicant_name}</b></p>
-    <p>ठेगाना: 
-      <b>
-        ${f.approverAddress ? `${f.approverAddress.province || "—"}, ${f.approverAddress.district || "—"}, ${f.approverAddress.palika || "—"}, ${f.approverAddress.wada || "—"}, ${f.approverAddress.tole || "—"}` : "—"}
-      </b>
+    <p>स्थायी ठेगाना (ना.प्र.प) अनुसार :  
+      जिल्ला <b>${f.approverAddress.permanentOld.district}</b>, 
+      गा.वि .स/ना.पा <b>${f.approverAddress.permanentOld.palika || "—"}</b>, 
+      वडा नं. <b>${f.approverAddress.permanentOld.wada || "—"}</b>, 
+      टोल <b>${f.approverAddress.permanentOld.tole || "—"}</b>
     </p>
+    
     <p>नागरिकता न: <b>${f.approver_citizenship_number || "—"}</b></p>
     <p>बुबाको नाम: <b>${f.approver_father_name || "—"}</b></p>
     <p>पतिको/पत्नीको नाम: <b>${f.approver_spouse_name || "—"}</b></p>
@@ -92,12 +94,12 @@ export function PageMaker_LoanApplicationPage1(data) {
         <b>${f.approver_applicant_name}</b>
       </p>
 
-      <p>
-        ठेगाना:
-        <b>
-          ${f.approverAddress ? `${f.approverAddress.province || "—"}, ${f.approverAddress.district || "—"}, ${f.approverAddress.palika || "—"}, ${f.approverAddress.wada || "—"}, ${f.approverAddress.tole || "—"}` : "—"}
-        </b>
-      </p>
+      <p>स्थायी ठेगाना (ना.प्र.प) अनुसार :  
+      जिल्ला <b>${f.approverAddress.permanentOld.district}</b>, 
+      गा.वि .स/ना.पा <b>${f.approverAddress.permanentOld.palika || "—"}</b>, 
+      वडा नं. <b>${f.approverAddress.permanentOld.wada || "—"}</b>, 
+      टोल <b>${f.approverAddress.permanentOld.tole || "—"}</b>
+    </p>
     </td>
     `
     : "";
@@ -290,7 +292,7 @@ export function PageMaker_LoanApplicationPage1(data) {
         <td>${row.ownerName || ""}</td>
         <td>${row.district || ""}</td>
         <td>${row.palika || ""}</td>
-        <td>${row.wardNo || ""}</td>
+        <td>${convert(row.wardNo || "", "toNp")}</td>
         <td>${row.tole || ""}</td>
         <td>${row.sheetNo || ""}</td>
         <td>${row.plotNo || ""}</td>
@@ -313,8 +315,9 @@ export function PageMaker_LoanApplicationPage1(data) {
         </div>
         <div class="">
             <h1 class="text-xs mt-5 text-center">सहकारी ऐन २०४८ बमोजिम स्थापित</h1>
-            <h2 class="font-bold text-center mt-1 tracking-widest">द सहारा लोन सेविम्स को अपरेटिभ सोसाइटी लिमिटेड</h2>
+            <h2 class="font-bold text-center mt-1 tracking-widest">द सहारा लोन सेविग्स को अपरेटिभ सोसाइटी लिमिटेड</h2>
             <h3 class="text-sm text-center">रजिष्टर्ड प्रधान कार्यालय मलंगवा, सर्लाही(नेपाल)</h3>
+            <h3 class="text-sm text-center">${f.branchType || "_"}:- ${f.branch || ""}</h3>
             <h4 class="mt-5 mb-2 underline text-center">Loan Application</h4>
         </div>
     </div>
@@ -330,7 +333,7 @@ export function PageMaker_LoanApplicationPage1(data) {
     <h2 class="mt-5 mb-0.5">श्रीमान् कार्यालय प्रमुख ज्यु</h2>
     <h3 class="my-1">द सहारा लोन सेविम्स को अपरेटिभ सोसाइटी लिमिटेड</h3>
     <h4 class="my-1">प्रधान कार्यालय मलंगवा</h4>
-    <h5 class="my-1">शाखा: <b>${f.branch || "-"}</b></h5>
+    <h5 class="my-1">${f.branchType}: <b>${f.branch || "-"}</b></h5>
 
     <p class="my-1 mb-2">
       कृपया निम्न विवरण खुलाइ म/हामीले <b>${f.desc1}</b> कार्यको लागि माग गरेको रु 
@@ -338,23 +341,23 @@ export function PageMaker_LoanApplicationPage1(data) {
     </p>
 
     <p>ऋण निवेदकको नाम थर: <b>${f.applicant_name}</b></p>
-    <p>उमेर: <b>${f.age}</b></p>
+    <p>उमेर: <b>${convert(f.age || "", "toNp")}</b></p>
 
     <p>
       स्थायी ठेगाना (ना.प्र.प) अनुसार :  
-      <b>${f.address.permanentOld.district}</b>, 
-      <b>${f.address.permanentOld.palika || "—"}</b>, 
-      <b>${f.address.permanentOld.wada || "—"}</b>, 
-      <b>${f.address.permanentOld.tole || "—"}</b>
-      र हाल बसोबास:  
+      जिल्ला <b>${f.address.permanentOld.district}</b>, 
+      गा.वि .स/ना.पा <b>${f.address.permanentOld.palika || "—"}</b>, 
+      वडा नं. <b>${f.address.permanentOld.wada || "—"}</b>, 
+      टोल <b>${f.address.permanentOld.tole || "—"}</b>
+      र हाल ठेगाना:
       <b>${f.address.permanent.province}</b>, 
-      <b>${f.address.permanent.district}</b>, 
-      <b>${f.address.permanent.palika || "—"}</b>, 
-      <b>${f.address.permanent.wada || "—"}</b>, 
-      <b>${f.address.permanent.tole || "—"}</b>
+      जिल्ला <b>${f.address.permanent.district}</b>, 
+      गा.पा / ना.पा. <b>${f.address.permanent.palika || "—"}</b>, 
+      वडा नं. <b>${f.address.permanent.wada || "—"}</b>, 
+      टोल <b>${f.address.permanent.tole || "—"}</b>
     </p>
 
-    <h2>फोन नं: <b>${f.phone1}</b>, <b>${f.phone2}</b></h2>
+    <h2>फोन नं: <b>${convert(f.phone1 || "", "toNp")}</b>, <b>${convert(f.phone2 || "", "toNp")}</b></h2>
     <h3>शैक्षिक योग्यता: <b>${f.personal_education}</b></h3>
 
     ${applicantDetails}
@@ -362,7 +365,7 @@ export function PageMaker_LoanApplicationPage1(data) {
     <div class="mt-2 mb-1">माग  गरेको ऋण सुविधा</div>
     <table border="1" class="text-xs my-3" cellspacing="0" cellpadding="6" width="100%">
         <tr>
-            <th>S No</th>
+            <th>क्र.स</th>
             <th>कर्जा सुविधा</th>
             <th>रकम</th>
             <th>भुक्तानी अवधि</th>
@@ -372,10 +375,10 @@ export function PageMaker_LoanApplicationPage1(data) {
           .map(
             (row, index) => `
         <tr>
-            <td><b>${index + 1}</b></td>
+            <td><b>${convert(index + 1 || "", "toNp")}</b></td>
             <td><b>${f.applicantType || "—"}</b></td>
             <td><b>${f.amount || "—"}</b></td>
-            <td><b>${row["भुक्तानी अवधि"] || "—"}</b></td>
+            <td><b>${convert(row["भुक्तानी अवधि"] || "—", "toNp")} वर्ष</b></td>
             <td><b>${row["कैफियत"] || "—"}</b></td>
         </tr>`
           )
@@ -391,7 +394,7 @@ export function PageMaker_LoanApplicationPage1(data) {
     </p>
 
     <p>
-      नागरिकता no: <b>${f.citizenship_number}</b>, <br/>
+      नागरिकता नं.: <b>${f.citizenship_number}</b>, <br/>
       बुबाको नाम: <b>${f.applicant_father_name}</b>, <br/>
       पतिको/पत्नीको नाम: <b>${f.applicant_spouse_name}</b>, <br/>
       बाजे/ससुरको नाम: <b>${f.applicant_inlaws_name}</b>
@@ -411,10 +414,9 @@ export function PageMaker_LoanApplicationPage1(data) {
     ${table6HTML}
     ${table7HTML}
 
-    <p class="my-3">माथि उल्लेखित सम्पूर्ण विवरण मैले उपलब्ध गराएको सत्य र साँचो हो । यसमा फरक परे म पूर्ण रूपमा जिम्मेवार हुनेछु । साथै, बैंकले समय, परिस्थिति तथा अन्य कारणवश कुनै नियम, ब्याज दर तथा अन्य नीति–नियम परिवर्तन गरेमा मलाई मान्य हुनेछ ।</p>
+    <p class="my-3">माथि उल्लेखित सम्पूर्ण विवरण मैले उपलब्ध गराएको सत्य र साँचो हो । यसमा फरक परे म पूर्ण रूपमा जिम्मेवार हुनेछु । साथै, संस्थाले समय, परिस्थिति तथा अन्य कारणवश कुनै नियम, ब्याज दर तथा अन्य नीति–नियम परिवर्तन गरेमा मलाई मन्जुर हुनेछ ।</p>
  
   
-    
    <table class="w-full border-collapse my-5 text-xs">
   <tr>
     <!-- Applicant -->

@@ -4,9 +4,6 @@ import convert from "number-to-nepali-words";
 export function PageMaker_LoanApplicationFamily(data) {
   const f = data.form1;
   const f2 = data.form2;
-  const f3 = data.form3;
-  const f4 = data.form4;
-  const f5 = data.form5;
 
   var p1 = "";
   var p2 = "";

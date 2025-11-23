@@ -42,8 +42,8 @@ const Create_form3 = ({ LMSIN, onDataChange }) => {
           <div className=" flex flex-row items-center justify-between">
             <div className=" flex flex-row items-center justify-center space-x-5">
               <div>
-                <Label className={"mb-2"}>कार्यालयको किसिम</Label>
-                <Select onValueChange={(val) => setFrom3((d) => ({ ...d, branchType: val }))} value={form3.branchType || ""} className="mt-2">
+                <Label className={"mb-2"}>शाखा किसिम</Label>
+                <Select disabled readOnly value={form3.branchType || ""} className="mt-2">
                   <SelectTrigger>
                     <SelectValue placeholder="कार्यालयको किसिम"></SelectValue>
                   </SelectTrigger>

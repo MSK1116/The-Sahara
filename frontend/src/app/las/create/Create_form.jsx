@@ -186,26 +186,41 @@ const Create_form = ({ onDataChange, initialData }) => {
 
         {/* ---------------------- Section 2 ---------------------------- */}
         <div className="flex flex-row items-center gap-x-10 justify-between">
-          <div className="w-full">
-            <Label className={localErrors.branch && "text-red-600"} htmlFor="branch">
-              शाखा
-            </Label>
-            <Input
-              id="branch"
-              name="branch"
-              className="w-full mt-2"
-              value={localData.branch || "कलैया"}
-              defaultValue={"कलैया"}
-              onChange={(e) => {
-                const val = e.target.value;
-                setLocalData((d) => ({ ...d, branch: val }));
-                if (!val) {
-                  setLocalErrors((prev) => ({ ...prev, branch: true }));
-                } else {
-                  setLocalErrors((prev) => ({ ...prev, branch: false }));
-                }
-              }}
-            />
+          <div className="w-full flex flex-row space-x-3">
+            <div>
+              <Label className={"mb-2"}>शाखा किसिम</Label>
+              <Select onValueChange={(val) => setLocalData((d) => ({ ...d, branchType: val }))} value={localData.branchType || ""} className="mt-2">
+                <SelectTrigger>
+                  <SelectValue placeholder="कार्यालयको किसिम"></SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={"प्रधान कार्यालय "}>प्रधान कार्यालय</SelectItem>
+                  <SelectItem value={"मुख्य साखा कार्यालय"}>मुख्य साखा कार्यालय</SelectItem>
+                  <SelectItem value={"सेवा केन्द्र"}>सेवा केन्द्र</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label className={localErrors.branch && "text-red-600"} htmlFor="branch">
+                शाखा
+              </Label>
+              <Input
+                id="branch"
+                name="branch"
+                className="w-full mt-2"
+                value={localData.branch || "कलैया"}
+                defaultValue={"कलैया"}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setLocalData((d) => ({ ...d, branch: val }));
+                  if (!val) {
+                    setLocalErrors((prev) => ({ ...prev, branch: true }));
+                  } else {
+                    setLocalErrors((prev) => ({ ...prev, branch: false }));
+                  }
+                }}
+              />
+            </div>
           </div>
 
           <div className="w-full">
