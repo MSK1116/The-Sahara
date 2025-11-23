@@ -40,11 +40,11 @@ export function PageMaker_LoanApplicationFrom2(data) {
       .map(
         (row, index) => `
       <tr>
-        <td>${index + 1}</td>
+        <td>${convert(index + 1 || "", "toNp")}</td>
         <td>${row.ownerName || ""}</td>
         <td>${row.district || ""}</td>
         <td>${row.palika || ""}</td>
-        <td>${row.wardNo || ""}</td>
+        <td>${convert(row.wardNo || "", "toNp")}</td>
         <td>${row.plotNo || ""}</td>
         <td class="text-nowrap whitespace-nowrap" >${row.area || ""}</td>
         <td>${row.landType || ""}</td>
@@ -86,14 +86,14 @@ export function PageMaker_LoanApplicationFrom2(data) {
       row._total = total;
       return `
         <tr>
-          <td>${index + 1}</td>
-          <td>${row.wardNo || ""}</td>
+          <td>${convert(index + 1 || "", "toNp")}</td>
+          <td>${convert(row.wardNo || "", "toNp")}</td>
           <td>${row.plotNo || ""}</td>
           <td class="text-nowrap whitespace-nowrap">${row.area || ""}</td>
-          <td>${row.govApprovedPrice ? convert(row.govApprovedPrice, "toNp") : ""}</td>
-          <td>${row.localApprovedPrice ? convert(row.localApprovedPrice, "toNp") : ""}</td>
-          <td>${total.toFixed(2) ? convert(total.toFixed(2), "toNp") : ""}</td>
-          <td>${convert((total / 2).toFixed(2), "toNp")}</td>
+          <td>${row.govApprovedPrice ? convert(row.govApprovedPrice, "toNp") : ""}/-</td>
+          <td>${row.localApprovedPrice ? convert(row.localApprovedPrice, "toNp") : ""}/-</td>
+          <td>${total.toFixed(2) ? convert(total.toFixed(2), "toNp") : ""}/-</td>
+          <td>${convert((total / 2).toFixed(2), "toNp")}/-</td>
         </tr>
       `;
     })
@@ -104,10 +104,10 @@ export function PageMaker_LoanApplicationFrom2(data) {
   <tr class="font-bold">
     <td colspan="6" class="text-right">जम्मा:</td>
     <td>
-      ${convert(table7Row.reduce((sum, r) => sum + (r._total || 0), 0).toFixed(2), "toNp")}
+      ${convert(table7Row.reduce((sum, r) => sum + (r._total || 0), 0).toFixed(2), "toNp")}/-
     </td>
     <td>
-      ${convert(table7Row.reduce((sum, r) => sum + (r._total || 0) / 2, 0).toFixed(2), "toNp")}
+      ${convert(table7Row.reduce((sum, r) => sum + (r._total || 0) / 2, 0).toFixed(2), "toNp")}/-
     </td>
   </tr>
 </tfoot>
@@ -130,7 +130,7 @@ export function PageMaker_LoanApplicationFrom2(data) {
                 लिमिटेड</h3>
             <h4>प्रधान कार्यालय: मलंगवा, सर्लाही(नेपाल)</h4>
             <h3 class="text-sm text-center">रजिष्टर्ड प्रधान कार्यालय </h3>
-            <h4 class="mt-3 mb-2 text-center"> ${f.branchType} <b>${f.branch}</b></h4>
+            <h4 class="mt-3 mb-2 text-center"> ${f.branchType}: <b>${f.branch}</b></h4>
             <h5 class="font-bold text-xl text-center my-3">धितो दिने घर जग्गाको मूल्याङ्कन प्रतिवेदन</h5>
 
         </div>
@@ -147,17 +147,18 @@ export function PageMaker_LoanApplicationFrom2(data) {
             <p>स्थलमा गई मूल्यांकन गरेको मितिः <b>${new NepaliDate(f2.evaluationDate || new Date()).format("ddd DD, MMMM YYYY", "np")}</b></p>
             <p>ऋण निवेदकको नामः <b>${f.applicant_name || ""}</b></p>
             <p>
-                स्थायी ठेगाना: -
-                <b>${f.address.permanentOld.district || "--"}</b>,
-                <b>${f.address.permanentOld.palika || "—"}</b>,
-                <b>${f.address.permanentOld.wada || "—"}</b>,
-                <b>${f.address.permanentOld.tole || "—"}</b> र हाल बसोबास गरेको ठेगाना: -
-                <b>${f.address.current.province}</b>,
-                <b>${f.address.current.district}</b>,
-                <b>${f.address.current.palika || "—"}</b>,
-                <b>${f.address.current.wada || "—"}</b>,
-                <b>${f.address.current.tole || "—"}</b>
-            </p>
+      स्थायी ठेगाना (ना.प्र.प) अनुसार :  
+      जिल्ला <b>${f.address.permanentOld.district}</b>, 
+      गा.वि .स/ना.पा <b>${f.address.permanentOld.palika || "—"}</b>, 
+      वडा नं. <b>${f.address.permanentOld.wada || "—"}</b>, 
+      टोल <b>${f.address.permanentOld.tole || "—"}</b>
+      र हाल ठेगाना:
+      <b>${f.address.permanent.province}</b>, 
+      जिल्ला <b>${f.address.permanent.district}</b>, 
+      गा.पा / ना.पा. <b>${f.address.permanent.palika || "—"}</b>, 
+      वडा नं. <b>${f.address.permanent.wada || "—"}</b>, 
+      टोल <b>${f.address.permanent.tole || "—"}</b>
+    </p>
             <p>ऋणको उद्देश्यः- <b>${f.desc1}</b></p>
         </div>
     </div>
@@ -167,8 +168,8 @@ export function PageMaker_LoanApplicationFrom2(data) {
 
   <div class=" my-5">
             <div>सिफारिस मूल्यः-</div>
-            <p>उपरोक्त बमोजिमको धितोको मूल्यमा नियमानुसार ५०% मार्जिन कटाई अधिकतम रु <b>${convert(f2.fiftyPercentMargin, "toNp")}</b>
-                अक्षरेपी रु. <b>${f2.fiftyPercentMargin_text}</b><br><br> धितो मूल्यांकन गर्नेको दस्तखत :- ___________
+            <p>उपरोक्त बमोजिमको धितोको मूल्यमा नियमानुसार ५०% मार्जिन कटाई अधिकतम रु <b>${convert(f2.fiftyPercentMargin, "toNp")}/-</b>
+                अक्षरेपी रु. <b>${f2.fiftyPercentMargin_text}मात्र </b>ऋण उपलब्ध गराउन सिफारिस गर्दछु |<br><br> धितो मूल्यांकन गर्नेको दस्तखत :- ___________
             </p>
    </div>
 

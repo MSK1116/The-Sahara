@@ -67,7 +67,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
             <td>${row.ownerName || ""}</td>
             <td>${row.district || ""}</td>
             <td>${row.palika || ""}</td>
-            <td >${row.wardNo || ""}</td>
+            <td >${convert(row.wardNo || "", "toNp")}</td>
             <td>${row.plotNo || ""}</td>
             <td class="text-nowrap whitespace-nowrap">${row.area || ""}</td>
             <td>${row.remarks || ""}</td>
@@ -90,7 +90,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
                 <img class="size-20" src="/image_dir/LogoOnly.png">
                 <h1 class="text-3xl font-extrabold text-shadow-md">द सहारा</h1>
             </div>
-            <div class=" bg-black text-white font-bold">
+            <div class=" font-bold">
                 लोन सेविंग्स को-आपरेटिभ सोसाइटी लि.
             </div>
         </div>
@@ -123,17 +123,21 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
         <p class=" text-center font-semibold">विषयः - धितो (दृष्टि) बन्धक पारित गरिदिने बारे ।</p>
         <p class="mt-4 text-justify">
             उपरोक्त सम्बन्धमा,
-            जिल्ला <strong>${f.address.permanentOld.district}</strong>,
-            <strong>${f.address.permanentOld.palika || "—"}</strong>,
-            वडा <strong>${f.address.permanentOld.wada || "—"}</strong>,
-            टोल <strong>${f.address.permanentOld.tole || "—"}</strong> मा बसोबास गर्ने व्यक्ति र हाल बसोबास परदेश
-            <strong>${f.address.permanent.province}</strong>,
-            जिल्ला <strong>${f.address.permanent.district}</strong>,
-            <strong>${f.address.permanent.palika || "—"}</strong>,
-            वडा <strong>${f.address.permanent.wada || "—"}</strong>,
-            टोल <strong>${f.address.permanent.tole || "—"}</strong>
-            मा बस्ने <strong>${f.applicant_inlaws_name || "-"} </strong> ${p1} <b>${f.applicant_father_name || "-"}</b> को  ${p2 || ""} वर्ष <b>${f.age ? convert(f.age, "toNp") : ""}</b> ${p3 || ""} 
-         <b>${f.applicant_name || ""}</b> ले तपसिल बमोजिम जग्गा दृस्टी बन्दक लेखत संस्थाको नाउँमा पारित गराई ऋण माग गर्नु भएको हुँदा ${p4 || ""} ${ownerNamesString || ""}  को नाउँमा दर्ता कायम भएको जग्गामा स्वीकृत ऋण रकम रु.<b> ${convert(
+        
+      स्थायी ठेगाना (ना.प्र.प) अनुसार :  
+      जिल्ला <b>${f.address.permanentOld.district}</b>, 
+      गा.वि .स/ना.पा <b>${f.address.permanentOld.palika || "—"}</b>, 
+      वडा नं. <b>${f.address.permanentOld.wada || "—"}</b>, 
+      टोल <b>${f.address.permanentOld.tole || "—"}</b>
+      र हाल ठेगाना:
+      <b>${f.address.permanent.province}</b>, 
+      जिल्ला <b>${f.address.permanent.district}</b>, 
+      गा.पा / ना.पा. <b>${f.address.permanent.palika || "—"}</b>, 
+      वडा नं. <b>${f.address.permanent.wada || "—"}</b>, 
+      टोल <b>${f.address.permanent.tole || "—"}</b>
+
+            मा बस्ने <strong>${f.applicant_inlaws_name || "-"} </strong> ${p1} <b>${f.applicant_father_name || "-"}</b> को  ${p2 || ""} वर्ष <b>${f.age ? convert(f.age, "toNp") : ""}</b> को ${p3 || ""} 
+         <b>${f.applicant_name || ""}</b> ले तपसिल बमोजिम जग्गा दृस्टी बन्धक लेखत संस्थाको नाउँमा पारित गराई ऋण माग गर्नु भएको हुँदा ${p4 || ""} ${ownerNamesString || ""}  को नाउँमा दर्ता कायम भएको जग्गामा स्वीकृत ऋण रकम रु.<b> ${convert(
     f2.fiftyPercentMargin,
     "toNp"
   )}/-</b> अक्षरेपी <b>${f2.fiftyPercentMargin_text || ""}</b> मात्र /- दृष्टि बन्धक लेखत पारित गराउन यस संस्थाको प्रतिनिधि ${f3.malpotOfficerName || "-"} मार्फत रोक्का राखी जानकारी पठाई दिनुहुन अनुरोध गरिन्छ ।
