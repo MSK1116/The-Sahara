@@ -11,7 +11,7 @@ export function PageMaker_LoanApplicationPage1(data) {
       <p>रजिष्ट्रेशन नं: <b>${f.registrationNumber}</b>, मिति: <b>${f.registrationDate}</b>, आयकर पान नं (PAN): <b>${f.panNumber}</b>, मिति: <b>${f.panDate}</b></p>
       <p>व्यापारको प्रकार: <b>${f.businessType || "—"}</b></p>
       <p>परियोजना स्थल: <b>${f.projectLocation || "—"}</b></p>
-      <p>परियोजनाको अनुमानित कुल लागत: <b>${f.projectCost || "—"}</b></p>
+      <p>परियोजनाको अनुमानित कुल लागत: <b>${f.projectCost || "—"}/-</b></p>
     `;
   } else {
     applicantDetails = `<p>ऋण निवेदकको प्रकार: <b>${f.applicantType}</b></p>
@@ -99,7 +99,7 @@ export function PageMaker_LoanApplicationPage1(data) {
       गा.वि .स/ना.पा <b>${f.approverAddress.permanentOld.palika || "—"}</b>, 
       वडा नं. <b>${f.approverAddress.permanentOld.wada || "—"}</b>, 
       टोल <b>${f.approverAddress.permanentOld.tole || "—"}</b>
-    </p>
+      </p>
     </td>
     `
     : "";
@@ -127,8 +127,8 @@ export function PageMaker_LoanApplicationPage1(data) {
           <tr>
             <td>${index + 1}</td>
             <td>${row.title || "—"}</td>
-            <td>${row.debtorIncome && row.debtorIncome !== "" ? row.debtorIncome : "0"}</td>
-            <td>${row.familyAnnualIncome && row.familyAnnualIncome !== "" ? row.familyAnnualIncome : "0"}</td>
+            <td>${row.debtorIncome && row.debtorIncome !== "" ? row.debtorIncome : "0"}/-</td>
+            <td>${row.familyAnnualIncome && row.familyAnnualIncome !== "" ? row.familyAnnualIncome : "0"}/-</td>
             <td>${row.notes || ""}</td>
           </tr>
         `
@@ -137,8 +137,8 @@ export function PageMaker_LoanApplicationPage1(data) {
 
         <tr style="font-weight: bold; background: #eee;">
           <td colspan="2" style="text-align:right;">जम्मा (Total)</td>
-          <td>${f.table3.totalDebtor || 0}</td>
-          <td>${f.table3.totalFamily || 0}</td>
+          <td>${f.table3.totalDebtor || 0}/-</td>
+          <td>${f.table3.totalFamily || 0}/-</td>
           <td></td>
         </tr>
       </tbody>
@@ -337,7 +337,7 @@ export function PageMaker_LoanApplicationPage1(data) {
 
     <p class="my-1 mb-2">
       कृपया निम्न विवरण खुलाइ म/हामीले <b>${f.desc1}</b> कार्यको लागि माग गरेको रु 
-      <b>${f.amount}</b> अक्षरमा रु <b>${f.amount_text} मात्र /-</b> को सुविधा स्वीकृत गरी दिनु हुन अनुरोध गर्दछु/छौं।
+      <b>${f.amount}/-</b> अक्षरमा रु <b>${f.amount_text} मात्र /-</b> को सुविधा स्वीकृत गरी दिनु हुन अनुरोध गर्दछु/छौं।
     </p>
 
     <p>ऋण निवेदकको नाम थर: <b>${f.applicant_name}</b></p>
@@ -429,14 +429,11 @@ export function PageMaker_LoanApplicationPage1(data) {
         नाम: <b>${f.applicant_name}</b>
       </p>
 
-      <p>
-        ठेगाना:
-        <b>
-          ${f.address.permanentOld.district},
-          ${f.address.permanentOld.palika},
-          ${f.address.permanentOld.wada},
-          ${f.address.permanentOld.tole}
-        </b>
+       <p>स्थायी ठेगाना (ना.प्र.प) अनुसार :  
+      जिल्ला <b>${f.approverAddress.permanentOld.district}</b>, 
+      गा.वि .स/ना.पा <b>${f.approverAddress.permanentOld.palika || "—"}</b>, 
+      वडा नं. <b>${f.approverAddress.permanentOld.wada || "—"}</b>, 
+      टोल <b>${f.approverAddress.permanentOld.tole || "—"}</b>
       </p>
     </td>
 
