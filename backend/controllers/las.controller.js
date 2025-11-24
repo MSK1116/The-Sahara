@@ -14,8 +14,6 @@ export const upsertLAS = async (req, res) => {
       ["form1.phone1", "Phone-1 number is required"],
       ["form1.age", "Age is required"],
       ["form1.applicant_father_name", "Applicant father name is required"],
-      ["form1.approver_spouse_name", "Applicant husband/wife name is required"],
-      ["form1.approver_inlaws_name", "Applicant in-laws name is required"],
       ["form1.applicant_profession", "Applicant profession is required"],
       ["form1.savingsAccountNumber", "Applicant Saving Account No is required"],
       ["form1.company_shareholderNumber", "Applicant Shareholder No is required"],

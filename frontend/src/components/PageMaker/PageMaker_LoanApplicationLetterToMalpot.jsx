@@ -9,6 +9,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
   var p2 = "";
   var p3 = "";
   var p4 = "";
+  var p5 = "";
   // applicant_inlaws_name;
   if (f.applicant_gender == "male") {
     p1 = " को  नाती ";
@@ -18,9 +19,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
     p1 = "को  बुहारी ";
   }
 
-  if (f.applicant_gender == "female" && f.applicant_maritalStatus == "married") {
-    p2 = "पतनी ";
-  } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "single") {
+  if (f.applicant_gender == "female") {
     p2 = "छोरि";
   } else if (f.applicant_gender == "male") {
     p2 = "छोरा ";
@@ -39,6 +38,11 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
   } else {
     p4 = "निज";
   }
+
+  if (f.applicant_gender == "female" && f.applicant_maritalStatus == "married") {
+    p5 = f.applicant_spouse_name + " को पतनी ";
+  }
+
   const table7Row = f.table7 && f.table7.length > 0 ? f.table7 : [{}];
   const ownerNamesString = [...new Set(f.table7.filter((row) => row.govApprovedPrice && row.localApprovedPrice).map((row) => row.ownerName || "Unknown"))].join(" र ");
   const table7HTML2 = `
@@ -136,7 +140,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
       वडा नं. <b>${convert(f.address.permanent.wada || "1", "toNp")}</b>, 
       टोल <b>${f.address.permanent.tole || "—"}</b>
 
-            मा बस्ने <strong>${f.applicant_inlaws_name || "-"} </strong> ${p1} <b>${f.applicant_father_name || "-"}</b> को  ${p2 || ""} वर्ष <b>${f.age ? convert(f.age, "toNp") : ""}</b> को ${p3 || ""} 
+            मा बस्ने <strong>${f.applicant_inlaws_name || "-"} </strong> ${p1} <b>${f.applicant_father_name || "-"}</b> को  ${p2 || ""} ${p5 || ""} वर्ष <b>${f.age ? convert(f.age, "toNp") : ""}</b> को ${p3 || ""} 
          <b>${f.applicant_name || ""}</b> ले तपसिल बमोजिम जग्गा दृस्टी बन्धक लेखत संस्थाको नाउँमा पारित गराई ऋण माग गर्नु भएको हुँदा ${p4 || ""} ${ownerNamesString || ""}  को नाउँमा दर्ता कायम भएको जग्गामा स्वीकृत ऋण रकम रु.<b> ${convert(
     f2.fiftyPercentMargin,
     "toNp"
