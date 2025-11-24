@@ -201,7 +201,7 @@ export function PageMaker_LoanApplicationTamasuk(data) {
             <p>मालपोत कार्यालय ${f3?.malpotOfficeName || ""} बाट धितो रोक्का भएको प्राप्त पत्रको प.सं. ${f4?.malpotOfficeReplyPageNo || ""} मिति ${
     f4?.malpotOfficeReplyDate && new NepaliDate(f4?.malpotOfficeReplyDate || today).format("ddd DD, MMMM YYYY", "np")
   } च.नं. ${f4?.malpotOfficeReplyChalaniNo || ""}</p>
-            <p>ऋणीको नागरिकता नं. ${f.citizenship_number || ""} मिति  ${f?.citizenship_takenDate && new NepaliDate(f?.citizenship_takenDate || today).format("YYYY/MM/DD", "np")} दिने कार्यलय नाम: ${
+            <p>ऋणीको नागरिकता नं. ${f.citizenship_number || ""}, मिति  ${f?.citizenship_takenDate && new NepaliDate(f?.citizenship_takenDate || today).format("YYYY/MM/DD", "np")}, दिने कार्यलय नाम: ${
     f.citizenship_takenOffice || "__________________"
   }</p>
         </div>
