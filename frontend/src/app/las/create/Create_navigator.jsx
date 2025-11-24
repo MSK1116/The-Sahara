@@ -279,10 +279,13 @@ ${htmlContent}
           }
         }
 
-        body {
-          font-family: Poppins, sans-serif;
-          font-size: 13px;
-          counter-reset: page;
+        
+          body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: calc(297mm - 16mm);
+            /* A4 height - @page margins */
         }
 
         table {
