@@ -6,10 +6,62 @@ export const upsertLAS = async (req, res) => {
     const data = req.body;
 
     const get = (obj, path) => path.split(".").reduce((o, k) => (o ? o[k] : undefined), obj);
+    const requiredFields = [
+      ["LMSIN", "LMSIN is required"],
+      ["form1.citizenship_number", "Citizenship number is required"],
+      ["form1.citizenship_takenOffice", "Office of citizenship is required"],
+      ["form1.citizenship_takenDate", "Date of citizenship taken is required"],
+      ["form1.phone1", "Phone-1 number is required"],
+      ["form1.age", "Age is required"],
+      ["form1.applicant_father_name", "Applicant father name is required"],
+      ["form1.approver_spouse_name", "Applicant husband/wife name is required"],
+      ["form1.approver_inlaws_name", "Applicant in-laws name is required"],
+      ["form1.applicant_profession", "Applicant profession is required"],
+      ["form1.savingsAccountNumber", "Applicant Saving Account No is required"],
+      ["form1.company_shareholderNumber", "Applicant Shareholder No is required"],
+      ["form1.personal_education", "Personal Education is required"],
+      ["form1.address.permanentOld.district", "Old permanent district missing"],
+      ["form1.address.permanentOld.palika", "Old permanent palika missing"],
+      ["form1.address.permanentOld.wada", "Old permanent ward missing"],
+      ["form1.address.permanent.district", "Permanent district missing"],
+      ["form1.address.permanent.palika", "Permanent palika missing"],
+      ["form1.address.permanent.wada", "Permanent ward missing"],
+    ];
 
     for (const [path, message] of requiredFields) {
       if (!get(data, path)) {
         return res.status(400).json({ message });
+      }
+    }
+
+    if (data.form1.approver_applicant_name) {
+      if (!data.form1.approver_age) {
+        return res.status(400).json({ message: "Approver Age is required" });
+      }
+      if (!data.form1.approver_citizenship_number) {
+        return res.status(400).json({ message: "Approver Citizenship number is required" });
+      }
+      if (!data.form1.approver_citizenship_takenOffice) {
+        return res.status(400).json({ message: "Approver Office of citizenship is required" });
+      }
+      if (!data.form1.approver_citizenship_takenDate) {
+        return res.status(400).json({ message: "Approver Date of citizenship taken is required" });
+      }
+
+      if (!data.form1.approverAddress.permanentOld.district || !data.form1.approverAddress.permanentOld.palika || !data.form1.approverAddress.permanentOld.wada) {
+        return res.status(400).json({ message: "Please check Approver applicant old permanent address" });
+      }
+      if (!data.form1.approverAddress.permanent.district || !data.form1.approverAddress.permanent.palika || !data.form1.approverAddress.permanent.wada) {
+        return res.status(400).json({ message: "Please check Approver applicant permanent address" });
+      }
+      if (!data.form1.approver_father_name) {
+        return res.status(400).json({ message: "Approver Applicant father name is required" });
+      }
+      if (!data.form1.approver_inlaws_name) {
+        return res.status(400).json({ message: "Approver in-laws name is required" });
+      }
+      if (!data.form1.approver_spouse_name) {
+        return res.status(400).json({ message: "Approver Applicant husband/wife name is required" });
       }
     }
 
