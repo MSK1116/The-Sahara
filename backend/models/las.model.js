@@ -131,7 +131,7 @@ const Form1Schema = new mongoose.Schema({
   rn4: { type: String, default: "" },
 
   branch: { type: String, default: "" },
-  branchType: { type: String, default: "साखा कार्यालय" },
+  branchType: { type: String, default: "सेवा केन्द्र" },
 
   desc1: { type: String, default: "" },
   amount: { type: String, default: "" },
