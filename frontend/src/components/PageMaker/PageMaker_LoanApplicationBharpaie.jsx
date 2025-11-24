@@ -1,4 +1,5 @@
 import NepaliDate from "nepali-date-converter";
+import convert from "nepali-num-to-words";
 
 export function PageMaker_LoanApplicationBharpaie(data) {
   const f = data.form1;
@@ -13,13 +14,13 @@ export function PageMaker_LoanApplicationBharpaie(data) {
             <div>भरपाई दादै स्थायी ठेगाना: -  
       जिल्ला <b>${f.address.permanentOld.district}</b>, 
       गा.वि .स/ना.पा <b>${f.address.permanentOld.palika || "—"}</b>, 
-      वडा नं. <b>${f.address.permanentOld.wada || "—"}</b>, 
+      वडा नं. <b>${convert(f.address.permanentOld.wada || "1", "toNp")}</b>, 
       टोल <b>${f.address.permanentOld.tole || "—"}</b>
       र हाल ठेगाना:
       <b>${f.address.permanent.province}</b>, 
       जिल्ला <b>${f.address.permanent.district}</b>, 
       गा.पा / ना.पा. <b>${f.address.permanent.palika || "—"}</b>, 
-      वडा नं. <b>${f.address.permanent.wada || "—"}</b>, 
+      वडा नं. <b>${convert(f.address.permanent.wada || "1", "toNp")}</b>, 
       टोल <b>${f.address.permanent.tole || "—"}</b>  मा बस्ने म ${f.applicant_name} यस द
                 सहारा
                 लोन सेविंग्स को
@@ -51,13 +52,13 @@ export function PageMaker_LoanApplicationBharpaie(data) {
             <div>भरपाई दादै स्थायी ठेगाना: -  
       जिल्ला <b>${f.address.permanentOld.district}</b>, 
       गा.वि .स/ना.पा <b>${f.address.permanentOld.palika || "—"}</b>, 
-      वडा नं. <b>${f.address.permanentOld.wada || "—"}</b>, 
+      वडा नं. <b>${convert(f.address.permanentOld.wada || "1", "toNp")}</b>, 
       टोल <b>${f.address.permanentOld.tole || "—"}</b>
       र हाल ठेगाना:
       <b>${f.address.permanent.province}</b>, 
       जिल्ला <b>${f.address.permanent.district}</b>, 
       गा.पा / ना.पा. <b>${f.address.permanent.palika || "—"}</b>, 
-      वडा नं. <b>${f.address.permanent.wada || "—"}</b>, 
+      वडा नं. <b>${convert(f.address.permanent.wada || "1", "toNp")}</b>, 
       टोल <b>${f.address.permanent.tole || "—"}</b>  मा बस्ने म ${f.applicant_name} यस द
                 सहारा
                 लोन सेविंग्स को

@@ -127,13 +127,13 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
       स्थायी ठेगाना (ना.प्र.प) अनुसार :  
       जिल्ला <b>${f.address.permanentOld.district}</b>, 
       गा.वि .स/ना.पा <b>${f.address.permanentOld.palika || "—"}</b>, 
-      वडा नं. <b>${f.address.permanentOld.wada || "—"}</b>, 
+      वडा नं. <b>${convert(f.address.permanentOld.wada || "1", "toNp")}</b>, 
       टोल <b>${f.address.permanentOld.tole || "—"}</b>
       र हाल ठेगाना:
       <b>${f.address.permanent.province}</b>, 
       जिल्ला <b>${f.address.permanent.district}</b>, 
       गा.पा / ना.पा. <b>${f.address.permanent.palika || "—"}</b>, 
-      वडा नं. <b>${f.address.permanent.wada || "—"}</b>, 
+      वडा नं. <b>${convert(f.address.permanent.wada || "1", "toNp")}</b>, 
       टोल <b>${f.address.permanent.tole || "—"}</b>
 
             मा बस्ने <strong>${f.applicant_inlaws_name || "-"} </strong> ${p1} <b>${f.applicant_father_name || "-"}</b> को  ${p2 || ""} वर्ष <b>${f.age ? convert(f.age, "toNp") : ""}</b> को ${p3 || ""} 

@@ -128,14 +128,14 @@ export function PageMaker_LoanApplicationManjurinama(data) {
         <p>
             लिखितम् ${f.approver_inlaws_name || ""} को ${p4} ${f.approver_father_name || ""} को ${p5}
             जिल्ला ${f.approverAddress.permanentOld.district || ""} गा.वि.स./न. पा. ${f.approverAddress.permanentOld.palika || ""}
-            वडा नं. ${f.approverAddress.permanentOld.wada || ""} हाल
+            वडा नं. ${convert(f.approverAddress.permanentOld.wada || "1", "toNp")} हाल
             जिल्ला ${f.approverAddress.permanent.district || ""} गा.पा./न. पा. ${f.approverAddress.permanent.palika || ""}
-            वडा नं. ${f.approverAddress.permanent.wada || ""} बस्ने वर्ष ${convert(f.approver_age || "", "toNp")} को म ${f.approver_applicant_name || ""} आगे
+            वडा नं. ${f.approverAddress.permanent.wada || "1"} बस्ने वर्ष ${convert(f.approver_age || "", "toNp")} को म ${f.approver_applicant_name || ""} आगे
             ${f.applicant_inlaws_name || ""} को ${p1} ${f.applicant_father_name || ""} को ${p2} ${p3 || ""}
             जिल्ला ${f.address.permanentOld.district || ""} गा.वि.स./न. पा. ${f.address.permanentOld.palika || ""}
-            वडा नं. ${f.address.permanentOld.wada || ""} हाल
+            वडा नं. ${convert(f.address.permanentOld.wada || "1", "toNp")} हाल
             जिल्ला ${f.address.permanent.district || ""} गा.पा./न. पा. ${f.address.permanent.palika || ""}
-            वडा नं. ${f.address.permanent.wada || ""} बस्ने वर्ष ${convert(f.age || "", "toNp")} को ${p3} ${f.applicant_name || ""} ले ${f.desc1 || "-"} कार्य गर्न
+            वडा नं. ${convert(f.address.permanent.wada || "1", "toNp")} बस्ने वर्ष ${convert(f.age || "", "toNp")} को ${p3} ${f.applicant_name || ""} ले ${f.desc1 || "-"} कार्य गर्न
             भनी यस द सहारा लोन सेविंग्स
             को-ऑपरेटिभ सोसाइटी लिमिटेड, ${f.branchType} ${f.branch} वाट ऋण रकम रु. ${f2.fiftyPercentMargin ? convert(f2.fiftyPercentMargin, "toNp") : ""}/- (अक्षरेपी रु.
             ${f2.fiftyPercentMargin_text || ""} मात्र ) कर्जा लिने भएको र सो कर्जा लिन धितो राखी दिनु होस भनी निज

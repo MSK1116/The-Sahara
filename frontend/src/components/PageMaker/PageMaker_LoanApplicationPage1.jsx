@@ -46,7 +46,7 @@ export function PageMaker_LoanApplicationPage1(data) {
         <td>${index + 1}</td>
         <td>${row.name || ""}</td>
         <td>
-          ${row.address ? `${row.address.province || ""}, ${row.address.district || ""}, ${row.address.palika || ""}, ${row.address.wada || ""}, ${row.address.tole || ""}` : ""}
+          ${row.address ? `${row.address.province || ""}, ${row.address.district || ""}, ${row.address.palika || ""}, ${convert(row.address.wada || "1", "toNp")}, ${row.address.tole || ""}` : ""}
         </td>
         <td>${row.relation || ""}</td>
         <td>${row.age || ""}</td>
@@ -69,7 +69,7 @@ export function PageMaker_LoanApplicationPage1(data) {
     <p>स्थायी ठेगाना (ना.प्र.प) अनुसार :  
       जिल्ला <b>${f.approverAddress.permanentOld.district}</b>, 
       गा.वि .स/ना.पा <b>${f.approverAddress.permanentOld.palika || "—"}</b>, 
-      वडा नं. <b>${f.approverAddress.permanentOld.wada || "—"}</b>, 
+      वडा नं. <b>${convert(f.approverAddress.permanentOld.wada || "1", "toNp")}</b>, 
       टोल <b>${f.approverAddress.permanentOld.tole || "—"}</b>
     </p>
     
@@ -97,7 +97,7 @@ export function PageMaker_LoanApplicationPage1(data) {
       <p>स्थायी ठेगाना (ना.प्र.प) अनुसार :  
       जिल्ला <b>${f.approverAddress.permanentOld.district}</b>, 
       गा.वि .स/ना.पा <b>${f.approverAddress.permanentOld.palika || "—"}</b>, 
-      वडा नं. <b>${f.approverAddress.permanentOld.wada || "—"}</b>, 
+      वडा नं. <b>${convert(f.approverAddress.permanentOld.wada || "1", "toNp")}</b>, 
       टोल <b>${f.approverAddress.permanentOld.tole || "—"}</b>
       </p>
     </td>
@@ -347,13 +347,13 @@ export function PageMaker_LoanApplicationPage1(data) {
       स्थायी ठेगाना (ना.प्र.प) अनुसार :  
       जिल्ला <b>${f.address.permanentOld.district}</b>, 
       गा.वि .स/ना.पा <b>${f.address.permanentOld.palika || "—"}</b>, 
-      वडा नं. <b>${f.address.permanentOld.wada || "—"}</b>, 
+      वडा नं. <b>${convert(f.address.permanentOld.wada || "1", "toNp")}</b>, 
       टोल <b>${f.address.permanentOld.tole || "—"}</b>
       र हाल ठेगाना:
       <b>${f.address.permanent.province}</b>, 
       जिल्ला <b>${f.address.permanent.district}</b>, 
       गा.पा / ना.पा. <b>${f.address.permanent.palika || "—"}</b>, 
-      वडा नं. <b>${f.address.permanent.wada || "—"}</b>, 
+      वडा नं. <b>${convert(f.address.permanent.wada || "1", "toNp")}</b>, 
       टोल <b>${f.address.permanent.tole || "—"}</b>
     </p>
 
@@ -390,7 +390,7 @@ export function PageMaker_LoanApplicationPage1(data) {
     <p class="mt-2">
       <b>ऋणीको व्यक्तिगत विवरण:</b> <br/>
       नाम: <b>${f.applicant_name}</b>, <br/>
-      ठेगाना: <b>${f.address.permanent.province}, ${f.address.permanent.district}, ${f.address.permanent.palika}, ${f.address.permanent.wada}, ${f.address.permanent.tole}</b>
+      ठेगाना: <b>${f.address.permanent.province}, ${f.address.permanent.district}, ${f.address.permanent.palika}, ${convert(f.address.permanent.wada || "1", "toNp")}, ${f.address.permanent.tole}</b>
     </p>
 
     <p>
@@ -432,7 +432,7 @@ export function PageMaker_LoanApplicationPage1(data) {
        <p>स्थायी ठेगाना (ना.प्र.प) अनुसार :  
       जिल्ला <b>${f.approverAddress.permanentOld.district}</b>, 
       गा.वि .स/ना.पा <b>${f.approverAddress.permanentOld.palika || "—"}</b>, 
-      वडा नं. <b>${f.approverAddress.permanentOld.wada || "—"}</b>, 
+      वडा नं. <b>${convert(f.approverAddress.permanentOld.wada || "1", "toNp")}</b>, 
       टोल <b>${f.approverAddress.permanentOld.tole || "—"}</b>
       </p>
     </td>

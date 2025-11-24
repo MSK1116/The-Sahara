@@ -105,12 +105,12 @@ export function PageMaker_LoanApplicationTamasuk(data) {
             मिति ०५१/०२/१३ को आगे ऋणीको नाम
             ${f.applicant_inlaws_name || ""} ${p1} ${f.applicant_father_name || ""} को ${p2} ${p3 || ""}
             जिल्ला ${f.address.permanentOld?.district || ""} गा.पा./न. पा. ${f.address.permanentOld.palika || ""}
-            वडा नं. ${f.address.permanentOld.wada || ""} हाल
+            वडा नं. ${convert(f.address.permanentOld.wada || "-", "toNp")} हाल
             जिल्ला ${f.address.permanent?.district || ""} गा.वि.स./न. पा. ${f.address.permanent.palika || ""}
-            वडा नं. ${f.address.permanent.wada || ""} बस्ने वर्ष ${f.age || ""} को म ${f.applicant_name || ""} ले
+            वडा नं. ${convert(f.address.permanent.wada || "1", "toNp")} बस्ने वर्ष ${f.age || ""} को म ${f.applicant_name || ""} ले
             ${f.desc1 || ""} कार्य गर्नको लागि यस संस्थावाट आजका मितिमा रु. ${f2.fiftyPercentMargin ? convert(f2.fiftyPercentMargin, "toNp") : ""} (अक्षरेपी रु.
             ${f2.fiftyPercentMargin_text || ""} मात्र ) ऋण लिएको ठिक साँची हो | यो ऋणको वार्षिक ${f4.annualInterestRate || ""} % (अक्षरेपी रु.
-            ${convert(f4.annualInterestRate, "toNpWord") || ""} 
+            ${convert(f4.annualInterestRate, "toNpWord") || ""}
             प्रतिशत) का दरसे ब्याज लगाई सो लागने ब्याज र सम्पूर्ण साँवा
             तपसिलको ऋण भुक्तानी तालिका अनुसार भुक्तानी समेत तपसिल बमोजिमका शतहरु पुरा-पुरा पालना गरी ${new NepaliDate(oneYearLater).format("YYYY", "np")} साल ${new NepaliDate(oneYearLater).format("MMMM", "np")}
             महिना ${new NepaliDate(oneYearLater).format("DD", "np")} गते भित्र

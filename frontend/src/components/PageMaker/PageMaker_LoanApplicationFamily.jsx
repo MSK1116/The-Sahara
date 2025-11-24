@@ -37,10 +37,10 @@ export function PageMaker_LoanApplicationFamily(data) {
     `${p2}: ${f.applicant_father_name || ""}`,
     `साबिक ठेगाना : जिल्ला ${f.address.permanentOld?.district || ""} 
    गा.वि.स./न. पा. ${f.address.permanentOld?.palika || ""} 
-   वडा नं. ${f.address.permanentOld?.wada || ""}`,
+   वडा नं. ${convert(f.address.permanentOld?.wada || "1", "toNp")}`,
     `जिल्ला ${f.address.permanent?.district || ""} 
    गा.वि.स./न. पा. ${f.address.permanent?.palika || ""} 
-   वडा नं. ${f.address.permanent?.wada || ""}`,
+   वडा नं. ${convert(f.address.permanent?.wada || "1", "toNp")}`,
   ];
 
   const landOwnerDetails2 = [
@@ -49,10 +49,10 @@ export function PageMaker_LoanApplicationFamily(data) {
     `${p2}:${f.approver_father_name || ""}`,
     `साबिक ठेगाना : जिल्ला ${f.address.permanentOld?.district || ""} 
    गा.वि.स./न. पा. ${f.address.permanentOld?.palika || ""} 
-   वडा नं. ${f.address.permanentOld?.wada || ""}`,
+   वडा नं. ${convert(f.address.permanentOld?.wada || "1", "toNp")}`,
     `जिल्ला ${f.address.permanent?.district || ""} 
    गा.वि.स./न. पा. ${f.address.permanent?.palika || ""} 
-   वडा नं. ${f.address.permanent?.wada || ""}`,
+   वडा नं. ${convert(f.address.permanent?.wada || "1", "toNp")}`,
   ];
 
   const table7Row = f.table7 && f.table7.length > 0 ? f.table7 : [{}];
@@ -185,9 +185,9 @@ ${fixedRows2
         <h4 class="indent-5 text-xs">
             त्यस संस्था बाट श्री <b>${f.applicant_inlaws_name || ""}</b> को ${p3} श्री ${f.applicant_father_name || ""} को  ${p4} जिल्ला
             ${f.address.permanentOld?.district || ""} गा.वि.स./न. पा. ${f.address.permanentOld.palika || ""} वडा नं.
-            ${f.address.permanentOld?.wada || ""} हाल जिल्ला
+            ${convert(f.address.permanentOld?.wada || "-", "toNp")} हाल जिल्ला
             ${f.address.permanent.district || ""} गा.पा./न. पा. ${f.address.permanent.palika || ""} वडा नं.
-            ${f.address.permanent.wada || ""} स्थापी ठेगाना भई बसौबास ग्नें वर्ष ${convert(f.age || "", "toNp")} को श्री ${f.applicant_name || ""} को नाउँमा ${f.applicantType || "-"} कर्जां अन्तर्गत जम्मा
+            ${convert(f.address.permanent.wada || "1", "toNp")} स्थापी ठेगाना भई बसौबास ग्नें वर्ष ${convert(f.age || "", "toNp")} को श्री ${f.applicant_name || ""} को नाउँमा ${f.applicantType || "-"} कर्जां अन्तर्गत जम्मा
             रु. ${f2.fiftyPercentMargin ? convert(f2.fiftyPercentMargin, "toNp") : ""} (अक्षरेपी रु.
             ${f2.fiftyPercentMargin_text || ""} मात्र ) ऋण लिनको लागि सुरक्षण बापत धितो स्वरूप श्री ${ownerNamesString || ""} को नाउँमा जग्गाधनी प्रमाण पूर्जा भई
             हकभोगमा रहेकी तपसिलमा उल्लेख भए मोजिमको जायजेभा सुरक्षण वापत संस्थालाई धितो लेखि दिएमा धितो जमानी दातार्सँग
