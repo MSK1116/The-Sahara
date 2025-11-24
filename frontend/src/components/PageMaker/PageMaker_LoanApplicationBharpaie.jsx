@@ -48,7 +48,7 @@ export function PageMaker_LoanApplicationBharpaie(data) {
     <p class="w-full my-10 textoverflow-hidden text-nowrap whitespace-nowrap">
         .......................................................................................................................................................................................................................................................................................................................................
     </p>
-    <div class=" flex flex-col space-y-5">
+    <div class=" flex mb-30 flex-col space-y-5">
         <div>
             <h1 class="text-xl mx-auto w-fit my-4 font-bold text-center border border-black px-3 py-1">भरपाई</h1>
             <div class="text-justify text-sm">भरपाई दादै स्थायी ठेगाना: -

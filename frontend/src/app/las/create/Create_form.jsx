@@ -44,7 +44,7 @@ const Create_form = ({ onDataChange, initialData }) => {
   useEffect(() => {
     if (initialData) {
       setLocalData(initialData);
-      setApplicantType(initialData.applicantType || "व्यक्ति");
+      setApplicantType(initialData.applicantType || "सहारा व्यक्तिगत कर्जा");
       setPaymentFrequency(initialData.paymentFrequency || "मासिक");
       setIsApprovalGiven(!!initialData.approver_applicant_name);
       setLocalErrors((prev) => ({ ...prev, personal_education: !initialData.personal_education }));
@@ -831,10 +831,10 @@ const Create_form = ({ onDataChange, initialData }) => {
                   name="citizenship_takenDate"></NepaliDateInput>
               </div>
               <div className=" ">
-                <Label htmlFor="citizenship_takenOffice">नागरिकता लिने कार्यालय </Label>
+                <Label htmlFor="approver_citizenship_takenOffice">नागरिकता लिने कार्यालय </Label>
                 <Input
-                  id="citizenship_takenOffice"
-                  name="citizenship_takenOffice"
+                  id="approver_citizenship_takenOffice"
+                  name="approver_citizenship_takenOffice"
                   className="w-full mt-2"
                   value={localData.approver_citizenship_takenOffice || ""}
                   onKeyDown={handleEnterFocus}

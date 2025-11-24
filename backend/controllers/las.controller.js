@@ -4,6 +4,7 @@ import { customAlphabet } from "nanoid";
 export const upsertLAS = async (req, res) => {
   try {
     const data = req.body;
+
     if (!data.LMSIN) {
       return res.status(400).json({ message: "LMSIN is required." });
     }
