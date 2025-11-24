@@ -161,10 +161,10 @@ export function PageMaker_LoanApplicationManjurinama(data) {
         <div class="my-2">
             <p class="font-semibold my-3 underline">संस्थाको प्रयोजनको लागि :- </p>
             <p>मालपोत कार्यालय ${f3?.malpotOfficeName || ""} बाट धितो रोक्का भएको प्राप्त पत्रको प.सं.
-                ${f4?.malpotOfficeReplyPageNo || ""} च.नं. ${f4?.malpotOfficeReplyChalaniNo || ""}</p>
+                ${f4?.malpotOfficeReplyPageNo || ""} च.नं. ${f4?.malpotOfficeReplyChalaniNo || ""} मिति ${new NepaliDate(f4?.malpotOfficeReplyDate || today).format("YYYY/MM/DD", "np")}</p>
             <p class="mt-1.5">मन्जुरीनामा दिनेको नागरिकता नं. ${f.approver_citizenship_number || ""} मिति ${
-    f?.approver_citizenship_takenDate && new NepaliDate(f?.approver_citizenship_takenDate || today).format("ddd DD, MMMM YYYY", "np")
-  } दिने कार्यलय नाम:
+    f?.approver_citizenship_takenDate && new NepaliDate(f?.approver_citizenship_takenDate || today).format("YYYY/MM/DD", "np")
+  } गते दिने कार्यलय नाम:
                 ${f.approver_citizenship_takenOffice || ""}</p>
         </div>
     </div>
