@@ -144,13 +144,13 @@ export function PageMaker_LoanApplicationFrom2(data) {
             <p>पद: <b>${f2.evaluatorPost}</b></p>
         </div>
         <div>
-            <p>स्थलमा गई मूल्यांकन गरेको मितिः <b>${new NepaliDate(f2.evaluationDate || new Date()).format("ddd DD, MMMM YYYY", "np")}</b></p>
+            <p>स्थलमा गई मूल्यांकन गरेको मितिः <b>${new NepaliDate(f2.evaluationDate || new Date()).format("YYYY/MM/DD", "np")}</b>गते</p>
             <p>ऋण निवेदकको नामः <b>${f.applicant_name || ""}</b></p>
             <p>
       स्थायी ठेगाना (ना.प्र.प) अनुसार :  
       जिल्ला <b>${f.address.permanentOld.district}</b>, 
       गा.वि .स/ना.पा <b>${f.address.permanentOld.palika || "—"}</b>, 
-      वडा नं. <b>${convert(f.address.permanentOld.wada || "1", "toNp")}</b>, 
+      वडा नं. <b>${convert(f.address.permanentOld.wada || "1", "toNp")}</b>,
       टोल <b>${f.address.permanentOld.tole || "—"}</b>
       र हाल ठेगाना:
       <b>${f.address.permanent.province}</b>, 

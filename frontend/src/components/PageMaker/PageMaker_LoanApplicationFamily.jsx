@@ -146,10 +146,10 @@ ${fixedRows2
                       .map((row, index) => {
                         return `
                     <tr>
-                        <td class="w-9">${index + 1}</td>
+                        <td class="w-9">${convert(index + 1, "toNp")}</td>
                         <td>${row?.name || ""}
                             <br>
-                            ${row?.citizenship_number || ""}
+                           ना.प्र.प.न:${row?.citizenship_number || ""}
                         </td>
                         <td>${row?.relation}</td>
                         <td></td>
@@ -179,7 +179,7 @@ ${fixedRows2
         </div>
     </div>
     <div class="px-3 text-justify">
-        <h1 class="my-3">श्री द सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड <br />मुख्य शाखा मलंगवा, सलाही।</h1>
+        <h1 class="my-3">श्री द सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड <br />${f.branchType || "_______"}, ${f.branch || "______"}</h1>
         <h2 class=" text-center">विषयः व्यक्तिगत जमानीको सहमती बारे ।</h2>
         <h3>महोदय,</h3>
         <h4 class="indent-5 text-xs">
@@ -187,10 +187,10 @@ ${fixedRows2
             ${f.address.permanentOld?.district || ""} गा.वि.स./न. पा. ${f.address.permanentOld.palika || ""} वडा नं.
             ${convert(f.address.permanentOld?.wada || "-", "toNp")} हाल जिल्ला
             ${f.address.permanent.district || ""} गा.पा./न. पा. ${f.address.permanent.palika || ""} वडा नं.
-            ${convert(f.address.permanent.wada || "1", "toNp")} स्थापी ठेगाना भई बसौबास ग्नें वर्ष ${convert(f.age || "", "toNp")} को श्री ${f.applicant_name || ""} को नाउँमा ${f.applicantType || "-"} कर्जां अन्तर्गत जम्मा
+            ${convert(f.address.permanent.wada || "1", "toNp")} स्थायी ठेगाना भई बसौबास गर्ने वर्ष ${convert(f.age || "", "toNp")} को श्री ${f.applicant_name || ""} को नाउँमा ${f.applicantType || "-"} अन्तर्गत जम्मा
             रु. ${f2.fiftyPercentMargin ? convert(f2.fiftyPercentMargin, "toNp") : ""} (अक्षरेपी रु.
             ${f2.fiftyPercentMargin_text || ""} मात्र ) ऋण लिनको लागि सुरक्षण बापत धितो स्वरूप श्री ${ownerNamesString || ""} को नाउँमा जग्गाधनी प्रमाण पूर्जा भई
-            हकभोगमा रहेकी तपसिलमा उल्लेख भए मोजिमको जायजेभा सुरक्षण वापत संस्थालाई धितो लेखि दिएमा धितो जमानी दातार्सँग
+            हकभोगमा रहेको तपसिलमा उल्लेख भए मोजिमको जायजेथा सुरक्षण वापत संस्थालाई धितो लेखि दिएमा धितो जमानी दातार्सँग
             तल विवरणमा भरिए वमोजिमका हामी नाता सम्बन्धका व्यक्तिहरुको पूर्ण रुपमा सहमती छ। उपरोक्त फर्म/संस्था/व्यक्ति
             ले उल्लेखित कर्ज़ा र त्यसमा
             लागने ब्याज तथा जरिवाना समेत नतिरे/ बुझाएमा सहकारी ऐन तथा संस्थाको नियमावली अनुसार तपसिलमा उल्लेखित धितोदाता

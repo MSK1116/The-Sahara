@@ -140,10 +140,10 @@ export function PageMaker_LoanApplicationManjurinama(data) {
             को-ऑपरेटिभ सोसाइटी लिमिटेड, ${f.branchType} ${f.branch} वाट ऋण रकम रु. ${f2.fiftyPercentMargin ? convert(f2.fiftyPercentMargin, "toNp") : ""}/- (अक्षरेपी रु.
             ${f2.fiftyPercentMargin_text || ""} मात्र ) कर्जा लिने भएको र सो कर्जा लिन धितो राखी दिनु होस भनी निज
             ${f.applicant_name || ""} ले अन्नु भएको ₹ उपरोक्त बमोजिम धितो राखी दिन मन्जुर छ कि छैन भनी द
-            सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड, ${f.branchType} ${f.branch} सोधनी हुँदा सोधनी गर्दा
-            मेरो चित्त बुभ्यो तमसुकमा लेखिए अनुसारको लिनु दिन हुने वापत तपसिलमा लेखिएको अरु कसैलाई कुनै
-            व्यहोराको लिखित नगरी दिएको मेरो हक भोगको जग्गा जाय जेबा धितों राखी ${f.applicant_name || ""} लाई
-            कर्जा मा कारोवार गर्न गराउन मन्जुर छ निज ऋणीले यस द सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी
+            सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड, ${f.branchType} ${f.branch} मा सोधनी हुँदा सोधनी गर्दा
+            मेरो चित्त बुभ्यो तमसुकमा लेखिए अनुसारको लिनु दिनु हुने वापत तपसिलमा लेखिएको अरु कसैलाई कुनै
+            व्यहोराको लिखित नगरी दिएको मेरो हक भोगको जग्गा जाय जेथा धितों राखी ${f.applicant_name || ""} लाई
+            कर्जा कारोवार गर्न गराउन मन्जुर छ निज ऋणीले यस द सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी
             लिमिटेड ${f.branchType || ""} ${f.branch || ""} गरेको तमसुक अनुसार समयमा ऋण नतीरेमा मैले मन्जुरीनामा गरी
             लेखि दिएको जग्गा जाय जेथा लिलाम विक्री गरी असुल उपर गरेमा मेरो मन्जुरी छ । पछि कुनै किसिमको
             उजुर बाजुर गर्ने छैन, गरे यसै कागजले बदर गरी दिनु भनी म आफ्नो ख़ुशी राजीले यस द सहारा लोन
@@ -161,10 +161,10 @@ export function PageMaker_LoanApplicationManjurinama(data) {
         <div class="my-2">
             <p class="font-semibold my-3 underline">संस्थाको प्रयोजनको लागि :- </p>
             <p>मालपोत कार्यालय ${f3?.malpotOfficeName || ""} बाट धितो रोक्का भएको प्राप्त पत्रको प.सं.
-                ${f4?.malpotOfficeReplyPageNo || ""} च.नं. ${f4?.malpotOfficeReplyChalaniNo || ""} मिति ${new NepaliDate(f4?.malpotOfficeReplyDate || today).format("YYYY/MM/DD", "np")}</p>
+                ${convert(f4?.malpotOfficeReplyPageNo || "1", "toNp")} च.नं. ${convert(f4?.malpotOfficeReplyChalaniNo || "1", "toNp")} मिति ${new NepaliDate(f4?.malpotOfficeReplyDate || today).format("YYYY/MM/DD", "np")}</p>
             <p class="mt-1.5">मन्जुरीनामा दिनेको नागरिकता नं. ${f.approver_citizenship_number || ""} मिति ${
     f?.approver_citizenship_takenDate && new NepaliDate(f?.approver_citizenship_takenDate || today).format("YYYY/MM/DD", "np")
-  } गते दिने कार्यलय नाम:
+  } गते दिने कार्यालयको नाम:
                 ${f.approver_citizenship_takenOffice || ""}</p>
         </div>
     </div>
