@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
-
+import convert from "number-to-nepali-words";
 import { IoAddCircleSharp } from "react-icons/io5";
 import { FaFolderClosed } from "react-icons/fa6";
 import { IoSearchSharp } from "react-icons/io5";
@@ -9,6 +9,7 @@ import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/comp
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { Input } from "@/components/ui/input";
 
 const Home_page = ({ sessionAuth0 }) => {
   const router = useRouter();
@@ -47,21 +48,11 @@ const Home_page = ({ sessionAuth0 }) => {
             <IoSearchSharp className="fill-blue-700 size-15" />
             <p className="mt-3 text-center font-semibold">Quick Search</p>
             <p className="text-xs text-gray-500 mb-3 text-center">Enter the 6-digit LMSIN.</p>
-            <InputOTP id="lmsin-input" maxLength={6} value={lmsin || ""} onChange={(value) => setLmsin(value)}>
-              <InputOTPGroup className={"bg-gray-50"}>
-                <InputOTPSlot index={0} />
-                <InputOTPSlot index={1} />
-                <InputOTPSlot index={2} />
-              </InputOTPGroup>
-              <InputOTPSeparator>
-                <span>-</span>
-              </InputOTPSeparator>
-              <InputOTPGroup className={"bg-gray-50"}>
-                <InputOTPSlot index={3} />
-                <InputOTPSlot index={4} />
-                <InputOTPSlot index={5} />
-              </InputOTPGroup>
-            </InputOTP>
+            <Input
+              onChange={(e) => {
+                const inEn = convert(e.target.value || "1", "toEn").trim();
+                setLmsin(inEn);
+              }}></Input>
             <Button variant={"outline"} type="button" onClick={handleSearch} className="w-full mt-4">
               Search
             </Button>

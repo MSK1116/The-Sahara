@@ -289,7 +289,6 @@ ${htmlContent}
             /* A4 height - @page margins */
         }
 
-
         /* Fallback in case browser does not support @bottom-center */
         @media print {
           .print-footer {
