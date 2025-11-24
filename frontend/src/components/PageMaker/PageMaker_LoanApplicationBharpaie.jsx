@@ -1,5 +1,5 @@
 import NepaliDate from "nepali-date-converter";
-import convert from "nepali-num-to-words";
+import convert from "number-to-nepali-words";
 
 export function PageMaker_LoanApplicationBharpaie(data) {
   const f = data.form1;
