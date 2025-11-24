@@ -126,14 +126,14 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
           <Label className={localErrors?.permanent_tole && "text-red-600"}>टोल / बाटो</Label>
           <Input
             className="w-full mt-2"
-            value={permanent.tole || ""}
+            value={permanentOld.tole || ""}
             onChange={(e) => {
               const val = e.target.value;
-              setPermanent({ ...permanent, tole: e.target.value });
+              setPermanentOld({ ...permanentOld, tole: e.target.value });
               if (!val || val.length < 4 || val.length > 50) {
-                setLocalErrors((prev) => ({ ...prev, permanent_tole: true }));
+                setLocalErrors((prev) => ({ ...prev, permanentOld_tole: true }));
               } else {
-                setLocalErrors((prev) => ({ ...prev, permanent_tole: false }));
+                setLocalErrors((prev) => ({ ...prev, permanentOld_tole: false }));
               }
             }}
             onKeyDown={handleEnterFocus}
