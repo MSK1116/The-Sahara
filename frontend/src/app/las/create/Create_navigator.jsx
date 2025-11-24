@@ -270,6 +270,7 @@ ${htmlContent}
         @page {
           size: A4;
           margin: 15mm;
+          
 
           /* Page Number at Bottom */
           @bottom-center {
@@ -279,24 +280,15 @@ ${htmlContent}
           }
         }
 
-        
-          body {
+        body {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             min-height: calc(297mm - 16mm);
+            height: 100%;
             /* A4 height - @page margins */
         }
 
-        table {
-          border-collapse: collapse;
-          width: 100%;
-        }
-
-        td, th {
-          border: 1px solid #000;
-          padding: 6px;
-        }
 
         /* Fallback in case browser does not support @bottom-center */
         @media print {
@@ -328,7 +320,6 @@ ${htmlContent}
 
     printWindow.document.close();
   };
-
   const handlePrint5 = async () => {
     const updated = await onSave();
     if (!updated) return toast.error("Failed to update before printing.");
