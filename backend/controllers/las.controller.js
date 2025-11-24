@@ -5,28 +5,14 @@ export const upsertLAS = async (req, res) => {
   try {
     const data = req.body;
 
-    if (!data.LMSIN) {
-      return res.status(400).json({ message: "LMSIN is required." });
+    const get = (obj, path) => path.split(".").reduce((o, k) => (o ? o[k] : undefined), obj);
+
+    for (const [path, message] of requiredFields) {
+      if (!get(data, path)) {
+        return res.status(400).json({ message });
+      }
     }
 
-    if (!data.form1.citizenship_number) {
-      return res.status(400).json({ message: "citizenship_number is required." });
-    }
-
-    if (!data.form1.phone1) {
-      return res.status(400).json({ message: "Phone-1 number is required." });
-    }
-
-    if (!data.form1.age) {
-      return res.status(400).json({ message: "Age is required." });
-    }
-    if (!data.form1.applicant_father_name) {
-      return res.status(400).json({ message: "Applicant father name is required" });
-    }
-
-    if (!data.form1.applicant_profession) {
-      return res.status(400).json({ message: "Applicant profession is required" });
-    }
     // Find existing record by citizenship_number
     const existingLA = await lasModel.findOne({ LMSIN: data.LMSIN });
 

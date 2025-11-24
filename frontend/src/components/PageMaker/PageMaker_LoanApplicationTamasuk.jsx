@@ -9,7 +9,6 @@ export function PageMaker_LoanApplicationTamasuk(data) {
 
   var p1 = "";
   var p2 = "";
-  var p3 = "";
 
   // applicant_inlaws_name;
   if (f.applicant_gender == "male") {
@@ -25,10 +24,6 @@ export function PageMaker_LoanApplicationTamasuk(data) {
     p2 = "छोरि";
   } else if (f.applicant_gender == "male") {
     p2 = "छोरा ";
-  }
-
-  if (f.applicant_gender == "female") {
-    p3 = f.applicant_spouse_name + "को श्रीमती " || "";
   }
 
   const today = new Date();
@@ -103,7 +98,7 @@ export function PageMaker_LoanApplicationTamasuk(data) {
             लिखितम् धनिको नाम द सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड
             सर्लाही, मलंगवा र.नं. ०१/०५०/०५१
             मिति ०५१/०२/१३ को आगे ऋणीको नाम
-            ${f.applicant_inlaws_name || ""} ${p1} ${f.applicant_father_name || ""} को ${p2} ${p3 || ""}
+            ${f.applicant_inlaws_name || ""} ${p1} ${f.applicant_father_name || ""} को ${p2}
             जिल्ला ${f.address.permanentOld?.district || ""} गा.पा./न. पा. ${f.address.permanentOld.palika || ""}
             वडा नं. ${convert(f.address.permanentOld.wada || "-", "toNp")} हाल
             जिल्ला ${f.address.permanent?.district || ""} गा.वि.स./न. पा. ${f.address.permanent.palika || ""}
