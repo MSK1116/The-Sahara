@@ -61,7 +61,7 @@ export function PageMaker_LoanApplicationTamasuk(data) {
             <td>${row.ownerName || ""}</td>
             <td>${row?.district || ""}</td>
             <td>${row.palika || ""}</td>
-            <td >${row.wardNo || ""}</td>
+            <td >${convert(row.wardNo || "", "toNp")}</td>
             <td>${row.plotNo || ""}</td>
             <td class="text-nowrap whitespace-nowrap">${row.area || ""}</td>
           </tr>
@@ -78,18 +78,19 @@ export function PageMaker_LoanApplicationTamasuk(data) {
     <div class="flex w-[10%] h-full">
         <div class=" pr-4 text-center b text-xs ">
             <p>
-                संस्थाको तर्फबाट कागज तयार गर्नेको नाम :
-                ${f4?.maker || "___________"}<br>
-                संस्थाको तर्फबाट कागज जाँच गर्नेको दस्तखत : ___________
+                संस्थाको तर्फबाट कागज जाँच गर्नेको दस्तखत : ___________ <br>
+                संस्थाको तर्फबाट कागज तयार गर्नेको नाम र दस्तखत:
+                ${f4?.maker || "___________"}
+                
             </p>
             <p class="ml-2">
               जिल्ला ${f4?.witness2?.district || "___________"} न.पा./गा.वि.स
-                ${f4?.witness2?.palika || "___________"} वडा नं. ${f4?.witness2?.ward || "___________"}मा बस्ने
+                ${f4?.witness2?.palika || "___________"} वडा नं. ${f4?.witness2?.ward || "___________"}मा बस्ने वर्ष _____ को 
                 ${f4?.witness2?.name}
             </p>
             <p>
               जिल्ला   ${f4?.witness1?.district || "___________"} न.पा./गा.वि.स
-                ${f4?.witness1?.palika || "___________"} वडा नं. ${f4?.witness1?.ward || "___________"}मा बस्ने
+                ${f4?.witness1?.palika || "___________"} वडा नं. ${f4?.witness1?.ward || "___________"}मा बस्ने वर्ष _____ को
                 ${f4?.witness1?.name}
             </p>
             <p class=" font-semibold">साक्षी :</p>
@@ -102,26 +103,25 @@ export function PageMaker_LoanApplicationTamasuk(data) {
             लिखितम् धनिको नाम द सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड
             सर्लाही, मलंगवा र.नं. ०१/०५०/०५१
             मिति ०५१/०२/१३ को आगे ऋणीको नाम
-            ${f.applicant_inlaws_name || ""} को ${p1} ${f.applicant_father_name || ""} को ${p2} ${p3 || ""}
-            जिल्ला ${f.address.permanentOld?.district || ""} गा.वि.स./न. पा. ${f.address.permanentOld.palika || ""}
+            ${f.applicant_inlaws_name || ""} ${p1} ${f.applicant_father_name || ""} को ${p2} ${p3 || ""}
+            जिल्ला ${f.address.permanentOld?.district || ""} गा.पा./न. पा. ${f.address.permanentOld.palika || ""}
             वडा नं. ${f.address.permanentOld.wada || ""} हाल
             जिल्ला ${f.address.permanent?.district || ""} गा.वि.स./न. पा. ${f.address.permanent.palika || ""}
             वडा नं. ${f.address.permanent.wada || ""} बस्ने वर्ष ${f.age || ""} को म ${f.applicant_name || ""} ले
-            ${f.desc1 || ""} कार्य गर्नको लागि बस संस्थावाट आजका मितिमा रु. ${f2.fiftyPercentMargin ? convert(f2.fiftyPercentMargin, "toNp") : ""} (अक्षरेपी रु.
+            ${f.desc1 || ""} कार्य गर्नको लागि यस संस्थावाट आजका मितिमा रु. ${f2.fiftyPercentMargin ? convert(f2.fiftyPercentMargin, "toNp") : ""} (अक्षरेपी रु.
             ${f2.fiftyPercentMargin_text || ""} मात्र ) ऋण लिएको ठिक साँची हो | यो ऋणको वार्षिक ${f4.annualInterestRate || ""} % (अक्षरेपी रु.
-            ${convert(f4.annualInterestRate, "toNp") || ""} 
+            ${convert(f4.annualInterestRate, "toNpWord") || ""} 
             प्रतिशत) का दरसे ब्याज लगाई सो लागने ब्याज र सम्पूर्ण साँवा
             तपसिलको ऋण भुक्तानी तालिका अनुसार भुक्तानी समेत तपसिल बमोजिमका शतहरु पुरा-पुरा पालना गरी ${new NepaliDate(oneYearLater).format("YYYY", "np")} साल ${new NepaliDate(oneYearLater).format("MMMM", "np")}
-            महिना ${new NepaliDate(oneYearLater).format("DD", "np")} गते मसान्त भित्र
-            तपसिलको ऋण भुक्तानी तालिका अनुसार तोकिएको समय मित्र नगद यस संस्थालाई ब्राउने छु। यस ऋण बापत
+            महिना ${new NepaliDate(oneYearLater).format("DD", "np")} गते भित्र
+            तपसिलको ऋण भुक्तानी तालिका अनुसार तोकिएको समय मित्र नगद यस संस्थालाई बुझाउने छु। यस ऋण बापत
             अरु कसैलाई कनै व्यवहारको लिखित गरि नदिएको खास लिखित गरि सहिछाप गर्नेको हकभोगको तपसिल बमोजिमको धितो यस
-            संस्थालाई लेखि दिएको छु। मेरो आफने नाउँमा वर्ता रहेको जति दृष्टी र अस्को मञ्जुरीवाट धितो रहेको जति जमानतको
+            संस्थालाई लेखि दिएको छु। मेरो आफ्नै नाउँमा वर्ता रहेको जति दृष्टी र अरुको मञ्जुरीवाट धितो रहेको जति जमानतको
             रुपमा मानिने छ। तपसिलमा लेखिए वमोजिमको शर्तं पालना नभएमा वा तोकिएको म्याद भिन्न साँबा व्याज र किस्ताकी रकम
             बुझाउन नसकेमा मेरो जायजेथा रोकी वा
             नरोंकी वा मैले राखेको धितो र अरुको हकको जमानी रुपमा रहेको धिती समेत डॉँक लिलाम बिक्री गरी यसवाट र त्यसवाट
             नपुगे रोक्का रहून नसकेको समेत अन्य चल अचल जायजेयाबाट बाँकी साँवा, व्याज असुल उपर गरी लिन होला भनि मेरो
-            मनोमान ख़ुशी राजीले ${f.branch || ""} स्थित द साहरा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड , मलंगवा,
-            सर्लाही
+            मनोमान ख़ुशी राजीले ${f.branch || ""} स्थित द साहरा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड, ${f.branch || ""}
             लाई बुझाई दिए । साक्षी किनाराको सदर । <br>ईती सम्वत ${new NepaliDate(today).format("YYYY", "np")} साल ${new NepaliDate(today).format("MMMM", "np")} महिना ${new NepaliDate(today).format("DD", "np")} गते रोज ${new NepaliDate(today).format(
     "ddd",
     "np"
@@ -145,7 +145,7 @@ export function PageMaker_LoanApplicationTamasuk(data) {
             कुनै व्यवस्थाबाट पनि ऋण रकम असुल उपर गरी लिएमा पनि मेरो मंजुर हुनेछ।</span>
         <br>
         <span>३.
-            यस ऋण सम्बन्धि उल्लेखित शर्तको अतिरिक्त इस संस्थाको ऐन नियम अनुसार र पछि बनाईने ऐन नियम कार्यविधि र
+            यस ऋण सम्बन्धि उल्लेखित शर्तको अतिरिक्त यस संस्थाको ऐन नियम अनुसार र पछि बनाईने ऐन नियम कार्यविधि र
             प्रशासकिय
 
             आदेशहरु सबै मलाई मान्य हुनेछ त्यस सम्बन्धि संशोधित नियम र व्याजदर समेत मलाई लागु हुनेछ र त्यसको पालना
@@ -178,9 +178,9 @@ export function PageMaker_LoanApplicationTamasuk(data) {
                             ${f2.fiftyPercentMargin_text || ""} मात्र )
                         </td>
                         <td class="border-r">
-                            ऋण रकमको ${f4.annualInterestRate || ""} % ले हुने ब्याज हरेक महिना तोकीएको मितिमा बुझाउन अनिवार्य हुनेछ। तोकेको थप
-                            समयमा व्याज नबुझाएमा थप ${f4.addPer1 || ""}}% का दरले व्याज लाग्नेछ साथै तोकेको समयमा किस्ता
-                            तथा साँवा नबुझाएमा थप ${f4.addPer2 || ""}}% का दरले व्याज लाग्नेछ ।
+                            ऋण रकमको ${convert(f4.annualInterestRate || "", "toNp")} % ले हुने ब्याज हरेक महिना तोकीएको मितिमा बुझाउन अनिवार्य हुनेछ। तोकेको
+                            समयमा व्याज नबुझाएमा थप ${convert(f4.addPer1 || "", "toNp")}% का दरले व्याज लाग्नेछ साथै तोकेको समयमा किस्ता
+                            तथा साँवा नबुझाएमा थप ${convert(f4.addPer2 || "", "toNp")}% का दरले व्याज लाग्नेछ ।
                             तोकेको दिनमा व्याज नबुझाएमा मेरो बचत खाता
                             नं. ${f.savingsAccountNumber || ""}
                             बाट कट्टा गरि लिएमा मलाई मंजुर छ।
@@ -197,15 +197,13 @@ export function PageMaker_LoanApplicationTamasuk(data) {
         </div>
         <div class="my-2">
             <p class="font-semibold my-2 underline">संस्थाको प्रयोजनको लागि :- </p>
-            <p>धितो रोक्काको लागि संस्थाबाट पत्र संख्या ${f3?.malpotLetterNo || ""} च.न ${f3?.malpotLetterChalaniNo || ""} मिति ${new NepaliDate(f3?.malpotLetterDate || today).format("YYYY/MM/DD", "np")} मिति</p>
+            <p>धितो रोक्काको लागि संस्थाबाट पत्र संख्या ${f3?.malpotLetterNo || ""} च.न ${f3?.malpotLetterChalaniNo || ""} मिति ${new NepaliDate(f3?.malpotLetterDate || today).format("YYYY/MM/DD", "np")}</p>
             <p>मालपोत कार्यालय ${f3?.malpotOfficeName || ""} बाट धितो रोक्का भएको प्राप्त पत्रको प.सं. ${f4?.malpotOfficeReplyPageNo || ""} मिति ${
     f4?.malpotOfficeReplyDate && new NepaliDate(f4?.malpotOfficeReplyDate || today).format("ddd DD, MMMM YYYY", "np")
   } च.नं. ${f4?.malpotOfficeReplyChalaniNo || ""}</p>
-            <p>ऋणीको नागरिकता नं. ${f.citizenship_number || ""} मिति  ${f?.citizenship_takenDate && new NepaliDate(f?.citizenship_takenDate || today).format("ddd DD, MMMM YYYY", "np")} दिने कार्यलय नाम: ${f.citizenship_takenOffice || ""}</p>
+            <p>ऋणीको नागरिकता नं. ${f.citizenship_number || ""} मिति  ${f?.citizenship_takenDate && new NepaliDate(f?.citizenship_takenDate || today).format("YYYY/MM/DD", "np")} दिने कार्यलय नाम: ${f.citizenship_takenOffice || ""}</p>
         </div>
     </div>
-
-  
     <script>
       window.onload = () => { window.print(); };
     </script>

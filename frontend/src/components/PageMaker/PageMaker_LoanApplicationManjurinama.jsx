@@ -107,15 +107,16 @@ export function PageMaker_LoanApplicationManjurinama(data) {
     <div class="flex w-[10%] h-full">
         <div class=" pr-4 mt-auto mb-20 text-center b text-xs ">
             <p>
-                संस्थाको तर्फबाट कागज तयार गर्नेको नाम : _______________<br>
-                संस्थाको तर्फबाट कागज जाँच गर्नेको दस्तखत : ___________
+                 संस्थाको तर्फबाट कागज जाँच गर्नेको दस्तखत : ___________
+                 संस्थाको तर्फबाट कागज तयार गर्नेको नाम र दस्तखत: _______________<br>
+                
             </p>
             <p class="ml-2">
-                जिल्ला __________ न.पा./गा.वि.स ___________वडा नं. ___________ मा बस्ने
+                जिल्ला __________ न.पा./गा.वि.स ___________वडा नं. ___________ मा बस्ने वर्ष _____ को
                 ______________
             </p>
             <p>
-                जिल्ला ________ न.पा./गा.वि.स ___________ वडा नं. ___________ मा बस्ने
+                जिल्ला ________ न.पा./गा.वि.स ___________ वडा नं. ___________ मा बस्ने वर्ष _____ को
                 ______________
             </p>
             <p class=" font-semibold">साक्षी :</p>
@@ -125,27 +126,27 @@ export function PageMaker_LoanApplicationManjurinama(data) {
     <div class="pl-4 text-sm text-justify">
         <h1 class="my-3 underline  text-center font-semibold">मन्जुरीनामा</h1>
         <p>
-            लिखितम् ${f.approver_inlaws_name || ""} को ${p4} ${f.approver_father_name || ""} को ${p5} ${p6 || ""}
+            लिखितम् ${f.approver_inlaws_name || ""} को ${p4} ${f.approver_father_name || ""} को ${p5}
             जिल्ला ${f.approverAddress.permanentOld.district || ""} गा.वि.स./न. पा. ${f.approverAddress.permanentOld.palika || ""}
             वडा नं. ${f.approverAddress.permanentOld.wada || ""} हाल
-            जिल्ला ${f.approverAddress.permanent.district || ""} गा.वि.स./न. पा. ${f.approverAddress.permanent.palika || ""}
-            वडा नं. ${f.approverAddress.permanent.wada || ""} बस्ने वर्ष ${f.approver_age || ""} को म ${f.approver_applicant_name || ""} आगे
+            जिल्ला ${f.approverAddress.permanent.district || ""} गा.पा./न. पा. ${f.approverAddress.permanent.palika || ""}
+            वडा नं. ${f.approverAddress.permanent.wada || ""} बस्ने वर्ष ${convert(f.approver_age || "", "toNp")} को म ${f.approver_applicant_name || ""} आगे
             ${f.applicant_inlaws_name || ""} को ${p1} ${f.applicant_father_name || ""} को ${p2} ${p3 || ""}
             जिल्ला ${f.address.permanentOld.district || ""} गा.वि.स./न. पा. ${f.address.permanentOld.palika || ""}
             वडा नं. ${f.address.permanentOld.wada || ""} हाल
-            जिल्ला ${f.address.permanent.district || ""} गा.वि.स./न. पा. ${f.address.permanent.palika || ""}
-            वडा नं. ${f.address.permanent.wada || ""} बस्ने वर्ष ${f.age || ""} को ${p3} ले ${f.applicant_name || ""} कार्य गर्न
+            जिल्ला ${f.address.permanent.district || ""} गा.पा./न. पा. ${f.address.permanent.palika || ""}
+            वडा नं. ${f.address.permanent.wada || ""} बस्ने वर्ष ${convert(f.age || "", "toNp")} को ${p3} ${f.applicant_name || ""} ले ${f.desc1 || "-"} कार्य गर्न
             भनी यस द सहारा लोन सेविंग्स
-            को-ऑपरेटिभ सोसाइटी लिमिटेड मुख्य शाखा मलंगवा, सलाही वाट ऋण रकम रु. ${f2.fiftyPercentMargin ? convert(f2.fiftyPercentMargin, "toNp") : ""} (अक्षरेपी रु.
-            ${f2.fiftyPercentMargin_text || ""} मात्र ) कर्जा लिने भएको र सो कजां लिन धितो राखी दिनु होस भनी निज
-            ${f.approver_applicant_name || ""} ले अन्नु भएको ₹ उपरोक्त बमोजिम धितो राखी दिन मन्जुर छ कि छैन भनी द
-            सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड मुख्य शाखा मलंगवा, सरलाहीबाट सोधनी हुँदा सोधनी गर्दा
+            को-ऑपरेटिभ सोसाइटी लिमिटेड, ${f.branchType} ${f.branch} वाट ऋण रकम रु. ${f2.fiftyPercentMargin ? convert(f2.fiftyPercentMargin, "toNp") : ""}/- (अक्षरेपी रु.
+            ${f2.fiftyPercentMargin_text || ""} मात्र ) कर्जा लिने भएको र सो कर्जा लिन धितो राखी दिनु होस भनी निज
+            ${f.applicant_name || ""} ले अन्नु भएको ₹ उपरोक्त बमोजिम धितो राखी दिन मन्जुर छ कि छैन भनी द
+            सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड, ${f.branchType} ${f.branch} सोधनी हुँदा सोधनी गर्दा
             मेरो चित्त बुभ्यो तमसुकमा लेखिए अनुसारको लिनु दिन हुने वापत तपसिलमा लेखिएको अरु कसैलाई कुनै
-            व्यहोराको लिखित नगरी दिएको मेरो हक भोगको जग्गा जाय जेबा धितों राखी ${f.approver_applicant_name || ""} लाई
-            कर्जा कारोवार गन गराउन मन्जुर छ निज ऋणीले यस द सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी
+            व्यहोराको लिखित नगरी दिएको मेरो हक भोगको जग्गा जाय जेबा धितों राखी ${f.applicant_name || ""} लाई
+            कर्जा मा कारोवार गर्न गराउन मन्जुर छ निज ऋणीले यस द सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी
             लिमिटेड ${f.branchType || ""} ${f.branch || ""} गरेको तमसुक अनुसार समयमा ऋण नतीरेमा मैले मन्जुरीनामा गरी
             लेखि दिएको जग्गा जाय जेथा लिलाम विक्री गरी असुल उपर गरेमा मेरो मन्जुरी छ । पछि कुनै किसिमको
-            उजर बाजुर गर्ने छैन, गरे यसै कागजले बबर गरी दिनु भनी म आफ्नो ख़ुशी राजीले बस व सहारा लोन
+            उजुर बाजुर गर्ने छैन, गरे यसै कागजले बदर गरी दिनु भनी म आफ्नो ख़ुशी राजीले यस द सहारा लोन
             सेविंग्स को-ऑपरेटिभ सोसाइटी लिमिटेड ${f.branchType || ""} ${f.branch || ""} बसी
             किनाराको साक्षीहरुको रोहवरमा यो मन्जुरीनामाको कागज लेखि सही छाप गरी द सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी
             लिमिटेड ${f.branchType || ""} ${f.branch || ""} लाई दिएँ।
