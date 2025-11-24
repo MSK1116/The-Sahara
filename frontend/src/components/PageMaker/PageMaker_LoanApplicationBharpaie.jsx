@@ -24,7 +24,7 @@ export function PageMaker_LoanApplicationBharpaie(data) {
                 सहारा
                 लोन सेविंग्स को
                 औ-सो लि <b>${f.branchType}: - ${f.branch}</b> बाट ${f.desc1 || ""} कार्य निम्न
-                कामको लागि रु. ${f.fiftyPercentMargin || ""}/- (अक्षरेपी रुपियाँ: ${f.fiftyPercentMargin_text || ""} मात्र) नगद/चेक नं. संस्था बाट
+                कामको लागि रु. ${f2.fiftyPercentMargin || ""}/- (अक्षरेपी रुपियाँ: ${f2.fiftyPercentMargin_text || ""} मात्र) नगद/चेक नं. संस्था बाट
                 बुझिलिई यो भरपाई गरि दियें</div>
         </div>
 
