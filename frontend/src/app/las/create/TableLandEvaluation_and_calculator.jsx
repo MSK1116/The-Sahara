@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
 import AreaInput from "@/components/AreaInput";
 import convert from "number-to-nepali-words";
-const TableLandEvaluation_and_calculator = ({ initialData, onDataChange, handleFiftyPercent }) => {
+const TableLandEvaluation_and_calculator = ({ initialData, onDataChange, handleFiftyPercent, handleEnterFocus }) => {
   const initialRow = {
     id: Date.now(),
     wardNo: "",
@@ -86,6 +85,7 @@ const TableLandEvaluation_and_calculator = ({ initialData, onDataChange, handleF
                 <td title={katha || ""} className="border p-2">
                   <Input
                     value={row.govApprovedPrice || ""}
+                    onKeyDown={handleEnterFocus}
                     onChange={(e) => {
                       const val = convert(e.target.value, "toEn");
                       handleInputChange(index, "govApprovedPrice", val);
@@ -95,6 +95,7 @@ const TableLandEvaluation_and_calculator = ({ initialData, onDataChange, handleF
                 </td>
                 <td className="border p-2">
                   <Input
+                    onKeyDown={handleEnterFocus}
                     value={row.localApprovedPrice || ""}
                     onChange={(e) => {
                       const val = convert(e.target.value, "toEn");

@@ -82,117 +82,128 @@ const Create_form2 = ({ LMSIN, onDataChange, user }) => {
     setFiftyPercentMarginLimit(grandTotal / 4);
   };
 
+  const handleEnterFocus = useCallback((e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const form = e.target.form;
+      const index = Array.prototype.indexOf.call(form, e.target);
+      form.elements[index + 1]?.focus();
+    }
+  }, []);
+
   return (
     <>
       {localData?.form1 ? (
-        <div className="pt-10 px-10 pb-0">
-          <h1 className="text-xl select-none tracking-wide font-semibold mb-10 px-3 py-1 bg-gray-100 rounded-md w-fit">मूल्यांकन परतिवेदन </h1>
-          <div className="flex flex-row justify-between items-center space-x-5">
-            {/* Evaluator Name - ShadCN Combobox */}
-            <div className="w-full">
-              <Label>मूल्यांकन गर्नेको नामः</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="outline" role="combobox" className="w-full mt-2 justify-between">
-                    {form2.evaluatorName || "छान्नुहोस्"}
-                    <ChevronsUpDown className="opacity-50 h-4 w-4" />
-                  </Button>
-                </PopoverTrigger>
+        <form>
+          <div className="pt-10 px-10 pb-0">
+            <h1 className="text-xl select-none tracking-wide font-semibold mb-10 px-3 py-1 bg-gray-100 rounded-md w-fit">मूल्यांकन परतिवेदन </h1>
+            <div className="flex flex-row justify-between items-center space-x-5">
+              {/* Evaluator Name - ShadCN Combobox */}
+              <div className="w-full">
+                <Label>मूल्यांकन गर्नेको नामः</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="outline" role="combobox" className="w-full mt-2 justify-between">
+                      {form2.evaluatorName || "छान्नुहोस्"}
+                      <ChevronsUpDown className="opacity-50 h-4 w-4" />
+                    </Button>
+                  </PopoverTrigger>
 
-                <PopoverContent className="w-full p-0">
-                  <Command>
-                    <CommandInput placeholder="नाम खोज्नुहोस्..." />
-                    <CommandList>
-                      <CommandEmpty>कुनै नाम भेटिएन।</CommandEmpty>
-                      <CommandGroup>
-                        {officers.map((o) => (
-                          <CommandItem
-                            key={o.id}
-                            value={o.name}
-                            onSelect={() => {
-                              setFrom2((d) => ({
-                                ...d,
-                                evaluatorName: o.name,
-                                evaluatorPost: o.post,
-                              }));
-                              document.body.click(); // Close popover
-                            }}>
-                            <Check className={cn("mr-2 h-4 w-4", o.name === localData.evaluatorName ? "opacity-100" : "opacity-0")} />
-                            {o.name}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
+                  <PopoverContent className="w-full p-0">
+                    <Command>
+                      <CommandInput placeholder="नाम खोज्नुहोस्..." />
+                      <CommandList>
+                        <CommandEmpty>कुनै नाम भेटिएन।</CommandEmpty>
+                        <CommandGroup>
+                          {officers.map((o) => (
+                            <CommandItem
+                              key={o.id}
+                              value={o.name}
+                              onSelect={() => {
+                                setFrom2((d) => ({
+                                  ...d,
+                                  evaluatorName: o.name,
+                                  evaluatorPost: o.post,
+                                }));
+                                document.body.click(); // Close popover
+                              }}>
+                              <Check className={cn("mr-2 h-4 w-4", o.name === localData.evaluatorName ? "opacity-100" : "opacity-0")} />
+                              {o.name}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              <div className="w-full">
+                <Label>पद :</Label>
+                <Input className="mt-2" value={form2.evaluatorPost || ""} disabled />
+              </div>
+
+              <div className="w-full">
+                <Label htmlFor="date">स्थलमा गई मूल्यांकन गरेको मितिः</Label>
+                <NepaliDateInput handleEnterFocus={handleEnterFocus} value={form2.evaluationDate || ""} onChange={(val) => setFrom2((d) => ({ ...d, evaluationDate: val }))} className="mt-2" />
+              </div>
             </div>
 
-            <div className="w-full">
-              <Label>पद :</Label>
-              <Input className="mt-2" value={form2.evaluatorPost || ""} disabled />
-            </div>
+            <span className="flex items-center my-4">
+              <span className="h-px flex-1 bg-linear-to-r from-transparent to-gray-300"></span>
+              <span className="shrink-0 px-4 text-gray-900">Page 1, Section 2</span>
+              <span className="h-px flex-1 bg-linear-to-l from-transparent to-gray-300"></span>
+            </span>
 
-            <div className="w-full">
-              <Label htmlFor="date">स्थलमा गई मूल्यांकन गरेको मितिः</Label>
-              <NepaliDateInput value={form2.evaluationDate || ""} onChange={(val) => setFrom2((d) => ({ ...d, evaluationDate: val }))} className="mt-2" />
-            </div>
-          </div>
+            <Table7_copy_for_form2 localData={localData} initialData={localData.form1?.table7} onDataChange={handleTable1Change} />
+            <TableLandEvaluation_and_calculator handleFiftyPercent={handleFiftyPercent} onDataChange={handleTable2Change} initialData={localData.form1?.table7} handleEnterFocus={handleEnterFocus} />
 
-          <span className="flex items-center my-4">
-            <span className="h-px flex-1 bg-linear-to-r from-transparent to-gray-300"></span>
-            <span className="shrink-0 px-4 text-gray-900">Page 1, Section 2</span>
-            <span className="h-px flex-1 bg-linear-to-l from-transparent to-gray-300"></span>
-          </span>
+            <span className="flex items-center my-4">
+              <span className="h-px flex-1 bg-linear-to-r from-transparent to-gray-300"></span>
+              <span className="shrink-0 px-4 text-gray-900">Page 1, Section 3</span>
+              <span className="h-px flex-1 bg-linear-to-l from-transparent to-gray-300"></span>
+            </span>
 
-          <Table7_copy_for_form2 localData={localData} initialData={localData.form1?.table7} onDataChange={handleTable1Change} />
-          <TableLandEvaluation_and_calculator handleFiftyPercent={handleFiftyPercent} onDataChange={handleTable2Change} initialData={localData.form1?.table7} />
-
-          <span className="flex items-center my-4">
-            <span className="h-px flex-1 bg-linear-to-r from-transparent to-gray-300"></span>
-            <span className="shrink-0 px-4 text-gray-900">Page 1, Section 3</span>
-            <span className="h-px flex-1 bg-linear-to-l from-transparent to-gray-300"></span>
-          </span>
-
-          <div className=" mb-10">
-            <p className=" font-bold my-5">सिफारिस मूल्यः-</p>
-            <div className=" flex flex-row items-center space-x-5">
-              <div className="w-1/2">
-                <Label>५०% मार्जिन कटाई:</Label>
-                <Input
-                  className="mt-2"
-                  onChange={(e) => {
-                    const raw = e.target.value;
-                    if (raw === "") {
+            <div className=" mb-10">
+              <p className=" font-bold my-5">सिफारिस मूल्यः-</p>
+              <div className=" flex flex-row items-center space-x-5">
+                <div className="w-1/2">
+                  <Label>५०% मार्जिन कटाई:</Label>
+                  <Input
+                    className="mt-2"
+                    onChange={(e) => {
+                      const raw = e.target.value;
+                      if (raw === "") {
+                        setFrom2((d) => ({
+                          ...d,
+                          fiftyPercentMargin: "",
+                          fiftyPercentMargin_text: "",
+                        }));
+                        return;
+                      }
+                      const cleaned = Number(String(convert(raw, "toEn")).replace(/,/g, ""));
+                      if (isNaN(cleaned)) return;
+                      if (cleaned > fiftyPercentMarginLimit && cleaned > localData.form1.amount) return;
                       setFrom2((d) => ({
                         ...d,
-                        fiftyPercentMargin: "",
-                        fiftyPercentMargin_text: "",
+                        fiftyPercentMargin: cleaned,
                       }));
-                      return;
-                    }
-                    const cleaned = Number(String(convert(raw, "toEn")).replace(/,/g, ""));
-                    if (isNaN(cleaned)) return;
-                    if (cleaned > fiftyPercentMarginLimit && cleaned > localData.form1.amount) return;
-                    setFrom2((d) => ({
-                      ...d,
-                      fiftyPercentMargin: cleaned,
-                    }));
-                    setFrom2((d) => ({
-                      ...d,
-                      fiftyPercentMargin_text: convert(cleaned, "toNpWord", "currency"),
-                    }));
-                  }}
-                  value={form2.fiftyPercentMargin || ""}
-                />
-              </div>
-              <div className="w-full">
-                <Label>अक्षरेपी रु.</Label>
-                <Input className="mt-2" value={form2.fiftyPercentMargin ? convert(form2.fiftyPercentMargin, "toNpWord", "currency") + " मात्र /-" : ""} disabled />
+                      setFrom2((d) => ({
+                        ...d,
+                        fiftyPercentMargin_text: convert(cleaned, "toNpWord", "currency"),
+                      }));
+                    }}
+                    value={form2.fiftyPercentMargin || ""}
+                  />
+                </div>
+                <div className="w-full">
+                  <Label>अक्षरेपी रु.</Label>
+                  <Input className="mt-2" value={form2.fiftyPercentMargin ? convert(form2.fiftyPercentMargin, "toNpWord", "currency") + " मात्र /-" : ""} disabled />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </form>
       ) : null}
     </>
   );
