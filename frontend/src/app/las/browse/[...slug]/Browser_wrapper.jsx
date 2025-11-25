@@ -5,23 +5,29 @@ import Create_form from "../../create/Create_form";
 import Create_navigator from "../../create/Create_navigator";
 import toast from "react-hot-toast";
 import Create_form2 from "../../create/Create_form2";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp";
 import { IoSearchSharp } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
 import Create_form3 from "../../create/Create_form3";
 import Create_form4 from "../../create/Create_form4";
 
-const Browser_wrapper = ({ LMSIN }) => {
+const Browser_wrapper = ({ LMSIN, formNo }) => {
   const [applicantData, setApplicantData] = useState(null);
   const [form1Data, setForm1Data] = useState({});
   const [form2Data, setForm2Data] = useState({});
   const [form3Data, setForm3Data] = useState({});
   const [form4Data, setForm4Data] = useState({});
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(formNo ?? 1);
   const [lmsin, setLmsin] = useState(LMSIN.replace(/-/g, ""));
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const pageFromUrl = Number(searchParams.get("formNo") || 1);
+    setCurrentPage(pageFromUrl);
+  }, [searchParams]);
 
   useEffect(() => {
     handleDataFetch();
@@ -102,6 +108,7 @@ const Browser_wrapper = ({ LMSIN }) => {
     const success = await handleSave();
     if (success) {
       setCurrentPage(page);
+      router.replace(`?formNo=${page}`);
     }
   };
 

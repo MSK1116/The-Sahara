@@ -2,9 +2,7 @@
 import { notFound, redirect } from "next/navigation";
 import Browser_wrapper from "./Browser_wrapper";
 
-export async function generateMetadata({ params, searchParams }) {
-  const { slug } = await params;
-
+export async function generateMetadata({ params }) {
   return {
     metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
     title: `LMS Viewer`,
