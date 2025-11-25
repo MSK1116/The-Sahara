@@ -7,11 +7,11 @@ export function PageMaker_LoanApplicationBharpaie(data) {
   const f3 = data.form3;
   return `
 
-<body class="ml-30 flex flex-col py-20">
+<body class="ml-30 flex flex-col py-20 text-xl ">
     <div class=" flex flex-col space-y-5">
         <div>
             <h1 class="text-xl mx-auto w-fit my-4 font-bold text-center border border-black px-3 py-1">भरपाई</h1>
-            <div class="text-justify text-sm">भरपाई दादै स्थायी ठेगाना: -
+            <div class="text-justify">भरपाई दादै स्थायी ठेगाना: -
                 जिल्ला <b>${f.address.permanentOld.district}</b>,
                 गा.वि .स/ना.पा <b>${f.address.permanentOld.palika || "—"}</b>,
                 वडा नं. <b>${convert(f.address.permanentOld.wada || "1", "toNp")}</b>,
@@ -51,7 +51,7 @@ export function PageMaker_LoanApplicationBharpaie(data) {
     <div class=" flex mb-30 flex-col space-y-5">
         <div>
             <h1 class="text-xl mx-auto w-fit my-4 font-bold text-center border border-black px-3 py-1">भरपाई</h1>
-            <div class="text-justify text-sm">भरपाई दादै स्थायी ठेगाना: -
+            <div class="text-justify ">भरपाई दादै स्थायी ठेगाना: -
                 जिल्ला <b>${f.address.permanentOld.district}</b>,
                 गा.वि .स/ना.पा <b>${f.address.permanentOld.palika || "—"}</b>,
                 वडा नं. <b>${convert(f.address.permanentOld.wada || "1", "toNp")}</b>,

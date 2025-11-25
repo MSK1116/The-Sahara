@@ -287,6 +287,7 @@ ${htmlContent}
             min-height: calc(297mm - 16mm);
             height: 100%;
             /* A4 height - @page margins */
+            
         }
 
         /* Fallback in case browser does not support @bottom-center */
