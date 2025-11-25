@@ -81,12 +81,12 @@ export function PageMaker_LoanApplicationTamasuk(data) {
                 
             </p>
             <p class="ml-2">
-              जिल्ला ${f4?.witness2?.district || "___________"} न.पा./गा.वि.स
+              जिल्ला ${f4?.witness2?.district || "___________"} गा.वि.स/गा.पा/न. पा.
                 ${f4?.witness2?.palika || "___________"} वडा नं. ${f4?.witness2?.ward || "___________"}मा बस्ने वर्ष _____ को 
                 ${f4?.witness2?.name}
             </p>
             <p>
-              जिल्ला   ${f4?.witness1?.district || "___________"} न.पा./गा.वि.स
+              जिल्ला   ${f4?.witness1?.district || "___________"} गा.वि.स/गा.पा/न. पा.
                 ${f4?.witness1?.palika || "___________"} वडा नं. ${f4?.witness1?.ward || "___________"}मा बस्ने वर्ष _____ को
                 ${f4?.witness1?.name}
             </p>
@@ -101,9 +101,9 @@ export function PageMaker_LoanApplicationTamasuk(data) {
             सर्लाही, मलंगवा र.नं. ०१/०५०/०५१
             मिति ०५१/०२/१३ को आगे ऋणीको नाम
             ${f.applicant_inlaws_name || ""} ${p1} ${f.applicant_father_name || ""} को ${p2} ${p3 || ""} 
-            जिल्ला ${f.address.permanentOld?.district || ""} गा.पा./न. पा. ${f.address.permanentOld.palika || ""}
+            जिल्ला ${f.address.permanentOld?.district || ""} गा.वि.स./न. पा. ${f.address.permanentOld.palika || ""}
             वडा नं. ${convert(f.address.permanentOld.wada || "-", "toNp")} हाल
-            जिल्ला ${f.address.permanent?.district || ""} गा.वि.स./न. पा. ${f.address.permanent.palika || ""}
+            जिल्ला ${f.address.permanent?.district || ""} गा.पा./न. पा. ${f.address.permanent.palika || ""}
             वडा नं. ${convert(f.address.permanent.wada || "1", "toNp")} बस्ने वर्ष ${convert(f.age || "", "toNp")} को म ${f.applicant_name || ""} ले
             ${f.desc1 || ""} कार्य गर्नको लागि यस संस्थावाट आजका मितिमा रु. ${f2.fiftyPercentMargin ? convert(f2.fiftyPercentMargin, "toNp") : "-"} (अक्षरेपी रु.
             ${f2.fiftyPercentMargin_text || "-"} मात्र ) ऋण लिएको ठिक साँचो हो | यो ऋणको वार्षिक ${convert(f4.annualInterestRate || "", "toNp")} % (अक्षरेपी रु.
@@ -113,10 +113,10 @@ export function PageMaker_LoanApplicationTamasuk(data) {
             महिना ${new NepaliDate(oneYearLater).format("DD", "np")} गते भित्र
             तपसिलको ऋण भुक्तानी तालिका अनुसार तोकिएको समय मित्र नगद यस संस्थालाई बुझाउने छु। यस ऋण बापत
             अरु कसैलाई कुनै व्यवहारको लिखित गरि नदिएको खास लिखित गरि सहिछाप गर्नेको हकभोगको तपसिल बमोजिमको धितो यस
-            संस्थालाई लेखि दिएको छु। मेरो आफ्नै नाउँमा वर्ता रहेको जति दृष्टी र अरुको मञ्जुरीवाट धितो रहेको जति जमानतको
+            संस्थालाई लेखि दिएको छु। मेरो आफ्नै नाउँमा दर्ता रहेको जति दृष्टी र अरुको मञ्जुरीवाट धितो रहेको जति जमानतको
             रुपमा मानिने छ। तपसिलमा लेखिए वमोजिमको शर्तं पालना नभएमा वा तोकिएको म्याद भिन्न साँबा व्याज र किस्ताको रकम
             बुझाउन नसकेमा मेरो जायजेथा रोकी वा
-            नरोंकी वा मैले राखेको धितो र अरुको हकको जमानी रुपमा रहेको धिती समेत डॉँक लिलाम बिक्री गरी यसवाट र त्यसवाट
+            नरोंकी वा मैले राखेको धितो र अरुको हकको जमानी रुपमा रहेको धितो समेत डॉँक लिलाम बिक्री गरी यसवाट र त्यसवाट
             नपुगे रोक्का रहन नसकेको समेत अन्य चल अचल जायजेयाबाट बाँकी साँवा, व्याज असुल उपर गरी लिनु होला भनि मेरो
             मनोमान ख़ुशी राजीले ${f.branch || ""} स्थित द साहरा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड,${f.branchType} ${f.branch || ""}
             लाई बुझाई दिए । साक्षी किनाराको सदर । <br>ईती सम्वत ${new NepaliDate(today).format("YYYY", "np")} साल ${new NepaliDate(today).format("MMMM", "np")} महिना ${new NepaliDate(today).format("DD", "np")} गते रोज ${new NepaliDate(today).format(
@@ -129,7 +129,7 @@ export function PageMaker_LoanApplicationTamasuk(data) {
         <span>१. यस ऋण रकमबाट तयार गरिने वाली वा खरीद हुने सामान ऋण नतिरेसम्म बिक्री गर्ने छैन र सो समेत धितोको रुपमा
             रहन मेरो
 
-            मंजुर छ। इस प्रकार तयार हुने वाली त्यस संस्थालाई बुझाई यसबाट हुने रकमबाट मेरो तिनु पनें किस्ता रकम र अन्य
+            मंजुर छ।  यस  प्रकार तयार हुने वाली त्यस संस्थालाई बुझाई यसबाट हुने रकमबाट मेरो तिर्नु पर्ने किस्ता रकम र अन्य
             खर्च
             केही
             भएमा सो समेत कटाई बाँकी रकम मलाई भुक्तानी दिन संस्थाको व्यवस्था प्रति मेरो मन्जुर हुनेछ।</span>
@@ -196,7 +196,7 @@ export function PageMaker_LoanApplicationTamasuk(data) {
             <p class="font-semibold my-2 underline">संस्थाको प्रयोजनको लागि :- </p>
             <p>धितो रोक्काको लागि संस्थाबाट पत्र संख्या ${f3?.malpotLetterNo || ""} च.न ${f3?.malpotLetterChalaniNo || ""} मिति ${new NepaliDate(f3?.malpotLetterDate || today).format("YYYY/MM/DD", "np")}</p>
             <p>मालपोत कार्यालय ${f3?.malpotOfficeName || ""} बाट धितो रोक्का भएको प्राप्त पत्रको प.सं. ${f4?.malpotOfficeReplyPageNo || ""} मिति ${
-    f4?.malpotOfficeReplyDate && new NepaliDate(f4?.malpotOfficeReplyDate || today).format("ddd DD, MMMM YYYY", "np")
+    f4?.malpotOfficeReplyDate && new NepaliDate(f4?.malpotOfficeReplyDate || today).format("YYYY/MM/DD", "np")
   } च.नं. ${f4?.malpotOfficeReplyChalaniNo || ""}</p>
             <p>ऋणीको नागरिकता नं. ${f.citizenship_number || ""}, मिति  ${f?.citizenship_takenDate && new NepaliDate(f?.citizenship_takenDate || today).format("YYYY/MM/DD", "np")}, दिने कार्यलय नाम: ${
     f.citizenship_takenOffice || "__________________"
