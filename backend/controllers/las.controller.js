@@ -1,9 +1,14 @@
 // controllers/laController.js
-import lasModel from "../models/las.model.js";
+import getLasModel from "../models/las.model.js";
 import { customAlphabet } from "nanoid";
+
 export const upsertLAS = async (req, res) => {
   try {
+    // Destructure the suffix and the rest of the form data from the request body.
     const data = req.body;
+    const { databaseSlug } = data;
+    // Get the dynamic model. If no suffix is provided, it defaults to the "LAS" collection.
+    const LasModel = getLasModel(databaseSlug);
 
     const get = (obj, path) => path.split(".").reduce((o, k) => (o ? o[k] : undefined), obj);
     const requiredFields = [
@@ -64,16 +69,16 @@ export const upsertLAS = async (req, res) => {
     }
 
     // Find existing record by citizenship_number
-    const existingLA = await lasModel.findOne({ LMSIN: data.LMSIN });
+    const existingLA = await LasModel.findOne({ LMSIN: data.LMSIN });
 
     if (existingLA) {
-      const updatedLAS = await lasModel.findByIdAndUpdate(existingLA._id, data, { new: true });
+      const updatedLAS = await LasModel.findByIdAndUpdate(existingLA._id, data, { new: true });
       return res.status(200).json({
         message: "Record updated successfully",
         data: updatedLAS,
       });
     } else {
-      const newLAS = new lasModel(data);
+      const newLAS = new LasModel(data);
       await newLAS.save();
       return res.status(201).json({
         message: "New record created successfully",
@@ -89,14 +94,17 @@ export const upsertLAS = async (req, res) => {
 const nanoid = customAlphabet("0123456789", 6);
 
 export const getApplicant = async (req, res) => {
-  const { LMSIN } = req.body;
+  // Expect LMSIN and branchName from the request body
+  const { LMSIN, databaseSlug } = req.body;
 
   if (!LMSIN) {
     return res.status(400).json({ error: "LMSIN is required" });
   }
 
   try {
-    const applicant = await lasModel.findOne({ LMSIN: LMSIN });
+    // Get the dynamic model
+    const LasModel = getLasModel(databaseSlug);
+    const applicant = await LasModel.findOne({ LMSIN: LMSIN });
 
     if (!applicant) {
       return res.status(404).json({ error: "Applicant not found" });
@@ -109,6 +117,8 @@ export const getApplicant = async (req, res) => {
 };
 export const getLMSIN = async (req, res) => {
   try {
+    const { databaseSlug } = req.body;
+    const LasModel = getLasModel(databaseSlug);
     let lmsinNumber;
     let exists = true;
     let attempts = 0;
@@ -116,7 +126,7 @@ export const getLMSIN = async (req, res) => {
 
     while (exists && attempts < maxAttempts) {
       lmsinNumber = `${nanoid().replace(/(\d{3})(\d{3})/, "$1-$2")}`;
-      exists = await lasModel.findOne({ LMSIN: lmsinNumber });
+      exists = await LasModel.findOne({ LMSIN: lmsinNumber });
       attempts++;
     }
 

@@ -18,14 +18,14 @@ import Province7JSON from "@/asset/Province7.json";
 
 const allProvinces = [Province1JSON, Province2JSON, Province3JSON, Province4JSON, Province5JSON, Province6JSON, Province7JSON];
 
-const Create_form4 = ({ LMSIN, onDataChange }) => {
+const Create_form4 = ({ LMSIN, onDataChange, user }) => {
   const allDistricts = allProvinces.flatMap((p) => p.districts.map((d) => d.name));
   const [localData, setLocalData] = useState({});
   const [form4, setForm4] = useState({});
 
   const handleDataFetch = async () => {
     try {
-      const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/getApplicant`, { LMSIN });
+      const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/getApplicant`, { LMSIN, databaseSlug: user?.databaseSlug });
       if (temp.data) {
         setLocalData(temp.data ?? {});
         setForm4(temp.data.form4 ?? {});

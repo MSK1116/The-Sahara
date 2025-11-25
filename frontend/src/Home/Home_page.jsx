@@ -1,19 +1,20 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import convert from "number-to-nepali-words";
 import { IoAddCircleSharp } from "react-icons/io5";
-import { FaFolderClosed } from "react-icons/fa6";
 import { IoSearchSharp } from "react-icons/io5";
-import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Input } from "@/components/ui/input";
+import jwt from "jsonwebtoken";
 
 const Home_page = ({ sessionAuth0 }) => {
   const router = useRouter();
   const [lmsin, setLmsin] = useState("");
+
+  const user = jwt.decode(sessionAuth0?.tokenSet?.idToken);
 
   const handleSearch = () => {
     if (lmsin.length !== 6) {
@@ -30,12 +31,12 @@ const Home_page = ({ sessionAuth0 }) => {
         <div className=" w-[40%] bg-blue-700 p-10 rounded-sm cursor-default">
           <p className=" text-xl font-bold text-center mb-5 text-white">Welcome to Loan Application System!</p>
           <div className=" relative mx-auto size-30 rounded-full">
-            <Image alt="profile image" className=" border border-white object-center object-cover rounded-full" src={"/image_dir/personaA.jpg"} fill={true}></Image>
+            <Image alt="profile image" className=" border border-white object-center object-cover rounded-full" src={user?.profileImage || "/image_dir/LogoOnly.png"} fill={true}></Image>
           </div>
           <div className=" text-center  mt-4 space-x-1 text-white">
-            <p className=" capitalize font-bold">{sessionAuth0?.user?.nickname || "Guest"}</p>
-            <p className=" text-sm">Branch Manager</p>
-            <p className=" text-sm">Kaliya, Bara</p>
+            <p className=" capitalize font-bold tracking-wider">{sessionAuth0?.user?.nickname || "Guest"}</p>
+            <p className=" text-sm tracking-wide">{user?.officerPost}</p>
+            <p className=" text-sm">{user?.officerBranch}</p>
           </div>
         </div>
         <div className="flex flex-row items-center cursor-default space-x-5 w-[60%] h-auto p-5 py-10">

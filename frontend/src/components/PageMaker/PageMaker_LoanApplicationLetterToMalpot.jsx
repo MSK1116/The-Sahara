@@ -115,7 +115,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
             <p>चलानी न.: - ${f3.malpotLetterChalaniNo}</p>
         </div>
         <div class=" pr-10">
-            <p>कोड न. :- ${f3.branchCode}</p>
+            <p>कोड न. :- ${f.branchCode}</p>
             <p>मिति: - ${new NepaliDate(f3.malpotLetterDate || new Date()).format("ddd DD, MMMM YYYY", "np")}</p>
         </div>
     </div>

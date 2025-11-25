@@ -6,13 +6,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const Create_form3 = ({ LMSIN, onDataChange }) => {
+const Create_form3 = ({ LMSIN, onDataChange, user }) => {
   const [localData, setLocalData] = useState({});
   const [form3, setFrom3] = useState({});
 
   const handleDataFetch = async () => {
     try {
-      const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/getApplicant`, { LMSIN });
+      const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/getApplicant`, { LMSIN, databaseSlug: user?.databaseSlug });
 
       if (temp.data) {
         setLocalData(temp.data ?? {});
@@ -59,10 +59,7 @@ const Create_form3 = ({ LMSIN, onDataChange }) => {
                 <Label>कार्यालय</Label>
                 <Input className="mt-2" disabled readOnly value={localData?.form1?.branch || " "}></Input>
               </div>
-              <div className=" w-20">
-                <Label>कोड: </Label>
-                <Input value={form3.branchCode || ""} onChange={(e) => setFrom3((d) => ({ ...d, branchCode: e.target.value }))} className="mt-2"></Input>
-              </div>
+
               <div className=" w-30">
                 <Label>पत्र नं. </Label>
                 <Input className="mt-2" value={form3.malpotLetterNo || ""} onChange={(e) => setFrom3((d) => ({ ...d, malpotLetterNo: e.target.value }))}></Input>

@@ -11,8 +11,8 @@ import { IoSearchSharp } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
 import Create_form3 from "../../create/Create_form3";
 import Create_form4 from "../../create/Create_form4";
-
-const Browser_wrapper = ({ LMSIN, formNo }) => {
+import jwt from "jsonwebtoken";
+const Browser_wrapper = ({ LMSIN, formNo, sessionAuth0 }) => {
   const [applicantData, setApplicantData] = useState(null);
   const [form1Data, setForm1Data] = useState({});
   const [form2Data, setForm2Data] = useState({});
@@ -23,6 +23,7 @@ const Browser_wrapper = ({ LMSIN, formNo }) => {
   const [lmsin, setLmsin] = useState(LMSIN.replace(/-/g, ""));
   const router = useRouter();
   const searchParams = useSearchParams();
+  const user = jwt.decode(sessionAuth0?.tokenSet?.idToken);
 
   useEffect(() => {
     const pageFromUrl = Number(searchParams.get("formNo") || 1);
@@ -37,7 +38,7 @@ const Browser_wrapper = ({ LMSIN, formNo }) => {
     setLoading(true);
 
     try {
-      const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/getApplicant`, { LMSIN: LMSIN });
+      const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/getApplicant`, { LMSIN: LMSIN, databaseSlug: user?.databaseSlug });
       if (temp.data) {
         setApplicantData(temp.data);
         setForm1Data(temp.data.form1);
@@ -79,7 +80,7 @@ const Browser_wrapper = ({ LMSIN, formNo }) => {
     }
 
     try {
-      const promise = axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/upsert`, { ...aggregated, LMSIN: LMSIN });
+      const promise = axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/upsert`, { ...aggregated, LMSIN: LMSIN, databaseSlug: user?.databaseSlug });
       toast.promise(promise, {
         loading: "Updating applicant...",
         success: "Applicant updated successfully!",
@@ -121,15 +122,16 @@ const Browser_wrapper = ({ LMSIN, formNo }) => {
       router.push(`/las/browse/${formattedLmsin}`);
     }
   };
+
   return (
     <main className="flex flex-row">
       <div className="w-[90%]">
         {applicantData ? (
           <>
             {currentPage === 1 && <Create_form initialData={applicantData?.form1} onDataChange={setForm1Data} />}
-            {currentPage === 2 && <Create_form2 LMSIN={LMSIN} onDataChange={handleForm2DataChange} />}
-            {currentPage === 3 && <Create_form3 LMSIN={LMSIN} onDataChange={handleForm3DataChange} />}
-            {currentPage === 4 && <Create_form4 LMSIN={LMSIN} onDataChange={handleForm4DataChange} />}
+            {currentPage === 2 && <Create_form2 user={user} LMSIN={LMSIN} onDataChange={handleForm2DataChange} />}
+            {currentPage === 3 && <Create_form3 user={user} LMSIN={LMSIN} onDataChange={handleForm3DataChange} />}
+            {currentPage === 4 && <Create_form4 user={user} LMSIN={LMSIN} onDataChange={handleForm4DataChange} />}
             {currentPage === 5 && <div className="p-10">Page 5 is under construction.</div>}
           </>
         ) : (

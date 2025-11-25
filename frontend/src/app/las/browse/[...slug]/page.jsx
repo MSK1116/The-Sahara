@@ -1,6 +1,7 @@
 // \frontend\src\app\chat\[...slug]\page.jsx
 import { notFound, redirect } from "next/navigation";
 import Browser_wrapper from "./Browser_wrapper";
+import { auth0 } from "@/lib/auth0";
 
 export async function generateMetadata({ params }) {
   return {
@@ -21,14 +22,14 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params, searchParams }) {
   const { slug } = await params;
-
+  const sessionAuth0 = await auth0.getSession();
   if (!slug) {
     redirect(`/`);
   }
 
   return (
     <>
-      <Browser_wrapper LMSIN={slug[0]} />
+      <Browser_wrapper sessionAuth0={sessionAuth0} LMSIN={slug[0]} />
     </>
   );
 }

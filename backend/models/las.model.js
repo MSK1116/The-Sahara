@@ -132,6 +132,7 @@ const Form1Schema = new mongoose.Schema({
 
   branch: { type: String, default: "" },
   branchType: { type: String, default: "सेवा केन्द्र" },
+  branchCode: { type: String, default: "" },
 
   desc1: { type: String, default: "" },
   amount: { type: String, default: "" },
@@ -192,7 +193,6 @@ const Form2Schema = new mongoose.Schema({
 });
 
 const Form3Schema = new mongoose.Schema({
-  branchCode: { type: String, default: "" },
   malpotLetterNo: { type: String, default: "" },
   malpotLetterChalaniNo: { type: String, default: "" },
   malpotLetterDate: { type: String, default: "" },
@@ -233,4 +233,12 @@ const LASchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.models.LAS || mongoose.model("LAS", LASchema);
+const getLasModel = (suffix = "") => {
+  const modelName = `LAS${suffix}`;
+  if (mongoose.models[modelName]) {
+    return mongoose.models[modelName];
+  }
+  return mongoose.model(modelName, LASchema);
+};
+
+export default getLasModel;

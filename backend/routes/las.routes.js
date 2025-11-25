@@ -4,6 +4,6 @@ const router = express.Router();
 
 router.post("/upsert", upsertLAS);
 router.post("/getApplicant", getApplicant);
-router.get("/getLmsin", getLMSIN);
+router.post("/getLmsin", getLMSIN);
 
 export default router;

@@ -5,14 +5,18 @@ import Create_navigator from "./Create_navigator";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import Create_form2 from "./Create_form2";
-import Create_form3 from "./Create_form3";
-const CreateWrapper = () => {
+import jwt from "jsonwebtoken";
+
+const CreateWrapper = ({ sessionAuth0 }) => {
   const router = useRouter();
-  const [form1Data, setForm1Data] = useState({});
+
   const [Lmsin, setLmsin] = useState("");
   const [isUpserting, setIsUpserting] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const user = jwt.decode(sessionAuth0?.tokenSet?.idToken);
+  const [form1Data, setForm1Data] = useState({ branchType: user?.officerBranchType, branch: user?.officerBranch, branchCode: user?.officerBranchCode });
+
+  console.log(user);
 
   const handleUpsert = async () => {
     const aggregated = {
@@ -24,7 +28,7 @@ const CreateWrapper = () => {
     }
     try {
       setIsUpserting(true);
-      const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/upsert`, { ...aggregated, LMSIN: Lmsin });
+      const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/upsert`, { ...aggregated, LMSIN: Lmsin, databaseSlug: user?.databaseSlug });
       if (temp.data) {
         console.log(temp.data.data.form1);
         temp.data?.data.LMSIN && router.push(`/las/browse/${temp.data?.data.LMSIN}`);
@@ -41,7 +45,7 @@ const CreateWrapper = () => {
 
   const getLMSIN = async () => {
     try {
-      const LMSIN = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/las/getLmsin`);
+      const LMSIN = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/getLmsin`, { databaseSlug: user?.databaseSlug });
       if (LMSIN.data) {
         setLmsin(LMSIN.data.lmsinNumber);
       }
@@ -64,7 +68,7 @@ const CreateWrapper = () => {
   return (
     <>
       <main className="flex flex-row ">
-        <div className="w-[90%]">{currentPage === 1 && <Create_form onDataChange={setForm1Data} />}</div>
+        <div className="w-[90%]">{currentPage === 1 && <Create_form initialData={form1Data} onDataChange={setForm1Data} />}</div>
         <div className="flex-1 ">
           <Create_navigator currentPage={currentPage} handleFormPage={handleFormPage} isUpserting={isUpserting} LMSIN={Lmsin} onSave={handleUpsert} />
         </div>
