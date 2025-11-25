@@ -44,7 +44,7 @@ export function PageMaker_LoanApplicationManjurinama(data) {
   }
 
   // idea
-  if (f.approver_applicant_name == "male") {
+  if (f.approver_applicant_gender == "male") {
     p4 = " को  नाती ";
   } else if (f.approver_applicant_gender == "female" && f.approver_applicant_maritalStatus == "single") {
     p4 = "को  नातिनी ";
