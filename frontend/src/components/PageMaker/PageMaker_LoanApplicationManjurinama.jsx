@@ -13,9 +13,10 @@ export function PageMaker_LoanApplicationManjurinama(data) {
 
   var p4 = "";
   var p5 = "";
-  var p6 = "";
 
-  // applicant_inlaws_name;
+  var p7 = "";
+  var p8 = "";
+
   if (f.applicant_gender == "male") {
     p1 = " को  नाती ";
   } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "single") {
@@ -23,9 +24,8 @@ export function PageMaker_LoanApplicationManjurinama(data) {
   } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "married") {
     p1 = "को  बुहारी ";
   }
-  if (f.applicant_gender == "female" && f.applicant_maritalStatus == "married") {
-    p2 = "पतनी ";
-  } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "single") {
+
+  if (f.applicant_gender == "female" && f.applicant_maritalStatus == "single") {
     p2 = "छोरि";
   } else if (f.applicant_gender == "male") {
     p2 = "छोरा ";
@@ -38,28 +38,29 @@ export function PageMaker_LoanApplicationManjurinama(data) {
   } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "single") {
     p3 = "शुश्री ";
   }
+
+  if (f.applicant_gender == "female" && f.applicant_maritalStatus == "married") {
+    p7 = f.applicant_spouse_name + " को पतनी ";
+  }
+
   // idea
-  if (f.applicant_gender == "male") {
+  if (f.approver_applicant_name == "male") {
     p4 = " को  नाती ";
-  } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "single") {
+  } else if (f.approver_applicant_gender == "female" && f.approver_applicant_maritalStatus == "single") {
     p4 = "को  नातिनी ";
-  } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "married") {
+  } else if (f.approver_applicant_gender == "female" && f.approver_applicant_maritalStatus == "married") {
     p4 = "को  बुहारी ";
   }
-  if (f.applicant_gender == "female" && f.applicant_maritalStatus == "married") {
-    p5 = "पतनी ";
-  } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "single") {
+
+  if (f.approver_applicant_gender == "female" && f.approver_applicant_maritalStatus == "single") {
     p5 = "छोरि";
-  } else if (f.applicant_gender == "male") {
+  } else if (f.approver_applicant_gender == "male") {
     p5 = "छोरा ";
   }
 
-  if (f.applicant_gender == "male") {
-    p6 = "श्री ";
-  } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "married") {
-    p6 = "श्रीमती ";
-  } else if (f.applicant_gender == "female" && f.applicant_maritalStatus == "single") {
-    p6 = "शुश्री ";
+  if (f.applicant_gender == "female" && f.applicant_maritalStatus == "married") {
+    // p7 is already used for ...
+    p8 = f.applicant_spouse_name + " को पतनी ";
   }
 
   const today = new Date();
@@ -126,12 +127,12 @@ export function PageMaker_LoanApplicationManjurinama(data) {
     <div class="px-4 text-sm text-justify">
         <h1 class="my-3 underline  text-center font-semibold">मन्जुरीनामा</h1>
         <p>
-            लिखितम् ${f.approver_inlaws_name || ""} को ${p4} ${f.approver_father_name || ""} को ${p5}
+            लिखितम् ${f.approver_inlaws_name || ""} को ${p4} ${f.approver_father_name || ""} को ${p5} ${p8 || ""}
             जिल्ला ${f.approverAddress.permanentOld.district || ""} गा.वि.स./न. पा. ${f.approverAddress.permanentOld.palika || ""}
             वडा नं. ${convert(f.approverAddress.permanentOld.wada || "1", "toNp")} हाल
             जिल्ला ${f.approverAddress.permanent.district || ""} गा.पा./न. पा. ${f.approverAddress.permanent.palika || ""}
             वडा नं. ${f.approverAddress.permanent.wada || "1"} बस्ने वर्ष ${convert(f.approver_age || "", "toNp")} को म ${f.approver_applicant_name || ""} आगे
-            ${f.applicant_inlaws_name || ""} को ${p1} ${f.applicant_father_name || ""} को ${p2} ${p3 || ""}
+            ${f.applicant_inlaws_name || ""} को ${p1} ${f.applicant_father_name || ""} को ${p2} ${p7 || ""}
             जिल्ला ${f.address.permanentOld.district || ""} गा.वि.स./न. पा. ${f.address.permanentOld.palika || ""}
             वडा नं. ${convert(f.address.permanentOld.wada || "1", "toNp")} हाल
             जिल्ला ${f.address.permanent.district || ""} गा.पा./न. पा. ${f.address.permanent.palika || ""}

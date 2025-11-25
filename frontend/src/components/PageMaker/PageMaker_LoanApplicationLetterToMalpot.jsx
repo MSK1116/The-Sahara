@@ -65,7 +65,6 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
     ${table7Row
       .map((row, index) => {
         if (!row.govApprovedPrice || !row.localApprovedPrice) return "";
-
         return `
           <tr>
             <td>${row.ownerName || ""}</td>
