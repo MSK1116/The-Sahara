@@ -31,7 +31,7 @@ export function PageMaker_LoanApplicationBharpaie(data) {
             </div>
         </div>
 
-        <div class="text-sm">
+        <div class="">
             <p class=" font-semibold underline text-center">तपसिल</p>
             <div class="px-3 border py-2 mt-1">
                 <p>खाता नं. ${f.savingsAccountNumber || ""}<b> </b></p>
@@ -71,7 +71,7 @@ export function PageMaker_LoanApplicationBharpaie(data) {
             </div>
         </div>
 
-        <div class="text-sm">
+        <div class="">
             <p class=" font-semibold underline text-center">तपसिल</p>
             <div class="px-3 border py-2 mt-1">
                 <p>खाता नं. ${f.savingsAccountNumber || ""}<b> </b></p>
