@@ -97,7 +97,7 @@ export function PageMaker_LoanApplicationTamasuk(data) {
     <div class="px-5 text-justify">
         <h1 class="my-3 underline  text-center">तमसुक</h1>
         <p>
-            लिखितम् धनिको नाम द सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड
+            लिखितम् धनिको नाम द सहारा लोन सेविंग्स को-ऑपरेटिभ सोसाइटी लिमिटेड
             सर्लाही, मलंगवा र.नं. ०१/०५०/०५१
             मिति ०५१/०२/१३ को आगे ऋणीको नाम
             ${f.applicant_inlaws_name || ""} ${p1} ${f.applicant_father_name || ""} को ${p2} ${p3 || ""} 
@@ -118,7 +118,7 @@ export function PageMaker_LoanApplicationTamasuk(data) {
             बुझाउन नसकेमा मेरो जायजेथा रोकी वा
             नरोंकी वा मैले राखेको धितो र अरुको हकको जमानी रुपमा रहेको धितो समेत डॉँक लिलाम बिक्री गरी यसवाट र त्यसवाट
             नपुगे रोक्का रहन नसकेको समेत अन्य चल अचल जायजेयाबाट बाँकी साँवा, व्याज असुल उपर गरी लिनु होला भनि मेरो
-            मनोमान ख़ुशी राजीले ${f.branch || ""} स्थित द साहरा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड,${f.branchType} ${f.branch || ""}
+            मनोमान ख़ुशी राजीले ${f.branch || ""} स्थित द साहरा लोन सेविंग्स को-ऑपरेटिभ सोसाइटी लिमिटेड,${f.branchType} ${f.branch || ""}
             लाई बुझाई दिए । साक्षी किनाराको सदर । <br>ईती सम्वत ${new NepaliDate(today).format("YYYY", "np")} साल ${new NepaliDate(today).format("MMMM", "np")} महिना ${new NepaliDate(today).format("DD", "np")} गते रोज ${new NepaliDate(today).format(
     "ddd",
     "np"

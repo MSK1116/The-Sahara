@@ -25,7 +25,7 @@ export function PageMaker_LoanApplicationManjurinama(data) {
     p1 = "को  बुहारी ";
   }
 
-  if (f.applicant_gender == "female" && f.applicant_maritalStatus == "single") {
+  if (f.applicant_gender == "female") {
     p2 = "छोरि";
   } else if (f.applicant_gender == "male") {
     p2 = "छोरा ";
@@ -58,9 +58,9 @@ export function PageMaker_LoanApplicationManjurinama(data) {
     p5 = "छोरा ";
   }
 
-  if (f.applicant_gender == "female" && f.applicant_maritalStatus == "married") {
+  if (f.approver_applicant_gender == "female" && f.approver_applicant_maritalStatus == "married") {
     // p7 is already used for ...
-    p8 = f.applicant_spouse_name + " को पतनी ";
+    p8 = f.approver_spouse_name + " को पतनी ";
   }
 
   const today = new Date();
@@ -127,12 +127,12 @@ export function PageMaker_LoanApplicationManjurinama(data) {
     <div class="px-4 text-sm text-justify">
         <h1 class="my-3 underline  text-center font-semibold">मन्जुरीनामा</h1>
         <p>
-            लिखितम् ${f.approver_inlaws_name || ""} को ${p4} ${f.approver_father_name || ""} को ${p5} ${p8 || ""}
+            लिखितम् ${f.approver_inlaws_name || ""} ${p4 || "-"} ${f.approver_father_name || ""} को ${p5 || "-"} ${p8 || ""}
             जिल्ला ${f.approverAddress.permanentOld.district || ""} गा.वि.स./न. पा. ${f.approverAddress.permanentOld.palika || ""}
             वडा नं. ${convert(f.approverAddress.permanentOld.wada || "1", "toNp")} हाल
             जिल्ला ${f.approverAddress.permanent.district || ""} गा.पा./न. पा. ${f.approverAddress.permanent.palika || ""}
             वडा नं. ${f.approverAddress.permanent.wada || "1"} बस्ने वर्ष ${convert(f.approver_age || "", "toNp")} को म ${f.approver_applicant_name || ""} आगे
-            ${f.applicant_inlaws_name || ""} को ${p1} ${f.applicant_father_name || ""} को ${p2} ${p7 || ""}
+            ${f.applicant_inlaws_name || ""} ${p1} ${f.applicant_father_name || ""} को ${p2} ${p7 || ""}
             जिल्ला ${f.address.permanentOld.district || ""} गा.वि.स./न. पा. ${f.address.permanentOld.palika || ""}
             वडा नं. ${convert(f.address.permanentOld.wada || "1", "toNp")} हाल
             जिल्ला ${f.address.permanent.district || ""} गा.पा./न. पा. ${f.address.permanent.palika || ""}
@@ -141,15 +141,15 @@ export function PageMaker_LoanApplicationManjurinama(data) {
             को-ऑपरेटिभ सोसाइटी लिमिटेड, ${f.branchType} ${f.branch} वाट ऋण रकम रु. ${f2.fiftyPercentMargin ? convert(f2.fiftyPercentMargin, "toNp") : ""}/- (अक्षरेपी रु.
             ${f2.fiftyPercentMargin_text || ""} मात्र ) कर्जा लिने भएको र सो कर्जा लिन धितो राखी दिनु होस भनी निज
             ${f.applicant_name || ""} ले अन्नु भएको ₹ उपरोक्त बमोजिम धितो राखी दिन मन्जुर छ कि छैन भनी द
-            सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड, ${f.branchType} ${f.branch} मा सोधनी हुँदा सोधनी गर्दा
+            सहारा लोन सेविंग्स को-ऑपरेटिभ सोसाइटी लिमिटेड, ${f.branchType} ${f.branch} मा सोधनी हुँदा सोधनी गर्दा
             मेरो चित्त बुभ्यो तमसुकमा लेखिए अनुसारको लिनु दिनु हुने वापत तपसिलमा लेखिएको अरु कसैलाई कुनै
             व्यहोराको लिखित नगरी दिएको मेरो हक भोगको जग्गा जाय जेथा धितों राखी ${f.applicant_name || ""} लाई
-            कर्जा कारोवार गर्न गराउन मन्जुर छ निज ऋणीले यस द सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी
+            कर्जा कारोवार गर्न गराउन मन्जुर छ निज ऋणीले यस द सहारा लोन सेविंग्स को-ऑपरेटिभ सोसाइटी
             लिमिटेड ${f.branchType || ""} ${f.branch || ""} गरेको तमसुक अनुसार समयमा ऋण नतीरेमा मैले मन्जुरीनामा गरी
             लेखि दिएको जग्गा जाय जेथा लिलाम विक्री गरी असुल उपर गरेमा मेरो मन्जुरी छ । पछि कुनै किसिमको
             उजुर बाजुर गर्ने छैन, गरे यसै कागजले बदर गरी दिनु भनी म आफ्नो ख़ुशी राजीले यस द सहारा लोन
-            सेविंग्स को-ऑपरेटिभ सोसाइटी लिमिटेड ${f.branchType || ""} ${f.branch || ""} बसी
-            किनाराको साक्षीहरुको रोहवरमा यो मन्जुरीनामाको कागज लेखि सही छाप गरी द सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी
+            सेविंग्स को-ऑपरेटिभ सोसाइटी लिमिटेड ${f.branchType || ""} ${f.branch || ""} मा बसी
+            किनाराको साक्षीहरुको रोहवरमा यो मन्जुरीनामाको कागज लेखि सही छाप गरी द सहारा लोन सेविंग्स को-ऑपरेटिभ सोसाइटी
             लिमिटेड ${f.branchType || ""} ${f.branch || ""} लाई दिएँ।
         </p>
 

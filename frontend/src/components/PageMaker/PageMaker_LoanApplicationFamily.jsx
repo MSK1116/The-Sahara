@@ -179,7 +179,7 @@ ${fixedRows2
         </div>
     </div>
     <div class="px-3 text-justify">
-        <h1 class="my-3">श्री द सहारा लोन सेविंग्स को-ऑपरेटिव सोसाइटी लिमिटेड <br />${f.branchType || "_______"}, ${f.branch || "______"}</h1>
+        <h1 class="my-3">श्री द सहारा लोन सेविंग्स को-ऑपरेटिभ सोसाइटी लिमिटेड <br />${f.branchType || "_______"}, ${f.branch || "______"}</h1>
         <h2 class=" text-center">विषयः व्यक्तिगत जमानीको सहमती बारे ।</h2>
         <h3>महोदय,</h3>
         <h4 class="indent-5 text-xs">
