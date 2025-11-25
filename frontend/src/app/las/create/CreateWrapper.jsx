@@ -16,8 +16,6 @@ const CreateWrapper = ({ sessionAuth0 }) => {
   const user = jwt.decode(sessionAuth0?.tokenSet?.idToken);
   const [form1Data, setForm1Data] = useState({ branchType: user?.officerBranchType, branch: user?.officerBranch, branchCode: user?.officerBranchCode });
 
-  console.log(user);
-
   const handleUpsert = async () => {
     const aggregated = {
       form1: form1Data,
