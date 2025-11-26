@@ -58,6 +58,11 @@ const Home_page = ({ sessionAuth0 }) => {
             <p className="text-xs text-gray-500 mb-3 text-center">Enter the 6-digit LMSIN.</p>
             <Input
               placeholder="12XX45"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                }
+              }}
               onChange={(e) => {
                 const inEn = convert(e.target.value || "1", "toEn").trim();
                 setLmsin(inEn);

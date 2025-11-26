@@ -39,8 +39,8 @@ const CreateWrapper = ({ sessionAuth0 }) => {
       if (temp.data) {
         console.log(temp.data.data.form1);
         temp.data?.data.LMSIN && router.push(`/las/browse/${temp.data?.data.LMSIN}`);
-        setIsUpserting(false); // Set loading to false on success
-        return true; // Indicate success
+        setIsUpserting(false);
+        return true;
       }
     } catch (error) {
       setIsUpserting(false);
