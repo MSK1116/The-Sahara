@@ -229,7 +229,19 @@ const Create_form = ({ onDataChange, initialData }) => {
           <div className="w-full cursor-default ">
             <Label htmlFor="amount_text">अक्षरेपी रु</Label>
             {/* show computed amount in words; make readOnly so it's always derived from numeric amount */}
-            <Input disabled id="amount_text" name="amount_text" className="w-full mt-2 text-gray-500" value={!localData.amount ? "पहिले भर्नुपर्ने नम्बर राख्नुहोस्" : `${localData.amount_text || ""} मात्र /-`} readOnly />
+            <Input
+              value={localData.amount_text || ""}
+              onChange={(e) => {
+                setLocalData((d) => ({
+                  ...d,
+                  amount_text: e.target.value.trim(),
+                }));
+              }}
+              id="amount_text"
+              name="amount_text"
+              className="w-full mt-2 text-gray-500"
+              placeholder={!localData.amount ? "पहिले भर्नुपर्ने नम्बर राख्नुहोस्" : ""}
+            />
           </div>
         </div>
         {/* Divider */}

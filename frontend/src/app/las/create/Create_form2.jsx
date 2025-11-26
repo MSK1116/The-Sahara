@@ -192,9 +192,6 @@ const Create_form2 = ({ LMSIN, onDataChange, user }) => {
                       setFrom2((d) => ({
                         ...d,
                         fiftyPercentMargin: cleaned,
-                      }));
-                      setFrom2((d) => ({
-                        ...d,
                         fiftyPercentMargin_text: convert(cleaned, "toNpWord", "currency"),
                       }));
                     }}
@@ -203,7 +200,7 @@ const Create_form2 = ({ LMSIN, onDataChange, user }) => {
                 </div>
                 <div className="w-full">
                   <Label>अक्षरेपी रु.</Label>
-                  <Input className="mt-2" value={form2.fiftyPercentMargin ? convert(form2.fiftyPercentMargin, "toNpWord", "currency") + " मात्र /-" : ""} disabled />
+                  <Input className="mt-2" value={form2?.fiftyPercentMargin_text || ""} />
                 </div>
               </div>
             </div>
