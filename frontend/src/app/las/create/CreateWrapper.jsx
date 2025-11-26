@@ -26,7 +26,16 @@ const CreateWrapper = ({ sessionAuth0 }) => {
     }
     try {
       setIsUpserting(true);
-      const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/upsert`, { ...aggregated, LMSIN: Lmsin, databaseSlug: user?.databaseSlug });
+      const temp = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/las/upsert`,
+        { ...aggregated, LMSIN: Lmsin, databaseSlug: user?.databaseSlug },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionAuth0?.tokenSet?.accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (temp.data) {
         console.log(temp.data.data.form1);
         temp.data?.data.LMSIN && router.push(`/las/browse/${temp.data?.data.LMSIN}`);
@@ -43,7 +52,16 @@ const CreateWrapper = ({ sessionAuth0 }) => {
 
   const getLMSIN = async () => {
     try {
-      const LMSIN = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/getLmsin`, { databaseSlug: user?.databaseSlug });
+      const LMSIN = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/las/getLmsin`,
+        { databaseSlug: user?.databaseSlug },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionAuth0?.tokenSet?.accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (LMSIN.data) {
         setLmsin(LMSIN.data.lmsinNumber);
       }

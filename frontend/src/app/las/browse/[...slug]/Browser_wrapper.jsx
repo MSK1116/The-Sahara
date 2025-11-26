@@ -38,7 +38,16 @@ const Browser_wrapper = ({ LMSIN, formNo, sessionAuth0 }) => {
     setLoading(true);
 
     try {
-      const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/getApplicant`, { LMSIN: LMSIN, databaseSlug: user?.databaseSlug });
+      const temp = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/las/getApplicant`,
+        { LMSIN: LMSIN, databaseSlug: user?.databaseSlug },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionAuth0?.tokenSet?.accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (temp.data) {
         setApplicantData(temp.data);
         setForm1Data(temp.data.form1);
@@ -80,7 +89,16 @@ const Browser_wrapper = ({ LMSIN, formNo, sessionAuth0 }) => {
     }
 
     try {
-      const promise = axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/upsert`, { ...aggregated, LMSIN: LMSIN, databaseSlug: user?.databaseSlug });
+      const promise = axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/las/upsert`,
+        { ...aggregated, LMSIN: LMSIN, databaseSlug: user?.databaseSlug },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionAuth0?.tokenSet?.accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       toast.promise(promise, {
         loading: "Updating applicant...",
         success: "Applicant updated successfully!",
@@ -129,9 +147,9 @@ const Browser_wrapper = ({ LMSIN, formNo, sessionAuth0 }) => {
         {applicantData ? (
           <>
             {currentPage === 1 && <Create_form initialData={applicantData?.form1} onDataChange={setForm1Data} />}
-            {currentPage === 2 && <Create_form2 user={user} LMSIN={LMSIN} onDataChange={handleForm2DataChange} />}
-            {currentPage === 3 && <Create_form3 user={user} LMSIN={LMSIN} onDataChange={handleForm3DataChange} />}
-            {currentPage === 4 && <Create_form4 user={user} LMSIN={LMSIN} onDataChange={handleForm4DataChange} />}
+            {currentPage === 2 && <Create_form2 sessionAuth0={sessionAuth0} LMSIN={LMSIN} onDataChange={handleForm2DataChange} />}
+            {currentPage === 3 && <Create_form3 sessionAuth0={sessionAuth0} LMSIN={LMSIN} onDataChange={handleForm3DataChange} />}
+            {currentPage === 4 && <Create_form4 sessionAuth0={sessionAuth0} LMSIN={LMSIN} onDataChange={handleForm4DataChange} />}
             {currentPage === 5 && <div className="p-10">Page 5 is under construction.</div>}
           </>
         ) : (

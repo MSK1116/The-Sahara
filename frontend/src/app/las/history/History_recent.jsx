@@ -31,11 +31,21 @@ const History_recent = ({ sessionAuth0 }) => {
     if (diffDays < 2 || diffDays > 90) return toast.error("Date range must be between 2 and 90 days");
 
     try {
-      const promise = axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/getRecentHistory`, { databaseSlug: user?.databaseSlug, startDate: toADDate(startDate), finishDate: toADDate(finishDate) });
+      console.log(sessionAuth0);
+      const promise = axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/las/getRecentHistory`,
+        { databaseSlug: user?.databaseSlug, startDate: toADDate(startDate), finishDate: toADDate(finishDate) },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionAuth0?.tokenSet?.accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       toast.promise(promise, {
         loading: "Loading history...",
         success: "History loaded!",
-        error: (err) => err?.response?.data?.message || "Failed to update applicant. Please try again.",
+        error: (err) => err?.response?.data?.message || "Failed to Load history. Please try again.",
       });
       const try1 = await promise;
       setLoading(false);
@@ -101,7 +111,7 @@ const History_recent = ({ sessionAuth0 }) => {
           </form>
         </div>
         <div className="grid mt-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {fetchedHistory.map((historyItem, idx) => (
+          {fetchedHistory?.map((historyItem, idx) => (
             <Link href={`/las/browse/${historyItem.LMSIN}`} key={idx} className="p-4  bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200">
               <div className="flex items-center space-x-2 mb-2">
                 <div className="size-1.5 rounded-full bg-blue-500"></div> <span className="text-xs text-gray-500">Recent Update</span>

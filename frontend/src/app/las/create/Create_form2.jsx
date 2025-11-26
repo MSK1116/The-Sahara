@@ -13,11 +13,12 @@ import axios from "axios";
 import Table7_copy_for_form2 from "./Table7_copy_for_form2";
 import TableLandEvaluation_and_calculator from "./TableLandEvaluation_and_calculator";
 
-const Create_form2 = ({ LMSIN, onDataChange, user }) => {
+const Create_form2 = ({ LMSIN, onDataChange, sessionAuth0 }) => {
   const [localData, setLocalData] = useState({});
   const [form2, setFrom2] = useState({});
   const [fiftyPercentMarginLimit, setFiftyPercentMarginLimit] = useState(0);
 
+  const user = jwt.decode(sessionAuth0?.tokenSet?.idToken);
   const officers = [
     {
       id: 1,
@@ -53,7 +54,16 @@ const Create_form2 = ({ LMSIN, onDataChange, user }) => {
 
   const handleDataFetch = async () => {
     try {
-      const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/getApplicant`, { LMSIN, databaseSlug: user?.databaseSlug });
+      const temp = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/las/getApplicant`,
+        { LMSIN, databaseSlug: user?.databaseSlug },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionAuth0?.tokenSet?.accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (temp.data) {
         setLocalData(temp.data ?? {});

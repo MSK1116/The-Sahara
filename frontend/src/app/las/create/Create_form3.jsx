@@ -5,14 +5,25 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
+import jwt from "jsonwebtoken";
 
-const Create_form3 = ({ LMSIN, onDataChange, user }) => {
+const Create_form3 = ({ LMSIN, onDataChange, sessionAuth0 }) => {
   const [localData, setLocalData] = useState({});
   const [form3, setFrom3] = useState({});
+  const user = jwt.decode(sessionAuth0?.tokenSet?.idToken);
 
   const handleDataFetch = async () => {
     try {
-      const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/getApplicant`, { LMSIN, databaseSlug: user?.databaseSlug });
+      const temp = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/las/getApplicant`,
+        { LMSIN, databaseSlug: user?.databaseSlug },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionAuth0?.tokenSet?.accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (temp.data) {
         setLocalData(temp.data ?? {});

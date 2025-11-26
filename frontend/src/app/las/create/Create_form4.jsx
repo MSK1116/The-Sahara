@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import NepaliDateInput from "@/components/NepaliDatePicker";
-
+import jwt from "jsonwebtoken";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 import Province1JSON from "@/asset/Province1.json";
@@ -18,14 +18,24 @@ import Province7JSON from "@/asset/Province7.json";
 
 const allProvinces = [Province1JSON, Province2JSON, Province3JSON, Province4JSON, Province5JSON, Province6JSON, Province7JSON];
 
-const Create_form4 = ({ LMSIN, onDataChange, user }) => {
+const Create_form4 = ({ LMSIN, onDataChange, sessionAuth0 }) => {
   const allDistricts = allProvinces.flatMap((p) => p.districts.map((d) => d.name));
   const [localData, setLocalData] = useState({});
   const [form4, setForm4] = useState({});
+  const user = jwt.decode(sessionAuth0?.tokenSet?.idToken);
 
   const handleDataFetch = async () => {
     try {
-      const temp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/getApplicant`, { LMSIN, databaseSlug: user?.databaseSlug });
+      const temp = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/las/getApplicant`,
+        { LMSIN, databaseSlug: user?.databaseSlug },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionAuth0?.tokenSet?.accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (temp.data) {
         setLocalData(temp.data ?? {});
         setForm4(temp.data.form4 ?? {});
