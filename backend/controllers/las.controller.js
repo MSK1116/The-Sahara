@@ -142,15 +142,17 @@ export const getLMSIN = async (req, res) => {
 };
 
 export const getRecentHistory = async (req, res) => {
-  const { databaseSlug } = req.body;
-  const sevenDaysAgo = new Date();
-  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 14);
+  const { databaseSlug, startDate, finishDate } = req.body;
 
+  const start = startDate ? new Date(Date.UTC(new Date(startDate).getFullYear(), new Date(startDate).getMonth(), new Date(startDate).getDate(), 0, 0, 0, 0)) : new Date(new Date().setDate(new Date().getDate() - 14));
+  const finish = finishDate ? new Date(Date.UTC(new Date(finishDate).getFullYear(), new Date(finishDate).getMonth(), new Date(finishDate).getDate(), 23, 59, 59, 999)) : new Date();
+
+  console.log(start, finish);
   try {
     const LasModel = getLasModel(databaseSlug);
     const docs = await LasModel.find(
       {
-        $or: [{ createdAt: { $gte: sevenDaysAgo } }, { updatedAt: { $gte: sevenDaysAgo } }],
+        $or: [{ createdAt: { $gte: start, $lte: finish } }, { updatedAt: { $gte: start, $lte: finish } }],
       },
       {
         LMSIN: 1,

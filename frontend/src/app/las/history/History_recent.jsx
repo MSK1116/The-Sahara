@@ -1,17 +1,38 @@
 "use client";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import jwt from "jsonwebtoken";
 import toast from "react-hot-toast";
 import Link from "next/link";
+import NepaliDateInput from "@/components/NepaliDatePicker";
+import NepaliDate from "nepali-date-converter";
+import { LuCalendarRange } from "react-icons/lu";
+import { IoSearchSharp } from "react-icons/io5";
+import { Button } from "@/components/ui/button";
+
 const History_recent = ({ sessionAuth0 }) => {
   const user = jwt.decode(sessionAuth0?.tokenSet?.idToken);
   const [fetchedHistory, setFetchedHistory] = useState();
   const [loading, setLoading] = useState(true);
 
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  const [startDate, setStartDate] = useState(new NepaliDate(sevenDaysAgo).format("YYYY-MM-DD"));
+  const [finishDate, setFinishDate] = useState(new NepaliDate(new Date()).format("YYYY-MM-DD"));
+  const toADDate = (npDateStr) => {
+    const ad = new NepaliDate(npDateStr).getAD();
+    return new Date(ad.year, ad.month, ad.date);
+  };
   const handleFetchRecent = async () => {
+    const startAD = toADDate(startDate);
+    const finishAD = toADDate(finishDate);
+    const diffDays = (finishAD - startAD) / (1000 * 60 * 60 * 24);
+
+    if (startAD > finishAD) return toast.error("Start date cannot be after finish date");
+    if (diffDays < 2 || diffDays > 90) return toast.error("Date range must be between 2 and 90 days");
+
     try {
-      const promise = axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/getRecentHistory`, { databaseSlug: user?.databaseSlug });
+      const promise = axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/getRecentHistory`, { databaseSlug: user?.databaseSlug, startDate: toADDate(startDate), finishDate: toADDate(finishDate) });
       toast.promise(promise, {
         loading: "Loading history...",
         success: "History loaded!",
@@ -34,6 +55,15 @@ const History_recent = ({ sessionAuth0 }) => {
     console.log(fetchedHistory);
   }, [fetchedHistory]);
 
+  const handleEnterFocus = useCallback((e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const form = e.target.form;
+      const index = Array.prototype.indexOf.call(form, e.target);
+      form.elements[index + 1]?.focus();
+    }
+  }, []);
+
   if (loading) {
     return (
       <>
@@ -48,15 +78,28 @@ const History_recent = ({ sessionAuth0 }) => {
   return (
     <>
       <main className="p-10">
-        <div className="px-5 cursor-default py-2 flex items-center space-x-3 text-sm text-gray-100 rounded-2xl bg-linear-to-r from-blue-500 via-blue-600 to-indigo-600 shadow-lg hover:shadow-xl transition-shadow duration-300 w-fit">
-          <div className="relative">
-            <div className="absolute inline-flex h-3 w-3 rounded-full bg-blue-400 opacity-75 animate-ping"></div>
-            <div className="relative h-3 w-3 rounded-full bg-white"></div>
+        <div className=" flex flex-row items-center justify-between">
+          <div className="px-5 cursor-default py-2 flex items-center space-x-3 text-sm text-gray-100 rounded-2xl bg-linear-to-r from-blue-500 via-blue-600 to-indigo-600 shadow-lg hover:shadow-xl transition-shadow duration-300 w-fit">
+            <div className="relative">
+              <div className="absolute inline-flex h-3 w-3 rounded-full bg-blue-400 opacity-75 animate-ping"></div>
+              <div className="relative h-3 w-3 rounded-full bg-white"></div>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xs opacity-80">Connected to</span>
+              <span className="font-semibold">{user?.databaseSlug} Branch</span>
+            </div>
           </div>
-          <div className="flex flex-col">
-            <span className="text-xs opacity-80">Connected to</span>
-            <span className="font-semibold">{user?.databaseSlug} Branch</span>
-          </div>
+          <form className=" flex flex-row space-x-3 w-1/2 px-3 items-center justify-between">
+            <span>
+              <LuCalendarRange className="size-5" />
+            </span>
+            <NepaliDateInput onChange={(val) => setStartDate(val)} value={startDate} handleEnterFocus={handleEnterFocus}></NepaliDateInput>
+            <span>to</span>
+            <NepaliDateInput onChange={(val) => setFinishDate(val)} value={finishDate} handleEnterFocus={handleEnterFocus}></NepaliDateInput>
+            <Button onClick={() => handleFetchRecent()} type={"button"} variant={"outline"} className="p-1 border rounded-full">
+              <IoSearchSharp className="size-5 fill-blue-600" />
+            </Button>
+          </form>
         </div>
         <div className="grid mt-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {fetchedHistory.map((historyItem, idx) => (
