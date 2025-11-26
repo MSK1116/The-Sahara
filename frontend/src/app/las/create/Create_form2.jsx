@@ -39,6 +39,11 @@ const Create_form2 = ({ LMSIN, onDataChange, user }) => {
       post: "सहायक द्वितीय",
       name: "हफिज अंसारि",
     },
+    {
+      id: 4,
+      post: "___",
+      name: "पुरानो मूल्यांकनको आधारमा",
+    },
   ];
 
   const handleDataFetch = async () => {
