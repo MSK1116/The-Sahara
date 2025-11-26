@@ -36,7 +36,7 @@ const Home_page = ({ sessionAuth0 }) => {
             <Image alt="profile image" className=" border border-white object-center object-cover rounded-full" src={user?.profileImage || "/image_dir/LogoOnly.png"} fill={true}></Image>
           </div>
           <div className=" text-center  mt-4 space-x-1 text-white">
-            <p className=" capitalize font-bold tracking-wider">{sessionAuth0?.user?.nickname || "Guest"}</p>
+            <p className=" uppercase font-bold tracking-wider">{sessionAuth0?.user?.nickname || "Guest"}</p>
             <p className=" text-sm tracking-wide">{user?.officerPost}</p>
             <p className=" text-sm">{user?.officerBranch}</p>
           </div>
