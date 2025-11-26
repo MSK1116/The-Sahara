@@ -582,6 +582,9 @@ ${htmlContent}
             {idx + 1}
           </Button>
         ))}
+        <Button onClick={() => window.alert("Coming soon...")} disabled={!isEditing} variant={"outline"} className={` relative z-10 h-8 w-fit border border-dotted border-blue-600 rounded-full flex items-center justify-center cursor-pointer `}>
+          Renew
+        </Button>
       </div>
       <div className="flex flex-col items-center gap-y-2.5 justify-center mt-15">
         <Button disabled={isUpserting} type="button" onClick={() => onSave && onSave()} className="w-full" variant="outline">
