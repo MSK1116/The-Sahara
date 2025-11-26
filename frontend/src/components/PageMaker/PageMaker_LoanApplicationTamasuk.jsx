@@ -108,7 +108,7 @@ export function PageMaker_LoanApplicationTamasuk(data) {
             ${f.desc1 || ""} कार्य गर्नको लागि यस संस्थावाट आजका मितिमा रु. ${f2.fiftyPercentMargin ? convert(f2.fiftyPercentMargin, "toNp") : "-"} (अक्षरेपी रु.
             ${f2.fiftyPercentMargin_text || "-"} मात्र ) ऋण लिएको ठिक साँचो हो | यो ऋणको वार्षिक ${convert(f4.annualInterestRate || "", "toNp")} % (अक्षरेपी रु.
             ${convert(f4.annualInterestRate, "toNpWord") || ""}
-            प्रतिशत) का दरसे ब्याज लगाई सो लागने ब्याज र सम्पूर्ण साँवा
+            प्रतिशत) का दरले ब्याज लगाई सो लागने ब्याज र सम्पूर्ण साँवा
             तपसिलको ऋण भुक्तानी तालिका अनुसार भुक्तानी समेत तपसिल बमोजिमका सर्तहरु पुरा-पुरा पालना गरी ${new NepaliDate(oneYearLater).format("YYYY", "np")} साल ${new NepaliDate(oneYearLater).format("MMMM", "np")}
             महिना ${new NepaliDate(oneYearLater).format("DD", "np")} गते भित्र
             तपसिलको ऋण भुक्तानी तालिका अनुसार तोकिएको समय मित्र नगद यस संस्थालाई बुझाउने छु। यस ऋण बापत
