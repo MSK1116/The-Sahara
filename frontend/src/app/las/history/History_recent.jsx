@@ -120,6 +120,7 @@ const History_recent = ({ sessionAuth0 }) => {
             </Link>
           ))}
         </div>
+        {!fetchedHistory?.length && <div className="w-full flex flex-col items-center justify-center py-16 text-gray-500 text-sm">दिइएको मिति दायरामा कुनै रेकर्ड फेला परेन।</div>}
       </main>
     </>
   );
