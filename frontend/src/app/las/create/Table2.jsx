@@ -8,7 +8,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRad
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import MiniAddressSelector from "@/components/MiniAddressSelector";
 
-const relationsList = ["पिता", "श्रीमती", "पति ", "आमा", "दाजु", "भाइ", "दिदी", "बहिनी", "छोरा", "छोरी", "ससुर", "सासु"];
+const relationsList = ["पिता", "श्रीमती", "पति ", "आमा", "दाजु", "भाइ", "दिदी", "बहिनी", "छोरा", "छोरी", "बुहारी ", "ससुर", "सासु"];
 
 const educationList = ["अशिक्षित", "१–६ कक्षा", "७–९ कक्षा", "१० कक्षा", "११–१२ कक्षा (+२)", "स्नातक (Bachelor)", "स्नातकोत्तर (Master)", "डाक्टर / PhD"];
 

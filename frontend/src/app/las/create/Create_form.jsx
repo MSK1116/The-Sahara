@@ -34,6 +34,7 @@ const Create_form = ({ onDataChange, initialData }) => {
   const [localData, setLocalData] = useState(initialData || {});
   useEffect(() => {
     const isPerson = applicantType !== "सहारा ब्यापारिक कर्जा";
+
     if (!isPerson && convert(localData.amount || "", "toEn") > 300000) {
       setIsPanRequired(true);
     } else {
