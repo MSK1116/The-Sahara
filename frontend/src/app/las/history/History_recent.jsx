@@ -21,14 +21,13 @@ const History_recent = ({ sessionAuth0 }) => {
   const [finishDate, setFinishDate] = useState(new NepaliDate(new Date()).format("YYYY-MM-DD"));
   const toADDate = (npDateStr) => {
     const ad = new NepaliDate(npDateStr).getAD();
-    return new Date(ad.year, ad.month, ad.date);
+    return new Date(Date.UTC(ad.year, ad.month, ad.date));
   };
   const handleFetchRecent = async () => {
     const startAD = toADDate(startDate);
     const finishAD = toADDate(finishDate);
-    const diffDays = (finishAD - startAD) / (1000 * 60 * 60 * 24);
-
     if (startAD > finishAD) return toast.error("Start date cannot be after finish date");
+    const diffDays = (finishAD - startAD) / 86400000; // 1000*60*60*24
     if (diffDays < 2 || diffDays > 90) return toast.error("Date range must be between 2 and 90 days");
 
     try {
