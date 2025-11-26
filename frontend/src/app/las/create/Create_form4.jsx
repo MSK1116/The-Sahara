@@ -59,10 +59,8 @@ const Create_form4 = ({ LMSIN, onDataChange, user }) => {
     <>
       {localData.form4 ? (
         <form>
-          {" "}
           <div className="pt-10 px-10 pb-0">
             <h1 className="text-xl select-none tracking-wide font-semibold mb-10 px-3 py-1 bg-gray-100 rounded-md w-fit">तमसुक </h1>
-
             <div className=" flex flex-row items-start justify-around space-x-5">
               <div className=" flex flex-col space-y-5">
                 <div>
@@ -78,7 +76,7 @@ const Create_form4 = ({ LMSIN, onDataChange, user }) => {
                 </div>
                 <div>
                   <Label>अक्षरेपी प्रतिशत</Label>
-                  <Input disabled readOnly value={convert(form4?.annualInterestRate || "", "toNpWord") + " प्रतिशत"} className="mt-2"></Input>
+                  <Input onKeyDown={handleEnterFocus} disabled readOnly value={convert(form4?.annualInterestRate || "", "toNpWord") + " प्रतिशत"} className="mt-2"></Input>
                 </div>
               </div>
 
