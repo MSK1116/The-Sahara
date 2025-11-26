@@ -318,7 +318,7 @@ export function PageMaker_LoanApplicationPage1(data) {
             <h2 class="font-bold text-center mt-1 tracking-widest">द सहारा लोन सेविग्स को अपरेटिभ सोसाइटी लिमिटेड</h2>
             <h3 class="text-sm text-center">रजिष्टर्ड प्रधान कार्यालय मलंगवा, सर्लाही(नेपाल)</h3>
             <h3 class="text-sm text-center">${f.branchType || "_"}:- ${f.branch || ""}</h3>
-            <h4 class="mt-5 mb-2 underline font-semibold text-center">ऋण माग-पत्र </h4>
+            <h4 class="mt-5 mb-2 underline font-semibold text-xl text-center">ऋण माग-पत्र</h4>
         </div>
     </div>
 
@@ -441,6 +441,165 @@ export function PageMaker_LoanApplicationPage1(data) {
     ${approverSection2}
   </tr>
 </table>
+
+     <div class=" w-full border relative h-55">
+            <div class="absolute font-bold top-2 right-2">
+                उत्तर (N)
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none"
+                    stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="19" x2="12" y2="5"></line>
+                    <polyline points="5 12 12 5 19 12"></polyline>
+                </svg>
+            </div>
+        </div>
+    <div class="p-5">
+        <table class="text-xs">
+            <thead>
+                <tr class=" ">
+                    <th rowspan="2">क्रम स.</th>
+                    <th rowspan="2" class="">संलग्न कागजातहरु</th>
+                    <th colspan="2" class="w-1/6 ">संस्था प्रयोजनको लागि</th>
+                </tr>
+                <tr>
+                    <th>प्रतिलिपि</th>
+                    <th>सक्कल</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>१.</td>
+                    <td>धितो दिने जग्गाको जग्गाधनी प्रमाण-पूर्जा</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>२.</td>
+                    <td>तिरो तिरेको रसिद</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>३.</td>
+                    <td>रजिस्ट्रेशन/ अपशवण्डा वा अन्य जग्गाको स्वामित्व प्राप्तिको कागज</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>४.</td>
+                    <td>जग्गाको फुल साइज नक्सा (Blue Print), फाइल नक्सा</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>५.</td>
+                    <td>घड़ेरी जग्गाको हकमा ट्रेस नक्सा समेत</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>६.</td>
+                    <td>फिल्ड बुक उतार / प्लेट बुक उतार</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>७.</td>
+                    <td>चार किल्ला प्रमाणित</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>८.</td>
+                    <td>नागरिकता</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>९.</td>
+                    <td>घरको नक्सा (नक्सा पास भएको)</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>१०.</td>
+                    <td>भवन निर्माण अनुमति पत्र (गा.वि.स.को हकमा सिफारिस-पत्र)</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>११.</td>
+                    <td>भवन निर्माण सम्पन्न प्रमाण-पत्र</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>१२.</td>
+                    <td>घर जग्गाको मूल्यांकनको कागज (नगरपालिकाबाट)</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>१३.</td>
+                    <td>आम्दानीको श्रोत खुल्ने कागज</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>(क)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>(ख)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>(ग)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>१४.</td>
+                    <td>कम्पनी / फर्म दर्ता प्रमाण-पत्र (नवीकरण गरिएको)</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>१५.</td>
+                    <td>स्थायी लेखा नम्बर (PAN)</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>१६.</td>
+                    <td>नयाँ आर्थिक वर्षको कर तिरेको रसिद</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>१७.</td>
+                    <td>कर चुक्ता / आय व्यय विवरण पेश गरेको विवरण</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>१८.</td>
+                    <td>३.५ लाखभन्दा माथि ऋणको हकमा स्किम (Proposal) वा व्यवसायिक योजना</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+
+
+        </table>
+
+        <p class="my-1.5 font-semibold">रुजु गर्ने <br> कर्मचारी नाम र ठेगाना _______________</p>
+    </div>
 
 
     <script>
