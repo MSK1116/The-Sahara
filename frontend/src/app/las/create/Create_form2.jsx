@@ -40,9 +40,14 @@ const Create_form2 = ({ LMSIN, onDataChange, user }) => {
       name: "हफिज अंसारि",
     },
     {
-      id: 4,
+      id: 5,
       post: "___",
       name: "पुरानो मूल्यांकनको आधारमा",
+    },
+    {
+      id: 6,
+      post: "सहायक द्वितीय",
+      name: "पंकज चौधरी",
     },
   ];
 

@@ -54,7 +54,7 @@ const Create_form3 = ({ LMSIN, onDataChange, user }) => {
               <div className=" flex flex-row items-center justify-center space-x-5">
                 <div>
                   <Label className={"mb-2"}>शाखा किसिम</Label>
-                  <Select disabled readOnly value={form3.branchType || ""} className="mt-2">
+                  <Select disabled readOnly value={localData?.form1?.branchType || ""} className="mt-2">
                     <SelectTrigger>
                       <SelectValue placeholder="कार्यालयको किसिम"></SelectValue>
                     </SelectTrigger>
