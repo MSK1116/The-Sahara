@@ -442,7 +442,10 @@ export function PageMaker_LoanApplicationPage1(data) {
   </tr>
 </table>
 
-     <div class=" w-full border relative h-55">
+    <div class="p-5">
+        <h1 class="text-center">वसोवास गरिआऐको घर वा डेरा भएको ठाउँको नक्सा
+        </h1>
+         <div class=" w-full border relative h-55">
             <div class="absolute font-bold top-2 right-2">
                 उत्तर (N)
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none"
@@ -452,6 +455,7 @@ export function PageMaker_LoanApplicationPage1(data) {
                 </svg>
             </div>
         </div>
+    </div>
     <div class="p-5">
         <table class="text-xs">
             <thead>
