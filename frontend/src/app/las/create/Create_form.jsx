@@ -84,26 +84,6 @@ const Create_form = ({ onDataChange, initialData }) => {
     { numberKey: "project_estimated_cost", textKey: "project_estimated_cost_text" },
   ];
 
-  useEffect(() => {
-    setLocalData((prev) => {
-      const updated = { ...prev };
-      let changed = false;
-
-      autoConvertList.forEach(({ numberKey, textKey }) => {
-        const num = prev[numberKey];
-        if (num === undefined) return;
-
-        const words = convertNumberToWords(num);
-        if (words !== prev[textKey]) {
-          updated[textKey] = words;
-          changed = true;
-        }
-      });
-
-      return changed ? updated : prev;
-    });
-  }, [localData.amount, localData.project_estimated_cost]);
-
   // Focus the other input if "अन्य" is selected
   useEffect(() => {
     if (applicantType === "अन्य") {
@@ -227,13 +207,21 @@ const Create_form = ({ onDataChange, initialData }) => {
               value={localData.amount || ""}
               onKeyDown={handleEnterFocus}
               onChange={(e) => {
-                const valInEn = e.target.value.trim() === "" ? "" : convert(e.target.value || "", "toEn");
-                setLocalData((d) => ({ ...d, amount: convert(e.target.value || "", "toNp") }));
-                if (Number(valInEn) > 1000000 || Number(valInEn) === 0) {
-                  setLocalErrors((prev) => ({ ...prev, amount: true }));
-                } else {
-                  setLocalErrors((prev) => ({ ...prev, amount: false }));
-                }
+                const val = e.target.value;
+                const valInEn = val.trim() === "" ? "" : convert(val, "toEn");
+                const valInNp = convert(val, "toNp");
+                const valText = val ? convertNumberToWords(val) : "";
+
+                setLocalData((d) => ({
+                  ...d,
+                  amount: valInNp,
+                  amount_text: valText,
+                }));
+
+                setLocalErrors((prev) => ({
+                  ...prev,
+                  amount: Number(valInEn) > 1000000 || Number(valInEn) === 0,
+                }));
               }}
             />
           </div>
