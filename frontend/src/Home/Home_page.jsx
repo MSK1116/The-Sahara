@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Input } from "@/components/ui/input";
 import jwt from "jsonwebtoken";
+import { FaIndianRupeeSign } from "react-icons/fa6";
 
 const Home_page = ({ sessionAuth0 }) => {
   const router = useRouter();
@@ -40,27 +41,29 @@ const Home_page = ({ sessionAuth0 }) => {
             <p className=" text-sm">{user?.officerBranch}</p>
           </div>
         </div>
-        <div className="flex flex-row items-center cursor-default space-x-5 w-[60%] h-auto p-5 py-10">
-          <a href="/las/create" className=" flex items-center justify-center flex-col rounded-sm hover:shadow-xl w-full h-full bg-gray-100">
-            <IoAddCircleSharp className=" fill-blue-700 size-15" />
-            <p className=" mt-3 text-center">Create New</p>
-          </a>
-          <a href="/las/history" className=" flex items-center justify-center flex-col rounded-sm hover:shadow-xl w-full h-full bg-gray-100">
-            <FaHistory className=" fill-blue-700 size-15" />
-            <p className=" mt-3 text-center">Branch History</p>
+        <div className="grid grid-cols-3 w-[60%]  gap-5  p-5 py-10">
+          <a href="/las/create" className="flex items-center justify-center flex-col rounded-sm hover:shadow-xl bg-gray-100 p-6">
+            <IoAddCircleSharp className="fill-blue-700 size-10" />
+            <p className="mt-3 text-center">Create New</p>
           </a>
 
-          <div className=" flex items-center justify-center flex-col rounded-sm shadow-inner p-4 w-full h-full bg-gray-100">
-            <IoSearchSharp className="fill-blue-700 size-15" />
+          <a href="/las/history" className="flex items-center justify-center flex-col rounded-sm hover:shadow-xl bg-gray-100 p-6">
+            <FaHistory className="fill-blue-700 size-10" />
+            <p className="mt-3 text-center">Branch History</p>
+          </a>
+
+          <div className="flex items-center justify-center flex-col rounded-sm shadow-inner bg-gray-100 p-6">
+            <IoSearchSharp className="fill-blue-700 size-10" />
             <p className="mt-3 text-center font-semibold">Quick Search</p>
             <p className="text-xs text-gray-500 mb-3 text-center">Enter the 6-digit LMSIN.</p>
             <Input
-              placeholder={"12XX45"}
+              placeholder="12XX45"
               onChange={(e) => {
                 const inEn = convert(e.target.value || "1", "toEn").trim();
                 setLmsin(inEn);
-              }}></Input>
-            <Button variant={"outline"} type="button" onClick={handleSearch} className="w-full mt-4">
+              }}
+            />
+            <Button variant="outline" type="button" onClick={handleSearch} className="w-full mt-4">
               Search
             </Button>
           </div>
