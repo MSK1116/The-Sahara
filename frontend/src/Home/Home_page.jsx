@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { use, useState } from "react";
 import convert from "number-to-nepali-words";
 import { IoAddCircleSharp } from "react-icons/io5";
+import { FaHistory } from "react-icons/fa";
 import { IoSearchSharp } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -44,12 +45,17 @@ const Home_page = ({ sessionAuth0 }) => {
             <IoAddCircleSharp className=" fill-blue-700 size-15" />
             <p className=" mt-3 text-center">Create New</p>
           </a>
+          <a href="/las/history" className=" flex items-center justify-center flex-col rounded-sm hover:shadow-xl w-full h-full bg-gray-100">
+            <FaHistory className=" fill-blue-700 size-15" />
+            <p className=" mt-3 text-center">Branch History</p>
+          </a>
 
           <div className=" flex items-center justify-center flex-col rounded-sm shadow-inner p-4 w-full h-full bg-gray-100">
             <IoSearchSharp className="fill-blue-700 size-15" />
             <p className="mt-3 text-center font-semibold">Quick Search</p>
             <p className="text-xs text-gray-500 mb-3 text-center">Enter the 6-digit LMSIN.</p>
             <Input
+              placeholder={"12XX45"}
               onChange={(e) => {
                 const inEn = convert(e.target.value || "1", "toEn").trim();
                 setLmsin(inEn);

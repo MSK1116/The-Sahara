@@ -140,3 +140,35 @@ export const getLMSIN = async (req, res) => {
     res.status(500).json({ error: "Something went wrong" });
   }
 };
+
+export const getRecentHistory = async (req, res) => {
+  const { databaseSlug } = req.body;
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 14);
+
+  try {
+    const LasModel = getLasModel(databaseSlug);
+    const docs = await LasModel.find(
+      {
+        $or: [{ createdAt: { $gte: sevenDaysAgo } }, { updatedAt: { $gte: sevenDaysAgo } }],
+      },
+      {
+        LMSIN: 1,
+        "form1.citizenship_number": 1,
+        "form1.applicant_name": 1,
+        _id: 0,
+      }
+    ).sort({ updatedAt: -1 });
+
+    const result = docs.map((doc) => ({
+      LMSIN: doc.LMSIN,
+      citizenship_number: doc.form1?.citizenship_number || "",
+      applicant_name: doc.form1?.applicant_name || "",
+    }));
+
+    return res.status(200).json({ result });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ error });
+  }
+};
