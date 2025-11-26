@@ -318,7 +318,7 @@ export function PageMaker_LoanApplicationPage1(data) {
             <h2 class="font-bold text-center mt-1 tracking-widest">द सहारा लोन सेविग्स को अपरेटिभ सोसाइटी लिमिटेड</h2>
             <h3 class="text-sm text-center">रजिष्टर्ड प्रधान कार्यालय मलंगवा, सर्लाही(नेपाल)</h3>
             <h3 class="text-sm text-center">${f.branchType || "_"}:- ${f.branch || ""}</h3>
-            <h4 class="mt-5 mb-2 underline text-center">Loan Application</h4>
+            <h4 class="mt-5 mb-2 underline font-semibold text-center">ऋण माग-पत्र </h4>
         </div>
     </div>
 
