@@ -93,7 +93,6 @@ ${htmlContent}
 
     printWindow.document.close();
   };
-
   const handlePrint2 = async () => {
     const updated = await onSave();
     if (!updated) return toast.error("Failed to update before printing.");
@@ -246,7 +245,6 @@ ${htmlContent}
 
     printWindow.document.close();
   };
-
   const handlePrint4 = async () => {
     const updated = await onSave();
     if (!updated) return toast.error("Failed to update before printing.");
@@ -582,7 +580,11 @@ ${htmlContent}
             {idx + 1}
           </Button>
         ))}
-        <Button onClick={() => window.alert("Coming soon...")} disabled={!isEditing} variant={"outline"} className={` relative z-10 h-8 w-fit border border-dotted border-blue-600 rounded-full flex items-center justify-center cursor-pointer `}>
+        <Button
+          onClick={() => handleFormPage("Renew")}
+          disabled={!isEditing}
+          variant={"outline"}
+          className={` ${currentPage === "renew" && " bg-blue-600 text-white border-white"} bg-white border-blue-600 relative z-10 h-8 w-fit border border-dotted  rounded-full flex items-center justify-center cursor-pointer `}>
           Renew
         </Button>
       </div>

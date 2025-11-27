@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import Create_form3 from "../../create/Create_form3";
 import Create_form4 from "../../create/Create_form4";
 import jwt from "jsonwebtoken";
+import Create_formRenew from "../../create/Create_formRenew";
 const Browser_wrapper = ({ LMSIN, formNo, sessionAuth0 }) => {
   const [applicantData, setApplicantData] = useState(null);
   const [form1Data, setForm1Data] = useState({});
@@ -150,11 +151,10 @@ const Browser_wrapper = ({ LMSIN, formNo, sessionAuth0 }) => {
             {currentPage === 2 && <Create_form2 sessionAuth0={sessionAuth0} LMSIN={LMSIN} onDataChange={handleForm2DataChange} />}
             {currentPage === 3 && <Create_form3 sessionAuth0={sessionAuth0} LMSIN={LMSIN} onDataChange={handleForm3DataChange} />}
             {currentPage === 4 && <Create_form4 sessionAuth0={sessionAuth0} LMSIN={LMSIN} onDataChange={handleForm4DataChange} />}
-            {currentPage === 5 && <div className="p-10">Page 5 is under construction.</div>}
+            {currentPage === "Renew" && <Create_formRenew sessionAuth0={sessionAuth0} LMSIN={LMSIN} />}
           </>
         ) : (
           <>
-            {" "}
             <div className="w-full text-center p-10">Applicant not found.</div>
             <div className=" mx-auto size-fit flex items-center justify-center flex-col rounded-sm shadow-inner p-4 bg-gray-100">
               <IoSearchSharp className="fill-blue-700 size-15" />
