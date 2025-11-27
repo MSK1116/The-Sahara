@@ -291,7 +291,7 @@ const Create_form = ({ onDataChange, initialData }) => {
                     setLocalData((d) => ({ ...d, age: handleAgeCalculator(val) }));
                   }}
                 />
-                <span className="text-center inline-flex items-center justify-center gap-1">
+                <span className="text-center text-red-600 inline-flex items-center justify-center gap-1">
                   or
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -703,7 +703,7 @@ const Create_form = ({ onDataChange, initialData }) => {
         </div>
         <span className="font-bold">ऋणीको व्यक्तिगत विवरण</span>
 
-        <Table2 handleEnterFocus={handleEnterFocus} onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table2: newRows })), [])} initialData={localData.table2} />
+        <Table2 handleEnterFocus={handleEnterFocus} applicantAddress={localData?.address.permanent} onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table2: newRows })), [])} initialData={localData.table2} />
         <div className="flex items-center my-10">
           <span className="flex-1 h-px bg-gray-300"></span>
           <span className="px-4 text-sm text-gray-700">Page 2, Section 2</span>
@@ -712,7 +712,6 @@ const Create_form = ({ onDataChange, initialData }) => {
         <div className=" ">
           <div className="flex flex-row items-center space-x-5">
             <p className=" font-bold">धितो मन्जुरीनामा दिनका व्यक्तिगत विवरण</p>
-
             <div className="text-xs space-x-2 flex items-center justify-center">
               <Checkbox
                 className={" border border-red-600"}
@@ -753,7 +752,7 @@ const Create_form = ({ onDataChange, initialData }) => {
                     setLocalData((d) => ({ ...d, approver_age: handleAgeCalculator(val) }));
                   }}
                 />
-                <span className="text-center inline-flex items-center justify-center gap-1">
+                <span className="text-center text-red-600 inline-flex items-center justify-center gap-1">
                   or
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />

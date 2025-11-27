@@ -36,10 +36,11 @@ export default function MiniAddressSelector({ value, onChange, disabled = false 
   };
 
   useEffect(() => {
-    if (onChange && JSON.stringify(selected) !== JSON.stringify(value)) {
+    if (!onChange) return;
+    if (JSON.stringify(selected) !== JSON.stringify(value)) {
       onChange(selected);
     }
-  }, [selected, value, onChange]);
+  }, [selected]);
 
   return (
     <Popover>

@@ -618,16 +618,16 @@ ${htmlContent}
               धितो दिने घर जग्गाको मुलाङ्कन परतिवेदन
             </Button>
             <Button onClick={handlePrint3} variant="outline">
-              मालपोतलाई चिठी
+              दृष्टिबन्धक पत्र
             </Button>
-            <Button onClick={handlePrint4} variant="outline">
-              भरपाई
+            <Button onClick={handlePrint6} variant="outline">
+              व्यक्तिगत जमानीको सहमती
             </Button>
             <Button onClick={handlePrint5} variant="outline">
               तमसुक
             </Button>
-            <Button onClick={handlePrint6} variant="outline">
-              व्यक्तिगत जमानीको सहमती
+            <Button onClick={handlePrint4} variant="outline">
+              भरपाई
             </Button>
             <Button onClick={handlePrint7} variant="outline">
               मन्जुरीनामा

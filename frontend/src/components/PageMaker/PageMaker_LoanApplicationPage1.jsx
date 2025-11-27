@@ -602,7 +602,7 @@ export function PageMaker_LoanApplicationPage1(data) {
 
         </table>
 
-        <p class="my-1.5 font-semibold">रुजु गर्ने <br> कर्मचारी नाम र ठेगाना _______________</p>
+        <p class="my-1.5 font-semibold">रुजु गर्ने <br> कर्मचारी नाम र दस्तखत _______________</p>
     </div>
 
 

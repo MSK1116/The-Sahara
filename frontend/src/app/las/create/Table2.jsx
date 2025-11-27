@@ -7,6 +7,7 @@ import { MdDelete } from "react-icons/md";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import MiniAddressSelector from "@/components/MiniAddressSelector";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const relationsList = ["पिता", "श्रीमती", "पति ", "आमा", "दाजु", "भाइ", "दिदी", "बहिनी", "छोरा", "छोरी", "बुहारी ", "ससुर", "सासु"];
 
@@ -14,7 +15,7 @@ const educationList = ["अशिक्षित", "१–६ कक्षा", 
 
 const professionList = ["कृषक", "व्यवसाय", "नोकरी", "विद्यार्थी", "ड्राइभर", "शिक्षक", "इन्जिनियर", "डाक्टर", "गृहिणी", "विदेशमा रोजगार"];
 
-export default function Table2({ onDataChange, handleEnterFocus, initialData }) {
+export default function Table2({ onDataChange, handleEnterFocus, initialData, applicantAddress }) {
   const initialRow = {
     id: Date.now(),
     name: "",
@@ -55,10 +56,28 @@ export default function Table2({ onDataChange, handleEnterFocus, initialData }) 
         <table className="table-auto border-collapse border-gray-300 w-full">
           <thead>
             <tr className="bg-gray-100">
-              <th className="px-4 py-2 w-4 text-left text-sm text-gray-700 font-semibold border">सि.न</th>
+              <th className="px-1 py-2 w-4 text-left text-sm text-gray-700 font-semibold border">सि.न</th>
               <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">नाम</th>
-              <th className="px-4 py-2  text-left text-sm text-gray-700 font-semibold border">ठेगाना</th>
-              <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">नाता</th>
+              <th className="px-4 py-2 flex flex-row items-center justify-between text-left text-sm text-gray-700 font-semibold border">
+                ठेगाना
+                <div className="flex items-center justify-center">
+                  <span className="text-xs">ऋणीको जस्तै:</span>
+                  <Checkbox
+                    onCheckedChange={(checked) => {
+                      if (checked) {
+                        const updatedRows = rows.map((row) => ({
+                          ...row,
+                          address: applicantAddress,
+                        }));
+                        setRows(updatedRows);
+                        onDataChange && onDataChange(updatedRows);
+                      }
+                    }}
+                    className="border ml-0.5 border-red-600"
+                  />
+                </div>
+              </th>
+              <th className="px-4 py-2 w-16 text-left text-sm text-gray-700 font-semibold border">नाता</th>
               <th className="px-4 py-2 w-20 text-left text-sm text-gray-700 font-semibold border">उमेर</th>
               <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">शैक्षिक योग्यता</th>
               <th className="px-4 py-2 text-left text-sm text-gray-700 font-semibold border">पेसा </th>
@@ -69,14 +88,14 @@ export default function Table2({ onDataChange, handleEnterFocus, initialData }) 
           <tbody>
             {rows.map((row, index) => (
               <tr key={row.id}>
-                <td className="border p-2">
+                <td className="border p-0.5">
                   <Input disabled readOnly value={index + 1 || ""} />
                 </td>
                 <td className="border p-2 max-w-50">
                   <Input onKeyDown={handleEnterFocus} id={`name-${row.id}`} value={row.name || ""} onChange={(e) => handleInputChange(row.id, "name", e.target.value)} placeholder="नाम" />
                 </td>
-                <td className="border p-2 w-40 max-w-50 min-w-40">
-                  <div className="w-full overflow-hidden">
+                <td className="border p-2  w-40 max-w-50 min-w-40">
+                  <div className="w-full  overflow-hidden">
                     <MiniAddressSelector value={row.address || ""} onChange={(addr) => handleInputChange(row.id, "address", addr)} />
                   </div>
                 </td>
@@ -122,6 +141,7 @@ export default function Table2({ onDataChange, handleEnterFocus, initialData }) 
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </td>
+                {/* profession */}
                 <td className="border p-2 w-30 max-w-30 min-w-30">
                   <div className="flex w-full gap-2">
                     <Input onKeyDown={handleEnterFocus} id={`profession-${row.id}`} value={row.profession || ""} onChange={(e) => handleInputChange(row.id, "profession", e.target.value)} placeholder="पेसा" className="flex-1" />
