@@ -13,7 +13,7 @@ const GenderAndMale_status = ({ onDataChange, gender: initialGender, maritalStat
   }, [gender, marital]);
 
   return (
-    <div className="flex flex-row mt-5.5 space-x-3 items-center justify-center">
+    <div className="flex flex-row  space-x-3 items-center justify-center">
       {/* Male */}
       <div title="पुरुष चयन गर्नुहोस्" onClick={() => setGender("male")} className={`${gender === "male" && "bg-blue-500 text-white border-white"} p-2.5 rounded-md border border-gray-400`}>
         <FaRegUser />

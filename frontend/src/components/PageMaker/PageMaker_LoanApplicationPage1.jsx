@@ -357,7 +357,7 @@ export function PageMaker_LoanApplicationPage1(data) {
       टोल <b>${f.address.permanent.tole || "—"}</b>
     </p>
 
-    <h2>फोन नं: <b>${convert(f.phone1 || "", "toNp")}</b>, <b>${convert(f.phone2 || "", "toNp")}</b></h2>
+    <h2>फोन नं: <b>${convert(f.phone1 || "", "toNp")}</b></h2>
     <h3>शैक्षिक योग्यता: <b>${f.personal_education}</b></h3>
 
     ${applicantDetails}

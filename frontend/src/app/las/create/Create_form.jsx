@@ -17,6 +17,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import NepaliDateInput from "@/components/NepaliDatePicker";
 import GenderAndMale_status from "@/components/GenderAndMarried_status";
 import { Checkbox } from "@/components/ui/checkbox";
+import NepaliDate from "nepali-date-converter";
 
 const Create_form = ({ onDataChange, initialData }) => {
   const [applicantType, setApplicantType] = useState("सहारा व्यक्तिगत कर्जा");
@@ -123,8 +124,13 @@ const Create_form = ({ onDataChange, initialData }) => {
       prevPayloadRef.current = serialized;
       if (onDataChange) onDataChange(combined);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localData, applicantType, paymentFrequency]);
+
+  const handleAgeCalculator = (value) => {
+    const { year, month, date } = new NepaliDate(value).getAD();
+    const today = new Date();
+    return today.getFullYear() - year - (today.getMonth() < month || (today.getMonth() === month && today.getDate() < date) ? 1 : 0);
+  };
 
   return (
     <div className="pt-10 px-10 pb-0">
@@ -273,36 +279,51 @@ const Create_form = ({ onDataChange, initialData }) => {
             </div>
 
             {/* Age */}
-            <div className="mt-5 flex flex-row items-center justify-center space-x-3">
+            <div className="mt-5 flex flex-col space-y-1 items-center justify-center space-x-3">
               <div>
                 <Label className={localErrors.age ? "text-red-600" : ""} htmlFor="age">
                   उमेर
                 </Label>
-                <Input
-                  id="age"
-                  name="age"
-                  className="mt-2"
-                  value={localData.age ? convert(localData.age || "", "toEn") : ""}
-                  onKeyDown={handleEnterFocus}
-                  onChange={(e) => {
-                    const valInEn = convert(e.target.value || "", "toEn");
-                    const numVal = Number(valInEn);
-                    setLocalData((d) => ({ ...d, age: convert(e.target.value || "", "toNp") }));
-                    setLocalErrors((prev) => ({ ...prev, age: numVal < 18 || numVal > 85 || isNaN(numVal) }));
+                <NepaliDateInput
+                  className="mt-3"
+                  handleEnterFocus={handleEnterFocus}
+                  onChange={(val) => {
+                    setLocalData((d) => ({ ...d, age: handleAgeCalculator(val) }));
                   }}
                 />
+                <span className="text-center inline-flex items-center justify-center gap-1">
+                  or
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </span>
+                <div className="flex flex-row items-center justify-between space-x-3">
+                  <Input
+                    id="age"
+                    name="age"
+                    className=""
+                    value={localData.age ? convert(localData.age || "", "toEn") : ""}
+                    onKeyDown={handleEnterFocus}
+                    onChange={(e) => {
+                      const valInEn = convert(e.target.value || "", "toEn");
+                      const numVal = Number(valInEn);
+                      setLocalData((d) => ({ ...d, age: convert(e.target.value || "", "toNp") }));
+                      setLocalErrors((prev) => ({ ...prev, age: numVal < 18 || numVal > 85 || isNaN(numVal) }));
+                    }}
+                  />
+                  <GenderAndMale_status
+                    gender={localData.applicant_gender || ""}
+                    maritalStatus={localData.applicant_maritalStatus || ""}
+                    onDataChange={(val) =>
+                      setLocalData((d) => ({
+                        ...d,
+                        applicant_gender: val.gender,
+                        applicant_maritalStatus: val.marital,
+                      }))
+                    }
+                  />
+                </div>
               </div>
-              <GenderAndMale_status
-                gender={localData.applicant_gender || ""}
-                maritalStatus={localData.applicant_maritalStatus || ""}
-                onDataChange={(val) =>
-                  setLocalData((d) => ({
-                    ...d,
-                    applicant_gender: val.gender,
-                    applicant_maritalStatus: val.marital,
-                  }))
-                }
-              />
             </div>
 
             {/* Phone 1 */}
@@ -324,28 +345,6 @@ const Create_form = ({ onDataChange, initialData }) => {
 
                   setLocalData((d) => ({ ...d, phone1: convert(trimmedValue || "", "toNp") }));
                   setLocalErrors((prev) => ({ ...prev, phone1: valInEn.length !== 10 || isNaN(numVal) }));
-                }}
-              />
-            </div>
-
-            {/* Phone 2 */}
-            <div className="w-full mt-5">
-              <Label className={localErrors.phone2 ? "text-red-600" : ""} htmlFor="phone2">
-                फोन नं २
-              </Label>
-              <Input
-                id="phone2"
-                name="phone2"
-                className="w-full mt-2"
-                value={localData.phone2 ? convert(localData.phone2 || "", "toEn") : ""}
-                onKeyDown={handleEnterFocus}
-                onChange={(e) => {
-                  const rawValue = e.target.value;
-                  const trimmedValue = rawValue.replace(/\s+/g, ""); // remove all spaces
-                  const valInEn = convert(trimmedValue, "toEn");
-                  const numVal = Number(valInEn);
-                  setLocalData((d) => ({ ...d, phone2: convert(trimmedValue || "", "toNp") }));
-                  setLocalErrors((prev) => ({ ...prev, phone2: valInEn.length !== 10 || isNaN(numVal) }));
                 }}
               />
             </div>
@@ -746,11 +745,23 @@ const Create_form = ({ onDataChange, initialData }) => {
                   onChange={(e) => setLocalData((d) => ({ ...d, approver_applicant_name: e.target.value }))}
                 />
               </div>
-              <div className=" flex flex-row items-center justify-center space-x-3">
-                <div>
-                  <Label className={localErrors.approver_age ? "text-red-600" : ""}>उमेर</Label>
+              <div className=" flex flex-col space-x-3 space-y-2">
+                <Label className={localErrors.approver_age ? "text-red-600" : ""}>उमेर</Label>
+                <NepaliDateInput
+                  handleEnterFocus={handleEnterFocus}
+                  onChange={(val) => {
+                    setLocalData((d) => ({ ...d, approver_age: handleAgeCalculator(val) }));
+                  }}
+                />
+                <span className="text-center inline-flex items-center justify-center gap-1">
+                  or
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </span>
+                <div className="flex flex-row items-center justify-between space-x-2.5">
                   <Input
-                    className="mt-2"
+                    className=""
                     value={localData.approver_age ? convert(localData.approver_age || "", "toEn") : ""}
                     onKeyDown={handleEnterFocus}
                     onChange={(e) => {
@@ -760,18 +771,19 @@ const Create_form = ({ onDataChange, initialData }) => {
                       setLocalErrors((prev) => ({ ...prev, approver_age: numVal < 18 || numVal > 85 || isNaN(numVal) }));
                     }}
                   />
+
+                  <GenderAndMale_status
+                    gender={localData.approver_applicant_gender || ""}
+                    maritalStatus={localData.approver_applicant_maritalStatus || ""}
+                    onDataChange={(val) =>
+                      setLocalData((d) => ({
+                        ...d,
+                        approver_applicant_gender: val.gender,
+                        approver_applicant_maritalStatus: val.marital,
+                      }))
+                    }
+                  />
                 </div>
-                <GenderAndMale_status
-                  gender={localData.approver_applicant_gender || ""}
-                  maritalStatus={localData.approver_applicant_maritalStatus || ""}
-                  onDataChange={(val) =>
-                    setLocalData((d) => ({
-                      ...d,
-                      approver_applicant_gender: val.gender,
-                      approver_applicant_maritalStatus: val.marital,
-                    }))
-                  }
-                />
               </div>
               <div className="w-full ">
                 <Label className={!isApprovalGiven && "text-gray-500"} htmlFor="approver_citizenship_number">

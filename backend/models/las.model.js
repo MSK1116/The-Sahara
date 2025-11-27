@@ -145,7 +145,6 @@ const Form1Schema = new mongoose.Schema({
   applicant_maritalStatus: { type: String, default: "single" },
 
   phone1: { type: String, default: "" },
-  phone2: { type: String, default: "" },
 
   citizenship_number: { type: String, default: "" },
   citizenship_takenOffice: { type: String, default: "" },
