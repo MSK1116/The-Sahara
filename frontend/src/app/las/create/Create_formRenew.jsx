@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken";
 import NepaliDateInput from "@/components/NepaliDatePicker";
 import NepaliDate from "nepali-date-converter";
 
-const Create_formRenew = ({ sessionAuth0, LMSIN }) => {
+const Create_formRenew = ({ sessionAuth0, LMSIN, onDataChange }) => {
   const [form1, setForm1] = useState({});
   const [form4, setForm4] = useState({});
   const [localErrors, setLocalErrors] = useState({});
@@ -31,7 +31,6 @@ const Create_formRenew = ({ sessionAuth0, LMSIN }) => {
         console.log(temp);
         setForm1(temp.data.form1 ?? {});
         setForm4(temp.data.form4 ?? {});
-        window.alert("Coming soon...");
       }
     } catch (error) {
       console.error(error);
@@ -42,6 +41,12 @@ const Create_formRenew = ({ sessionAuth0, LMSIN }) => {
   useEffect(() => {
     handleDataFetch();
   }, []);
+
+  useEffect(() => {
+    if (onDataChange) {
+      onDataChange({ form1, form4 });
+    }
+  }, [form1, form4]);
 
   const handleEnterFocus = useCallback((e) => {
     if (e.key === "Enter") {
@@ -107,6 +112,7 @@ const Create_formRenew = ({ sessionAuth0, LMSIN }) => {
                   onChange={(e) => {
                     const valInEn = convert(e.target.value || "", "toEn");
                     const numVal = Number(valInEn);
+                    setForm1((d) => ({ ...d, age: convert(e.target.value || "", "toNp") }));
                     setLocalErrors((prev) => ({ ...prev, age: numVal < 18 || numVal > 85 || isNaN(numVal) }));
                   }}
                 />
