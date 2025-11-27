@@ -30,8 +30,6 @@ const Create_formRenew = ({ sessionAuth0, LMSIN }) => {
       if (temp.data) {
         console.log(temp);
         setForm1(temp.data.form1 ?? {});
-        setForm2(temp.data.form2 ?? {});
-        setForm3(temp.data.form3 ?? {});
         setForm4(temp.data.form4 ?? {});
         window.alert("Coming soon...");
       }
