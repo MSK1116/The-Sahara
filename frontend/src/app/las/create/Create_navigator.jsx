@@ -564,7 +564,7 @@ ${htmlContent}
 
     printWindow.document.close();
   };
-
+  const pages = ["ऋण मागपत्र दर्ता", "मूल्यांकन परतिवेदन ", "मालपोतको लागि रोका पत्र", "तमसुक"];
   return (
     <div className="w-full flex flex-col px-5 pt-3 pb-0 rounded-l-2xl sticky bg-gray-200 top-1/6 shadow ">
       <div className="flex relative flex-col select-none items-center gap-3">
@@ -573,6 +573,7 @@ ${htmlContent}
         {[...Array(4)].map((i, idx) => (
           <Button
             variant={"outline"}
+            title={pages[idx]}
             disabled={!isEditing && idx !== 0}
             onClick={() => handleFormPage(idx + 1)}
             key={idx}
@@ -584,6 +585,7 @@ ${htmlContent}
           onClick={() => handleFormPage(10)}
           disabled={!isEditing}
           variant={"outline"}
+          title={"नवीकरण"}
           className={` ${currentPage === 10 ? " bg-blue-600 text-white border-white" : "bg-white border-blue-600"}  relative z-10 h-8 w-fit border border-dotted  rounded-full flex items-center justify-center cursor-pointer `}>
           Renew
         </Button>
@@ -631,6 +633,9 @@ ${htmlContent}
             </Button>
             <Button onClick={handlePrint7} variant="outline">
               मन्जुरीनामा
+            </Button>
+            <Button onClick={() => window.alert("Coming soon...")} variant="outline">
+              फुकुवा पत्र
             </Button>
           </div>
           <DialogFooter>
