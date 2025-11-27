@@ -40,6 +40,7 @@ const Create_formRenew = ({ sessionAuth0, LMSIN }) => {
 
   useEffect(() => {
     handleDataFetch();
+    window.alert("coming soon...");
   }, []);
 
   const handleEnterFocus = useCallback((e) => {
@@ -54,42 +55,44 @@ const Create_formRenew = ({ sessionAuth0, LMSIN }) => {
   return (
     <>
       <main>
-        <form>
-          <div className="flex items-center my-10">
-            <span className="flex-1 h-px bg-gray-300"></span>
-            <span className="px-4 text-sm text-gray-700">Page 1, Section 3</span>
-            <span className="flex-1 h-px bg-gray-300"></span>
-          </div>
-
-          <div className=" flex flex-row items-start justify-around space-x-5">
-            <div className=" flex flex-col space-y-5">
-              <div>
-                <Label>ऋणको बार्षिक पर्तिसत</Label>
-                <Input
-                  className="mt-2"
-                  onKeyDown={handleEnterFocus}
-                  value={form4?.annualInterestRate || ""}
-                  onChange={(e) => {
-                    const val = convert(e.target.value, "toEn").trim();
-                    setForm4((d) => ({ ...d, annualInterestRate: val }));
-                  }}></Input>
-              </div>
-              <div>
-                <Label>अक्षरेपी प्रतिशत</Label>
-                <Input onKeyDown={handleEnterFocus} disabled readOnly value={convert(form4?.annualInterestRate || "", "toNpWord") + " प्रतिशत"} className="mt-2"></Input>
-              </div>
+        {form1 && (
+          <form>
+            <div className="flex items-center my-10">
+              <span className="flex-1 h-px bg-gray-300"></span>
+              <span className="px-4 text-sm text-gray-700">Page 1, Section 3</span>
+              <span className="flex-1 h-px bg-gray-300"></span>
             </div>
 
-            <div className=" ">
-              <Label>तोकेको थप समयमा व्याज नबुझाएमा थप % </Label>
-              <Input onKeyDown={handleEnterFocus} className="mt-2" value={form4?.addPer1 || ""} onChange={(e) => setForm4((d) => ({ ...d, addPer1: e.target.value }))}></Input>
+            <div className=" flex flex-row items-start justify-around space-x-5">
+              <div className=" flex flex-col space-y-5">
+                <div>
+                  <Label>ऋणको बार्षिक पर्तिसत</Label>
+                  <Input
+                    className="mt-2"
+                    onKeyDown={handleEnterFocus}
+                    value={form4?.annualInterestRate || ""}
+                    onChange={(e) => {
+                      const val = convert(e.target.value, "toEn").trim();
+                      setForm4((d) => ({ ...d, annualInterestRate: val }));
+                    }}></Input>
+                </div>
+                <div>
+                  <Label>अक्षरेपी प्रतिशत</Label>
+                  <Input onKeyDown={handleEnterFocus} disabled readOnly value={convert(form4?.annualInterestRate || "", "toNpWord") + " प्रतिशत"} className="mt-2"></Input>
+                </div>
+              </div>
+
+              <div className=" ">
+                <Label>तोकेको थप समयमा व्याज नबुझाएमा थप % </Label>
+                <Input onKeyDown={handleEnterFocus} className="mt-2" value={form4?.addPer1 || ""} onChange={(e) => setForm4((d) => ({ ...d, addPer1: e.target.value }))}></Input>
+              </div>
+              <div className=" ">
+                <Label>तोकेको समयमा किस्ता तथा साँवा नबुझाएमा थप %</Label>
+                <Input onKeyDown={handleEnterFocus} className="mt-2" value={form4?.addPer2 || ""} onChange={(e) => setForm4((d) => ({ ...d, addPer2: e.target.value }))}></Input>
+              </div>
             </div>
-            <div className=" ">
-              <Label>तोकेको समयमा किस्ता तथा साँवा नबुझाएमा थप %</Label>
-              <Input onKeyDown={handleEnterFocus} className="mt-2" value={form4?.addPer2 || ""} onChange={(e) => setForm4((d) => ({ ...d, addPer2: e.target.value }))}></Input>
-            </div>
-          </div>
-        </form>
+          </form>
+        )}
       </main>
     </>
   );

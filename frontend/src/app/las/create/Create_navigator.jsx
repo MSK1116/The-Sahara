@@ -581,10 +581,10 @@ ${htmlContent}
           </Button>
         ))}
         <Button
-          onClick={() => handleFormPage("Renew")}
+          onClick={() => handleFormPage(10)}
           disabled={!isEditing}
           variant={"outline"}
-          className={` ${currentPage === "renew" && " bg-blue-600 text-white border-white"} bg-white border-blue-600 relative z-10 h-8 w-fit border border-dotted  rounded-full flex items-center justify-center cursor-pointer `}>
+          className={` ${currentPage === 10 ? " bg-blue-600 text-white border-white" : "bg-white border-blue-600"}  relative z-10 h-8 w-fit border border-dotted  rounded-full flex items-center justify-center cursor-pointer `}>
           Renew
         </Button>
       </div>
