@@ -111,7 +111,7 @@ const Create_formRenew = ({ sessionAuth0, LMSIN }) => {
                   }}
                 />
               </div>
-              {!form1.approver_applicant_name && (
+              {form1.approver_applicant_name && (
                 <div className="flex flex-col space-y-2 w-1/5">
                   <Label className={localErrors.approver_age ? "text-red-600" : ""}>मंजुरिनामा दिनेको उमेर</Label>
                   <NepaliDateInput onChange={(val) => setForm1((d) => ({ ...d, approver_age: handleAgeCalculator(val) }))} handleEnterFocus={handleEnterFocus} />
