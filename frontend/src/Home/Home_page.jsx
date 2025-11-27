@@ -30,7 +30,7 @@ const Home_page = ({ sessionAuth0 }) => {
   return (
     <>
       <div className=" w-full h-full flex flex-row space-x-5 py-20 px-10">
-        <div className=" w-[40%] bg-blue-700 p-10 rounded-sm cursor-default">
+        <div className=" w-[40%] bg-linear-to-br from-blue-600 to-blue-700 p-10 rounded-sm cursor-default">
           <p className=" text-xl font-bold text-center mb-5 text-white">Welcome to Loan Application System!</p>
           <div className=" relative mx-auto size-30 rounded-full">
             <Image alt="profile image" className=" border border-white object-center object-cover rounded-full" src={user?.profileImage || "/image_dir/LogoOnly.png"} fill={true}></Image>
