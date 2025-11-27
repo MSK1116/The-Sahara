@@ -76,6 +76,11 @@ const Browser_wrapper = ({ LMSIN, formNo, sessionAuth0 }) => {
     setForm4Data(form4);
   };
 
+  const handleFromRenewDataChange = ({ form1, form4 }) => {
+    setForm1Data(form1);
+    setForm4Data(form4);
+  };
+
   const handleSave = async () => {
     const aggregated = {
       form1: form1Data,
@@ -151,7 +156,7 @@ const Browser_wrapper = ({ LMSIN, formNo, sessionAuth0 }) => {
             {currentPage === 2 && <Create_form2 sessionAuth0={sessionAuth0} LMSIN={LMSIN} onDataChange={handleForm2DataChange} />}
             {currentPage === 3 && <Create_form3 sessionAuth0={sessionAuth0} LMSIN={LMSIN} onDataChange={handleForm3DataChange} />}
             {currentPage === 4 && <Create_form4 sessionAuth0={sessionAuth0} LMSIN={LMSIN} onDataChange={handleForm4DataChange} />}
-            {currentPage === 10 && <Create_formRenew sessionAuth0={sessionAuth0} LMSIN={LMSIN} />}
+            {currentPage === 10 && <Create_formRenew sessionAuth0={sessionAuth0} LMSIN={LMSIN} onDataChange={handleFromRenewDataChange} />}
           </>
         ) : (
           <>

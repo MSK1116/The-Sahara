@@ -80,11 +80,6 @@ const Create_form = ({ onDataChange, initialData }) => {
     }
   };
 
-  const autoConvertList = [
-    { numberKey: "amount", textKey: "amount_text" },
-    { numberKey: "project_estimated_cost", textKey: "project_estimated_cost_text" },
-  ];
-
   // Focus the other input if "अन्य" is selected
   useEffect(() => {
     if (applicantType === "अन्य") {
