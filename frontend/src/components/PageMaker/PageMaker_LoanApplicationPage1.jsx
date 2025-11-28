@@ -1,6 +1,7 @@
 import convert from "number-to-nepali-words";
 export function PageMaker_LoanApplicationPage1(data) {
   const f = data.form1;
+
   console.log(f);
   let applicantDetails = "";
   const isPerson = f.applicantType !== "सहारा ब्यापारिक कर्जा";
@@ -320,6 +321,7 @@ export function PageMaker_LoanApplicationPage1(data) {
             <h3 class="text-sm text-center">${f.branchType || "_"}:- ${f.branch || ""}</h3>
             <h4 class="mt-5 mb-2 underline font-semibold text-xl text-center">ऋण माग-पत्र</h4>
         </div>
+        <svg class=" absolute top-0 right-0" id="barcode"></svg>
     </div>
 
     <hr>
@@ -607,7 +609,19 @@ export function PageMaker_LoanApplicationPage1(data) {
 
 
     <script>
-      window.onload = () => { window.print(); };
+      window.onload = function() {
+        JsBarcode("#barcode", "${data.LMSIN}", {
+          format: "CODE128",
+          displayValue: true,
+          lineColor: "#000",
+          width: 1,
+          height: 15,
+          margin: 0
+          fontSize: 10,   
+          textMargin: 2
+        });
+        window.print();
+      }
     </script>
 
 </body>`;

@@ -13,6 +13,7 @@ import { PageMaker_LoanApplicationBharpaie } from "@/components/PageMaker/PageMa
 import { PageMaker_LoanApplicationTamasuk } from "@/components/PageMaker/PageMaker_LoanApplicationTamasuk";
 import { PageMaker_LoanApplicationFamily } from "@/components/PageMaker/PageMaker_LoanApplicationFamily";
 import { PageMaker_LoanApplicationManjurinama } from "@/components/PageMaker/PageMaker_LoanApplicationManjurinama";
+import JsBarcode from "jsbarcode";
 
 const Create_navigator = ({ currentPage, onSave, handleFormPage, isUpserting, LMSIN, isEditing = false }) => {
   const [openPrintModal, setOpenPrintModal] = useState(false);
@@ -84,9 +85,9 @@ const Create_navigator = ({ currentPage, onSave, handleFormPage, isUpserting, LM
       </style>
 
       <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+      <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     </head>
 ${htmlContent}
-    
 
   </html>
 `);

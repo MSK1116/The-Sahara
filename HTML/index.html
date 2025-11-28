@@ -35,6 +35,312 @@
 <body>
 
     <div class="">
+
+
+        <div class="flex relative flex-row justify-center items-center">
+            <div class="absolute left-2 top-2 mr-10 size-20">
+                <img class="rounded-full" src="/image_dir/LogoOnly.png" alt="Logo" />
+            </div>
+            <div class="">
+                <h1 class="text-xs mt-5 text-center">सहकारी ऐन २०४८ बमोजिम स्थापित</h1>
+                <h2 class="font-bold text-center mt-1 tracking-widest">द सहारा लोन सेविग्स को अपरेटिभ सोसाइटी
+                    लिमिटेड</h2>
+                <h3 class="text-sm text-center">रजिष्टर्ड प्रधान कार्यालय मलंगवा, सर्लाही(नेपाल)</h3>
+                <h3 class="text-sm text-center">${f.branchType || "_"}:- ${f.branch || ""}</h3>
+                <h4 class="mt-5 mb-2 underline font-semibold text-xl text-center">ऋण माग-पत्र</h4>
+            </div>
+
+        </div>
+
+        <hr>
+        <div class="flex items-center text-xs mt-1 justify-between flex-row">
+            <h5>ऋण माग पत्र दर्ता संख्या: <b>${f.rn1 || ""}</b></h5>
+            <h5>ऋण भाग पत्र दर्ता मिति: <b>${f.rn2 || ""}</b></h5>
+            <h5>ऋण संख्या: <b>${f.rn3 || ""}</b></h5>
+            <h5>दर्ता गर्नेको दस्तखत: <b>..............</b></h5>
+        </div>
+
+        <h2 class="mt-5 mb-0.5">श्रीमान् कार्यालय प्रमुख ज्यु</h2>
+        <h3 class="my-1">द सहारा लोन सेविम्स को अपरेटिभ सोसाइटी लिमिटेड</h3>
+        <h4 class="my-1">प्रधान कार्यालय मलंगवा</h4>
+        <h5 class="my-1">${f.branchType}: <b>${f.branch || "-"}</b></h5>
+
+        <p class="my-1 mb-2">
+            कृपया निम्न विवरण खुलाइ म/हामीले <b>${f.desc1}</b> कार्यको लागि माग गरेको रु
+            <b>${f.amount}/-</b> अक्षरमा रु <b>${f.amount_text} मात्र /-</b> को सुविधा स्वीकृत गरी दिनु हुन अनुरोध
+            गर्दछु/छौं।
+        </p>
+
+        <p>ऋण निवेदकको नाम थर: <b>${f.applicant_name}</b></p>
+        <p>उमेर: <b>${convert(f.age || "", "toNp")}</b></p>
+
+        <p>
+            स्थायी ठेगाना (ना.प्र.प) अनुसार :
+            जिल्ला <b>${f.address.permanentOld.district}</b>,
+            गा.वि .स/ना.पा <b>${f.address.permanentOld.palika || "—"}</b>,
+            वडा नं. <b>${convert(f.address.permanentOld.wada || "1", "toNp")}</b>,
+            टोल <b>${f.address.permanentOld.tole || "—"}</b>
+            र हाल ठेगाना:
+            <b>${f.address.permanent.province}</b>,
+            जिल्ला <b>${f.address.permanent.district}</b>,
+            गा.पा / ना.पा. <b>${f.address.permanent.palika || "—"}</b>,
+            वडा नं. <b>${convert(f.address.permanent.wada || "1", "toNp")}</b>,
+            टोल <b>${f.address.permanent.tole || "—"}</b>
+        </p>
+
+        <h2>फोन नं: <b>${convert(f.phone1 || "", "toNp")}</b></h2>
+        <h3>शैक्षिक योग्यता: <b>${f.personal_education}</b></h3>
+
+        ${applicantDetails}
+
+        <div class="mt-2 mb-1">माग गरेको ऋण सुविधा</div>
+        <table border="1" class="text-xs my-3" cellspacing="0" cellpadding="6" width="100%">
+            <tr>
+                <th>क्र.स</th>
+                <th>कर्जा सुविधा</th>
+                <th>रकम</th>
+                <th>भुक्तानी अवधि</th>
+                <th>कैफियत</th>
+            </tr>
+            ${f.table1
+            .map(
+            (row, index) => `
+            <tr>
+                <td><b>${convert(index + 1 || "", "toNp")}</b></td>
+                <td><b>${f.applicantType || "—"}</b></td>
+                <td><b>${f.amount || "—"}</b></td>
+                <td><b>${convert(row["भुक्तानी अवधि"] || "—", "toNp")} वर्ष</b></td>
+                <td><b>${row["कैफियत"] || "—"}</b></td>
+            </tr>`
+            )
+            .join("")}
+        </table>
+
+        <p>व्याज बुझाउने: <b>${f.paymentFrequency}</b></p>
+
+        <p class="mt-2">
+            <b>ऋणीको व्यक्तिगत विवरण:</b> <br />
+            नाम: <b>${f.applicant_name}</b>, <br />
+            ठेगाना: <b>${f.address.permanent.province}, ${f.address.permanent.district},
+                ${f.address.permanent.palika},
+                ${convert(f.address.permanent.wada || "1", "toNp")}, ${f.address.permanent.tole}</b>
+        </p>
+
+        <p>
+            नागरिकता नं.: <b>${f.citizenship_number}</b>, <br />
+            बुबाको नाम: <b>${f.applicant_father_name}</b>, <br />
+            पतिको/पत्नीको नाम: <b>${f.applicant_spouse_name}</b>, <br />
+            बाजे/ससुरको नाम: <b>${f.applicant_inlaws_name}</b>
+        </p>
+
+        ${relativesTableHTML}
+
+        ${approverSection}
+
+        <p>ऋणीको पेशा: <b>${f.applicant_profession}</b></P>
+
+        ${incomeTable}
+
+        ${table4HTML}
+
+        ${table5HTML}
+        ${table6HTML}
+        ${table7HTML}
+
+        <p class="my-3">माथि उल्लेखित सम्पूर्ण विवरण मैले उपलब्ध गराएको सत्य र साँचो हो । यसमा फरक परे म पूर्ण रूपमा
+            जिम्मेवार हुनेछु । साथै, संस्थाले समय, परिस्थिति तथा अन्य कारणवश कुनै नियम, ब्याज दर तथा अन्य नीति–नियम
+            परिवर्तन
+            गरेमा मलाई मन्जुर हुनेछ ।</p>
+
+
+        <table class="w-full border-collapse my-5 text-xs">
+            <tr>
+                <!-- Applicant -->
+                <td class="align-top w-1/2 border px-4 py-2">
+                    <p class="font-semibold mb-3">निवेदक:</p>
+
+                    <p>हस्ताक्षर: ___________________</p>
+
+                    <p>
+                        नाम: <b>${f.applicant_name}</b>
+                    </p>
+
+                    <p>स्थायी ठेगाना (ना.प्र.प) अनुसार :
+                        जिल्ला <b>${f.approverAddress.permanentOld.district}</b>,
+                        गा.वि .स/ना.पा <b>${f.approverAddress.permanentOld.palika || "—"}</b>,
+                        वडा नं. <b>${convert(f.approverAddress.permanentOld.wada || "1", "toNp")}</b>,
+                        टोल <b>${f.approverAddress.permanentOld.tole || "—"}</b>
+                    </p>
+                </td>
+
+                <!-- Approver -->
+                ${approverSection2}
+            </tr>
+        </table>
+
+        <div class="p-5">
+            <h1 class="text-center">वसोवास गरिआऐको घर वा डेरा भएको ठाउँको नक्सा
+            </h1>
+            <div class=" w-full border relative h-55">
+                <div class="absolute font-bold top-2 right-2">
+                    उत्तर (N)
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none"
+                        stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="19" x2="12" y2="5"></line>
+                        <polyline points="5 12 12 5 19 12"></polyline>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="p-5">
+            <table class="text-xs">
+                <thead>
+                    <tr class=" ">
+                        <th rowspan="2">क्रम स.</th>
+                        <th rowspan="2" class="">संलग्न कागजातहरु</th>
+                        <th colspan="2" class="w-1/6 ">संस्था प्रयोजनको लागि</th>
+                    </tr>
+                    <tr>
+                        <th>प्रतिलिपि</th>
+                        <th>सक्कल</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>१.</td>
+                        <td>धितो दिने जग्गाको जग्गाधनी प्रमाण-पूर्जा</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>२.</td>
+                        <td>तिरो तिरेको रसिद</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>३.</td>
+                        <td>रजिस्ट्रेशन/ अपशवण्डा वा अन्य जग्गाको स्वामित्व प्राप्तिको कागज</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>४.</td>
+                        <td>जग्गाको फुल साइज नक्सा (Blue Print), फाइल नक्सा</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>५.</td>
+                        <td>घड़ेरी जग्गाको हकमा ट्रेस नक्सा समेत</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>६.</td>
+                        <td>फिल्ड बुक उतार / प्लेट बुक उतार</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>७.</td>
+                        <td>चार किल्ला प्रमाणित</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td>८.</td>
+                        <td>नागरिकता</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>९.</td>
+                        <td>घरको नक्सा (नक्सा पास भएको)</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>१०.</td>
+                        <td>भवन निर्माण अनुमति पत्र (गा.वि.स.को हकमा सिफारिस-पत्र)</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>११.</td>
+                        <td>भवन निर्माण सम्पन्न प्रमाण-पत्र</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>१२.</td>
+                        <td>घर जग्गाको मूल्यांकनको कागज (नगरपालिकाबाट)</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>१३.</td>
+                        <td>आम्दानीको श्रोत खुल्ने कागज</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>(क)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>(ख)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>(ग)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>१४.</td>
+                        <td>कम्पनी / फर्म दर्ता प्रमाण-पत्र (नवीकरण गरिएको)</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>१५.</td>
+                        <td>स्थायी लेखा नम्बर (PAN)</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>१६.</td>
+                        <td>नयाँ आर्थिक वर्षको कर तिरेको रसिद</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>१७.</td>
+                        <td>कर चुक्ता / आय व्यय विवरण पेश गरेको विवरण</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>१८.</td>
+                        <td>३.५ लाखभन्दा माथि ऋणको हकमा स्किम (Proposal) वा व्यवसायिक योजना</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+
+
+            </table>
+
+            <p class="my-1.5 font-semibold">रुजु गर्ने <br> कर्मचारी नाम र दस्तखत _______________</p>
+        </div>
+
         <div>
             <h1 class="text-xl mx-auto w-fit my-2 font-bold text-center border border-black px-3 py-1">भरपाई</h1>
             <div>भरपाई दादै स्थायी ठेगाना: - ${f.address.permanent.province}, ${f.address.permanent.district},
