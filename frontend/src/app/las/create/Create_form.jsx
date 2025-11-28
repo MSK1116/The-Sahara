@@ -703,7 +703,7 @@ const Create_form = ({ onDataChange, initialData }) => {
         </div>
         <span className="font-bold">ऋणीको व्यक्तिगत विवरण</span>
 
-        <Table2 handleEnterFocus={handleEnterFocus} applicantAddress={localData?.address.permanent} onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table2: newRows })), [])} initialData={localData.table2} />
+        <Table2 handleEnterFocus={handleEnterFocus} applicantAddress={localData?.address?.permanent} onDataChange={useCallback((newRows) => setLocalData((d) => ({ ...d, table2: newRows })), [])} initialData={localData.table2} />
         <div className="flex items-center my-10">
           <span className="flex-1 h-px bg-gray-300"></span>
           <span className="px-4 text-sm text-gray-700">Page 2, Section 2</span>
