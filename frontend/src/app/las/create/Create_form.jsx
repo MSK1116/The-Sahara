@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Create_addressInput from "./Create_addressInput";
 import ProjectAddressSelector from "./ProjectAddressSelector";
+
 import Table1 from "./Table1";
 import convert from "number-to-nepali-words";
 import Table2 from "./Table2";
@@ -18,8 +19,11 @@ import NepaliDateInput from "@/components/NepaliDatePicker";
 import GenderAndMale_status from "@/components/GenderAndMarried_status";
 import { Checkbox } from "@/components/ui/checkbox";
 import NepaliDate from "nepali-date-converter";
+import { IoIosArrowDropdownCircle } from "react-icons/io";
+import { Button } from "@/components/ui/button";
 
 const Create_form = ({ onDataChange, initialData }) => {
+  const professionList = ["कृषक", "व्यवसाय", "नोकरी", "विद्यार्थी", "ड्राइभर", "शिक्षक", "इन्जिनियर", "डाक्टर", "गृहिणी", "विदेशमा रोजगार"];
   const [applicantType, setApplicantType] = useState("सहारा व्यक्तिगत कर्जा");
   const [paymentFrequency, setPaymentFrequency] = useState("मासिक");
   const [isApprovalGiven, setIsApprovalGiven] = useState(false);
@@ -139,26 +143,18 @@ const Create_form = ({ onDataChange, initialData }) => {
         {/* ---------------------- Section 1 ---------------------------- */}
         <div className="flex flex-row items-center gap-x-10 justify-between">
           <div className="w-full">
-            <Label htmlFor="rn1">संख्या</Label>
+            <Label htmlFor="rn1">दर्ता न:</Label>
             <Input id="rn1" name="rn1" className="w-full mt-2" value={localData.rn1 || ""} onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, rn1: e.target.value }))} />
           </div>
-
-          <div className="w-full">
-            <Label htmlFor="rn2">ऋण संख्या</Label>
-            <Input id="rn2" name="rn2" className="w-full mt-2" value={localData.rn2 || ""} onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, rn2: e.target.value }))} />
-          </div>
-
           <div className="w-full">
             <Label htmlFor="rn3">ऋण मागपत्र दर्ता मिति</Label>
+            <NepaliDateInput className="w-full mt-2" handleEnterFocus={handleEnterFocus} onChange={(val) => setLocalData((d) => ({ ...d, rn2: val }))} value={localData.rn2 || ""} />
+          </div>
+          <div className="w-full">
+            <Label htmlFor="rn3">ऋण संख्या</Label>
             <Input id="rn3" name="rn3" className="w-full mt-2" value={localData.rn3 || ""} onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, rn3: e.target.value }))} />
           </div>
-
-          <div className="w-full">
-            <Label htmlFor="rn4">दर्ता गर्नेको दस्तखत</Label>
-            <Input id="rn4" name="rn4" className="w-full mt-2" value={localData.rn4 || ""} onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, rn4: e.target.value }))} />
-          </div>
         </div>
-
         {/* Divider */}
         <div className="flex items-center my-10">
           <span className="flex-1 h-px bg-gray-300"></span>
@@ -452,16 +448,37 @@ const Create_form = ({ onDataChange, initialData }) => {
               />
             </div>
           </div>
-          <div className="w-full mt-5">
-            <Label htmlFor="applicant_profession">ऋणीको पेशा</Label>
-            <Input
-              id="applicant_profession"
-              name="applicant_profession"
-              className="w-full mt-2"
-              value={localData.applicant_profession || ""}
-              onKeyDown={handleEnterFocus}
-              onChange={(e) => setLocalData((d) => ({ ...d, applicant_profession: e.target.value }))}
-            />
+          <div className="w-1/4 flex flex-row items-center justify-center space-x-3 mt-5">
+            <div>
+              <Label htmlFor="applicant_profession">ऋणीको पेशा</Label>
+              <Input
+                id="applicant_profession"
+                name="applicant_profession"
+                className="w-full mt-2"
+                value={localData.applicant_profession || ""}
+                onKeyDown={handleEnterFocus}
+                onChange={(e) => setLocalData((d) => ({ ...d, applicant_profession: e.target.value }))}
+              />
+            </div>
+            <div className="mt-4">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline">
+                    <IoIosArrowDropdownCircle />
+                  </Button>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent align="start">
+                  <DropdownMenuRadioGroup value={localData.applicant_profession || ""} onValueChange={(val) => setLocalData((d) => ({ ...d, applicant_profession: val }))}>
+                    {professionList.map((prof, i) => (
+                      <DropdownMenuRadioItem key={i + "form1"} value={prof}>
+                        {prof}
+                      </DropdownMenuRadioItem>
+                    ))}
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
         </div>
         {/* Divider */}

@@ -308,7 +308,7 @@ export function PageMaker_LoanApplicationPage1(data) {
 </table>
 `;
 
-  return `<body>
+  return `<body class="ml-15">
     <div class="flex relative flex-row justify-center items-center">
         <div class="absolute left-2 top-2 mr-10 size-20">
             <img class="rounded-full" src="/image_dir/LogoOnly.png" alt="Logo" />
@@ -324,10 +324,10 @@ export function PageMaker_LoanApplicationPage1(data) {
 
     <hr>
     <div class="flex items-center text-xs mt-1 justify-between flex-row">
-        <h5>ऋण माग पत्र दर्ता संख्या: <b>-</b></h5>
-        <h5>ऋण भाग पत्र दर्ता मिति: <b>-</b></h5>
-        <h5>ऋण संख्या: <b>-</b></h5>
-        <h5>दर्ता गर्नेको दस्तखत: <b>-</b></h5>
+        <h5>ऋण माग पत्र दर्ता संख्या: <b>${f.rn1 || ""}</b></h5>
+        <h5>ऋण भाग पत्र दर्ता मिति: <b>${f.rn2 || ""}</b></h5>
+        <h5>ऋण संख्या: <b>${f.rn3 || ""}</b></h5>
+        <h5>दर्ता गर्नेको दस्तखत: <b>..............</b></h5>
     </div>
 
     <h2 class="mt-5 mb-0.5">श्रीमान् कार्यालय प्रमुख ज्यु</h2>

@@ -104,19 +104,19 @@ export function PageMaker_LoanApplicationManjurinama(data) {
 
   return `
 
-<body class=" flex flex-row items-center">
+<body class=" ml-5 flex flex-row">
     <div class="flex w-[10%] h-full">
-        <div class=" pr-4 mt-auto mb-20 text-center b text-xs ">
+        <div class=" pr-4 mb-auto mt-45 text-center b text-xs ">
             <p>
-                 संस्थाको तर्फबाट कागज जाँच गर्नेको दस्तखत : ___________
-                 संस्थाको तर्फबाट कागज तयार गर्नेको नाम र दस्तखत: _______________<br>
+                 संस्थाको तर्फबाट कागज जाँच गर्नेको दस्तखत : ___________<br><br>
+                 संस्थाको तर्फबाट कागज तयार गर्नेको नाम र दस्तखत: _______________
                 
             </p>
-            <p class="ml-2">
+            <p class="ml-2 my-2">
                 जिल्ला __________ गा.वि.स/गा.पा/न. पा. ___________वडा नं. ___________ मा बस्ने वर्ष _____ को
                 ______________
             </p>
-            <p>
+            <p class="my-2">
                 जिल्ला ________ गा.वि.स/गा.पा/न. पा. ___________ वडा नं. ___________ मा बस्ने वर्ष _____ को
                 ______________
             </p>
@@ -124,7 +124,7 @@ export function PageMaker_LoanApplicationManjurinama(data) {
         </div>
     </div>
 
-    <div class="px-4 text-sm text-justify">
+    <div class="px-4 ml-15 text-sm text-justify">
         <h1 class="my-3 underline  text-center font-semibold">मन्जुरीनामा</h1>
         <p>
             लिखितम् ${f.approver_inlaws_name || ""} ${p4 || "-"} ${f.approver_father_name || ""} को ${p5 || "-"} ${p8 || ""}

@@ -99,7 +99,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
         {/* Palika */}
         <div>
           <Label>गा.वि.स / ना. पा.</Label>
-          <Input value={permanentOld.palika || ""} onChange={(val) => setPermanentOld({ ...permanentOld, palika: val.target.value })}></Input>
+          <Input onKeyDown={handleEnterFocus} value={permanentOld.palika || ""} onChange={(val) => setPermanentOld({ ...permanentOld, palika: val.target.value })}></Input>
         </div>
 
         {/* Wada */}
@@ -267,10 +267,7 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
         <div className=" mt-4">
           <Label>प्रदेश</Label>
           <DropdownMenu>
-            <DropdownMenuTrigger
-              className="mt-2 border px-3 py-2 rounded-md w-full text-sm"
-              disabled={current.sameAsPermanent} // disable trigger
-            >
+            <DropdownMenuTrigger className="mt-2 border px-3 py-2 rounded-md w-full text-sm" disabled={current.sameAsPermanent}>
               {current.province || "प्रदेश चयन गर्नुहोस्"}
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-full max-h-60 overflow-y-auto">
