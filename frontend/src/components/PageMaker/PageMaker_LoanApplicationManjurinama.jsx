@@ -28,7 +28,7 @@ export function PageMaker_LoanApplicationManjurinama(data) {
   if (f.applicant_gender == "female") {
     p2 = "छोरि";
   } else if (f.applicant_gender == "male") {
-    p2 = "छोरा ";
+    p2 = "छोरा";
   }
 
   if (f.applicant_gender == "male") {
@@ -52,7 +52,7 @@ export function PageMaker_LoanApplicationManjurinama(data) {
     p4 = "को  बुहारी ";
   }
 
-  if (f.approver_applicant_gender == "female" && f.approver_applicant_maritalStatus == "single") {
+  if (f.approver_applicant_gender == "female") {
     p5 = "छोरि";
   } else if (f.approver_applicant_gender == "male") {
     p5 = "छोरा ";

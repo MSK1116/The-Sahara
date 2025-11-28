@@ -52,14 +52,12 @@ export function PageMaker_LoanApplicationBharpaie(data) {
             <div class="text-justify ">भरपाई दादै स्थायी ठेगाना: -
                 जिल्ला <b>${f.address.permanentOld.district}</b>,
                 गा.वि .स/ना.पा <b>${f.address.permanentOld.palika || "—"}</b>,
-                वडा नं. <b>${convert(f.address.permanentOld.wada || "1", "toNp")}</b>,
-                टोल <b>${f.address.permanentOld.tole || "—"}</b>
+                वडा नं. <b>${convert(f.address.permanentOld.wada || "1", "toNp")}</b>
                 र हाल ठेगाना:
                 <b>${f.address.permanent.province}</b>,
                 जिल्ला <b>${f.address.permanent.district}</b>,
                 गा.पा / ना.पा. <b>${f.address.permanent.palika || "—"}</b>,
-                वडा नं. <b>${convert(f.address.permanent.wada || "1", "toNp")}</b>,
-                टोल <b>${f.address.permanent.tole || "—"}</b> मा बस्ने म ${f.applicant_name} यस द
+                वडा नं. <b>${convert(f.address.permanent.wada || "1", "toNp")}</b> मा बस्ने म ${f.applicant_name} यस द
                 सहारा
                 लोन सेविंग्स को
                 औ-सो लि <b>${f.branchType}: - ${f.branch}</b> बाट ${f.desc1 || ""} कार्य निम्न
