@@ -616,9 +616,9 @@ export function PageMaker_LoanApplicationPage1(data) {
           lineColor: "#000",
           width: 1,
           height: 15,
-          margin: 0
+          margin: 0,
           fontSize: 10,   
-          textMargin: 2
+          textMargin: 2,
         });
         window.print();
       }
