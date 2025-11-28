@@ -50,6 +50,11 @@ const Create_form2 = ({ LMSIN, onDataChange, sessionAuth0 }) => {
       post: "सहायक द्वितीय",
       name: "पंकज चौधरी",
     },
+    {
+      id: 7,
+      post: "सहायक तृतीय",
+      name: "होस नारायण राय",
+    },
   ];
 
   const handleDataFetch = async () => {
