@@ -153,7 +153,6 @@ ${htmlContent}
             font-size: 10px;
             font-family: Poppins, sans-serif;
           }
-
           .print-footer::after {
             content: "Page " counter(page) " of " counter(pages);
           }
@@ -164,7 +163,6 @@ ${htmlContent}
     </head>
 ${htmlContent}
     
-
   </html>
 `);
 
@@ -567,7 +565,7 @@ ${htmlContent}
   };
   const pages = ["ऋण मागपत्र दर्ता", "मूल्यांकन परतिवेदन ", "मालपोतको लागि रोका पत्र", "तमसुक"];
   return (
-    <div className="w-full flex flex-col px-5 pt-3 pb-0 rounded-l-2xl sticky bg-gray-200 top-1/6 shadow ">
+    <div className="w-full flex flex-col px-4 pt-3 pb-0 rounded-l-2xl sticky bg-linear-to-l to-gray-200 from-gray-100 top-1/6 shadow ">
       <div className="flex relative flex-col select-none items-center gap-3">
         <div className="absolute h-full bg-gray-300 top-0 left-1/2 w-0.5 -translate-x-1/2 transform z-0"></div>
 

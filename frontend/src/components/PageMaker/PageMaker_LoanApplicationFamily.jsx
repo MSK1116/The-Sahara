@@ -204,7 +204,7 @@ ${fixedRows2
         </h4>
         <div>
         <h1 class="my-0.5 font-semibold text-center">तपसिल </h1>
-              ${table7HTM}
+              ${landDetails.length > 0 ? table7HTM : ""}
               ${f.approver_applicant_name ? table7HTM2 : ""}
               ${table2HTML}
         </div>

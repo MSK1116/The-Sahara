@@ -141,7 +141,7 @@ const Create_form = ({ onDataChange, initialData }) => {
       <h1 className="text-xl select-none tracking-wide font-semibold mb-10 px-3 py-1 bg-gray-100 rounded-md w-fit">ऋण मागपत्र दर्ता </h1>
       <form ref={formRef}>
         {/* ---------------------- Section 1 ---------------------------- */}
-        <div className="flex flex-row items-center gap-x-10 justify-between">
+        <div className="flex flex-row max-w-full items-center gap-x-10 justify-between">
           <div className="w-full">
             <Label htmlFor="rn1">दर्ता न:</Label>
             <Input id="rn1" name="rn1" className="w-full mt-2" value={localData.rn1 || ""} onKeyDown={handleEnterFocus} onChange={(e) => setLocalData((d) => ({ ...d, rn1: e.target.value }))} />
