@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MdDelete } from "react-icons/md";
@@ -49,8 +49,11 @@ export default function Table7({ onDataChange, localData, initialData }) {
   const handleInputChange = (id, field, value) => {
     const newRows = rows.map((row) => (row.id === id ? { ...row, [field]: value } : row));
     setRows(newRows);
-    onDataChange && onDataChange(newRows);
   };
+
+  useEffect(() => {
+    onDataChange && onDataChange(rows);
+  }, [rows]);
 
   const handleEnterFocus = useCallback((e) => {
     if (e.key === "Enter") {
