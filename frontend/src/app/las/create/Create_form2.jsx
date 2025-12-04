@@ -17,45 +17,27 @@ const Create_form2 = ({ LMSIN, onDataChange, sessionAuth0 }) => {
   const [localData, setLocalData] = useState({});
   const [form2, setFrom2] = useState({});
   const [fiftyPercentMarginLimit, setFiftyPercentMarginLimit] = useState(0);
+  const [officers, setOfficers] = useState([]);
 
   const user = jwt.decode(sessionAuth0?.tokenSet?.idToken);
-  const officers = [
-    {
-      id: 1,
-      post: "सहायक प्रथम",
-      name: "वुद्ध राम महतो",
-    },
-    {
-      id: 2,
-      post: "सहायक द्वितीय",
-      name: "वसन्त कुमार गुप्ता",
-    },
-    {
-      id: 3,
-      post: "सहायक द्वितीय",
-      name: "दिपेन्द्र महतो",
-    },
-    {
-      id: 4,
-      post: "सहायक द्वितीय",
-      name: "हफिज अंसारि",
-    },
-    {
-      id: 5,
-      post: "___",
-      name: "पुरानो मूल्यांकनको आधारमा",
-    },
-    {
-      id: 6,
-      post: "सहायक द्वितीय",
-      name: "पंकज चौधरी",
-    },
-    {
-      id: 7,
-      post: "सहायक तृतीय",
-      name: "होस नारायण राय",
-    },
-  ];
+
+  const loadOfficers = async () => {
+    try {
+      const temp1 = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/las/getOfficers`,
+        { databaseSlug: user?.databaseSlug },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionAuth0?.tokenSet?.accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setOfficers(temp1.data?.employee);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleDataFetch = async () => {
     try {
@@ -82,6 +64,7 @@ const Create_form2 = ({ LMSIN, onDataChange, sessionAuth0 }) => {
 
   useEffect(() => {
     handleDataFetch();
+    loadOfficers();
   }, [LMSIN]);
 
   const mergeTable7 = useCallback((newRows) => {
@@ -142,18 +125,18 @@ const Create_form2 = ({ LMSIN, onDataChange, sessionAuth0 }) => {
                         <CommandGroup>
                           {officers.map((o) => (
                             <CommandItem
-                              key={o.id}
-                              value={o.name}
+                              key={o.nameEn}
+                              value={o.nameNp}
                               onSelect={() => {
                                 setFrom2((d) => ({
                                   ...d,
-                                  evaluatorName: o.name,
+                                  evaluatorName: o.nameNp,
                                   evaluatorPost: o.post,
                                 }));
                                 document.body.click(); // Close popover
                               }}>
-                              <Check className={cn("mr-2 h-4 w-4", o.name === localData.evaluatorName ? "opacity-100" : "opacity-0")} />
-                              {o.name}
+                              <Check className={cn("mr-2 h-4 w-4", o.nameNp == localData.evaluatorName ? "opacity-100" : "opacity-0")} />
+                              {o.nameNp}
                             </CommandItem>
                           ))}
                         </CommandGroup>

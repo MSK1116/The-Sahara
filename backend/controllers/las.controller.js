@@ -1,4 +1,5 @@
 // controllers/laController.js
+import Branch from "../models/branch.model.js";
 import getLasModel from "../models/las.model.js";
 import { customAlphabet } from "nanoid";
 
@@ -172,6 +173,21 @@ export const getRecentHistory = async (req, res) => {
     }));
 
     return res.status(200).json({ result });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ error });
+  }
+};
+
+export const getOfficers = async (req, res) => {
+  const { databaseSlug } = req.body;
+  console.log(databaseSlug);
+  try {
+    const branchFetched = await Branch.findOne({ databaseSlug: databaseSlug }).lean();
+    if (!branchFetched) {
+      return res.status(400).json({ error: "Branch not found" });
+    }
+    return res.status(200).json({ employee: branchFetched.employee });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ error });
