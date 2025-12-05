@@ -37,7 +37,7 @@ export async function POST(req) {
       headers: { Authorization: `Bearer ${token}` },
       params: {
         q: `username:"${username}"`,
-        search_engine: "v3", // required for filtering
+        search_engine: "v3",
       },
     });
 
@@ -48,10 +48,11 @@ export async function POST(req) {
 
     const userId = user.user_id;
 
-    // 3️⃣ Delete user
     await axios.delete(`https://${AUTH0_DOMAIN}/api/v2/users/${encodeURIComponent(userId)}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+
+    const removeInMongoDb = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/removeOfficer`, { nameEn: body.employee.nameEn, _id: body.employee._id, databaseSlug });
 
     return NextResponse.json({ success: true, userId });
   } catch (err) {

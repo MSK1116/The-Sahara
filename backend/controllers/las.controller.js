@@ -216,6 +216,37 @@ export const addOfficer = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+export const removeOfficer = async (req, res) => {
+  const { nameEn, _id, databaseSlug } = req.body;
+
+  if (!nameEn || !_id || !databaseSlug) {
+    return res.status(400).json({ message: "nameEn, _id, and databaseSlug are required." });
+  }
+
+  try {
+    const branch = await Branch.findOne({ databaseSlug });
+    if (!branch) {
+      return res.status(404).json({ message: "Branch not found." });
+    }
+
+    const emp = branch.employee.id(_id);
+    if (!emp) {
+      return res.status(404).json({ message: "Employee not found." });
+    }
+
+    if (emp.nameEn !== nameEn) {
+      return res.status(400).json({ message: "Employee name does not match." });
+    }
+
+    emp.deleteOne();
+    await branch.save();
+
+    return res.status(200).json({ message: "Employee removed successfully." });
+  } catch (error) {
+    console.error("Error removing employee:", error);
+    return res.status(500).json({ message: "Internal server error." });
+  }
+};
 
 export const getBranch = async (req, res) => {
   try {
