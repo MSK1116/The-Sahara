@@ -1,4 +1,5 @@
 // controllers/laController.js
+import mongoose from "mongoose";
 import Branch from "../models/branch.model.js";
 import getLasModel from "../models/las.model.js";
 import { customAlphabet } from "nanoid";
@@ -275,5 +276,53 @@ export const getAllBranchSlugs = async (req, res) => {
   } catch (error) {
     console.error("Error fetching branch slugs:", error);
     return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const transferEmployee = async (req, res) => {
+  const { sourceBranchCode, targetBranchCode, employeeId } = req.body;
+
+  if (!sourceBranchCode || !targetBranchCode || !employeeId) {
+    return res.status(400).json({ message: "All fields are required." });
+  }
+
+  if (sourceBranchCode === targetBranchCode) {
+    return res.status(400).json({ message: "Source and target branch cannot be the same." });
+  }
+
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    const sourceBranch = await Branch.findOne({ branchCode: sourceBranchCode }).session(session);
+    if (!sourceBranch) throw new Error("Source branch not found");
+
+    const employeeIndex = sourceBranch.employee.findIndex((e) => e._id.toString() === employeeId);
+    if (employeeIndex === -1) throw new Error("Employee not found in source branch");
+
+    const [employeeToTransfer] = sourceBranch.employee.splice(employeeIndex, 1);
+    await sourceBranch.save({ session });
+
+    const targetBranch = await Branch.findOne({ branchCode: targetBranchCode }).session(session);
+    if (!targetBranch) throw new Error("Target branch not found");
+
+    targetBranch.employee.unshift(employeeToTransfer);
+    await targetBranch.save({ session });
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return res.status(200).json({ message: "Employee transferred successfully." });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    console.error("Transfer error:", error);
+
+    // Retry if transient error
+    if (error.errorLabels?.includes("TransientTransactionError")) {
+      return res.status(500).json({ message: "Write conflict occurred. Please retry the operation." });
+    }
+
+    return res.status(500).json({ message: "Server error during transfer." });
   }
 };

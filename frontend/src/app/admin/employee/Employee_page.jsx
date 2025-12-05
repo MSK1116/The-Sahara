@@ -188,10 +188,30 @@ export default function Employee_page({ sessionAuth0 }) {
   // Store globalId in modalEmployee state
   const [modalEmployee, setModalEmployee] = useState({ branchCode: "", globalId: "" });
 
-  // --- Core Transfer Logic ---
-  const handleTransfer = useCallback((sourceBranchCode, targetBranchCode, globalEmployeeId) => {
-    setBranches((prevBranches) => transferEmployee(prevBranches, sourceBranchCode, targetBranchCode, globalEmployeeId));
-  }, []);
+  const handleTransfer = useCallback(
+    async (sourceBranchCode, targetBranchCode, globalEmployeeId) => {
+      try {
+        // Find the employee object
+        const employee = branches.find((branch) => branch.branchCode === sourceBranchCode)?.employee.find((emp) => emp.globalId === globalEmployeeId);
+
+        if (!employee) return;
+
+        // 1. Call backend API
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/transferEmployee`, {
+          sourceBranchCode,
+          targetBranchCode,
+          employeeId: employee._id,
+        });
+
+        // 2. Update frontend state (optimistic UI)
+        setBranches((prev) => transferEmployee(prev, sourceBranchCode, targetBranchCode, globalEmployeeId));
+      } catch (err) {
+        console.error(err);
+        alert("Failed to transfer employee. Please try again.");
+      }
+    },
+    [branches]
+  );
 
   // --- Drag and Drop Handlers ---
   const handleDragStart = useCallback((e, branchCode, globalEmployeeId) => {
@@ -211,9 +231,7 @@ export default function Employee_page({ sessionAuth0 }) {
     (e, targetBranchCode) => {
       e.preventDefault();
       if (!draggedItem) return;
-
       const { sourceBranchCode, globalEmployeeId } = draggedItem;
-
       // Check if the source and target are the same branch
       if (sourceBranchCode === targetBranchCode) {
         setDraggedItem(null);
