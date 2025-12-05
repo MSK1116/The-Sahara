@@ -46,10 +46,13 @@ const Create_addressInput = ({ onAddressChange, setLocalErrors, localErrors, ini
     }
   );
 
-  // inform parent of address changes
+  const addressData = React.useMemo(() => ({ permanentOld, permanent, current }), [permanentOld, permanent, current]);
+
   React.useEffect(() => {
-    if (onAddressChange) onAddressChange({ permanentOld, permanent, current });
-  }, [permanentOld, permanent, current, onAddressChange]);
+    if (onAddressChange) {
+      onAddressChange(addressData);
+    }
+  }, [addressData]);
 
   const handleEnterFocus = (e) => {
     if (e.key === "Enter") {

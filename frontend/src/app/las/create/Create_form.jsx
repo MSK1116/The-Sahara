@@ -492,7 +492,7 @@ const Create_form = ({ onDataChange, initialData }) => {
           {/* Dropdown Applicant Type */}
 
           <div className="min-w-fit">
-            <Label className={"min-w-fit"}>ऋण निवेदकको प्रकार</Label>
+            <Label className={"min-w-fit text-red-600 "}>ऋण निवेदकको प्रकार</Label>
             <DropdownMenu>
               <DropdownMenuTrigger className="mt-2 border px-3 py-2 text-sm rounded-md w-full">{applicantType}</DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">

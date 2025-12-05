@@ -193,3 +193,17 @@ export const getOfficers = async (req, res) => {
     return res.status(400).json({ error });
   }
 };
+
+export const getBranch = async (req, res) => {
+  try {
+    const fetchBranch = await Branch.find({}).lean();
+
+    if (!fetchBranch) {
+      return res.status(400).json({ error: "Something went wrong" });
+    }
+    return res.status(200).json({ fetchBranch });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ error });
+  }
+};
