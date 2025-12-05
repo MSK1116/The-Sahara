@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 import { Input } from "@/components/ui/input";
 import jwt from "jsonwebtoken";
 import { FaIndianRupeeSign } from "react-icons/fa6";
-
+import { FaArrowRightFromBracket } from "react-icons/fa6";
 const Home_page = ({ sessionAuth0 }) => {
   const router = useRouter();
   const [lmsin, setLmsin] = useState("");
@@ -41,8 +41,8 @@ const Home_page = ({ sessionAuth0 }) => {
             <p className=" text-sm">{user?.officerBranch}</p>
           </div>
           {user.privilege?.includes("Admin") && (
-            <a className=" text-blue-600 text-xs mt-3 bg-gray-200 px-2 py-0.5 mx-auto font-semibold rounded-xl  " href="/admin/employee">
-              Admin Dashboard
+            <a className=" shadow-xl flex items-center justify-between text-blue-600 text-xs mt-3 bg-gray-200 px-2 py-0.5 mx-auto font-semibold rounded-xl  " href="/admin/employee">
+              Admin Dashboard <FaArrowRightFromBracket className="ml-1" />
             </a>
           )}
         </div>
