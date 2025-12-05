@@ -37,11 +37,11 @@ export async function POST(req) {
           password,
           connection: AUTH0_CONNECTION,
           name: nameEn,
-          userName: nameEn.trim().split(" ")[0],
+          username: nameEn.trim().split(" ")[0],
           user_metadata: {
             officerPost: post,
             databaseSlug,
-            branchType,
+            officerBranchType: branchType,
             officerBranch: branchNameNp,
             officerBranchCode: branchCode,
             profileImage,
@@ -58,7 +58,7 @@ export async function POST(req) {
       return NextResponse.json({ error: message }, { status: err.response?.status || 500 });
     }
 
-    const addInMongoDb = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/addOfficer`, { nameEn, nameNp, databaseSlug });
+    const addInMongoDb = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/addOfficer`, { post, nameEn, nameNp, databaseSlug });
 
     return NextResponse.json({ email: createdUser.email, user_id: createdUser.user_id }, { status: 201 });
   } catch (err) {

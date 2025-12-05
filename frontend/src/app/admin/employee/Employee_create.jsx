@@ -77,7 +77,7 @@ const Employee_create = ({ branches }) => {
       });
     } catch (error) {
       console.error("Failed to create user:", error);
-      const errorMessage = error.response?.data?.error?.message || "An unexpected error occurred. Please try again.";
+      const errorMessage = error.response?.data?.error || "An unexpected error occurred. Please try again.";
       setMessage({ type: "error", content: `Error: ${errorMessage}` });
     } finally {
       setIsSubmitting(false);
