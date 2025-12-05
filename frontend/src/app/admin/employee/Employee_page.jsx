@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import React, { useState, useCallback, useMemo, useEffect } from "react";
+import Employee_create from "./Employee_create";
 
 const PRIMARY_COLOR = "#155dfc";
 
@@ -272,6 +273,7 @@ export default function Employee_page({ sessionAuth0 }) {
           <span className="inline-flex items-center mt-4 px-3 py-1 text-xs font-semibold rounded-full text-white shadow-md" style={{ backgroundColor: PRIMARY_COLOR }}>
             Total Employees: {totalEmployees}
           </span>
+          {/* <Employee_create /> */}
         </div>
 
         {/* Branch Containers (Drag & Drop Zones - Emulating Card) */}

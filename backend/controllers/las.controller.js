@@ -181,7 +181,6 @@ export const getRecentHistory = async (req, res) => {
 
 export const getOfficers = async (req, res) => {
   const { databaseSlug } = req.body;
-  console.log(databaseSlug);
   try {
     const branchFetched = await Branch.findOne({ databaseSlug: databaseSlug }).lean();
     if (!branchFetched) {
