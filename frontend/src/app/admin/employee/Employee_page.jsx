@@ -280,9 +280,9 @@ export default function Employee_page({ sessionAuth0 }) {
   return (
     <>
       {updating && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-opacity">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40  backdrop-blur-sm transition-opacity">
           <div className="flex flex-col items-center space-y-4">
-            <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"></div>
+            <div className="loader"></div>
             <p className="text-white font-semibold text-lg">Processing transfer...</p>
           </div>
         </div>
