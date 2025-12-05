@@ -41,7 +41,7 @@ const Home_page = ({ sessionAuth0 }) => {
             <p className=" text-sm">{user?.officerBranch}</p>
           </div>
           {user.privilege?.includes("Admin") && (
-            <a className=" shadow-xl flex items-center justify-between text-blue-600 text-xs mt-3 bg-gray-200 px-2 py-0.5 mx-auto font-semibold rounded-xl  " href="/admin/employee">
+            <a href="/admin" className=" shadow-xl flex items-center justify-between text-blue-600 text-xs mt-3 bg-gray-200 px-2 py-0.5 mx-auto font-semibold rounded-xl  ">
               Admin Dashboard <FaArrowRightFromBracket className="ml-1" />
             </a>
           )}

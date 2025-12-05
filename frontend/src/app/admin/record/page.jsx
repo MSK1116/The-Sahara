@@ -1,6 +1,6 @@
 import { auth0 } from "@/lib/auth0";
 import React from "react";
-import Backup_page from "./Backup_page";
+import Backup_page from "./Record_page";
 
 const page = async () => {
   const sessionAuth0 = await auth0.getSession();
