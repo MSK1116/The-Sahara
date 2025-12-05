@@ -1,20 +1,13 @@
 "use client";
 import Image from "next/image";
-import React from "react";
-import BikramSambat from "bikram-sambat-js";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { TiHome } from "react-icons/ti";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+import NepaliDate from "nepali-date-converter";
 
 const Navbar = () => {
-  const date = new Date();
-  const nepDate = new BikramSambat(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`).toBS().split("-");
-
-  const bsMonths = ["Baishakh", "Jestha", "Ashadh", "Shrawan", "Bhadra", "Ashwin", "Kartik", "Mangsir", "Poush", "Magh", "Falgun", "Chaitra"];
-
-  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
   const router = useRouter();
 
   return (
@@ -64,18 +57,18 @@ const Navbar = () => {
           {/* Date Box */}
           <div
             className="
-              px-4 py-2
+              px-5 py-2
               rounded-2xl border border-gray-200 
-              bg-gradient-to-br from-gray-50 to-white
+              bg-linear-to-br from-gray-50 to-white
               shadow-sm
-              text-sm 
+              text-sm cursor-default
             ">
-            <div className="font-medium text-gray-800">{days[date.getDay()]}</div>
+            <div className="font-medium text-gray-800">{new NepaliDate(new Date()).format("ddd", "np")}</div>
 
             <div className="flex gap-1 text-gray-600 mt-0.5">
-              <span>{bsMonths[+nepDate[1] - 1]}</span>
-              <span>{nepDate[2]},</span>
-              <span>{nepDate[0]}</span>
+              <span>{new NepaliDate(new Date()).format("DD", "np")}</span>
+              <span>{new NepaliDate(new Date()).format("MMMM", "np")},</span>
+              <span>{new NepaliDate(new Date()).format("YYYY", "np")}</span>
             </div>
           </div>
         </div>

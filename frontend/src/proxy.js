@@ -1,7 +1,7 @@
 //E:\CODE\Bureaucrazy Temp\frontend\src\proxy.js
 import { NextResponse } from "next/server";
 import { auth0 } from "./lib/auth0";
-
+import jwt from "jsonwebtoken";
 const PUBLIC_PATHS = [];
 
 function isPublicPath(pathname) {
@@ -26,6 +26,14 @@ export async function proxy(request) {
     const loginUrl = new URL("/auth/login", request.nextUrl.origin);
     loginUrl.searchParams.set("returnTo", pathname);
     return NextResponse.redirect(loginUrl);
+  }
+
+  if (pathname.startsWith("/admin")) {
+    const decoded = jwt.decode(session.tokenSet?.idToken || "");
+
+    if (!decoded?.privilege?.includes("Admin")) {
+      return new NextResponse("Access forbidden", { status: 403 });
+    }
   }
 
   return NextResponse.next();

@@ -1,7 +1,6 @@
 "use client";
 import axios from "axios";
 import React, { useState, useCallback, useMemo, useEffect } from "react";
-import { FaSalesforce } from "react-icons/fa";
 
 const PRIMARY_COLOR = "#155dfc";
 
@@ -10,7 +9,7 @@ const processInitialData = (data) => {
     ...branch,
     employee: branch.employee.map((emp) => ({
       ...emp,
-      globalId: `${branch._id.$oid}-${emp._id}-${Math.floor(100000 + Math.random() * 900000)}`,
+      globalId: `${emp._id}-${Math.floor(100000 + Math.random() * 900000)}`,
     })),
   }));
 };
