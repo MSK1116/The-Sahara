@@ -193,6 +193,30 @@ export const getOfficers = async (req, res) => {
   }
 };
 
+export const addOfficer = async (req, res) => {
+  const { post, nameNp, nameEn, databaseSlug } = req.body;
+
+  if (!post || !nameNp || !nameEn) {
+    return res.status(400).json({ message: "All employee fields are required." });
+  }
+
+  try {
+    const branch = await Branch.findOne({ databaseSlug });
+    if (!branch) {
+      return res.status(404).json({ message: "Branch not found." });
+    }
+
+    const newEmployee = { post, nameNp, nameEn };
+    branch.employee.push(newEmployee);
+
+    await branch.save();
+    return res.status(200).json({ message: "Employee added successfully", branch });
+  } catch (error) {
+    console.error("Error adding employee:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 export const getBranch = async (req, res) => {
   try {
     const fetchBranch = await Branch.find({}).lean();

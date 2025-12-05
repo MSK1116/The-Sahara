@@ -1,61 +1,68 @@
-import { getSession, getManagementApiAccessToken } from "@auth0/nextjs-auth0";
 import { NextResponse } from "next/server";
 import axios from "axios";
 
-export const POST = async function createUser(req) {
-  const session = await getSession(req);
+const { AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_CONNECTION } = process.env;
 
-  if (!session || !session.user) {
-    return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-  }
-
-  // You might want to add role-based access control here
-  // For example, only allow admins to create users.
-  // const userRoles = session.user['http://saharalas.com/roles'];
-  // if (!userRoles.includes('admin')) {
-  //   return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-  // }
-
+export async function POST(req) {
   try {
-    const { email, password, name, role } = await req.json();
+    const body = await req.json();
+    const { email, password, nameEn, nameNp, post, databaseSlug, branchType, branchNameNp, branchCode, profileImage } = body;
 
-    if (!email || !password || !name || !role) {
-      return NextResponse.json({ error: "Missing required fields: email, password, name, role." }, { status: 400 });
+    if (!email || !password || !nameEn || !nameNp || !post || !databaseSlug) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    const { accessToken } = await getManagementApiAccessToken();
+    let tokenData;
+    try {
+      const tokenResponse = await axios.post(`https://${AUTH0_DOMAIN}/oauth/token`, {
+        client_id: AUTH0_CLIENT_ID,
+        client_secret: AUTH0_CLIENT_SECRET,
+        audience: `https://${AUTH0_DOMAIN}/api/v2/`,
+        grant_type: "client_credentials",
+      });
 
-    const auth0Domain = process.env.AUTH0_ISSUER_BASE_URL;
-    const apiUrl = `${auth0Domain}/api/v2/users`;
+      tokenData = tokenResponse.data;
+    } catch (err) {
+      console.error("Failed to get Auth0 token:", err.response?.data || err.message);
+      return NextResponse.json({ error: "Failed to get Auth0 token" }, { status: 500 });
+    }
 
-    const userData = {
-      email,
-      password,
-      name,
-      connection: "Username-Password-Authentication", // Or your specific DB connection
-      email_verified: true, // Or false to send a verification email
-      app_metadata: {
-        role: role,
-        // You can add other metadata here
-        // created_by: session.user.sub,
-      },
-    };
+    // 2️⃣ Create the user
+    let createdUser;
+    try {
+      const response = await axios.post(
+        `https://${AUTH0_DOMAIN}/api/v2/users`,
+        {
+          email,
+          password,
+          connection: AUTH0_CONNECTION,
+          name: nameEn,
+          userName: nameEn.trim().split(" ")[0],
+          user_metadata: {
+            officerPost: post,
+            databaseSlug,
+            branchType,
+            officerBranch: branchNameNp,
+            officerBranchCode: branchCode,
+            profileImage,
+          },
+        },
+        {
+          headers: { Authorization: `Bearer ${tokenData.access_token}` },
+        }
+      );
+      createdUser = response.data;
+    } catch (err) {
+      console.error("Failed to create user in Auth0:", err.response?.data || err.message);
+      const message = err.response?.data?.message || "Failed to create user";
+      return NextResponse.json({ error: message }, { status: err.response?.status || 500 });
+    }
 
-    const response = await axios.post(apiUrl, userData, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const addInMongoDb = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/addOfficer`, { nameEn, nameNp, databaseSlug });
 
-    return NextResponse.json(response.data, { status: 201 });
-  } catch (error) {
-    console.error("Auth0 user creation failed:", error.response?.data || error.message);
-    return NextResponse.json(
-      {
-        error: error.response?.data?.message || "Internal Server Error",
-      },
-      { status: error.response?.status || 500 }
-    );
+    return NextResponse.json({ email: createdUser.email, user_id: createdUser.user_id }, { status: 201 });
+  } catch (err) {
+    console.error("Unexpected error in createUser:", err);
+    return NextResponse.json({ error: "Unexpected server error" }, { status: 500 });
   }
-};
+}

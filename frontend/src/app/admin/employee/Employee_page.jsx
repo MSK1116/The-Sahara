@@ -273,7 +273,7 @@ export default function Employee_page({ sessionAuth0 }) {
           <span className="inline-flex items-center mt-4 px-3 py-1 text-xs font-semibold rounded-full text-white shadow-md" style={{ backgroundColor: PRIMARY_COLOR }}>
             Total Employees: {totalEmployees}
           </span>
-          {/* <Employee_create /> */}
+          <Employee_create branches={branches} />
         </div>
 
         {/* Branch Containers (Drag & Drop Zones - Emulating Card) */}
@@ -322,17 +322,21 @@ export default function Employee_page({ sessionAuth0 }) {
                         <p className="text-xs text-gray-500">{employee.post}</p>
                       </div>
 
-                      {/* Quick Transfer Button (Shadcn Button Icon Emulation) */}
-                      <button
-                        onClick={() => openModal(branch.branchCode, employee.globalId)} // Pass globalId
-                        className="p-2 h-8 w-8 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-90 hover:scale-100 shadow-md flex items-center justify-center 
+                      <div className="flex space-x-2">
+                        {/* Delete Button */}
+                        {/* NOTE: You need to define a handleDelete function in your component scope */}
+
+                        <button
+                          onClick={() => openModal(branch.branchCode, employee.globalId)} // Pass globalId
+                          className="p-2 h-8 w-8 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-90 hover:scale-100 shadow-md flex items-center justify-center 
                                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                        style={{ backgroundColor: PRIMARY_COLOR }}
-                        title="Quick Transfer">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                        </svg>
-                      </button>
+                          style={{ backgroundColor: PRIMARY_COLOR }}
+                          title="Quick Transfer">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   ))
                 ) : (
