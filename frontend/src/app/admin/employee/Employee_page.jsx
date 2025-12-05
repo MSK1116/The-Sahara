@@ -159,6 +159,7 @@ export default function Employee_page({ sessionAuth0 }) {
   const [branches, setBranches] = useState([]);
   const [draggedItem, setDraggedItem] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState(false);
 
   const handleBranchFetch = async () => {
     try {
@@ -191,7 +192,7 @@ export default function Employee_page({ sessionAuth0 }) {
   const handleTransfer = useCallback(
     async (sourceBranchCode, targetBranchCode, globalEmployeeId) => {
       try {
-        // Find the employee object
+        setUpdating(true);
         const employee = branches.find((branch) => branch.branchCode === sourceBranchCode)?.employee.find((emp) => emp.globalId === globalEmployeeId);
 
         if (!employee) return;
@@ -203,11 +204,12 @@ export default function Employee_page({ sessionAuth0 }) {
           employeeId: employee._id,
         });
 
-        // 2. Update frontend state (optimistic UI)
+        setUpdating(false);
         setBranches((prev) => transferEmployee(prev, sourceBranchCode, targetBranchCode, globalEmployeeId));
       } catch (err) {
         console.error(err);
         alert("Failed to transfer employee. Please try again.");
+        setUpdating(false);
       }
     },
     [branches]
@@ -276,117 +278,128 @@ export default function Employee_page({ sessionAuth0 }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 sm:p-10 font-sans antialiased">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-8 p-6 bg-white shadow-xl rounded-xl border border-gray-200 border-t-4" style={{ borderColor: PRIMARY_COLOR }}>
-          <h1 className="text-3xl font-extrabold text-gray-900 flex items-center tracking-tight">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mr-3 animate-pulse" style={{ color: PRIMARY_COLOR }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              <path d="M12 16.668V11" />
-              <path d="M10 13.5l2 2 2-2" />
-            </svg>
-            Employee Dashboard
-          </h1>
-          <p className="mt-2 text-md text-gray-600">Manage employee assignments by dragging and dropping them between branches, or use the quick transfer button.</p>
-          {/* Badge Style */}
-          <span className="inline-flex items-center mt-4 px-3 py-1 text-xs font-semibold rounded-full text-white shadow-md" style={{ backgroundColor: PRIMARY_COLOR }}>
-            Total Employees: {totalEmployees}
-          </span>
-          <Employee_create branches={branches} />
+    <>
+      {updating && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-opacity">
+          <div className="flex flex-col items-center space-y-4">
+            <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"></div>
+            <p className="text-white font-semibold text-lg">Processing transfer...</p>
+          </div>
         </div>
+      )}
 
-        {/* Branch Containers (Drag & Drop Zones - Emulating Card) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {branches.map((branch) => (
-            <div
-              key={branch.branchCode}
-              // The main drop zone for the branch
-              onDragOver={handleDragOver}
-              onDrop={(e) => handleDrop(e, branch.branchCode)}
-              className={`
+      <div className="min-h-screen bg-gray-50 p-4 sm:p-10 font-sans antialiased">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-8 p-6 bg-white shadow-xl rounded-xl border border-gray-200 border-t-4" style={{ borderColor: PRIMARY_COLOR }}>
+            <h1 className="text-3xl font-extrabold text-gray-900 flex items-center tracking-tight">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mr-3 animate-pulse" style={{ color: PRIMARY_COLOR }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <path d="M12 16.668V11" />
+                <path d="M10 13.5l2 2 2-2" />
+              </svg>
+              Employee Dashboard
+            </h1>
+            <p className="mt-2 text-md text-gray-600">Manage employee assignments by dragging and dropping them between branches, or use the quick transfer button.</p>
+            {/* Badge Style */}
+            <span className="inline-flex items-center mt-4 px-3 py-1 text-xs font-semibold rounded-full text-white shadow-md" style={{ backgroundColor: PRIMARY_COLOR }}>
+              Total Employees: {totalEmployees}
+            </span>
+            <Employee_create branches={branches} />
+          </div>
+
+          {/* Branch Containers (Drag & Drop Zones - Emulating Card) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            {branches.map((branch) => (
+              <div
+                key={branch.branchCode}
+                // The main drop zone for the branch
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, branch.branchCode)}
+                className={`
                 bg-white border border-gray-200 rounded-xl shadow-lg transition-all duration-300
                 ${draggedItem?.sourceBranchCode === branch.branchCode ? "ring-2 ring-gray-300 shadow-inner" : ""}
                 ${draggedItem && draggedItem.sourceBranchCode !== branch.branchCode ? "hover:border-dashed hover:border-4 hover:border-green-500 hover:shadow-2xl" : ""}
                 p-5 flex flex-col h-full
               `}>
-              {/* Branch Header */}
-              <div className="pb-3 mb-3 border-b border-gray-100">
-                <h2 className="text-xl font-semibold tracking-tight text-gray-800">
-                  <span className="text-lg mr-2 font-mono font-bold" style={{ color: PRIMARY_COLOR }}>
-                    {branch.branchCode}
-                  </span>
-                  {branch.nameEn}
-                </h2>
-                <p className="text-xs text-gray-500 mt-1">{branch.address}</p>
-              </div>
+                {/* Branch Header */}
+                <div className="pb-3 mb-3 border-b border-gray-100">
+                  <h2 className="text-xl font-semibold tracking-tight text-gray-800">
+                    <span className="text-lg mr-2 font-mono font-bold" style={{ color: PRIMARY_COLOR }}>
+                      {branch.branchCode}
+                    </span>
+                    {branch.nameEn}
+                  </h2>
+                  <p className="text-xs text-gray-500 mt-1">{branch.address}</p>
+                </div>
 
-              {/* Employee List Container */}
-              <div className="grow space-y-3 min-h-[120px]">
-                {branch.employee && branch.employee.length > 0 ? (
-                  branch.employee.map((employee) => (
-                    <div
-                      key={employee.globalId} // Use the new globalId for unique keying
-                      draggable
-                      onDragStart={(e) => handleDragStart(e, branch.branchCode, employee.globalId)} // Pass globalId
-                      onDragEnd={handleDragEnd}
-                      className={`
+                {/* Employee List Container */}
+                <div className="grow space-y-3 min-h-[120px]">
+                  {branch.employee && branch.employee.length > 0 ? (
+                    branch.employee.map((employee) => (
+                      <div
+                        key={employee.globalId} // Use the new globalId for unique keying
+                        draggable
+                        onDragStart={(e) => handleDragStart(e, branch.branchCode, employee.globalId)} // Pass globalId
+                        onDragEnd={handleDragEnd}
+                        className={`
                         p-3 bg-white rounded-lg shadow-sm cursor-grab flex justify-between items-center group
                         hover:bg-gray-50 hover:ring-2 hover:ring-opacity-50 hover:scale-[1.01] transition-all duration-200 ease-in-out
                         ${draggedItem?.globalEmployeeId === employee.globalId && draggedItem?.sourceBranchCode === branch.branchCode ? "opacity-40 ring-4 ring-yellow-400 scale-100 shadow-none" : "ring-gray-100"}
                         border border-gray-200
                       `}
-                      style={{ borderLeft: `5px solid ${PRIMARY_COLOR}` }}>
-                      <div>
-                        <p className="font-medium text-gray-900">{employee.nameEn}</p>
-                        <p className="text-xs text-gray-500">{employee.post}</p>
-                      </div>
+                        style={{ borderLeft: `5px solid ${PRIMARY_COLOR}` }}>
+                        <div>
+                          <p className="font-medium text-gray-900">{employee.nameEn}</p>
+                          <p className="text-xs text-gray-500">{employee.post}</p>
+                        </div>
 
-                      <div className="flex space-x-2">
-                        <Employee_delete databaseSlug={branch.databaseSlug} employee={employee} />
-                        <button
-                          onClick={() => openModal(branch.branchCode, employee.globalId)} // Pass globalId
-                          className="p-2 h-8 w-8 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-90 hover:scale-100 shadow-md flex items-center justify-center 
+                        <div className="flex space-x-2">
+                          <Employee_delete databaseSlug={branch.databaseSlug} employee={employee} />
+                          <button
+                            onClick={() => openModal(branch.branchCode, employee.globalId)} // Pass globalId
+                            className="p-2 h-8 w-8 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-90 hover:scale-100 shadow-md flex items-center justify-center 
                                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                          style={{ backgroundColor: PRIMARY_COLOR }}
-                          title="Quick Transfer">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                          </svg>
-                        </button>
+                            style={{ backgroundColor: PRIMARY_COLOR }}
+                            title="Quick Transfer">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                            </svg>
+                          </button>
+                        </div>
                       </div>
+                    ))
+                  ) : (
+                    // Placeholder when a branch has no employees
+                    <div className="text-center p-8 border-4 border-dashed border-gray-100 rounded-lg text-gray-400 bg-gray-50 transition-all duration-300">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 mx-auto mb-2 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-3m-1.724-11.399l-11-2a1 1 0 00-1.374.378L3 8.35v11.65a1 1 0 001.757.659l2.7-2.7h8.846a1 1 0 001-1V4.707a1 1 0 00-.515-.878z" />
+                      </svg>
+                      <p className="text-sm font-medium">Empty Branch - Drop Employee Here</p>
                     </div>
-                  ))
-                ) : (
-                  // Placeholder when a branch has no employees
-                  <div className="text-center p-8 border-4 border-dashed border-gray-100 rounded-lg text-gray-400 bg-gray-50 transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 mx-auto mb-2 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-3m-1.724-11.399l-11-2a1 1 0 00-1.374.378L3 8.35v11.65a1 1 0 001.757.659l2.7-2.7h8.846a1 1 0 001-1V4.707a1 1 0 00-.515-.878z" />
-                    </svg>
-                    <p className="text-sm font-medium">Empty Branch - Drop Employee Here</p>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        {/* Footer for status and error checking */}
-        <div className="mt-10 p-4 text-center bg-white rounded-xl shadow-lg border border-gray-200">
-          <p className="text-sm text-gray-600">
-            Status: {draggedItem ? `Dragging Employee (Global ID: ${draggedItem.globalEmployeeId}) from Branch ${draggedItem.sourceBranchCode}. Drop into another branch card.` : "Ready for Drag & Drop or Quick Transfer."}
-          </p>
-        </div>
+          {/* Footer for status and error checking */}
+          <div className="mt-10 p-4 text-center bg-white rounded-xl shadow-lg border border-gray-200">
+            <p className="text-sm text-gray-600">
+              Status: {draggedItem ? `Dragging Employee (Global ID: ${draggedItem.globalEmployeeId}) from Branch ${draggedItem.sourceBranchCode}. Drop into another branch card.` : "Ready for Drag & Drop or Quick Transfer."}
+            </p>
+          </div>
 
-        {/* Transfer Modal */}
-        <TransferModal
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          branches={branches}
-          currentBranchCode={modalEmployee.branchCode}
-          globalEmployeeId={modalEmployee.globalId} // Pass globalId
-          onConfirmTransfer={handleTransfer}
-        />
+          {/* Transfer Modal */}
+          <TransferModal
+            isOpen={isModalOpen}
+            onClose={closeModal}
+            branches={branches}
+            currentBranchCode={modalEmployee.branchCode}
+            globalEmployeeId={modalEmployee.globalId} // Pass globalId
+            onConfirmTransfer={handleTransfer}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
