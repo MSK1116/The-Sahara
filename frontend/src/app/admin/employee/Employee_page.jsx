@@ -2,6 +2,7 @@
 import axios from "axios";
 import React, { useState, useCallback, useMemo, useEffect } from "react";
 import Employee_create from "./Employee_create";
+import Employee_delete from "./Employee_delete";
 
 const PRIMARY_COLOR = "#155dfc";
 
@@ -277,7 +278,7 @@ export default function Employee_page({ sessionAuth0 }) {
         </div>
 
         {/* Branch Containers (Drag & Drop Zones - Emulating Card) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {branches.map((branch) => (
             <div
               key={branch.branchCode}
@@ -323,9 +324,7 @@ export default function Employee_page({ sessionAuth0 }) {
                       </div>
 
                       <div className="flex space-x-2">
-                        {/* Delete Button */}
-                        {/* NOTE: You need to define a handleDelete function in your component scope */}
-
+                        <Employee_delete databaseSlug={branch.databaseSlug} employee={employee} />
                         <button
                           onClick={() => openModal(branch.branchCode, employee.globalId)} // Pass globalId
                           className="p-2 h-8 w-8 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-90 hover:scale-100 shadow-md flex items-center justify-center 
