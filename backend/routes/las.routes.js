@@ -1,6 +1,6 @@
 import express from "express";
 import { auth } from "express-oauth2-jwt-bearer";
-import { getApplicant, getBranch, getLMSIN, getOfficers, getRecentHistory, upsertLAS } from "../controllers/las.controller.js";
+import { getAllBranchSlugs, getApplicant, getBranch, getLMSIN, getOfficers, getRecentHistory, upsertLAS } from "../controllers/las.controller.js";
 const router = express.Router();
 
 const checkJwt = auth({
@@ -14,5 +14,6 @@ router.post("/getLmsin", checkJwt, getLMSIN);
 router.post("/getRecentHistory", checkJwt, getRecentHistory);
 router.post("/getOfficers", checkJwt, getOfficers);
 router.post("/getBranch", checkJwt, getBranch);
+router.post("/getAllBranchSlugs", checkJwt, getAllBranchSlugs);
 
 export default router;

@@ -207,3 +207,19 @@ export const getBranch = async (req, res) => {
     return res.status(400).json({ error });
   }
 };
+
+export const getAllBranchSlugs = async (req, res) => {
+  try {
+    const slugs = await Branch.find({}, { databaseSlug: 1, _id: 0 });
+
+    if (!slugs || slugs.length === 0) {
+      return res.status(404).json({ slugs: [] });
+    }
+    const result = slugs.map((b) => b.databaseSlug);
+
+    return res.status(200).json({ slugs: result });
+  } catch (error) {
+    console.error("Error fetching branch slugs:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
