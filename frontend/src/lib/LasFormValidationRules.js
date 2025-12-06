@@ -28,6 +28,111 @@ export const validationRules = {
         return false;
       },
     },
+    // applicant all details
+    // ❗ Father Name Required
+    {
+      field: "applicant_father_name",
+      message: "ऋणीको बुवाको नाम आवश्यक छ. (Form 1, Page 1, Section 3)",
+      validate: (d) => {
+        const f = d.form1;
+        return !!f.applicant_father_name?.trim();
+      },
+    },
+
+    // ❗ Profession Required
+    {
+      field: "applicant_profession",
+      message: "ऋणीको पेशा आवश्यक छ. (Form 1, Page 1, Section 3)",
+      validate: (d) => {
+        const f = d.form1;
+        return !!f.applicant_profession?.trim();
+      },
+    },
+
+    // ❗ Applicant Type Required
+    {
+      field: "applicantType",
+      message: "ऋणीको प्रकार आवश्यक छ. (Form 1, Page 1, Section 4)",
+      validate: (d) => {
+        const f = d.form1;
+        return !!f.applicantType?.trim();
+      },
+    },
+
+    // ❗ Savings Account Number Required
+    {
+      field: "savingsAccountNumber",
+      message: "ऋणीको बचत खाताको नम्बर आवश्यक छ. (Form 1, Page 1, Section 4)",
+      validate: (d) => {
+        const f = d.form1;
+        return !!f.savingsAccountNumber?.trim();
+      },
+    },
+
+    // ❗ Company Shareholder Number Required
+    {
+      field: "company_shareholderNumber",
+      message: "ऋणीको कम्पनी शेयरधनी नम्बर आवश्यक छ. (Form 1, Page 1, Section 4)",
+      validate: (d) => {
+        const f = d.form1;
+        return !!f.company_shareholderNumber?.trim();
+      },
+    },
+
+    // ❗ Spouse Name Required (only if married)
+    {
+      field: "applicant_spouse_name",
+      message: "ऋणीको श्रीमान/श्रीमतीको नाम आवश्यक छ (वैवाहिक अवस्थामा)। (Form 1, Page 1, Section 3)",
+      validate: (d) => {
+        const f = d.form1;
+        if (f.applicant_maritalStatus !== "married") return true;
+        return !!f.applicant_spouse_name?.trim();
+      },
+    },
+
+    // ❗ In-laws Name Required
+    {
+      field: "applicant_inlaws_name",
+      message: "ऋणीको ससुरा/बुबाको नाम आवश्यक छ. (Form 1, Page 1, Section 3)",
+      validate: (d) => {
+        const f = d.form1;
+        return !!f.applicant_inlaws_name?.trim();
+      },
+    },
+
+    // ❗ Citizenship Number Required
+    {
+      field: "citizenship_number",
+      message: "ऋणीको नागरिकता नम्बर आवश्यक छ. (Form 1, Page 1, Section 3)",
+      validate: (d) => {
+        const f = d.form1;
+        return !!f.citizenship_number?.trim();
+      },
+    },
+
+    // ❗ Citizenship Issuing Office Required
+    {
+      field: "citizenship_takenOffice",
+      message: "ऋणीले नागरिकता लिएको कार्यालय आवश्यक छ. (Form 1, Page 1, Section 3)",
+      validate: (d) => {
+        const f = d.form1;
+        return !!f.citizenship_takenOffice?.trim();
+      },
+    },
+
+    // ❗ Description Required
+    {
+      field: "desc1",
+      message: "ऋणीको विवरण आवश्यक छ। (Form 1, Page 1, Section 2)",
+      validate: (d) => !!d.form1?.desc1?.trim(),
+    },
+
+    // ❗ Amount Required
+    {
+      field: "amount",
+      message: "ऋणीले माग गरेको रकम आवश्यक छ। (Form 1, Page 1, Section 2)",
+      validate: (d) => !!d.form1?.amount?.trim(),
+    },
     // table2
     {
       field: "table2",
@@ -91,6 +196,98 @@ export const validationRules = {
         return false;
       },
     },
+    // all details of approver
+    {
+      field: "approver_citizenship_number",
+      message: "मन्जुरीनामा दिने व्यक्तिको नागरिकता नम्बर आवश्यक छ।",
+      validate: (d) => {
+        const f = d.form1;
+        if (!f.approver_applicant_name || !f.approver_applicant_name.trim()) return true; // skip if no approver
+        return !!f.approver_citizenship_number && f.approver_citizenship_number.trim();
+      },
+    },
+    {
+      field: "approver_father_name",
+      message: "मन्जुरीनामा दिने व्यक्तिको बुवाको नाम आवश्यक छ।",
+      validate: (d) => {
+        const f = d.form1;
+        if (!f.approver_applicant_name || !f.approver_applicant_name.trim()) return true;
+        return !!f.approver_father_name && f.approver_father_name.trim();
+      },
+    },
+    {
+      field: "approver_inlaws_name",
+      message: "मन्जुरीनामा दिने व्यक्तिको ससुर / सासुको नाम आवश्यक छ।",
+      validate: (d) => {
+        const f = d.form1;
+        if (!f.approver_applicant_name || !f.approver_applicant_name.trim()) return true;
+        return !!f.approver_inlaws_name && f.approver_inlaws_name.trim();
+      },
+    },
+    {
+      field: "approver_spouse_name",
+      message: "मन्जुरीनामा दिने व्यक्तिको पति / पत्नीको नाम आवश्यक छ।",
+      validate: (d) => {
+        const f = d.form1;
+        if (!f.approver_applicant_name || !f.approver_applicant_name.trim()) return true;
+        return !!f.approver_spouse_name && f.approver_spouse_name.trim();
+      },
+    },
+    {
+      field: "approver_families_detail",
+      message: "मन्जुरीनामा दिने व्यक्तिको परिवारको विवरण आवश्यक छ।",
+      validate: (d) => {
+        const f = d.form1;
+        if (!f.approver_applicant_name || !f.approver_applicant_name.trim()) return true;
+        return !!f.approver_families_detail && f.approver_families_detail.trim();
+      },
+    },
+    {
+      field: "approver_age",
+      message: "मन्जुरीनामा दिने व्यक्तिको उमेर आवश्यक छ।",
+      validate: (d) => {
+        const f = d.form1;
+        if (!f.approver_applicant_name || !f.approver_applicant_name.trim()) return true;
+        return !!f.approver_age;
+      },
+    },
+    {
+      field: "approver_applicant_gender",
+      message: "मन्जुरीनामा दिने व्यक्तिको लिङ्ग आवश्यक छ।",
+      validate: (d) => {
+        const f = d.form1;
+        if (!f.approver_applicant_name || !f.approver_applicant_name.trim()) return true;
+        return !!f.approver_applicant_gender && f.approver_applicant_gender.trim();
+      },
+    },
+    {
+      field: "approver_applicant_maritalStatus",
+      message: "मन्जुरीनामा दिने व्यक्तिको वैवाहिक स्थिति आवश्यक छ।",
+      validate: (d) => {
+        const f = d.form1;
+        if (!f.approver_applicant_name || !f.approver_applicant_name.trim()) return true;
+        return !!f.approver_applicant_maritalStatus && f.approver_applicant_maritalStatus.trim();
+      },
+    },
+    {
+      field: "approver_citizenship_takenOffice",
+      message: "मन्जुरीनामा दिने व्यक्तिको नागरिकता जारी गर्ने कार्यालय आवश्यक छ।",
+      validate: (d) => {
+        const f = d.form1;
+        if (!f.approver_applicant_name || !f.approver_applicant_name.trim()) return true;
+        return !!f.approver_citizenship_takenOffice && f.approver_citizenship_takenOffice.trim();
+      },
+    },
+    {
+      field: "approver_citizenship_takenDate",
+      message: "मन्जुरीनामा दिने व्यक्तिको नागरिकता जारी मिति आवश्यक छ।",
+      validate: (d) => {
+        const f = d.form1;
+        if (!f.approver_applicant_name || !f.approver_applicant_name.trim()) return true;
+        return !!f.approver_citizenship_takenDate && f.approver_citizenship_takenDate.trim();
+      },
+    },
+
     // table 7
     {
       field: "table7",
