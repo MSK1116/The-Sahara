@@ -168,7 +168,8 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
                <div class="mt-1 w-full h-20 border"></div>
             </div>
             <div>
-            <p>..............</p>
+            <p>.................</p>
+            <p>कार्यालय प्रमुख</p>
             </div>
         </div>
     </div>
