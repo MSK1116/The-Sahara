@@ -107,7 +107,7 @@ const Create_form4 = ({ LMSIN, onDataChange, sessionAuth0 }) => {
             <div className=" my-5  px-10 text-sm space-x-3 space-y-3">
               धितो रोक्काको लागि संस्थाबाट पत्र संख्या <Input readOnly disabled className={"w-1/6"} value={localData?.form3?.malpotLetterNo || "फारम 3 बाट बुझाउनुहोस्।"}></Input> च.न{" "}
               <Input readOnly disabled value={localData?.form3?.malpotLetterChalaniNo || " फारम 3 बाट बुझाउनुहोस्।"} className={"w-1/6"}></Input> मिति{" "}
-              <span className=" font-semibold">{localData?.form3?.malpotLetterDate || "फारम १ बाट बुझाउनुहोस्।"}</span>
+              <span className=" text-red-500">{localData?.form3?.malpotLetterDate || "कृपया फारम 3 बाट बुझाउनुहोस्।"}</span>
               <br></br>
               मालपोत कार्यालय {localData?.form3?.malpotOfficeName || ""} बाट धितो रोक्का भएको प्राप्त पत्रको प.सं.{" "}
               <Input
@@ -116,7 +116,7 @@ const Create_form4 = ({ LMSIN, onDataChange, sessionAuth0 }) => {
                 onChange={(e) => {
                   setForm4((d) => ({ ...d, malpotOfficeReplyPageNo: e.target.value }));
                 }}
-                className={"w-1/6"}></Input>{" "}
+                className={"w-1/6"}></Input>
               मिति <NepaliDateInput handleEnterFocus={handleEnterFocus} value={form4?.malpotOfficeReplyDate || ""} onChange={(val) => setForm4((d) => ({ ...d, malpotOfficeReplyDate: val }))} className={"w-1/4 "}></NepaliDateInput> च.नं.
               <Input onKeyDown={handleEnterFocus} value={form4?.malpotOfficeReplyChalaniNo || ""} onChange={(e) => setForm4((d) => ({ ...d, malpotOfficeReplyChalaniNo: e.target.value }))} className={"w-1/6"}></Input> <br></br>ऋणीको नागरिकता नं.{" "}
               {localData?.form1?.citizenship_number || ""} मिति {localData?.form1?.citizenship_takenDate || <span className="text-red-500">कृपया फारम १ बाट बुझाउनुहोस्।</span>} दिने कार्यलय नाम:{" "}

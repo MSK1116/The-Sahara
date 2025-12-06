@@ -95,6 +95,7 @@ const Create_navigator = ({ currentPage, onSave, handleFormPage, isUpserting, LM
   const handlePrint7 = () => printHTML(PageMaker_LoanApplicationManjurinama, "", 7);
 
   const pages = ["ऋण मागपत्र दर्ता", "मूल्यांकन परतिवेदन ", "मालपोतको लागि रोका पत्र", "तमसुक"];
+
   return (
     <>
       <MissingErrorModal errors={missingFieldErrors} />

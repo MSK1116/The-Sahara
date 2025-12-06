@@ -348,6 +348,38 @@ export const validationRules = {
       },
     },
   ],
+  3: [
+    {
+      field: "form3.malpotLetterNo",
+      message: "मालपोत पत्र संख्या आवश्यक छ। (Form 3)",
+      validate: (d) => !!d.form3?.malpotLetterNo?.trim(),
+    },
+    {
+      field: "form3.malpotLetterChalaniNo",
+      message: "मालपोत पत्र चलानी नं. आवश्यक छ। (Form 3)",
+      validate: (d) => !!d.form3?.malpotLetterChalaniNo?.trim(),
+    },
+    {
+      field: "form3.malpotLetterDate",
+      message: "मालपोत पत्र मिति आवश्यक छ। (Form 3)",
+      validate: (d) => !!d.form3?.malpotLetterDate?.trim(),
+    },
+    {
+      field: "form3.malpotOfficeName",
+      message: "मालपोत कार्यालयको नाम आवश्यक छ। (Form 3)",
+      validate: (d) => !!d.form3?.malpotOfficeName?.trim(),
+    },
+    {
+      field: "form3.malpotOfficerName",
+      message: "मालपोत प्रतिनिधिको नाम आवश्यक छ। (Form 3)",
+      validate: (d) => !!d.form3?.malpotOfficerName?.trim(),
+    },
+    {
+      field: "form3.malpotOfficerName",
+      message: "मालपोत प्रतिनिधिको नागरिकता नं. आवश्यक छ। (Form 3)",
+      validate: (d) => !!d.form3?.malpotOfficerCitizenship_Number?.trim(),
+    },
+  ],
 
   5: [
     {

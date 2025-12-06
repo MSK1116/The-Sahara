@@ -158,6 +158,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
         </div>
         <div class=" flex mt-3 flex-row space-x-5">
             <div>श्री ${f3.malpotOfficerName || "-"}<br>
+                  नागरिकता नं. ${f3.malpotOfficerCitizenship_Number || "-"}
                 <p>द सहारा,${f.branchType}: - ${f.branch}</p>
             </div>
             <div>दृष्टि बन्धक पारित गराई रोक्काको जानकारी समेत लिई आउनु होला ।</div>

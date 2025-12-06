@@ -197,6 +197,7 @@ const Form3Schema = new mongoose.Schema({
   malpotLetterDate: { type: String, default: "" },
   malpotOfficeName: { type: String, default: "" },
   malpotOfficerName: { type: String, default: "" },
+  malpotOfficerCitizenship_Number: { type: String, default: "" },
 });
 
 const WitnessSchema = new mongoose.Schema(

@@ -108,6 +108,12 @@ const Create_form3 = ({ LMSIN, onDataChange, sessionAuth0 }) => {
                 <Input onKeyDown={handleEnterFocus} value={form3.malpotOfficerName || ""} onChange={(e) => setFrom3((d) => ({ ...d, malpotOfficerName: e.target.value }))}></Input>
               </div>
             </div>
+            <div className=" mt-5">
+              <div className=" w-1/3">
+                <Label className={"mb-2"}>पर्तिनिधी को नागरिकता नं. :</Label>
+                <Input onKeyDown={handleEnterFocus} value={form3.malpotOfficerCitizenship_Number || ""} onChange={(e) => setFrom3((d) => ({ ...d, malpotOfficerCitizenship_Number: e.target.value }))}></Input>
+              </div>
+            </div>
           </div>
         </form>
       ) : null}
