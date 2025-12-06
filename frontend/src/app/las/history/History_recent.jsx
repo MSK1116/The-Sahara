@@ -31,7 +31,6 @@ const History_recent = ({ sessionAuth0 }) => {
     if (diffDays < 2 || diffDays > 90) return toast.error("Date range must be between 2 and 90 days");
 
     try {
-      console.log(sessionAuth0);
       const promise = axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/las/getRecentHistory`,
         { databaseSlug: user?.databaseSlug, startDate: toADDate(startDate), finishDate: toADDate(finishDate) },
@@ -59,10 +58,6 @@ const History_recent = ({ sessionAuth0 }) => {
   useEffect(() => {
     handleFetchRecent();
   }, []);
-
-  useEffect(() => {
-    console.log(fetchedHistory);
-  }, [fetchedHistory]);
 
   const handleEnterFocus = useCallback((e) => {
     if (e.key === "Enter") {
