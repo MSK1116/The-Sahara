@@ -27,6 +27,8 @@ const Create_navigator = ({ currentPage, onSave, handleFormPage, isUpserting, LM
       setOpenPrintModal(false);
       setMissingFieldErrors(missingFieldError);
       return document.getElementById("errorModal").showModal();
+    } else {
+      setMissingFieldErrors([]);
     }
     setOpenPrintModal(false);
     const htmlContent = generatorFn(updated);

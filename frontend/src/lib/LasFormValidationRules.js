@@ -344,7 +344,6 @@ export const validationRules = {
           if (!land.localApprovedPrice) return false;
           if (!land.landType || !land.landType.trim()) return false;
         }
-
         return true;
       },
     },
