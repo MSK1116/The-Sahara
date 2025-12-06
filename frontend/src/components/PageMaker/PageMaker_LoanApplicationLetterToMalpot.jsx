@@ -163,7 +163,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
             <div>दृष्टि बन्धक पारित गराई रोक्काको जानकारी समेत लिई आउनु होला ।</div>
         </div>
         <div class=" flex flex-row items-center justify-between  m-5">
-           <div class="w-1/3" > 
+           <div class="w-1/3 text-center " > 
               <p>प्रतिनिधिको दस्तखत नमूना</p>
                <div class="mt-1 w-full h-20 border"></div>
             </div>
