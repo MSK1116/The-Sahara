@@ -116,7 +116,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
         </div>
         <div class=" pr-10">
             <p>कोड न. :- ${f.branchCode}</p>
-            <p>मिति: - ${new NepaliDate(f3.malpotLetterDate || new Date()).format("ddd DD, MMMM YYYY", "np")}</p>
+            <p>मिति: - ${new NepaliDate(f3.malpotLetterDate || new Date()).format("YYYY/MM/DD", "np")}</p>
         </div>
     </div>
 
@@ -162,9 +162,11 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
             </div>
             <div>दृष्टि बन्धक पारित गराई रोक्काको जानकारी समेत लिई आउनु होला ।</div>
         </div>
-        <div class=" flex flex-col items-center justify-center  m-5">
-            <p>दस्तखतको नमूना</p>
+        <div class=" flex flex-col items-center justify-start  m-5">
+           <div> <p>पर्तीनिधिको दस्तखत नमूना</p>
             <div class="mt-1 w-1/3 h-20 border"></div>
+            </div>
+            <div></div>
         </div>
     </div>
 
