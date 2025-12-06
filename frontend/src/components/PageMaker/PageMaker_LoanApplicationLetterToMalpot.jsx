@@ -143,7 +143,7 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
          <b>${f.applicant_name || ""}</b> ले तपसिल बमोजिम जग्गा दृस्टी बन्धक लेखत संस्थाको नाउँमा पारित गराई ऋण माग गर्नु भएको हुँदा ${p4 || ""} ${ownerNamesString || ""}  को नाउँमा दर्ता कायम भएको जग्गामा स्वीकृत ऋण रकम रु.<b> ${convert(
     f2.fiftyPercentMargin,
     "toNp"
-  )}/-</b> अक्षरेपी <b>${f2.fiftyPercentMargin_text || ""}</b> मात्र /- दृष्टि बन्धक लेखत पारित गराउन यस संस्थाको प्रतिनिधि ${f3.malpotOfficerName || "-"} मार्फत रोक्का राखी जानकारी पठाई दिनुहुन अनुरोध गरिन्छ ।
+  )}/-</b> (अक्षरेपी <b>${f2.fiftyPercentMargin_text || ""}</b> मात्र) दृष्टि बन्धक लेखत पारित गराउन यस संस्थाको प्रतिनिधि ${f3.malpotOfficerName || "-"} मार्फत रोक्का राखी जानकारी पठाई दिनुहुन अनुरोध गरिन्छ ।
         </p>
     </div>
 
@@ -162,11 +162,14 @@ export function PageMaker_LoanApplicationLetterToMalpot(data) {
             </div>
             <div>दृष्टि बन्धक पारित गराई रोक्काको जानकारी समेत लिई आउनु होला ।</div>
         </div>
-        <div class=" flex flex-col items-center justify-start  m-5">
-           <div> <p>पर्तीनिधिको दस्तखत नमूना</p>
-            <div class="mt-1 w-1/3 h-20 border"></div>
+        <div class=" flex flex-row items-center justify-between  m-5">
+           <div class="w-1/3" > 
+              <p>प्रतिनिधिको दस्तखत नमूना</p>
+               <div class="mt-1 w-full h-20 border"></div>
             </div>
-            <div></div>
+            <div>
+            <p>..............</p>
+            </div>
         </div>
     </div>
 
