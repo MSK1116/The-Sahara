@@ -3,7 +3,7 @@ export const validationRules = {
     // address permanentOld
     {
       field: "address.permanentOld",
-      message: "स्थायी ठेगाना (ना.प्र.प) अनुसार जिल्ला, पालिका, वा वडा आवश्यक छ. (Page 1, Section 3)",
+      message: "स्थायी ठेगाना (ना.प्र.प) अनुसार जिल्ला, पालिका, वा वडा आवश्यक छ. (Form 1, Page 1, Section 3)",
       validate: (d) => {
         const f = d.form1;
         const addr = f.address?.permanentOld;
@@ -17,7 +17,7 @@ export const validationRules = {
     // address permanent
     {
       field: "address.permanent",
-      message: "हालको ठेगाना अनुसार प्रदेश, जिल्ला, पालिका, वा वडा आवश्यक छ. (Page 1, Section 3)",
+      message: "हालको ठेगाना अनुसार प्रदेश, जिल्ला, पालिका, वा वडा आवश्यक छ. (Form 1, Page 1, Section 3)",
       validate: (d) => {
         const f = d.form1;
         const addr = f.address?.permanent;
@@ -28,24 +28,10 @@ export const validationRules = {
         return false;
       },
     },
-    // table1
-    {
-      field: "table1.भुक्तानी_अवधि",
-      message: "भुक्तानी अवधि भर्न आवश्यक छ. (Page 1, Section 3)",
-      validate: (d) => {
-        const f = d.form1;
-        const table1 = f.table1;
-        if (!table1) return false;
-        if (table1["भुक्तानी अवधि"]) {
-          return true;
-        }
-        return false;
-      },
-    },
     // table2
     {
       field: "table2",
-      message: "कृपया परिवारका सबै सदस्यको विवरण भर्नुहोस्. (Page 2, Section 1)",
+      message: "कृपया परिवारका सबै सदस्यको विवरण भर्नुहोस्. (Form 1, Page 2, Section 1)",
       validate: (d) => {
         const f = d.form1;
         const table2 = f.table2;
@@ -72,7 +58,7 @@ export const validationRules = {
     // address of approver permanentOld
     {
       field: "approverAddress.permanentOld",
-      message: "मन्जुरीनामा दिनेका स्थायी ठेगाना (ना.प्र.प) अनुसार जिल्ला, पालिका, वा वडा आवश्यक छ. (Page 2, Section 2)",
+      message: "मन्जुरीनामा दिनेका स्थायी ठेगाना (ना.प्र.प) अनुसार जिल्ला, पालिका, वा वडा आवश्यक छ. (Form 1, Page 2, Section 2)",
       validate: (d) => {
         const f = d.form1;
 
@@ -90,7 +76,7 @@ export const validationRules = {
     // address of approver permanent
     {
       field: "approverAddress.permanent",
-      message: "मन्जुरीनामा दिनेका हालको ठेगाना अनुसार प्रदेश, जिल्ला, पालिका, वा वडा आवश्यक छ. (Page 2, Section 2)",
+      message: "मन्जुरीनामा दिनेका हालको ठेगाना अनुसार प्रदेश, जिल्ला, पालिका, वा वडा आवश्यक छ. (Form 1, Page 2, Section 2)",
       validate: (d) => {
         const f = d.form1;
 
@@ -105,9 +91,10 @@ export const validationRules = {
         return false;
       },
     },
+    // table 7
     {
       field: "table7",
-      message: "कृपया सम्पत्ति विवरणको सबै आवश्यक जानकारी भर्नुहोस्. (Page 3, Section 1, Last Table)",
+      message: "कृपया सम्पत्ति विवरणको सबै आवश्यक जानकारी भर्नुहोस्. (Form 1, Page 3, Section 1, Last Table)",
       validate: (d) => {
         const f = d.form1;
         const table7 = f.table7;
@@ -123,6 +110,51 @@ export const validationRules = {
           // Validate plotNo and area
           if (!land.plotNo || !land.plotNo.trim()) return false;
           if (!land.area || !land.area.trim()) return false;
+        }
+
+        return true;
+      },
+    },
+  ],
+
+  2: [
+    {
+      field: "form2.evaluatorName",
+      message: "मूल्यांकन गर्नेको नाम आवश्यक छ। (Form 2, Page 1, Section 1)",
+      validate: (d) => !!d.form2?.evaluatorName,
+    },
+    {
+      field: "form2.evaluatorPost",
+      message: "मूल्यांकन गर्नेको पद आवश्यक छ। (Form 2, Page 1, Section 1)",
+      validate: (d) => !!d.form2?.evaluatorPost,
+    },
+    {
+      field: "form2.evaluationDate",
+      message: "मूल्यांकन मिति आवश्यक छ। (Form 2, Page 1, Section 1)",
+      validate: (d) => !!d.form2?.evaluationDate,
+    },
+    {
+      field: "form2.fiftyPercentMargin",
+      message: "सिफारिस रकम (५०% मार्जिन) आवश्यक छ। (Form 2, Page 1, Section 3)",
+      validate: (d) => !!d.form2?.fiftyPercentMargin,
+    },
+    {
+      field: "form2.fiftyPercentMargin_text",
+      message: "सिफारिस रकम अक्षरेपी आवश्यक छ। (Form 2, Page 1, Section 3)",
+      validate: (d) => !!d.form2?.fiftyPercentMargin_text,
+    },
+    {
+      field: "table7",
+      message: "जग्गाको किसिम, चलन चल्तीको मूल्य प्रतिकठ्ठा, नेपाल सरकार वा निकायले तोकेको मूल्य प्रतिकठ्ठा (सबै) जानकारी भर्नुहोस्. (Form 2, Page 1, Section 2)",
+      validate: (d) => {
+        const f = d.form1;
+        const table7 = f.table7;
+        if (!table7 || !Array.isArray(table7) || table7.length === 0) return false;
+
+        for (let land of table7) {
+          if (!land.govApprovedPrice) return false;
+          if (!land.localApprovedPrice) return false;
+          if (!land.landType || !land.landType.trim()) return false;
         }
 
         return true;

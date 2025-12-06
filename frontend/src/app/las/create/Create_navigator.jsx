@@ -85,12 +85,12 @@ const Create_navigator = ({ currentPage, onSave, handleFormPage, isUpserting, LM
   };
 
   const handlePrint1 = () => printHTML(PageMaker_LoanApplicationPage1, LMSIN, 1);
-  const handlePrint2 = () => printHTML(PageMaker_LoanApplicationFrom2, 2);
-  const handlePrint3 = () => printHTML(PageMaker_LoanApplicationLetterToMalpot, 3);
-  const handlePrint4 = () => printHTML(PageMaker_LoanApplicationBharpaie, 4);
-  const handlePrint5 = () => printHTML(PageMaker_LoanApplicationTamasuk, 5);
-  const handlePrint6 = () => printHTML(PageMaker_LoanApplicationFamily, 6);
-  const handlePrint7 = () => printHTML(PageMaker_LoanApplicationManjurinama, 7);
+  const handlePrint2 = () => printHTML(PageMaker_LoanApplicationFrom2, "", 2);
+  const handlePrint3 = () => printHTML(PageMaker_LoanApplicationLetterToMalpot, "", 3);
+  const handlePrint4 = () => printHTML(PageMaker_LoanApplicationBharpaie, "", 4);
+  const handlePrint5 = () => printHTML(PageMaker_LoanApplicationTamasuk, "", 5);
+  const handlePrint6 = () => printHTML(PageMaker_LoanApplicationFamily, "", 6);
+  const handlePrint7 = () => printHTML(PageMaker_LoanApplicationManjurinama, "", 7);
 
   const pages = ["ऋण मागपत्र दर्ता", "मूल्यांकन परतिवेदन ", "मालपोतको लागि रोका पत्र", "तमसुक"];
   return (
