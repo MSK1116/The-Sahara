@@ -234,15 +234,6 @@ export const validationRules = {
       },
     },
     {
-      field: "approver_families_detail",
-      message: "मन्जुरीनामा दिने व्यक्तिको परिवारको विवरण आवश्यक छ।",
-      validate: (d) => {
-        const f = d.form1;
-        if (!f.approver_applicant_name || !f.approver_applicant_name.trim()) return true;
-        return !!f.approver_families_detail && f.approver_families_detail.trim();
-      },
-    },
-    {
       field: "approver_age",
       message: "मन्जुरीनामा दिने व्यक्तिको उमेर आवश्यक छ।",
       validate: (d) => {
