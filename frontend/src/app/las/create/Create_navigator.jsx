@@ -71,9 +71,11 @@ const Create_navigator = ({ currentPage, onSave, handleFormPage, isUpserting, LM
         </style>
 
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
       </head>
 
       ${htmlContent}
+
     </html>
   `);
 
