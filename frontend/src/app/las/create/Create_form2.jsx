@@ -139,6 +139,20 @@ const Create_form2 = ({ LMSIN, onDataChange, sessionAuth0 }) => {
                               {o.nameNp}
                             </CommandItem>
                           ))}
+                          <CommandItem
+                            key={"पुरानो मुलांकनको आधारमा"}
+                            value={"पुरानो मुलांकनको आधारमा"}
+                            onSelect={() => {
+                              setFrom2((d) => ({
+                                ...d,
+                                evaluatorName: "पुरानो मुलांकनको आधारमा ",
+                                evaluatorPost: "-",
+                              }));
+                              document.body.click(); // Close popover
+                            }}>
+                            <Check className={cn("mr-2 h-4 w-4", "पुरानो मुलांकनको आधारमा" == localData.evaluatorName ? "opacity-100" : "opacity-0")} />
+                            पुरानो मुलांकनको आधारमा
+                          </CommandItem>
                         </CommandGroup>
                       </CommandList>
                     </Command>

@@ -350,13 +350,13 @@ export function PageMaker_LoanApplicationPage1(data) {
       जिल्ला <b>${f.address.permanentOld.district}</b>, 
       गा.वि .स/ना.पा <b>${f.address.permanentOld.palika || "—"}</b>, 
       वडा नं. <b>${convert(f.address.permanentOld.wada || "1", "toNp")}</b>, 
-      टोल <b>${f.address.permanentOld.tole || "—"}</b>
+      टोल <b>${f.address.permanentOld.tole || "........"}</b>
       र हाल ठेगाना:
       <b>${f.address.permanent.province}</b>, 
       जिल्ला <b>${f.address.permanent.district}</b>, 
       गा.पा / ना.पा. <b>${f.address.permanent.palika || "—"}</b>, 
       वडा नं. <b>${convert(f.address.permanent.wada || "1", "toNp")}</b>, 
-      टोल <b>${f.address.permanent.tole || "—"}</b>
+      टोल <b>${f.address.permanent.tole || "........"}</b>
     </p>
 
     <h2>फोन नं: <b>${convert(f.phone1 || "", "toNp")}</b></h2>

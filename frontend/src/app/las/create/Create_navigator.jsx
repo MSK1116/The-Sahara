@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { IoSaveSharp } from "react-icons/io5";
 import { MdPrint } from "react-icons/md";
 import { PageMaker_LoanApplicationPage1 } from "@/components/PageMaker/PageMaker_LoanApplicationPage1";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { PageMaker_LoanApplicationFrom2 } from "@/components/PageMaker/PageMaker_LoanApplicationForm2";
 import toast from "react-hot-toast";
@@ -19,13 +18,16 @@ import MissingErrorModal from "@/components/MissingErrorModal";
 const Create_navigator = ({ currentPage, onSave, handleFormPage, isUpserting, LMSIN, isEditing = false }) => {
   const [openPrintModal, setOpenPrintModal] = useState(false);
   const [missingFieldErrors, setMissingFieldErrors] = useState([]);
-  const printHTML = async (generatorFn, title = "Print") => {
+
+  const printHTML = async (generatorFn, title = "Print", pageToPrint) => {
     const updated = await onSave();
     if (!updated) return toast.error("Failed to update before printing.");
-    // const missingFieldError = validatePage(currentPage, updated);
-    // if (missingFieldError) {
-    //   return setMissingFieldErrors(missingFieldError);
-    // }
+    const missingFieldError = validatePage(pageToPrint, updated);
+    if (missingFieldError) {
+      setOpenPrintModal(false);
+      setMissingFieldErrors(missingFieldError);
+      return document.getElementById("errorModal").showModal();
+    }
     setOpenPrintModal(false);
     const htmlContent = generatorFn(updated);
     const printWindow = window.open("", "_blank");
@@ -82,13 +84,13 @@ const Create_navigator = ({ currentPage, onSave, handleFormPage, isUpserting, LM
     printWindow.document.close();
   };
 
-  const handlePrint1 = () => printHTML(PageMaker_LoanApplicationPage1, LMSIN);
-  const handlePrint2 = () => printHTML(PageMaker_LoanApplicationFrom2);
-  const handlePrint3 = () => printHTML(PageMaker_LoanApplicationLetterToMalpot);
-  const handlePrint4 = () => printHTML(PageMaker_LoanApplicationBharpaie);
-  const handlePrint5 = () => printHTML(PageMaker_LoanApplicationTamasuk);
-  const handlePrint6 = () => printHTML(PageMaker_LoanApplicationFamily);
-  const handlePrint7 = () => printHTML(PageMaker_LoanApplicationManjurinama);
+  const handlePrint1 = () => printHTML(PageMaker_LoanApplicationPage1, LMSIN, 1);
+  const handlePrint2 = () => printHTML(PageMaker_LoanApplicationFrom2, 2);
+  const handlePrint3 = () => printHTML(PageMaker_LoanApplicationLetterToMalpot, 3);
+  const handlePrint4 = () => printHTML(PageMaker_LoanApplicationBharpaie, 4);
+  const handlePrint5 = () => printHTML(PageMaker_LoanApplicationTamasuk, 5);
+  const handlePrint6 = () => printHTML(PageMaker_LoanApplicationFamily, 6);
+  const handlePrint7 = () => printHTML(PageMaker_LoanApplicationManjurinama, 7);
 
   const pages = ["ऋण मागपत्र दर्ता", "मूल्यांकन परतिवेदन ", "मालपोतको लागि रोका पत्र", "तमसुक"];
   return (
@@ -96,10 +98,9 @@ const Create_navigator = ({ currentPage, onSave, handleFormPage, isUpserting, LM
       <MissingErrorModal errors={missingFieldErrors} />
       <div className="w-full flex flex-col px-4 pt-3 pb-0 rounded-l-2xl sticky bg-linear-to-l to-gray-200 from-gray-100 top-1/6 shadow ">
         <div className="flex relative flex-col select-none items-center gap-3">
-          {missingFieldErrors.length > 200 && (
+          {missingFieldErrors.length > 0 && (
             <div className="absolute flex animate-bounce items-center justify-center top-0 left-0 size-4">
               <div className="absolute inset-0 rounded-full border border-red-600 animate-ping"></div>
-
               <Button onClick={() => document.getElementById("errorModal").showModal()} type="button" variant="ghost" className="size-4  cursor-pointer rounded-full relative z-10">
                 <MdError className="fill-red-600 size-5.5" />
               </Button>
