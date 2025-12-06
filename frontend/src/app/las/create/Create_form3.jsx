@@ -6,11 +6,35 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import jwt from "jsonwebtoken";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const Create_form3 = ({ LMSIN, onDataChange, sessionAuth0 }) => {
   const [localData, setLocalData] = useState({});
   const [form3, setFrom3] = useState({});
+  const [officers, setOfficers] = useState([]);
   const user = jwt.decode(sessionAuth0?.tokenSet?.idToken);
+
+  const loadOfficers = async () => {
+    try {
+      const temp1 = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/las/getOfficers`,
+        { databaseSlug: user?.databaseSlug },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionAuth0?.tokenSet?.accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setOfficers(temp1.data?.employee);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleDataFetch = async () => {
     try {
@@ -37,6 +61,7 @@ const Create_form3 = ({ LMSIN, onDataChange, sessionAuth0 }) => {
 
   useEffect(() => {
     handleDataFetch();
+    loadOfficers();
   }, [LMSIN]);
 
   useEffect(() => {
@@ -105,7 +130,42 @@ const Create_form3 = ({ LMSIN, onDataChange, sessionAuth0 }) => {
             <div className=" mt-5">
               <div className=" w-1/3">
                 <Label className={"mb-2"}>पर्तिनिधी :</Label>
-                <Input onKeyDown={handleEnterFocus} value={form3.malpotOfficerName || ""} onChange={(e) => setFrom3((d) => ({ ...d, malpotOfficerName: e.target.value }))}></Input>
+                {/* <Input onKeyDown={handleEnterFocus} value={form3.malpotOfficerName || ""} onChange={(e) => setFrom3((d) => ({ ...d, malpotOfficerName: e.target.value }))}></Input> */}
+
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="outline" role="combobox" className="w-full mt-2 justify-between">
+                      {form3.malpotOfficerName || "छान्नुहोस्"}
+                      <ChevronsUpDown className="opacity-50 h-4 w-4" />
+                    </Button>
+                  </PopoverTrigger>
+
+                  <PopoverContent className="w-full p-0">
+                    <Command>
+                      <CommandInput placeholder="नाम खोज्नुहोस्..." />
+                      <CommandList>
+                        <CommandEmpty>कुनै नाम भेटिएन।</CommandEmpty>
+                        <CommandGroup>
+                          {officers.map((o) => (
+                            <CommandItem
+                              key={o.nameEn}
+                              value={o.nameNp}
+                              onSelect={() => {
+                                setFrom3((d) => ({
+                                  ...d,
+                                  malpotOfficerName: o.nameNp,
+                                }));
+                                document.body.click(); // Close popover
+                              }}>
+                              <Check className={cn("mr-2 h-4 w-4", o.nameNp == form3.malpotOfficerName ? "opacity-100" : "opacity-0")} />
+                              {o.nameNp}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
               </div>
             </div>
             <div className=" mt-5">
