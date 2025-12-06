@@ -101,7 +101,7 @@ const Create_form4 = ({ LMSIN, onDataChange, sessionAuth0 }) => {
             </div>
             <span className="flex my-10 items-center">
               <span className="h-px flex-1 bg-linear-to-r from-transparent to-gray-300"></span>
-              <span className="shrink-0 px-4 text-sm text-gray-900">Page 4, Section 2</span>
+              <span className="shrink-0 px-4 text-sm text-gray-900">Page 1, Section 2</span>
               <span className="h-px flex-1 bg-linear-to-l from-transparent to-gray-300"></span>
             </span>
             <div className=" my-5  px-10 text-sm space-x-3 space-y-3">
@@ -124,7 +124,7 @@ const Create_form4 = ({ LMSIN, onDataChange, sessionAuth0 }) => {
             </div>
             <span className="flex my-10 items-center">
               <span className="h-px flex-1 bg-linear-to-r from-transparent to-gray-300"></span>
-              <span className="shrink-0 px-4 text-sm text-gray-900">Page 4, Section 3</span>
+              <span className="shrink-0 px-4 text-sm text-gray-900">Page 1, Section 3</span>
               <span className="h-px flex-1 bg-linear-to-l from-transparent to-gray-300"></span>
             </span>
             <div className=" space-y-5 mb-10 h-[90%] text-sm">

@@ -161,4 +161,37 @@ export const validationRules = {
       },
     },
   ],
+
+  5: [
+    {
+      field: "form4.annualInterestRate",
+      message: "ऋणको बार्षिक पर्तिसत आवश्यक छ। (Form 4, Page 1, Section 1)",
+      validate: (d) => !!d.form4?.annualInterestRate,
+    },
+    {
+      field: "form4.addPer1",
+      message: "तोकेको थप समयमा व्याज नबुझाएमा थप % आवश्यक छ। (Form 4, Page 1, Section 1)",
+      validate: (d) => !!d.form4?.addPer1,
+    },
+    {
+      field: "form4.addPer2",
+      message: "तोकेको समयमा किस्ता तथा साँवा नबुझाएमा थप % आवश्यक छ। (Form 4, Page 1, Section 1)",
+      validate: (d) => !!d.form4?.addPer2,
+    },
+    {
+      field: "form4.malpotOfficeReplyPageNo",
+      message: "मालपोत कार्यालयबाट प्राप्त पत्रको पृष्ठ नं. आवश्यक छ। (Form 4, Page 1, Section 2)",
+      validate: (d) => !!d.form4?.malpotOfficeReplyPageNo,
+    },
+    {
+      field: "form4.malpotOfficeReplyDate",
+      message: "मालपोत कार्यालयबाट प्राप्त पत्र मिति आवश्यक छ। (Form 4, Page 1, Section 2)",
+      validate: (d) => !!d.form4?.malpotOfficeReplyDate,
+    },
+    {
+      field: "form4.malpotOfficeReplyChalaniNo",
+      message: "मालपोत कार्यालयबाट प्राप्त पत्र च.नं. आवश्यक छ। (Form 4, Page 1, Section 2)",
+      validate: (d) => !!d.form4?.malpotOfficeReplyChalaniNo,
+    },
+  ],
 };
