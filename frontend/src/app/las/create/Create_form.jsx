@@ -406,7 +406,7 @@ const Create_form = ({ onDataChange, initialData }) => {
                 id="citizenship_takenOffice"
                 name="citizenship_takenOffice"
                 className="w-full mt-2"
-                value={localData.citizenship_takenOffice || ""}
+                value={localData.citizenship_takenOffice || "जिल्ला पप्रशासन कार्यालय "}
                 onKeyDown={handleEnterFocus}
                 onChange={(e) => setLocalData((d) => ({ ...d, citizenship_takenOffice: e.target.value }))}
               />
@@ -831,7 +831,7 @@ const Create_form = ({ onDataChange, initialData }) => {
                   id="approver_citizenship_takenOffice"
                   name="approver_citizenship_takenOffice"
                   className="w-full mt-2"
-                  value={localData.approver_citizenship_takenOffice || ""}
+                  value={localData.approver_citizenship_takenOffice || "जिल्ला पप्रशासन कार्यालय "}
                   onKeyDown={handleEnterFocus}
                   onChange={(e) => setLocalData((d) => ({ ...d, approver_citizenship_takenOffice: e.target.value }))}
                 />

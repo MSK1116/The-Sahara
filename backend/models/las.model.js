@@ -161,7 +161,7 @@ const Form1Schema = new mongoose.Schema({
   approver_applicant_maritalStatus: { type: String, default: "single" },
   approver_citizenship_takenOffice: { type: String, default: "" },
   approver_citizenship_takenDate: { type: String, default: "" },
-
+  approver_families_details: { type: String, default: "" },
   applicant_father_name: { type: String, default: "" },
   applicant_spouse_name: { type: String, default: "" },
   applicant_inlaws_name: { type: String, default: "" },
