@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 import Branch from "../models/branch.model.js";
 import getLasModel from "../models/las.model.js";
 import { customAlphabet } from "nanoid";
-import { timeAgo } from "../lib/calculateTimeAgo.js";
 
 export const upsertLAS = async (req, res) => {
   try {
@@ -128,8 +127,8 @@ export const getRecentHistory = async (req, res) => {
       LMSIN: doc.LMSIN,
       citizenship_number: doc.form1?.citizenship_number || "",
       applicant_name: doc.form1?.applicant_name || "",
-      createdAgo: timeAgo(doc.createdAt),
-      updatedAgo: timeAgo(doc.updatedAt),
+      createdAgo: doc.createdAt,
+      updatedAgo: doc.updatedAt,
     }));
 
     return res.status(200).json({ result });

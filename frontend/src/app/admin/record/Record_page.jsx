@@ -13,6 +13,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Check, ChevronsUpDown } from "lucide-react";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
+import { timeAgo } from "@/lib/calculateTimeAgo";
 
 const Backup_page = ({ sessionAuth0 }) => {
   const user = jwt.decode(sessionAuth0?.tokenSet?.idToken);
@@ -179,10 +180,14 @@ const Backup_page = ({ sessionAuth0 }) => {
             <Link href={`/las/browse/${historyItem.LMSIN}`} key={idx} className="p-4  bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200">
               <div className="flex items-center justify-between space-x-2 mb-2">
                 <div className=" flex flex-row items-center gap-1">
-                  <div className="size-1.5 rounded-full bg-blue-500"></div> <span className="text-xs text-gray-500">Updated {historyItem.updatedAgo}</span>
+                  <div className="size-1.5 rounded-full bg-blue-500"></div>{" "}
+                  <span title={timeAgo(historyItem.updatedAgo)} className="text-xs text-gray-500">
+                    Updated: {new NepaliDate(historyItem.updatedAgo).format("YYYY-MM-DD")}
+                  </span>
                 </div>
-
-                <span className="text-xs text-gray-500">Created {historyItem.createdAgo}</span>
+                <span title={timeAgo(historyItem.createdAgo)} className="text-xs text-gray-500">
+                  Created: {new NepaliDate(historyItem.createdAgo).format("YYYY-MM-DD")}
+                </span>
               </div>
               <div className="space-y-1 text-sm text-gray-700">
                 <div>

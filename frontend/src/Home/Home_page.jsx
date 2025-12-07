@@ -10,8 +10,10 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Input } from "@/components/ui/input";
 import jwt from "jsonwebtoken";
-import { FaIndianRupeeSign } from "react-icons/fa6";
+import { FaGear } from "react-icons/fa6";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import ChangePassword from "@/components/ChangePassword";
 const Home_page = ({ sessionAuth0 }) => {
   const router = useRouter();
   const [lmsin, setLmsin] = useState("");
@@ -29,14 +31,29 @@ const Home_page = ({ sessionAuth0 }) => {
   };
   return (
     <>
-      <div className=" w-full h-full flex flex-row space-x-5 py-20 px-10">
-        <div className=" w-[40%] flex flex-col items-center justify-center bg-linear-to-br from-blue-600 to-blue-700 p-10 pb-3 rounded-sm cursor-default">
+      <ChangePassword user={user} />
+      <div className=" w-full h-full  flex flex-row space-x-5 py-20 px-10">
+        <div className=" w-[40%] relative flex flex-col items-center justify-center bg-linear-to-br from-blue-600 to-blue-700 p-10 pb-3 rounded-sm cursor-default">
+          <div className="absolute top-3 right-3">
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <div className=" select-none  p-2 active:scale-105 rounded-full bg-blue-600 shadow-2xl ">
+                  <FaGear className="fill-white active:scale-95 hover:animate-spin size-4" />
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem onClick={() => document.getElementById("changePassword").showModal()} className={"text-xs"}>
+                  Change Password
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
           <p className=" text-xl font-bold text-center mb-5 text-white">Welcome to Loan Application System!</p>
           <div className=" relative mx-auto size-30 rounded-full">
             <Image alt="profile image" className=" border-2 border-white object-center object-cover rounded-full" src={user?.profileImage || "/image_dir/LogoOnly.png"} fill={true}></Image>
           </div>
           <div className=" text-center  mt-4 space-x-1 text-white">
-            <p className=" uppercase font-bold tracking-wider">{sessionAuth0?.user?.nickname || "Guest"}</p>
+            <p className=" uppercase font-bold tracking-wider">Hello, {sessionAuth0?.user?.nickname || "Guest"}!</p>
             <p className=" text-sm tracking-wide">{user?.officerPost}</p>
             <p className=" text-sm">{user?.officerBranch}</p>
           </div>
