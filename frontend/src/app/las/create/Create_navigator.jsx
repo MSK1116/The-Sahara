@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { IoSaveSharp } from "react-icons/io5";
 import { MdPrint } from "react-icons/md";
@@ -96,6 +96,23 @@ const Create_navigator = ({ currentPage, onSave, handleFormPage, isUpserting, LM
 
   const pages = ["ऋण मागपत्र दर्ता", "मूल्यांकन परतिवेदन ", "मालपोतको लागि रोका पत्र", "तमसुक"];
 
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key === "F2") {
+        e.preventDefault();
+        onSave && onSave();
+      }
+
+      if (e.key === "F3") {
+        e.preventDefault();
+        setOpenPrintModal((prev) => !prev);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, [onSave, setOpenPrintModal]);
+
   return (
     <>
       <MissingErrorModal errors={missingFieldErrors} />
@@ -138,7 +155,6 @@ const Create_navigator = ({ currentPage, onSave, handleFormPage, isUpserting, LM
           <Button type="button" disabled={isUpserting || !isEditing} onClick={() => setOpenPrintModal(true)} className="w-full" variant="outline">
             Print <MdPrint className="size-5" />
           </Button>
-
           <span className="flex w-full items-center">
             <span className="h-px flex-1 bg-linear-to-r from-transparent to-gray-50"></span>
             <span className="h-px flex-1 bg-linear-to-l from-transparent to-gray-50"></span>
