@@ -48,6 +48,7 @@ const History_recent = ({ sessionAuth0 }) => {
       });
       const try1 = await promise;
       setLoading(false);
+      console.log(try1.data.result);
       try1.data && setFetchedHistory(try1.data.result);
     } catch (error) {
       console.log(error);
@@ -108,8 +109,12 @@ const History_recent = ({ sessionAuth0 }) => {
         <div className="grid mt-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {fetchedHistory?.map((historyItem, idx) => (
             <Link href={`/las/browse/${historyItem.LMSIN}`} key={idx} className="p-4  bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200">
-              <div className="flex items-center space-x-2 mb-2">
-                <div className="size-1.5 rounded-full bg-blue-500"></div> <span className="text-xs text-gray-500">Recent Update</span>
+              <div className="flex items-center justify-between space-x-2 mb-2">
+                <div className=" flex flex-row items-center gap-1">
+                  <div className="size-1.5 rounded-full bg-blue-500"></div> <span className="text-xs text-gray-500">Updated {historyItem.updatedAgo}</span>
+                </div>
+
+                <span className="text-xs text-gray-500">Created {historyItem.createdAgo}</span>
               </div>
               <div className="space-y-1 text-sm text-gray-700">
                 <div>
