@@ -182,11 +182,11 @@ const Backup_page = ({ sessionAuth0 }) => {
                 <div className=" flex flex-row items-center gap-1">
                   <div className="size-1.5 rounded-full bg-blue-500"></div>{" "}
                   <span title={timeAgo(historyItem.updatedAgo)} className="text-xs text-gray-500">
-                    Updated: {new NepaliDate(historyItem.updatedAgo).format("YYYY-MM-DD")}
+                    Updated: {updatedAgo.year}-{updatedAgo.month}-{updatedAgo.date}
                   </span>
                 </div>
                 <span title={timeAgo(historyItem.createdAgo)} className="text-xs text-gray-500">
-                  Created: {new NepaliDate(historyItem.createdAgo).format("YYYY-MM-DD")}
+                  Created: {createdAgo.year}-{createdAgo.month}-{createdAgo.date}
                 </span>
               </div>
               <div className="space-y-1 text-sm text-gray-700">
