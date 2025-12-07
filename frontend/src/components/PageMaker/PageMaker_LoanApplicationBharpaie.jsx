@@ -6,12 +6,11 @@ export function PageMaker_LoanApplicationBharpaie(data) {
   const f2 = data.form2;
   const f3 = data.form3;
   return `
-
-<body class=" ml-30 flex flex-col py-20  ">
-    <div class=" flex flex-col space-y-5">
+<body class=" ml-30 flex flex-col h-screen justify-between py-20 ">
+    <div class=" flex flex-col space-y-5 ">
         <div>
             <h1 class="text-xl mx-auto w-fit my-4 font-bold text-center border border-black px-3 py-1">भरपाई</h1>
-            <div class="text-justify text-2xl ">भरपाई दादै स्थायी ठेगाना: -
+            <div class="text-justify text-xl ">भरपाई दादै स्थायी ठेगाना: -
                 जिल्ला <b>${f.address.permanentOld.district}</b>,
                 गा.वि .स/ना.पा <b>${f.address.permanentOld.palika || "—"}</b>,
                 वडा नं. <b>${convert(f.address.permanentOld.wada || "1", "toNp")}</b>
@@ -23,33 +22,36 @@ export function PageMaker_LoanApplicationBharpaie(data) {
                 सहारा
                 लोन सेविंग्स को
                 औ-सो लि <b>${f.branchType} ${f.branch}</b> बाट ${f.desc1 || ""} कार्य निम्न
-                कामको लागि रु. ${convert(f2.fiftyPercentMargin || "", "toNp")}/- (अक्षरेपी रुपियाँ: ${f2.fiftyPercentMargin_text || ""}
+                कामको लागि रु. ${convert(f2.fiftyPercentMargin || "", "toNp")}/- (अक्षरेपी रुपियाँ:
+                ${f2.fiftyPercentMargin_text || ""}
                 मात्र) नगद/चेक नं. संस्था बाट
                 बुझिलिई यो भरपाई गरि दियें
             </div>
         </div>
 
-        <div class="text-2xl">
-            <p class=" font-semibold underline text-center">तपसिल</p>
-            <div class="px-3 text-2xl border py-2 mt-1">
+        <div class="">
+            <p class=" text-xl font-semibold underline text-center">तपसिल</p>
+            <div class="px-3 text-xl border py-2 mt-1">
                 <p>खाता नं. ${f.savingsAccountNumber || ""}<b> </b></p>
                 <p>सेयर नं. ${f.company_shareholderNumber || ""}<b> </b></p>
                 <p>ऋण नं. <b> </b></p>
             </div>
 
-            <p class="mt-3">इति सम्बत्: ${new NepaliDate(new Date()).format("YYYY", "np")} साल ${new NepaliDate(new Date()).format("MMMM", "np")} महिना ${new NepaliDate(new Date()).format("DD", "np")} गते रोज ${new NepaliDate(new Date()).format(
-    "ddd",
-    "np"
-  )} मा शुभम् ।</p>
+            <p class="mt-3 text-xl">इति सम्बत्: ${new NepaliDate(new Date()).format("YYYY", "np")} साल ${new NepaliDate(new Date()).format("MMMM", "np")} महिना ${new NepaliDate(new Date()).format("DD", "np")} गते रोज ${new NepaliDate(
+    new Date()
+  ).format("ddd", "np")} मा शुभम् ।</p>
         </div>
     </div>
-    <p class="w-full my-10 textoverflow-hidden text-nowrap whitespace-nowrap">
+
+
+    <p class="w-full my-10 overflow-hidden text-nowrap whitespace-nowrap">
         .......................................................................................................................................................................................................................................................................................................................................
     </p>
-      
+
+    <div class="mb-15">
         <div>
             <h1 class="text-xl mx-auto w-fit my-4 font-bold text-center border border-black px-3 py-1">भरपाई</h1>
-            <div class="text-justify text-2xl ">भरपाई दादै स्थायी ठेगाना: -
+            <div class="text-justify text-xl ">भरपाई दादै स्थायी ठेगाना: -
                 जिल्ला <b>${f.address.permanentOld.district}</b>,
                 गा.वि .स/ना.पा <b>${f.address.permanentOld.palika || "—"}</b>,
                 वडा नं. <b>${convert(f.address.permanentOld.wada || "1", "toNp")}</b>
@@ -61,30 +63,30 @@ export function PageMaker_LoanApplicationBharpaie(data) {
                 सहारा
                 लोन सेविंग्स को
                 औ-सो लि <b>${f.branchType} ${f.branch}</b> बाट ${f.desc1 || ""} कार्य निम्न
-                कामको लागि रु. ${convert(f2.fiftyPercentMargin || "", "toNp")}/- (अक्षरेपी रुपियाँ: ${f2.fiftyPercentMargin_text || ""}
+                कामको लागि रु. ${convert(f2.fiftyPercentMargin || "", "toNp")}/- (अक्षरेपी रुपियाँ:
+                ${f2.fiftyPercentMargin_text || ""}
                 मात्र) नगद/चेक नं. संस्था बाट
                 बुझिलिई यो भरपाई गरि दियें
             </div>
         </div>
 
-        <div class="text-2xl">
-            <p class=" font-semibold underline text-center">तपसिल</p>
-            <div class="px-3 text-2xl border py-2 mt-1">
+        <div class="">
+            <p class=" font-semibold text-xl underline text-center">तपसिल</p>
+            <div class="px-3 text-xl border py-2 mt-1">
                 <p>खाता नं. ${f.savingsAccountNumber || ""}<b> </b></p>
                 <p>सेयर नं. ${f.company_shareholderNumber || ""}<b> </b></p>
                 <p>ऋण नं. <b> </b></p>
             </div>
 
-            <p class="mt-3">इति सम्बत्: ${new NepaliDate(new Date()).format("YYYY", "np")} साल ${new NepaliDate(new Date()).format("MMMM", "np")} महिना ${new NepaliDate(new Date()).format("DD", "np")} गते रोज ${new NepaliDate(new Date()).format(
-    "ddd",
-    "np"
-  )} मा शुभम् ।</p>
+            <p class="mt-3 text-xl">इति सम्बत्: ${new NepaliDate(new Date()).format("YYYY", "np")} साल ${new NepaliDate(new Date()).format("MMMM", "np")} महिना ${new NepaliDate(new Date()).format("DD", "np")} गते रोज ${new NepaliDate(
+    new Date()
+  ).format("ddd", "np")} मा शुभम् ।</p>
         </div>
     </div>
 
-<script>
-      window.onload = () => { window.print(); };
+
+    <script>
+        window.onload = () => { window.print(); };
     </script>
-</body>
-`;
+</body>`;
 }

@@ -347,6 +347,20 @@ export const validationRules = {
         return true;
       },
     },
+    {
+      field: "table7",
+      message: "जग्गाको किसिम भर्नुहोस्. (Form 2, Page 1, Section 2)",
+      validate: (d) => {
+        const f = d.form1;
+        const table7 = f.table7;
+        if (!table7 || !Array.isArray(table7) || table7.length === 0) return false;
+
+        for (let land of table7) {
+          if (!land.landType || !land.landType.trim()) return false;
+        }
+        return true;
+      },
+    },
   ],
   3: [
     {
