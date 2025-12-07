@@ -6,7 +6,7 @@ export function PageMaker_LoanApplicationBharpaie(data) {
   const f2 = data.form2;
   const f3 = data.form3;
   return `
-<body class=" ml-30 flex flex-col h-screen justify-between py-20 ">
+<body class=" ml-30 flex flex-col h-screen justify-between  ">
     <div class=" flex flex-col space-y-5 ">
         <div>
             <h1 class="text-xl mx-auto w-fit my-4 font-bold text-center border border-black px-3 py-1">भरपाई</h1>
