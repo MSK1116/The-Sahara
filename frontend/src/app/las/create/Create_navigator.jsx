@@ -149,10 +149,12 @@ const Create_navigator = ({ currentPage, onSave, handleFormPage, isUpserting, LM
           </Button>
         </div>
         <div className="flex flex-col items-center gap-y-2.5 justify-center mt-15">
-          <Button disabled={isUpserting} type="button" onClick={() => onSave && onSave()} className="w-full" variant="outline">
+          <Button disabled={isUpserting} type="button" onClick={() => onSave && onSave()} className="w-full relative" variant="outline">
+            <div className="absolute text-[8px] text-gray-500 select-none top-0.5 left-0.5 size-fit">F2</div>
             {isEditing ? "Update" : "Create"} {isUpserting ? <span className=" loading loading-xs loading-spinner"></span> : <IoSaveSharp className="size-5" />}
           </Button>
-          <Button type="button" disabled={isUpserting || !isEditing} onClick={() => setOpenPrintModal(true)} className="w-full" variant="outline">
+          <Button type="button" disabled={isUpserting || !isEditing} onClick={() => setOpenPrintModal(true)} className="w-full relative" variant="outline">
+            <div className="absolute text-[8px] text-gray-500 select-none top-0.5 left-0.5 size-fit">F3</div>
             Print <MdPrint className="size-5" />
           </Button>
           <span className="flex w-full items-center">
