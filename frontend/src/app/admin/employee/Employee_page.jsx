@@ -198,11 +198,20 @@ export default function Employee_page({ sessionAuth0 }) {
         if (!employee) return;
 
         // 1. Call backend API
-        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/transferEmployee`, {
-          sourceBranchCode,
-          targetBranchCode,
-          employeeId: employee._id,
-        });
+        await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/las/transferEmployee`,
+          {
+            sourceBranchCode,
+            targetBranchCode,
+            employeeId: employee._id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${sessionAuth0?.tokenSet?.accessToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         setUpdating(false);
         setBranches((prev) => transferEmployee(prev, sourceBranchCode, targetBranchCode, globalEmployeeId));

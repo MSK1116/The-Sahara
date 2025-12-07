@@ -2,34 +2,37 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
-import { auth } from "express-oauth2-jwt-bearer";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+
+import hpp from "hpp";
 
 import las from "./routes/las.routes.js";
-// import getUser from "./routes/users.route.js";
-// import chat from "./routes/chat.route.js";
-// import chatUtility from "./routes/chatUtility.route.js";
-// import askToAi from "./routes/ai.route.js";
-// import consoleRoute from "./routes/console.route.js";
-// import whatsappRoute from "./routes/whatsapp.route.js";
 
 dotenv.config();
 
 const app = express();
-const allowedOrigins = [`${process.env.frontend_url}`, ``];
+const allowedOrigins = [];
+if (process.env.frontend_url) allowedOrigins.push(process.env.frontend_url);
 
+app.use(helmet());
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
+      // allow non-browser tools or same-origin (no origin)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) !== -1) return callback(null, true);
+      return callback(new Error("Not allowed by CORS"));
     },
+    credentials: true,
   })
 );
-app.use(express.json());
+
+// security middlewares
+app.use(express.json({ limit: "50kb" }));
+app.use(hpp());
 app.set("trust proxy", true);
+
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODBURI;
 
@@ -50,17 +53,26 @@ mongoose
     console.error("Failed to connect to MongoDB:", err);
     process.exit(1);
   });
-const checkJwt = auth({
-  audience: "https://backend.bureaucrazy.co",
-  issuerBaseURL: `https://auth.bureaucrazy.co/`,
-});
+
 app.get("/", (req, res) => {
   res.send("Hello hacker");
 });
 
+// apply a general rate limiter
+const generalLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 300,
+});
+
+app.use(generalLimiter);
+
 app.use("/las", las);
-// app.use("/chat", chat);
-// app.use("/chatUtility", chatUtility);
-// app.use("/ai", askToAi);
-// app.use("/console", checkJwt, consoleRoute);
-// app.use("/whatsapp", whatsappRoute);
+
+// basic error handler to avoid stack leaks
+app.use((err, req, res, next) => {
+  console.error(err);
+  if (err && err.message && err.message.includes("CORS")) {
+    return res.status(403).json({ error: "CORS policy: Access denied" });
+  }
+  return res.status(500).json({ error: "Internal server error" });
+});
