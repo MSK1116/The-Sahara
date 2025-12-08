@@ -20,7 +20,6 @@ const Home_page = ({ sessionAuth0 }) => {
   const [lmsin, setLmsin] = useState("");
 
   const user = jwt.decode(sessionAuth0?.tokenSet?.idToken);
-  console.log(user);
   const handleSearch = () => {
     if (lmsin.length !== 6) {
       toast.error("LMSIN must be 6 digits");

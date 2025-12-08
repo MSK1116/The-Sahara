@@ -26,7 +26,7 @@ export async function POST(req) {
     }
 
     const ext = file.name.split(".").pop();
-    const fileName = `profilePicture/${userId}.${ext}`;
+    const fileName = `profilePicture/${userId}.${ext}?t=${Date.now()}`;
 
     const blobConnection = await put(fileName, file, {
       access: "public",
