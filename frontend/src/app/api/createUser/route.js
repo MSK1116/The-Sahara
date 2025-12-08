@@ -37,7 +37,7 @@ export async function POST(req) {
           password,
           connection: AUTH0_CONNECTION,
           name: nameEn,
-          username: nameEn.trim().split(" ")[0],
+          nickname: nameEn.trim().split(" ")[0],
           user_metadata: {
             officerPost: post,
             databaseSlug,

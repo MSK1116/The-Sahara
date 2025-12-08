@@ -49,7 +49,6 @@ const History_recent = ({ sessionAuth0 }) => {
       });
       const try1 = await promise;
       setLoading(false);
-      console.log(try1.data.result);
       try1.data && setFetchedHistory(try1.data.result);
     } catch (error) {
       console.log(error);
