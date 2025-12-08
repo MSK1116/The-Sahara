@@ -98,12 +98,12 @@ const Create_navigator = ({ currentPage, onSave, handleFormPage, isUpserting, LM
 
   useEffect(() => {
     const handleKeyPress = (e) => {
-      if (e.key === "F2") {
+      if (e.key === "F2" && !isUpserting) {
         e.preventDefault();
         onSave && onSave();
       }
 
-      if (e.key === "F3") {
+      if (e.key === "F3" && isEditing) {
         e.preventDefault();
         setOpenPrintModal((prev) => !prev);
       }

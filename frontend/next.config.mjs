@@ -16,6 +16,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "i.postimg.cc",
       },
+      {
+        protocol: "https",
+        hostname: "pdwlnic2b9tdg1ps.public.blob.vercel-storage.com",
+      },
     ],
   },
 };

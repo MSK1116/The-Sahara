@@ -20,6 +20,7 @@ const Browser_wrapper = ({ LMSIN, formNo, sessionAuth0 }) => {
   const [form3Data, setForm3Data] = useState({});
   const [form4Data, setForm4Data] = useState({});
   const [loading, setLoading] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [currentPage, setCurrentPage] = useState(formNo ?? 1);
   const [lmsin, setLmsin] = useState(LMSIN.replace(/-/g, ""));
   const router = useRouter();
@@ -95,6 +96,7 @@ const Browser_wrapper = ({ LMSIN, formNo, sessionAuth0 }) => {
     }
 
     try {
+      setIsUpdating(true);
       const promise = axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/las/upsert`,
         { ...aggregated, LMSIN: LMSIN, databaseSlug: user?.databaseSlug },
@@ -112,9 +114,11 @@ const Browser_wrapper = ({ LMSIN, formNo, sessionAuth0 }) => {
       });
       const temp = await promise;
       temp.data && setApplicantData(temp.data.data);
+      setIsUpdating(false);
       return temp.data.data;
     } catch (error) {
       console.error(error);
+      setIsUpdating(false);
     }
   };
 
@@ -188,7 +192,7 @@ const Browser_wrapper = ({ LMSIN, formNo, sessionAuth0 }) => {
         )}
       </div>
       <div className="flex-1">
-        <Create_navigator currentPage={currentPage} handleFormPage={handleFormPage} LMSIN={LMSIN} onSave={handleSave} isEditing={true} />
+        <Create_navigator isUpserting={isUpdating} currentPage={currentPage} handleFormPage={handleFormPage} LMSIN={LMSIN} onSave={handleSave} isEditing={true} />
       </div>
     </main>
   );

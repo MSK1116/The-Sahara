@@ -14,12 +14,13 @@ import { FaGear } from "react-icons/fa6";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import ChangePassword from "@/components/ChangePassword";
+import ProfileUpload from "@/components/ui/ProfileUpload";
 const Home_page = ({ sessionAuth0 }) => {
   const router = useRouter();
   const [lmsin, setLmsin] = useState("");
 
   const user = jwt.decode(sessionAuth0?.tokenSet?.idToken);
-
+  console.log(user);
   const handleSearch = () => {
     if (lmsin.length !== 6) {
       toast.error("LMSIN must be 6 digits");
@@ -32,6 +33,8 @@ const Home_page = ({ sessionAuth0 }) => {
   return (
     <>
       <ChangePassword user={user} />
+      <ProfileUpload user={user} />
+
       <div className=" w-full h-full  flex flex-row space-x-5 py-20 px-10">
         <div className=" w-[40%] relative flex flex-col items-center justify-center bg-linear-to-br from-blue-600 to-blue-700 p-10 pb-3 rounded-sm cursor-default">
           <div className="absolute top-3 right-3">
@@ -42,15 +45,18 @@ const Home_page = ({ sessionAuth0 }) => {
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => document.getElementById("changePassword").showModal()} className={"text-xs"}>
+                <DropdownMenuItem className={"text-xs"} onClick={() => document.getElementById("changePassword").showModal()}>
                   Change Password
+                </DropdownMenuItem>
+                <DropdownMenuItem className={"text-xs"} onClick={() => document.getElementById("ProfileUpload").showModal()}>
+                  Change picture
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
           <p className=" text-xl font-bold text-center mb-5 text-white">Welcome to Loan Application System!</p>
           <div className=" relative mx-auto size-30 rounded-full">
-            <Image alt="profile image" className=" border-2 border-white object-center object-cover rounded-full" src={user?.profileImage || "/image_dir/LogoOnly.png"} fill={true}></Image>
+            <Image alt="profile image" className=" border-2 border-white object-center object-cover rounded-full" src={user?.picture || "/image_dir/LogoOnly.png"} fill={true}></Image>
           </div>
           <div className=" text-center  mt-4 space-x-1 text-white">
             <p className=" uppercase font-bold tracking-wider">Hello, {sessionAuth0?.user?.nickname || "Guest"}!</p>
