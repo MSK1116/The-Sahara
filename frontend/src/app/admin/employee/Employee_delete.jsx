@@ -4,8 +4,6 @@ import React from "react";
 import toast from "react-hot-toast";
 
 const Employee_delete = ({ databaseSlug, employee }) => {
-  console.log(databaseSlug, employee);
-
   const handleDelete = async () => {
     try {
       const promise = axios.post("/api/deleteUser", { databaseSlug, employee });
@@ -15,7 +13,6 @@ const Employee_delete = ({ databaseSlug, employee }) => {
         error: "Failed to delete user.",
       });
       const try1 = await promise;
-      console.log(try1);
     } catch (error) {
       console.log(error);
     }

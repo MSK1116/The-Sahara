@@ -9,6 +9,12 @@ const employeeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  sub: {
+    type: String,
+  },
+  email: {
+    type: String,
+  },
   nameEn: { type: String, required: true },
 });
 

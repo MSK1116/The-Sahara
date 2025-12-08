@@ -53,13 +53,14 @@ export async function POST(req) {
         }
       );
       createdUser = response.data;
+      console.log("User created in Auth0:", createdUser);
     } catch (err) {
       console.error("Failed to create user in Auth0:", err.response?.data || err.message);
       const message = err.response?.data?.message || "Failed to create user";
       return NextResponse.json({ error: message }, { status: err.response?.status || 500 });
     }
 
-    const addInMongoDb = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/addOfficer`, { post, nameEn, nameNp, databaseSlug });
+    const addInMongoDb = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/addOfficer`, { post, nameEn, nameNp, databaseSlug, sub: createdUser.user_id, email: email });
 
     return NextResponse.json({ email: createdUser.email, user_id: createdUser.user_id }, { status: 201 });
   } catch (err) {
