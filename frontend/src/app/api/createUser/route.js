@@ -37,14 +37,15 @@ export async function POST(req) {
           password,
           connection: AUTH0_CONNECTION,
           name: nameEn,
+          username: nameEn.trim().split(" ")[0] + Math.floor(1000 + Math.random() * 9000),
           nickname: nameEn.trim().split(" ")[0],
+          picture: profileImage,
           user_metadata: {
             officerPost: post,
             databaseSlug,
             officerBranchType: branchType,
             officerBranch: branchNameNp,
             officerBranchCode: branchCode,
-            profileImage,
           },
         },
         {
