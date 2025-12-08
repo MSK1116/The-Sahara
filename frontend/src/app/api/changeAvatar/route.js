@@ -14,7 +14,7 @@ export async function POST(req) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
-    const token = process.env.THE_SAHARA_FRONTEND_BLOB_READ_WRITE_TOKEN;
+    const token = process.env.the_sahara_frontend_blob_READ_WRITE_TOKEN;
 
     const { blobs } = await list({
       prefix: `profilePicture/${userId}`,
