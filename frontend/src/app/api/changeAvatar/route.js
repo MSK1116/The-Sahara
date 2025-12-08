@@ -25,8 +25,10 @@ export async function POST(req) {
       await del(blob.url, { token });
     }
 
+    await new Promise((res) => setTimeout(res, 500));
     const ext = file.name.split(".").pop();
-    const fileName = `profilePicture/${userId}.${ext}?t=${Date.now()}`;
+    const timestamp = Date.now();
+    const fileName = `profilePicture/${userId}_${timestamp}.${ext}`;
 
     const blobConnection = await put(fileName, file, {
       access: "public",
