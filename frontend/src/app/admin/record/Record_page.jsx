@@ -176,32 +176,36 @@ const Backup_page = ({ sessionAuth0 }) => {
           </form>
         </div>
         <div className="grid mt-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {fetchedHistory?.map((historyItem, idx) => (
-            <Link href={`/las/browse/${historyItem.LMSIN}`} key={idx} className="p-4  bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200">
-              <div className="flex items-center justify-between space-x-2 mb-2">
-                <div className=" flex flex-row items-center gap-1">
-                  <div className="size-1.5 rounded-full bg-blue-500"></div>{" "}
-                  <span title={timeAgo(historyItem.updatedAgo)} className="text-xs text-gray-500">
-                    Updated: {updatedAgo.year}-{updatedAgo.month}-{updatedAgo.date}
+          {fetchedHistory?.map((historyItem, idx) => {
+            const updatedAgo = new NepaliDate(new Date(historyItem.updatedAgo)).getBS();
+            const createdAgo = new NepaliDate(new Date(historyItem.createdAgo)).getBS();
+            return (
+              <Link href={`/las/browse/${historyItem.LMSIN}`} key={idx} className="p-4  bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200">
+                <div className="flex items-center justify-between space-x-2 mb-2">
+                  <div className=" flex flex-row items-center gap-1">
+                    <div className="size-1.5 rounded-full bg-blue-500"></div>{" "}
+                    <span title={timeAgo(historyItem.updatedAgo)} className="text-xs text-gray-500">
+                      Updated: {updatedAgo.year}-{updatedAgo.month}-{updatedAgo.date}
+                    </span>
+                  </div>
+                  <span title={timeAgo(historyItem.createdAgo)} className="text-xs text-gray-500">
+                    Created: {createdAgo.year}-{createdAgo.month}-{createdAgo.date}
                   </span>
                 </div>
-                <span title={timeAgo(historyItem.createdAgo)} className="text-xs text-gray-500">
-                  Created: {createdAgo.year}-{createdAgo.month}-{createdAgo.date}
-                </span>
-              </div>
-              <div className="space-y-1 text-sm text-gray-700">
-                <div>
-                  <span className="font-semibold">LMSIN: </span> <span>{historyItem.LMSIN}</span>
+                <div className="space-y-1 text-sm text-gray-700">
+                  <div>
+                    <span className="font-semibold">LMSIN: </span> <span>{historyItem.LMSIN}</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold">Citizenship #: </span> <span>{historyItem.citizenship_number}</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold">Applicant: </span> <span>{historyItem.applicant_name}</span>
+                  </div>
                 </div>
-                <div>
-                  <span className="font-semibold">Citizenship #: </span> <span>{historyItem.citizenship_number}</span>
-                </div>
-                <div>
-                  <span className="font-semibold">Applicant: </span> <span>{historyItem.applicant_name}</span>
-                </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
         {!fetchedHistory?.length && <div className="w-full flex flex-col items-center justify-center py-16 text-gray-500 text-sm">दिइएको मिति दायरामा कुनै रेकर्ड फेला परेन।</div>}
       </main>
