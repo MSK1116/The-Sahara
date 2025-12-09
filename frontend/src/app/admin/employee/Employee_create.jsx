@@ -26,10 +26,10 @@ const Employee_create = ({ branches }) => {
     profileImage: "https://i.postimg.cc/rwCLXBPg/un-Known-User.jpg",
   });
 
-  const typeOfPost = ["सहायक तृतिय", "कार्यालय प्रमुख", "सहायक द्वितीय"];
+  const typeOfPost = ["सहायक तृतिय", "सहायक द्वितीय", "सहायक प्रथम", "कार्यालय प्रमुख", "सूचना प्राविधिक"];
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: "", content: "" });
-  const [createdUser, setCreatedUser] = useState(null); // store created user info
+  const [createdUser, setCreatedUser] = useState(null);
 
   const cleaned = branches.map((branch) => {
     const copy = { ...branch };
