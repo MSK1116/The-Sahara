@@ -1,21 +1,34 @@
 <html>
 
 <head>
-    <title>Print</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
+    <title>${title}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+
     <style>
         @page {
             size: A4;
-            margin: 8mm;
+            margin: 15mm;
+
+            @bottom-center {
+                content: "Page " counter(page) " of " counter(pages);
+                font-size: 10px;
+                font-family: Mukta, sans-serif;
+            }
+        }
+
+        .b {
+            text-orientation: mixed;
+            writing-mode: vertical-lr;
         }
 
         body {
-            font-family: Poppins;
+            font-family: Poppins, sans-serif;
             font-size: 13px;
+            counter-reset: page;
         }
 
         table {
@@ -28,22 +41,68 @@
             border: 1px solid #000;
             padding: 6px;
         }
-
-        .b {
-            text-orientation: mixed;
-            writing-mode: vertical-lr;
-        }
     </style>
+
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
 </head>
 
 <body>
+    <div class="flex flex-row items-start relative justify-center ">
+        <div class="w-25 absolute z-10 top-0 left-0"><img src="../frontend/public/image_dir/LogoOnly.png" /></div>
+        <div class="w-fit absolute z-10 top-0 right-0">☎️: ४६-५२००१२</div>
+        <div class="flex flex-1 flex-col text-center pb-2 border-b ">
+            <h1 class="">(नेपाल सरकार सहकारी
+                विभागबाट रजिस्टर्ड)
+            </h1>
+            <h2 class=" mt-2 text-4xl text-shadow-md font-bold">
+                द. सहारा
+            </h2>
+            <h3 class="text-xl">लोन सेविग्स को अपरेटिभ सोसाइटी
+                लिमिटेड</h3>
+            <h3 class="text-sm text-center">प्रधान कार्यालय मलंगवा, सर्लाही</h3>
+            <h4>र.नं. : १/०५०/०५१</h4>
+            <h5>${branchType}, ${branch}</h5>
 
-    <div>
-        <div></div>
-        <div></div>
+        </div>
+    </div>
+    <div class="flex flex-row items-center justify-between mt-1">
+        <div>
+            <p>पत्र संख्या :-</p>
+            <p>चलानी नं. :-</p>
+        </div>
+        <div>
+            मिति:
+        </div>
+    </div>
+    <h1 class=" text-center ">विषय :- <span class=" underline font-bold">जग्गा फुकुवा सम्बन्धमा ।</span></h1>
+    <div class="mt-1">
+        <p>श्री मालपोत कार्यालय,</p>
+        <p>...................</p>
+        <p class=" indent-5 mt-1 text-justify ">उपरोक्त सम्बन्धमा जिल्ला ${f.address.permanentOld?.district || ""}
+            गा.वि.स./न. पा.
+            ${f.address.permanentOld.palika || ""}
+            वडा नं. ${convert(f.address.permanentOld.wada || "-", "toNp")} हाल
+            जिल्ला ${f.address.permanent?.district || ""} गा.पा./न. पा. ${f.address.permanent.palika || ""}
+            वडा नं. ${convert(f.address.permanent.wada || "1", "toNp")} बस्ने वर्ष ${convert(f.age || "", "toNp")} ले यस
+            संस्थाबाट लिनु भएको सम्पूर्ण ऋण चुक्ता गरिसक्नु भएको हुँदा निजको नाउँमा वा श्री .................... को
+            मन्जुरनामा बमोजिम तपसिलमा उल्लेखित जग्गा ताहाँ रोक्का रहेकोले सो जग्गा फुक़ुबा गरीदिनुहुनको लागि अनुरोध
+            छ।
+        </p>
+        <p>जग्गा रोक्का रहेको मितिः ................ च.नं. ....................</p>
+        <p>रोक्का रहेको प.सं. ................ च.नं. ......................</p>
+        <div class="mt-5">
+            <h1 class="font-bold text-center">तपसिल</h1>
+        </div>
     </div>
 
+    <div class="mt-2">
+        <p class="underline">संस्थाको प्रतिनिधि</p>
+        <p>नाम: ............................................................</p>
+        <p>पद: ..............................</p>
+        <p>नागरिकता नं.: .......................</p>
+        <p class="mt-2">हस्ताक्षर: ........................</p>
+    </div>
 </body>
 
 </html>

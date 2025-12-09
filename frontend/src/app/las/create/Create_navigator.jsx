@@ -15,6 +15,7 @@ import { PageMaker_LoanApplicationManjurinama } from "@/components/PageMaker/Pag
 import { validatePage } from "@/lib/LasFormValidation";
 import { MdError } from "react-icons/md";
 import MissingErrorModal from "@/components/MissingErrorModal";
+import { PageMaker_LoanApplicationFukuwa } from "@/components/PageMaker/PageMaker_LoanApplicationFukuwa";
 const Create_navigator = ({ currentPage, onSave, handleFormPage, isUpserting, LMSIN, isEditing = false }) => {
   const [openPrintModal, setOpenPrintModal] = useState(false);
   const [missingFieldErrors, setMissingFieldErrors] = useState([]);
@@ -93,6 +94,7 @@ const Create_navigator = ({ currentPage, onSave, handleFormPage, isUpserting, LM
   const handlePrint5 = () => printHTML(PageMaker_LoanApplicationTamasuk, "", 5);
   const handlePrint6 = () => printHTML(PageMaker_LoanApplicationFamily, "", 6);
   const handlePrint7 = () => printHTML(PageMaker_LoanApplicationManjurinama, "", 7);
+  const handlePrint8 = () => printHTML(PageMaker_LoanApplicationFukuwa, "", 8);
 
   const pages = ["ऋण मागपत्र दर्ता", "मूल्यांकन परतिवेदन ", "मालपोतको लागि रोका पत्र", "तमसुक"];
 
@@ -193,7 +195,7 @@ const Create_navigator = ({ currentPage, onSave, handleFormPage, isUpserting, LM
               <Button onClick={handlePrint7} variant="outline">
                 मन्जुरीनामा
               </Button>
-              <Button onClick={() => window.alert("Coming soon...")} variant="outline">
+              <Button onClick={handlePrint8} variant="outline">
                 फुकुवा पत्र
               </Button>
             </div>
