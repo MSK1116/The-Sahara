@@ -153,7 +153,7 @@ export const getOfficers = async (req, res) => {
 };
 
 export const addOfficer = async (req, res) => {
-  const { post, nameNp, nameEn, databaseSlug } = req.body;
+  const { post, nameNp, nameEn, databaseSlug, sub, email } = req.body;
 
   if (!post || !nameNp || !nameEn) {
     return res.status(400).json({ message: "All employee fields are required." });
@@ -165,7 +165,7 @@ export const addOfficer = async (req, res) => {
       return res.status(404).json({ message: "Branch not found." });
     }
 
-    const newEmployee = { post, nameNp, nameEn };
+    const newEmployee = { post, nameNp, nameEn, sub, email };
     branch.employee.push(newEmployee);
 
     await branch.save();

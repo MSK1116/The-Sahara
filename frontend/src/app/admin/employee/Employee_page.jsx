@@ -9,7 +9,7 @@ const PRIMARY_COLOR = "#155dfc";
 const processInitialData = (data) => {
   return data.map((branch) => ({
     ...branch,
-    employee: branch.employee.map((emp) => ({
+    employee: branch.employee?.map((emp) => ({
       ...emp,
       globalId: `${emp._id}-${Math.floor(100000 + Math.random() * 900000)}`,
     })),
