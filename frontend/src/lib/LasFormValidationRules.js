@@ -427,4 +427,27 @@ export const validationRules = {
       validate: (d) => !!d.form4?.malpotOfficeReplyChalaniNo,
     },
   ],
+
+  8: [
+    {
+      field: "form4.malpotOfficeReplyDate",
+      message: "मालपोत कार्यालयको प्रतिक्रिया मिति आवश्यक छ। (Form 4)",
+      validate: (d) => !!d.form4?.malpotOfficeReplyDate,
+    },
+    {
+      field: "form4.malpotOfficeReplyChalaniNo",
+      message: "मालपोत कार्यालयको प्रतिक्रिया चलानी नम्बर आवश्यक छ। (Form 4)",
+      validate: (d) => !!d.form4?.malpotOfficeReplyChalaniNo,
+    },
+    {
+      field: "form3.malpotLetterNo",
+      message: "मालपोत कार्यालयमा पठाइएको पत्र नम्बर आवश्यक छ। (Form 3)",
+      validate: (d) => !!d.form3?.malpotLetterNo,
+    },
+    {
+      field: "form3.malpotLetterChalaniNo",
+      message: "मालपोत कार्यालयमा पठाइएको पत्र चलानी नम्बर आवश्यक छ। (Form 3)",
+      validate: (d) => !!d.form3?.malpotLetterChalaniNo,
+    },
+  ],
 };
