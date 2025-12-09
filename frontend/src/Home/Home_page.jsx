@@ -15,6 +15,7 @@ import { FaArrowRightFromBracket } from "react-icons/fa6";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import ChangePassword from "@/components/ChangePassword";
 import ProfileUpload from "@/components/ui/ProfileUpload";
+import { IoCamera } from "react-icons/io5";
 const Home_page = ({ sessionAuth0 }) => {
   const router = useRouter();
   const [lmsin, setLmsin] = useState("");
@@ -55,8 +56,11 @@ const Home_page = ({ sessionAuth0 }) => {
             </DropdownMenu>
           </div>
           <p className=" text-xl font-bold text-center mb-5 text-white">Welcome to Loan Application System!</p>
-          <div className=" relative mx-auto size-30 rounded-full">
-            <Image alt="profile image" className=" border-2 border-white object-center object-cover rounded-full" src={user?.picture || "/image_dir/LogoOnly.png"} fill={true}></Image>
+          <div className=" group/changePhotoBtn relative mx-auto size-30 rounded-full">
+            <div className="  group-hover/changePhotoBtn:opacity-100  opacity-30 transition-all duration-300 flex  absolute inset-0 z-50  items-end justify-center pb-3 ">
+              <IoCamera onClick={() => document.getElementById("ProfileUpload").showModal()} className=" fill-white size-5 cursor-pointer" />
+            </div>
+            <Image alt="profile image" className=" z-0 border-2 border-white object-center object-cover rounded-full" src={user?.picture || "/image_dir/LogoOnly.png"} fill={true}></Image>
           </div>
           <div className=" text-center  mt-4 space-x-1 text-white">
             <p className=" uppercase font-bold tracking-wider">Hello, {sessionAuth0?.user?.nickname || "Guest"}!</p>
