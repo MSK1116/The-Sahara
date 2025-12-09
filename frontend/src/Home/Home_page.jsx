@@ -41,8 +41,8 @@ const Home_page = ({ sessionAuth0 }) => {
           <div className="absolute top-3 right-3">
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <div className=" select-none  p-2 active:scale-105 rounded-full bg-blue-600 shadow-2xl ">
-                  <FaGear className="fill-white active:scale-95 hover:animate-spin size-4" />
+                <div className=" select-none group  p-2 active:scale-105 rounded-full bg-blue-600 shadow-2xl ">
+                  <FaGear className="fill-white active:scale-95 group-hover:animate-spin size-4" />
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -68,23 +68,23 @@ const Home_page = ({ sessionAuth0 }) => {
             <p className=" text-sm">{user?.officerBranch}</p>
           </div>
           {user.privilege?.includes("Admin") && (
-            <a href="/admin" className=" shadow-xl flex items-center justify-between text-blue-600 text-xs mt-3 bg-gray-200 px-2 py-0.5 mx-auto font-semibold rounded-xl  ">
-              Admin Dashboard <FaArrowRightFromBracket className="ml-1" />
+            <a href="/admin" className=" shadow-xl flex group items-center justify-between text-blue-600 text-xs mt-3 bg-gray-200 px-2 py-0.5 mx-auto font-semibold rounded-xl  ">
+              <span className="group-hover:-translate-x-0.5 transition-all duration-500">Admin Dashboard</span> <FaArrowRightFromBracket className="ml-1 group-hover:translate-x-0.5 transition-all duration-500 " />
             </a>
           )}
         </div>
         <div className="grid grid-cols-3 w-[60%]  gap-5  p-5 py-10">
-          <a href="/las/create" className="flex items-center border-t-4 border-blue-500 justify-center flex-col rounded-sm hover:shadow-xl bg-gray-100 p-6">
-            <IoAddCircleSharp className="fill-blue-700 size-10" />
+          <a href="/las/create" className="flex  group items-center border-t-4 border-blue-500 justify-center flex-col rounded-sm hover:shadow-xl bg-linear-to-b from-gray-50  to-gray-200 p-6">
+            <IoAddCircleSharp className="fill-blue-700 size-10 group-hover:-rotate-90 transition-all duration-500" />
             <p className="mt-3 text-center">Create New</p>
           </a>
 
-          <a href="/las/history" className="flex items-center justify-center flex-col rounded-sm hover:shadow-xl bg-gray-100 p-6">
-            <FaHistory className="fill-blue-700 size-10" />
+          <a href="/las/history" className="flex group items-center justify-center border-t-4 border-blue-500 flex-col rounded-sm hover:shadow-xl bg-linear-to-b from-gray-50  to-gray-200 p-6">
+            <FaHistory className="fill-blue-700 group-hover:-rotate-90 transition-all duration-500 size-10" />
             <p className="mt-3 text-center">Branch History</p>
           </a>
 
-          <div className="flex items-center justify-center flex-col rounded-sm shadow-inner bg-gray-100 p-6">
+          <div className="flex items-center justify-center flex-col border-t-4 border-blue-500 rounded-sm shadow-inner bg-linear-to-b from-gray-50  to-gray-200 p-6">
             <IoSearchSharp className="fill-blue-700 size-10" />
             <p className="mt-3 text-center font-semibold">Quick Search</p>
             <p className="text-xs text-gray-500 mb-3 text-center">Enter the 6-digit LMSIN.</p>
