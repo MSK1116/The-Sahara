@@ -1,8 +1,10 @@
 import React from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
+import { Button } from "../ui/button";
+import { IoMdRefreshCircle } from "react-icons/io";
 const COLORS = ["#2563eb", "#16a34a", "#f97316", "#eab308", "#8b5cf6", "#6b7280"];
 
-export default function AppPerDay({ loading = true, dailyCreated = [], dailyUpdated = [], loanStats = {}, topProfessions = [], topEducation = [] }) {
+export default function AppPerDay({ refreshFunction, loading = true, dailyCreated = [], dailyUpdated = [], loanStats = {}, topProfessions = [], topEducation = [] }) {
   const mergedData = dailyCreated.map((d, i) => ({
     date: d.date,
     created: d.count,
@@ -18,7 +20,12 @@ export default function AppPerDay({ loading = true, dailyCreated = [], dailyUpda
     <>
       <div className="space-y-10">
         <div className="px-8 py-6 bg-white ">
-          <h2 className=" font-semibold mb-6 text-gray-800">Applications Activity (Last 30 Days)</h2>
+          <div className=" flex flex-row items-center justify-between">
+            <h2 className=" font-semibold mb-6 text-gray-800">Applications Activity (Last 30 Days)</h2>
+            <Button disabled={loading} variant="outline" onClick={() => refreshFunction()} type="button">
+              Refresh {loading ? <span className=" loading loading-spinner loading-xs"></span> : <IoMdRefreshCircle className="size-5" />}
+            </Button>
+          </div>
           <div className="w-full h-72">
             {loading ? (
               <Loading />

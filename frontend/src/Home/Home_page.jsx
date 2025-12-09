@@ -137,7 +137,15 @@ const Home_page = ({ sessionAuth0 }) => {
           </div>
         </div>
       </div>
-      <AppPerDay loading={statLoading} topEducation={statData?.topEducation} loanStats={statData?.loanStats} topProfessions={statData?.topProfessions} dailyUpdated={statData?.dailyUpdated} dailyCreated={statData?.dailyCreated} />
+      <AppPerDay
+        refreshFunction={handleLasStatFetch}
+        loading={statLoading}
+        topEducation={statData?.topEducation}
+        loanStats={statData?.loanStats}
+        topProfessions={statData?.topProfessions}
+        dailyUpdated={statData?.dailyUpdated}
+        dailyCreated={statData?.dailyCreated}
+      />
     </>
   );
 };
