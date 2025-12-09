@@ -138,7 +138,7 @@ const Employee_create = ({ branches }) => {
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button variant="outline" role="combobox" className="w-full justify-between">
-                      {formData.databaseSlug || "छान्नुहोस्"}
+                      {formData?.databaseSlug || "छान्नुहोस्"}
                       <ChevronsUpDown className="h-4 w-4 opacity-50" />
                     </Button>
                   </PopoverTrigger>
@@ -148,7 +148,7 @@ const Employee_create = ({ branches }) => {
                       <CommandList>
                         <CommandEmpty>कुनै नाम भेटिएन।</CommandEmpty>
                         <CommandGroup heading="Branches">
-                          {cleaned.map((o, idx) => (
+                          {cleaned?.map((o, idx) => (
                             <CommandItem
                               key={idx}
                               onSelect={() => {
@@ -206,7 +206,7 @@ const Employee_create = ({ branches }) => {
                       <CommandList>
                         <CommandEmpty>कुनै पोष्ट भेटिएन।</CommandEmpty>
                         <CommandGroup heading="Posts">
-                          {typeOfPost.map((o, idx) => (
+                          {typeOfPost?.map((o, idx) => (
                             <CommandItem
                               key={idx}
                               onSelect={() => {
