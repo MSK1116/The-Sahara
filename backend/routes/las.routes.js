@@ -3,6 +3,7 @@ import { auth } from "express-oauth2-jwt-bearer";
 import { addOfficer, getAllBranchSlugs, getApplicant, getBranch, getLMSIN, getOfficers, getRecentHistory, removeOfficer, transferEmployee, upsertLAS } from "../controllers/las.controller.js";
 import rateLimit from "express-rate-limit";
 import { mongoStore } from "../lib/mongoStore.js";
+import { getAppPerDay } from "../controllers/las.stat.controller.js";
 const router = express.Router();
 
 const checkJwt = auth({
@@ -62,5 +63,6 @@ router.post("/getAllBranchSlugs", hourlyLimit, checkJwt, getAllBranchSlugs);
 router.post("/addOfficer", hourlyLimit, addOfficer);
 router.post("/removeOfficer", removeOfficer);
 router.post("/transferEmployee", hourlyLimit, checkJwt, transferEmployee);
+router.post("/getAppPerDay", hourlyLimit, checkJwt, getAppPerDay);
 
 export default router;

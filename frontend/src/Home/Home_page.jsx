@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { use, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import convert from "number-to-nepali-words";
 import { IoAddCircleSharp } from "react-icons/io5";
 import { FaHistory } from "react-icons/fa";
@@ -16,12 +16,15 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import ChangePassword from "@/components/ChangePassword";
 import ProfileUpload from "@/components/ui/ProfileUpload";
 import { IoCamera } from "react-icons/io5";
+import axios from "axios";
+import AppPerDay from "@/components/stats/AppPerDay";
 const Home_page = ({ sessionAuth0 }) => {
   const router = useRouter();
   const [lmsin, setLmsin] = useState("");
-
   const user = jwt.decode(sessionAuth0?.tokenSet?.idToken);
-  console.log(user);
+  const [statLoading, setStatLoading] = useState(true);
+  const [statData, setStatData] = useState(null);
+
   const handleSearch = () => {
     if (lmsin.length !== 6) {
       toast.error("LMSIN must be 6 digits");
@@ -31,6 +34,34 @@ const Home_page = ({ sessionAuth0 }) => {
       router.push(`/las/browse/${formattedLmsin}`);
     }
   };
+
+  const handleLasStatFetch = async () => {
+    try {
+      setStatLoading(true);
+      const temp1 = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/las/getAppPerDay`,
+        { databaseSlug: user?.databaseSlug },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionAuth0?.tokenSet?.accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (temp1) {
+        setStatData(temp1?.data);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setStatLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    handleLasStatFetch();
+  }, [sessionAuth0]);
+
   return (
     <>
       <ChangePassword user={user} />
@@ -106,6 +137,7 @@ const Home_page = ({ sessionAuth0 }) => {
           </div>
         </div>
       </div>
+      <AppPerDay loading={statLoading} topEducation={statData?.topEducation} loanStats={statData?.loanStats} topProfessions={statData?.topProfessions} dailyUpdated={statData?.dailyUpdated} dailyCreated={statData?.dailyCreated} />
     </>
   );
 };
