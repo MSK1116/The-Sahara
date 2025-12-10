@@ -85,7 +85,7 @@ const AreaInput = ({ value = "", onChange, disabled = false }) => {
   const errorClass = isValid ? "border-gray-300 focus:ring focus:ring-blue-200" : "border-red-500 bg-red-50";
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className={"flex items-center space-x-2"}>
       {inputs.map((val, index) => (
         <React.Fragment key={index}>
           <input
@@ -97,7 +97,7 @@ const AreaInput = ({ value = "", onChange, disabled = false }) => {
             onKeyDown={(e) => handleKeyDown(index, e)}
             onPaste={handlePaste}
             maxLength={3}
-            className={`${baseClass} ${errorClass} ${disabled && "text-gray-500"}`}
+            className={`${baseClass} ${errorClass} ${disabled && "text-gray-500"} min-w-8 w-full max-w-full `}
           />
           {index < 3 && <span className="text-xs">-</span>}
         </React.Fragment>

@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import NepaliDate from "nepali-date-converter";
 
+import Navbar_calculator from "./Navbar_calculator";
 const Navbar = () => {
   const router = useRouter();
 
@@ -37,6 +38,8 @@ const Navbar = () => {
             ">
             <TiHome className="size-6" />
           </Link>
+
+          <Navbar_calculator />
 
           {/* Logout */}
           <Button

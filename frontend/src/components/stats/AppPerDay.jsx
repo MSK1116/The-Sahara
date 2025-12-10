@@ -122,5 +122,5 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const Loading = () => {
-  return <div className=" loading loading-lg loading-spinner"></div>;
+  return <span className=" loading loading-lg loading-spinner"></span>;
 };

@@ -18,10 +18,12 @@ const Create_form2 = ({ LMSIN, onDataChange, sessionAuth0 }) => {
   const [form2, setFrom2] = useState({});
   const [fiftyPercentMarginLimit, setFiftyPercentMarginLimit] = useState(0);
   const [officers, setOfficers] = useState([]);
+  const [officerLoading, setOfficerLoading] = useState(true);
 
   const user = jwt.decode(sessionAuth0?.tokenSet?.idToken);
 
   const loadOfficers = async () => {
+    setOfficerLoading(true);
     try {
       const temp1 = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/las/getOfficers`,
@@ -36,6 +38,8 @@ const Create_form2 = ({ LMSIN, onDataChange, sessionAuth0 }) => {
       setOfficers(temp1.data?.employee);
     } catch (error) {
       console.error(error);
+    } finally {
+      setOfficerLoading(false);
     }
   };
 
@@ -122,38 +126,44 @@ const Create_form2 = ({ LMSIN, onDataChange, sessionAuth0 }) => {
                       <CommandInput placeholder="नाम खोज्नुहोस्..." />
                       <CommandList>
                         <CommandEmpty>कुनै नाम भेटिएन।</CommandEmpty>
-                        <CommandGroup>
-                          {officers.map((o) => (
+                        {officerLoading ? (
+                          <CommandGroup>
+                            <CommandItem>Loading...</CommandItem>
+                          </CommandGroup>
+                        ) : (
+                          <CommandGroup>
+                            {officers?.map((o) => (
+                              <CommandItem
+                                key={o.nameEn}
+                                value={o.nameNp}
+                                onSelect={() => {
+                                  setFrom2((d) => ({
+                                    ...d,
+                                    evaluatorName: o.nameNp,
+                                    evaluatorPost: o.post,
+                                  }));
+                                  document.body.click(); // Close popover
+                                }}>
+                                <Check className={cn("mr-2 h-4 w-4", o.nameNp == localData.evaluatorName ? "opacity-100" : "opacity-0")} />
+                                {o.nameNp}
+                              </CommandItem>
+                            ))}
                             <CommandItem
-                              key={o.nameEn}
-                              value={o.nameNp}
+                              key={"पुरानो मुलांकनको आधारमा"}
+                              value={"पुरानो मुलांकनको आधारमा"}
                               onSelect={() => {
                                 setFrom2((d) => ({
                                   ...d,
-                                  evaluatorName: o.nameNp,
-                                  evaluatorPost: o.post,
+                                  evaluatorName: "पुरानो मुलांकनको आधारमा ",
+                                  evaluatorPost: "-",
                                 }));
                                 document.body.click(); // Close popover
                               }}>
-                              <Check className={cn("mr-2 h-4 w-4", o.nameNp == localData.evaluatorName ? "opacity-100" : "opacity-0")} />
-                              {o.nameNp}
+                              <Check className={cn("mr-2 h-4 w-4", "पुरानो मुलांकनको आधारमा" == localData.evaluatorName ? "opacity-100" : "opacity-0")} />
+                              पुरानो मुलांकनको आधारमा
                             </CommandItem>
-                          ))}
-                          <CommandItem
-                            key={"पुरानो मुलांकनको आधारमा"}
-                            value={"पुरानो मुलांकनको आधारमा"}
-                            onSelect={() => {
-                              setFrom2((d) => ({
-                                ...d,
-                                evaluatorName: "पुरानो मुलांकनको आधारमा ",
-                                evaluatorPost: "-",
-                              }));
-                              document.body.click(); // Close popover
-                            }}>
-                            <Check className={cn("mr-2 h-4 w-4", "पुरानो मुलांकनको आधारमा" == localData.evaluatorName ? "opacity-100" : "opacity-0")} />
-                            पुरानो मुलांकनको आधारमा
-                          </CommandItem>
-                        </CommandGroup>
+                          </CommandGroup>
+                        )}
                       </CommandList>
                     </Command>
                   </PopoverContent>
