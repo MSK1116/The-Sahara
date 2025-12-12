@@ -16,15 +16,12 @@ const Navbar_calculator = () => {
 
   const calculateKatha = (area) => {
     if (!area) return 0;
-
     const parts = area.split("-").map((part) => Number(convert(part, "toEn")));
-
     if (parts.length === 1) return parts[0];
     if (parts.length === 4) {
       const [A, B, C, D] = parts;
       return A * 20 + B + C / 20 + D / (20 * 16);
     }
-
     return 0;
   };
 
@@ -40,17 +37,14 @@ const Navbar_calculator = () => {
       <DialogTrigger className="p-2 rounded-xl text-gray-600 hover:text-blue-600 hover:bg-gray-100 active:scale-95 transition">
         <FaCalculator className="size-5" />
       </DialogTrigger>
-
       <DialogContent className="max-w-lg">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold">Land Evaluator</DialogTitle>
           <DialogDescription className="text-sm">बीघा - कट्ठा - धुर - कनमा</DialogDescription>
         </DialogHeader>
-
         {/* AREA INPUT */}
         <div className="mt-4 flex flex-col items-center space-y-3">
           <AreaInput onChange={(val) => setLandEvaluator((d) => ({ ...d, land: val }))} value={landEvaluator.land} />
-
           <span className="text-xs rounded-md border bg-gray-100 px-3 py-1">{calculateKatha(landEvaluator.land).toFixed(3)} कट्ठा</span>
         </div>
 
