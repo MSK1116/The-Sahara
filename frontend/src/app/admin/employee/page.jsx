@@ -4,9 +4,11 @@ import { auth0 } from "@/lib/auth0";
 
 const page = async () => {
   const sessionAuth0 = await auth0.getSession();
+  const plainSession = sessionAuth0 ? JSON.parse(JSON.stringify(sessionAuth0)) : null;
+
   return (
     <>
-      <Employee_page sessionAuth0={sessionAuth0} />
+      <Employee_page sessionAuth0={plainSession} />
     </>
   );
 };

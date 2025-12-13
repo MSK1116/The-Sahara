@@ -13,6 +13,7 @@ export async function POST(req) {
     const body = await req.json();
     const email = body.employee?.email?.trim();
     const databaseSlug = body.databaseSlug;
+    const userId = body.employee?.sub;
 
     if (!email) {
       return NextResponse.json({ error: "Missing required field: email" }, { status: 400 });
@@ -31,21 +32,6 @@ export async function POST(req) {
 
     const token = tokenRes.data.access_token;
     if (!token) return NextResponse.json({ error: "Auth0 token missing" }, { status: 401 });
-
-    const usersRes = await axios.get(`https://${AUTH0_DOMAIN}/api/v2/users`, {
-      headers: { Authorization: `Bearer ${token}` },
-      params: {
-        q: `email:"${email}"`,
-        search_engine: "v3",
-      },
-    });
-
-    const user = usersRes.data[0];
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
-
-    const userId = user.user_id;
 
     await axios.delete(`https://${AUTH0_DOMAIN}/api/v2/users/${encodeURIComponent(userId)}`, {
       headers: { Authorization: `Bearer ${token}` },

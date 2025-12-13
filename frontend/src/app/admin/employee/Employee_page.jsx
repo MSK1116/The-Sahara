@@ -71,13 +71,10 @@ const transferEmployee = (prevBranches, sourceBranchCode, targetBranchCode, glob
  * Custom Modal Component (Emulating Shadcn Dialog/Modal)
  */
 const TransferModal = ({ isOpen, onClose, branches, currentBranchCode, globalEmployeeId, onConfirmTransfer }) => {
-  if (!isOpen) return null;
-
-  // Find employee using globalId
-  const currentEmployeeData = findEmployeeData(branches, globalEmployeeId);
   const [targetBranch, setTargetBranch] = useState("");
 
-  const availableBranches = branches.filter((b) => b.branchCode !== currentBranchCode);
+  const currentEmployeeData = useMemo(() => findEmployeeData(branches, globalEmployeeId), [branches, globalEmployeeId]);
+  const availableBranches = useMemo(() => branches.filter((b) => b.branchCode !== currentBranchCode), [branches, currentBranchCode]);
 
   React.useEffect(() => {
     if (isOpen) {
@@ -85,9 +82,11 @@ const TransferModal = ({ isOpen, onClose, branches, currentBranchCode, globalEmp
     }
   }, [isOpen]);
 
-  const handleTransfer = () => {
+  if (!isOpen || !currentEmployeeData) return null;
+
+  const handleTransfer = async () => {
     if (targetBranch && currentBranchCode && globalEmployeeId) {
-      onConfirmTransfer(currentBranchCode, targetBranch, globalEmployeeId);
+      await onConfirmTransfer(currentBranchCode, targetBranch, globalEmployeeId);
       onClose();
     }
   };
@@ -113,13 +112,16 @@ const TransferModal = ({ isOpen, onClose, branches, currentBranchCode, globalEmp
             Select Target Branch:
           </label>
           {/* Shadcn Select/Input Styling Emulation */}
+
           <select
             id="target-branch"
             value={targetBranch}
             onChange={(e) => setTargetBranch(e.target.value)}
             className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900 text-sm
-                                   focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition duration-150 shadow-sm
-                                   disabled:cursor-not-allowed disabled:opacity-50">
+             focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition duration-150 shadow-sm">
+            <option value="" disabled>
+              -- Select target branch --
+            </option>
             {availableBranches.map((branch) => (
               <option key={branch.branchCode} value={branch.branchCode}>
                 {branch.branchCode} - {branch.nameEn} ({branch.address})
@@ -160,6 +162,11 @@ export default function Employee_page({ sessionAuth0 }) {
   const [draggedItem, setDraggedItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleBranchFetch = async () => {
     try {
@@ -193,11 +200,17 @@ export default function Employee_page({ sessionAuth0 }) {
     async (sourceBranchCode, targetBranchCode, globalEmployeeId) => {
       try {
         setUpdating(true);
-        const employee = branches.find((branch) => branch.branchCode === sourceBranchCode)?.employee.find((emp) => emp.globalId === globalEmployeeId);
 
-        if (!employee) return;
+        const sourceBranch = branches.find((b) => b.branchCode === sourceBranchCode);
 
-        // 1. Call backend API
+        const targetBranch = branches.find((b) => b.branchCode === targetBranchCode);
+
+        const employee = sourceBranch?.employee.find((emp) => emp.globalId === globalEmployeeId);
+
+        if (!sourceBranch || !targetBranch || !employee) {
+          throw new Error("Invalid transfer data");
+        }
+
         await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/las/transferEmployee`,
           {
@@ -213,15 +226,19 @@ export default function Employee_page({ sessionAuth0 }) {
           }
         );
 
-        setUpdating(false);
+        await axios.post("/api/transferEmployee", { userId: employee.sub, post: employee.post, databaseSlug: targetBranch.databaseSlug, branchType: targetBranch.branchType, branchNameNp: targetBranch.nameNp, branchCode: targetBranch.branchCode });
+
+        // 2️⃣ Optimistic UI update
         setBranches((prev) => transferEmployee(prev, sourceBranchCode, targetBranchCode, globalEmployeeId));
+
+        setUpdating(false);
       } catch (err) {
         console.error(err);
-        alert("Failed to transfer employee. Please try again.");
+        alert("Failed to transfer employee");
         setUpdating(false);
       }
     },
-    [branches]
+    [branches, sessionAuth0]
   );
 
   // --- Drag and Drop Handlers ---
@@ -399,14 +416,7 @@ export default function Employee_page({ sessionAuth0 }) {
           </div>
 
           {/* Transfer Modal */}
-          <TransferModal
-            isOpen={isModalOpen}
-            onClose={closeModal}
-            branches={branches}
-            currentBranchCode={modalEmployee.branchCode}
-            globalEmployeeId={modalEmployee.globalId} // Pass globalId
-            onConfirmTransfer={handleTransfer}
-          />
+          {mounted && <TransferModal isOpen={isModalOpen} onClose={closeModal} branches={branches} currentBranchCode={modalEmployee.branchCode} globalEmployeeId={modalEmployee.globalId} onConfirmTransfer={handleTransfer} />}
         </div>
       </div>
     </>
