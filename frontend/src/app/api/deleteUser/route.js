@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
+import { auth0 } from "@/lib/auth0";
 
 const { AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_CONNECTION } = process.env;
 
@@ -10,14 +11,13 @@ if (!AUTH0_DOMAIN || !AUTH0_CLIENT_ID || !AUTH0_CLIENT_SECRET || !AUTH0_CONNECTI
 export async function POST(req) {
   try {
     const body = await req.json();
-    const username = body.employee.nameEn?.trim().split(" ")[0];
+    const email = body.employee?.email?.trim();
     const databaseSlug = body.databaseSlug;
 
-    if (!username) {
-      return NextResponse.json({ error: "Missing required field: username" }, { status: 400 });
+    if (!email) {
+      return NextResponse.json({ error: "Missing required field: email" }, { status: 400 });
     }
 
-    // 1️⃣ Get Auth0 Management API token
     const tokenRes = await axios.post(
       `https://${AUTH0_DOMAIN}/oauth/token`,
       {
@@ -32,11 +32,10 @@ export async function POST(req) {
     const token = tokenRes.data.access_token;
     if (!token) return NextResponse.json({ error: "Auth0 token missing" }, { status: 401 });
 
-    // 2️⃣ Find user by username
     const usersRes = await axios.get(`https://${AUTH0_DOMAIN}/api/v2/users`, {
       headers: { Authorization: `Bearer ${token}` },
       params: {
-        q: `username:"${username}"`,
+        q: `email:"${email}"`,
         search_engine: "v3",
       },
     });
@@ -51,8 +50,17 @@ export async function POST(req) {
     await axios.delete(`https://${AUTH0_DOMAIN}/api/v2/users/${encodeURIComponent(userId)}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-
-    const removeInMongoDb = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/removeOfficer`, { nameEn: body.employee.nameEn, _id: body.employee._id, databaseSlug });
+    const sessionAuth0 = await auth0.getSession();
+    const removeInMongoDb = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/las/removeOfficer`,
+      { nameEn: body.employee.nameEn, _id: body.employee._id, databaseSlug },
+      {
+        headers: {
+          Authorization: `Bearer ${sessionAuth0?.tokenSet?.accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     return NextResponse.json({ success: true, userId });
   } catch (err) {

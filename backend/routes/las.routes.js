@@ -60,9 +60,11 @@ router.post("/getRecentHistory", hourlyLimit, checkJwt, getRecentHistory);
 router.post("/getOfficers", hourlyLimit, checkJwt, getOfficers);
 router.post("/getBranch", hourlyLimit, checkJwt, getBranch);
 router.post("/getAllBranchSlugs", hourlyLimit, checkJwt, getAllBranchSlugs);
-router.post("/addOfficer", hourlyLimit, addOfficer);
-router.post("/removeOfficer", removeOfficer);
-router.post("/transferEmployee", hourlyLimit, checkJwt, transferEmployee);
 router.post("/getAppPerDay", hourlyLimit, checkJwt, getAppPerDay);
+
+// admin
+router.post("/addOfficer", hourlyLimit, checkJwt, addOfficer);
+router.post("/removeOfficer", hourlyLimit, checkJwt, removeOfficer);
+router.post("/transferEmployee", hourlyLimit, checkJwt, transferEmployee);
 
 export default router;

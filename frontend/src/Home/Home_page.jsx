@@ -50,6 +50,7 @@ const Home_page = ({ sessionAuth0 }) => {
       );
       if (temp1) {
         setStatData(temp1?.data);
+        localStorage.setItem(`lasStats_${user?.databaseSlug}`, JSON.stringify(temp1?.data));
       }
     } catch (error) {
       console.log(error);
@@ -59,7 +60,14 @@ const Home_page = ({ sessionAuth0 }) => {
   };
 
   useEffect(() => {
-    handleLasStatFetch();
+    const savedStats = localStorage.getItem(`lasStats_${user?.databaseSlug}`);
+    if (savedStats) {
+      setStatData(JSON.parse(savedStats));
+      setStatLoading(false);
+      return;
+    } else {
+      handleLasStatFetch();
+    }
   }, [sessionAuth0]);
 
   return (

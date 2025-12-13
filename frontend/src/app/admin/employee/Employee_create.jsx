@@ -171,25 +171,21 @@ const Employee_create = ({ branches }) => {
                   </PopoverContent>
                 </Popover>
               </div>
-
               {/* Email */}
               <div className="flex flex-col gap-1">
                 <Label>Employee Email</Label>
                 <Input type="email" className="w-full" onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))} placeholder="Email" />
               </div>
-
-              {/* Name Nepali */}
-              <div className="flex flex-col gap-1">
-                <Label>Employee full name (Nepali)</Label>
-                <Input className="w-full" onChange={(e) => setFormData((prev) => ({ ...prev, nameNp: e.target.value }))} placeholder="नाम (नेपाली)" />
-              </div>
-
               {/* Name English */}
               <div className="flex flex-col gap-1">
                 <Label>Employee full name (English)</Label>
                 <Input className="w-full" onChange={(e) => setFormData((prev) => ({ ...prev, nameEn: e.target.value }))} placeholder="Full name (English)" />
               </div>
-
+              {/* Name Nepali */}
+              <div className="flex flex-col gap-1">
+                <Label>Employee full name (Nepali)</Label>
+                <Input className="w-full" onChange={(e) => setFormData((prev) => ({ ...prev, nameNp: e.target.value }))} placeholder="नाम (नेपाली)" />
+              </div>
               {/* Post */}
               <div className="flex flex-col gap-1">
                 <Label>Employee Post</Label>
@@ -223,7 +219,6 @@ const Employee_create = ({ branches }) => {
                   </PopoverContent>
                 </Popover>
               </div>
-
               {/* Password */}
               <div className="flex flex-col gap-1">
                 <Label>Password</Label>

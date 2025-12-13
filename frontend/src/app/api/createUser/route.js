@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
+import { auth0 } from "@/lib/auth0";
 
 const { AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_CONNECTION } = process.env;
 
@@ -59,8 +60,17 @@ export async function POST(req) {
       const message = err.response?.data?.message || "Failed to create user";
       return NextResponse.json({ error: message }, { status: err.response?.status || 500 });
     }
-
-    const addInMongoDb = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/las/addOfficer`, { post, nameEn, nameNp, databaseSlug, sub: createdUser.user_id, email: email });
+    const sessionAuth0 = await auth0.getSession();
+    const addInMongoDb = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/las/addOfficer`,
+      { post, nameEn, nameNp, databaseSlug, sub: createdUser.user_id, email: email },
+      {
+        headers: {
+          Authorization: `Bearer ${sessionAuth0?.tokenSet?.accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     return NextResponse.json({ email: createdUser.email, user_id: createdUser.user_id }, { status: 201 });
   } catch (err) {
