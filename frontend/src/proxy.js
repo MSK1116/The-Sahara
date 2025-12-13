@@ -12,6 +12,12 @@ function isPublicPath(pathname) {
 export async function proxy(request) {
   const { pathname } = request.nextUrl;
 
+  const country = request.geo?.country;
+
+  if (country && country !== "NP") {
+    return new NextResponse("Service available only in Nepal", { status: 403 });
+  }
+
   if (pathname.startsWith("/auth")) {
     return auth0.middleware(request);
   }
